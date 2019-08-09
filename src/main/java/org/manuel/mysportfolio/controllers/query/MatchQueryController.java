@@ -1,4 +1,4 @@
-package org.manuel.mysportfolio.controllers;
+package org.manuel.mysportfolio.controllers.query;
 
 import lombok.AllArgsConstructor;
 import org.manuel.mysportfolio.model.dtos.MatchInListDto;

@@ -2,6 +2,7 @@ plugins {
 	id 'org.asciidoctor.convert' version '1.5.3'
 	id 'org.springframework.boot' version '2.2.0.BUILD-SNAPSHOT'
 	id 'java'
+	id "nebula.facet" version "6.0.3"
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -9,6 +10,14 @@ apply plugin: 'io.spring.dependency-management'
 group = 'org.manuel'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+
+facets {
+	restDocTest {
+		parentSourceSet = 'main'
+		testTaskName = 'restDocTest'
+		includeInCheckLifecycle = true
+	}
+}
 
 configurations {
 	developmentOnly
@@ -37,22 +46,35 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.8'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 		exclude group: 'junit', module: 'junit'
 	}
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+
+	restDocTestImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+		exclude group: 'junit', module: 'junit'
+	}
+	restDocTestImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	restDocTestImplementation 'org.springframework.security:spring-security-test'
 }
 
 test {
+	useJUnitPlatform()
+}
+
+restDocTest {
 	outputs.dir snippetsDir
 	useJUnitPlatform()
 }
 
 asciidoctor {
 	inputs.dir snippetsDir
-	dependsOn test
+	dependsOn restDocTest
 }
 
 bootJar {
