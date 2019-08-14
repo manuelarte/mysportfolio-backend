@@ -3,7 +3,6 @@ package org.manuel.mysportfolio.transformers;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.dtos.match.MatchInListDto;
 import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
@@ -18,17 +17,18 @@ public class MatchToMatchInListDtoTransformerTest {
     @Mock
     private TeamRepository teamRepository;
 
-    private static final AnonymousTeamToTeamDtoTransformer ANONYMOUS_TEAM_TO_TEAM_DTO_TRANSFORMER =
-            new AnonymousTeamToTeamDtoTransformer();
+    private static final AnonymousTeamToTeamInMatchInListDtoTransformer ANONYMOUS_TEAM_TO_TEAM_IN_MATCH_IN_LIST_DTO_TRANSFORMER =
+            new AnonymousTeamToTeamInMatchInListDtoTransformer();
 
     private MatchToMatchInListDtoTransformer matchToMatchInListDtoTransformer;
 
     @BeforeEach
     public void setUp() {
-        final var registeredTeamToTeamDtoTransformer = new RegisteredTeamToTeamDtoTransformer(teamRepository);
-        final var teamTypeToTeamDtoTransformer = new TeamTypeToTeamDtoTransformer(registeredTeamToTeamDtoTransformer, ANONYMOUS_TEAM_TO_TEAM_DTO_TRANSFORMER);
+        final var registeredTeamToTeamInMatchInListDtoTransformer = new RegisteredTeamToTeamInMatchInListDtoTransformer(teamRepository);
+        final var teamTypeToTeamInMatchInListDtoTransformer = new TeamTypeToTeamInMatchListDtoTransformer<>(registeredTeamToTeamInMatchInListDtoTransformer,
+                ANONYMOUS_TEAM_TO_TEAM_IN_MATCH_IN_LIST_DTO_TRANSFORMER);
         matchToMatchInListDtoTransformer =
-                new MatchToMatchInListDtoTransformer(teamTypeToTeamDtoTransformer);
+                new MatchToMatchInListDtoTransformer(teamTypeToTeamInMatchInListDtoTransformer);
     }
 
     @Test

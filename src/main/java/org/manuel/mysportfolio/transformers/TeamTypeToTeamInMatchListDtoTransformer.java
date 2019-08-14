@@ -10,21 +10,21 @@ import java.util.function.Function;
 
 @Component
 @lombok.AllArgsConstructor
-public class TeamTypeToTeamDtoTransformer<T> implements Function<TeamType, TeamDto> {
+public class TeamTypeToTeamInMatchListDtoTransformer<T> implements Function<TeamType, TeamDto> {
 
-    private final RegisteredTeamToTeamDtoTransformer registeredTeamToTeamDtoTransformer;
-    private final AnonymousTeamToTeamDtoTransformer anonymousTeamToTeamDtoTransformer;
+    private final RegisteredTeamToTeamInMatchInListDtoTransformer registeredTeamToTeamInMatchInListDtoTransformer;
+    private final AnonymousTeamToTeamInMatchInListDtoTransformer anonymousTeamToTeamInMatchInListDtoTransformer;
 
     @Override
-    public TeamDto apply(TeamType o) {
+    public TeamDto apply(final TeamType o) {
         if (o == null) {
             return null;
         }
         if (o instanceof RegisteredTeam) {
-            return registeredTeamToTeamDtoTransformer.apply((RegisteredTeam) o);
+            return registeredTeamToTeamInMatchInListDtoTransformer.apply((RegisteredTeam) o);
         }
         if (o instanceof AnonymousTeam) {
-            return anonymousTeamToTeamDtoTransformer.apply((AnonymousTeam) o);
+            return anonymousTeamToTeamInMatchInListDtoTransformer.apply((AnonymousTeam) o);
         }
         return null;
     }

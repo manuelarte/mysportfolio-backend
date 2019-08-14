@@ -3,6 +3,8 @@ package org.manuel.mysportfolio.controllers.query;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.manuel.mysportfolio.repositories.MatchRepository;
+import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.restdocs.RestDocumentationContextProvider;
@@ -22,6 +24,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class MatchQueryControllerTest {
 
     @Autowired
+    private TeamRepository teamRepository;
+
+    @Autowired
+    private MatchRepository matchRepository;
+
+    @Autowired
     private WebApplicationContext context;
 
     private MockMvc mockMvc;
@@ -38,4 +46,13 @@ public class MatchQueryControllerTest {
                 .andExpect(status().isOk())
                 .andDo(document("getAllMatches"));
     }
+
+    /*
+    @Test
+    public void getOneMatch() throws Exception {
+        this.mockMvc.perform(get("/api/v1/matches/{id}", id))
+                .andExpect(status().isOk())
+                .andDo(document("getAllMatches"));
+    }
+     */
 }

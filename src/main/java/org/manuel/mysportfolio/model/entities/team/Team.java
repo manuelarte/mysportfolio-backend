@@ -3,6 +3,7 @@ package org.manuel.mysportfolio.model.entities.team;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
+import org.manuel.mysportfolio.model.TeamInfo;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @lombok.Data
 @lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
-public class Team {
+public class Team implements TeamInfo {
 
     @Id
     private ObjectId id;
