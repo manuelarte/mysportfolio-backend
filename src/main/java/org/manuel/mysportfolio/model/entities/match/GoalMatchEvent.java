@@ -1,12 +1,10 @@
-package org.manuel.mysportfolio.model.entities;
+package org.manuel.mysportfolio.model.entities.match;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Value;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -14,7 +12,7 @@ import java.util.UUID;
 public class GoalMatchEvent implements MatchEvent {
 
     @Id
-    private UUID id;
+    private ObjectId id;
 
     private Integer minute;
 

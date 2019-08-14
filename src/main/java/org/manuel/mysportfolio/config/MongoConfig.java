@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 
 @Configuration
+@lombok.AllArgsConstructor
 public class MongoConfig extends AbstractMongoConfiguration {
 
     @Override

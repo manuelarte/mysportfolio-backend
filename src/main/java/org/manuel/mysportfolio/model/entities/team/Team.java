@@ -1,7 +1,12 @@
-package org.manuel.mysportfolio.model.entities;
+package org.manuel.mysportfolio.model.entities.team;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.util.Assert;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
@@ -11,10 +16,14 @@ import java.util.UUID;
 @Document(collection = "teams")
 @lombok.Data
 @lombok.AllArgsConstructor
+@lombok.NoArgsConstructor
 public class Team {
 
     @Id
-    private UUID id;
+    private ObjectId id;
+
+    @CreatedBy
+    private String playerId;
 
     @NotEmpty
     @Max(30)
