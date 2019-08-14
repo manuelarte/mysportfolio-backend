@@ -14,7 +14,7 @@ public class RegisteredTeamToRegisteredTeamDtoTransformer implements Function<Re
     @Override
     public RegisteredTeamDto apply(final RegisteredTeam registeredTeam) {
         return registeredTeam == null ? null : RegisteredTeamDto.builder()
-                .id(registeredTeam.getTeamId().toString())
+                .teamId(registeredTeam.getTeamId().toString())
                 .build();
     }
 

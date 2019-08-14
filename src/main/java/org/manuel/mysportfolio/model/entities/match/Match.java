@@ -30,4 +30,9 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
 
     private String creator;
 
+    @SuppressWarnings("unused")
+    private void setCreator(final String creator) {
+        this.creator = creator;
+    }
+
 }

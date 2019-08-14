@@ -12,8 +12,6 @@ import java.net.URL;
 @lombok.NoArgsConstructor
 public class RegisteredTeam implements TeamType {
 
-    private ObjectId id;
-
     @NotNull
     private ObjectId teamId;
 

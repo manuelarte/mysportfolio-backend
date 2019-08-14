@@ -1,23 +1,36 @@
-= Spring REST Docs JUnit 5 Sample
-Andy Wilkinson;
+= My Sporfolio API
+Manuel Doncel Martos;
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
 :snippets: ../../../build/generated-snippets
 
-Sample application demonstrating how to use Spring REST Docs with JUnit 5.
+Documentation about `My Sportfolio` api.
 
-`My Sportfolio` makes a call to a very simple service and produces three
-documentation snippets.
+## Get all Matches
 
-One showing how to make a request using cURL:
+Request cURL:
 
 include::{snippets}/getAllMatches/curl-request.adoc[]
 
-One showing the HTTP request:
+HTTP request:
 
 include::{snippets}/getAllMatches/http-request.adoc[]
 
-And one showing the HTTP response:
+HTTP response:
 
 include::{snippets}/getAllMatches/http-response.adoc[]
+
+## Get match
+
+Request cURL:
+
+include::{snippets}/getMatch/curl-request.adoc[]
+
+HTTP request:
+
+include::{snippets}/getMatch/http-request.adoc[]
+
+HTTP response:
+
+include::{snippets}/getMatch/http-response.adoc[]

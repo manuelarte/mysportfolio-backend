@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 public class RegisteredTeamDto implements TeamInMatchDto {
 
     @NotNull
-    private final String id;
+    private final String teamId;
 
     @JsonPOJOBuilder(withPrefix = "")
     public static final class RegisteredTeamDtoBuilder {

@@ -18,8 +18,6 @@ import java.util.UUID;
 @lombok.NoArgsConstructor
 public class AnonymousTeam implements TeamType, TeamInfo {
 
-    private ObjectId id;
-
     @NotEmpty
     @Max(30)
     private String name;
