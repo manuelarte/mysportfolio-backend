@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.match.MatchInListDto;
+import org.manuel.mysportfolio.model.dtos.match.PerformanceDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.team.Team;
