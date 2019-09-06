@@ -8,6 +8,10 @@ import org.manuel.mysportfolio.model.dtos.match.MatchInListDto;
 import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.repositories.TeamRepository;
+import org.manuel.mysportfolio.transformers.match.AnonymousTeamToTeamInMatchInListDtoTransformer;
+import org.manuel.mysportfolio.transformers.match.MatchToMatchInListDtoTransformer;
+import org.manuel.mysportfolio.transformers.match.RegisteredTeamToTeamInMatchInListDtoTransformer;
+import org.manuel.mysportfolio.transformers.match.TeamTypeToTeamInMatchListDtoTransformer;
 import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

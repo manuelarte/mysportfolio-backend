@@ -1,4 +1,4 @@
-package org.manuel.mysportfolio.transformers;
+package org.manuel.mysportfolio.transformers.match;
 
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.dtos.team.RegisteredTeamDto;

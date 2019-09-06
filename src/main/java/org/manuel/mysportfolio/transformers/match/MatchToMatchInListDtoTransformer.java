@@ -1,4 +1,4 @@
-package org.manuel.mysportfolio.transformers;
+package org.manuel.mysportfolio.transformers.match;
 
 import org.manuel.mysportfolio.model.dtos.match.MatchInListDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamDto;
