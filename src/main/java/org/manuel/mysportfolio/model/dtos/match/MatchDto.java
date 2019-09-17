@@ -25,7 +25,7 @@ public class MatchDto<HT extends TeamInMatchDto, AT extends TeamInMatchDto> {
 
     // private final Set<EventDto> events;
 
-    private final String creator;
+    private final String createdBy;
 
     public static <HT extends TeamInMatchDto, AT extends TeamInMatchDto> MatchDtoBuilder builder() {
         return new MatchDtoBuilder<HT, AT>();

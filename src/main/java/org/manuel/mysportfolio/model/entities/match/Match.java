@@ -3,9 +3,11 @@ package org.manuel.mysportfolio.model.entities.match;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportType;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,11 +30,13 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
 
     private Set<String> events = new HashSet<>();
 
-    private String creator;
+    @CreatedBy
+    @NotNull
+    private String createdBy;
 
     @SuppressWarnings("unused")
-    private void setCreator(final String creator) {
-        this.creator = creator;
+    private void setCreator(final String createdBy) {
+        this.createdBy = createdBy;
     }
 
 }

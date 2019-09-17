@@ -20,7 +20,7 @@ public class MatchToMatchDtoTransformer implements Function<Match, MatchDto> {
                 .type(match.getType())
                 .homeTeam(teamTypeToTeamInMatchDtoTransformer.apply(match.getHomeTeam()))
                 .awayTeam(teamTypeToTeamInMatchDtoTransformer.apply(match.getAwayTeam()))
-                .creator(match.getCreator())
+                .createdBy(match.getCreatedBy())
                 .build();
     }
 

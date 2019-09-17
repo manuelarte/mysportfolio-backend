@@ -30,7 +30,7 @@ public class MatchDtoTest {
                 .id(UUID.randomUUID().toString())
                 .homeTeam(createMockAnonymousTeamDto())
                 .awayTeam(createMockAnonymousTeamDto())
-                .creator(UUID.randomUUID().toString())
+                .createdBy(UUID.randomUUID().toString())
                 .build();
         JSONObject json = new JSONObject(OBJECT_MAPPER.writeValueAsString(matchDto));
         assertEquals(json.getString("id"), matchDto.getId());
@@ -38,7 +38,7 @@ public class MatchDtoTest {
         assertFalse(json.getJSONObject("homeTeam").has("id"));
         assertEquals(json.getJSONObject("awayTeam").getString("name"), matchDto.getAwayTeam().getName());
         assertFalse(json.getJSONObject("awayTeam").has("id"));
-        assertEquals(json.getString("creator"), matchDto.getCreator());
+        assertEquals(json.getString("createdBy"), matchDto.getCreatedBy());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class MatchDtoTest {
                         .id(UUID.randomUUID().toString())
                         .homeTeam(createMockRegisteredTeamDto())
                         .awayTeam(createMockRegisteredTeamDto())
-                        .creator(UUID.randomUUID().toString())
+                        .createdBy(UUID.randomUUID().toString())
                         .build();
         JSONObject json = new JSONObject(OBJECT_MAPPER.writeValueAsString(matchDto));
         assertEquals(json.getString("id"), matchDto.getId());
@@ -56,7 +56,7 @@ public class MatchDtoTest {
         assertFalse(json.getJSONObject("homeTeam").has("name"));
         assertEquals(json.getJSONObject("awayTeam").getString("teamId"), matchDto.getAwayTeam().getTeamId());
         assertFalse(json.getJSONObject("awayTeam").has("name"));
-        assertEquals(json.getString("creator"), matchDto.getCreator());
+        assertEquals(json.getString("createdBy"), matchDto.getCreatedBy());
     }
 
     @Test
@@ -66,7 +66,7 @@ public class MatchDtoTest {
                         .id(UUID.randomUUID().toString())
                         .homeTeam(createMockRegisteredTeamDto())
                         .awayTeam(createMockAnonymousTeamDto())
-                        .creator(UUID.randomUUID().toString())
+                        .createdBy(UUID.randomUUID().toString())
                         .build();
         JSONObject json = new JSONObject(OBJECT_MAPPER.writeValueAsString(matchDto));
         assertEquals(json.getString("id"), matchDto.getId());
@@ -74,7 +74,7 @@ public class MatchDtoTest {
         assertFalse(json.getJSONObject("homeTeam").has("name"));
         assertEquals(json.getJSONObject("awayTeam").getString("name"), matchDto.getAwayTeam().getName());
         assertFalse(json.getJSONObject("awayTeam").has("teamId"));
-        assertEquals(json.getString("creator"), matchDto.getCreator());
+        assertEquals(json.getString("createdBy"), matchDto.getCreatedBy());
     }
 
     private AnonymousTeamDto createMockAnonymousTeamDto() {

@@ -1,10 +1,12 @@
-package org.manuel.mysportfolio.config;
+package org.manuel.mysportfolio.config.database;
 
 import com.mongodb.MongoClient;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
 
 @Configuration
+@EnableMongoAuditing
 @lombok.AllArgsConstructor
 public class MongoConfig extends AbstractMongoConfiguration {
 
