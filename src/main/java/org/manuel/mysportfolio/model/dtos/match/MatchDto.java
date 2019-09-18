@@ -12,7 +12,7 @@ import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
 @lombok.AllArgsConstructor
 @lombok.Value
 @lombok.Builder(toBuilder = true)
-public class MatchDto<HT extends TeamInMatchDto, AT extends TeamInMatchDto> {
+public class MatchDto<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMatchDto> {
 
     private final String id;
 
@@ -20,19 +20,19 @@ public class MatchDto<HT extends TeamInMatchDto, AT extends TeamInMatchDto> {
 
     private final SportType type;
 
-    private final HT homeTeam;
-    private final AT awayTeam;
+    private final HomeTeam homeTeam;
+    private final AwayTeam awayTeam;
 
     // private final Set<EventDto> events;
 
     private final String createdBy;
 
-    public static <HT extends TeamInMatchDto, AT extends TeamInMatchDto> MatchDtoBuilder builder() {
-        return new MatchDtoBuilder<HT, AT>();
+    public static <HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMatchDto> MatchDtoBuilder builder() {
+        return new MatchDtoBuilder<HomeTeam, AwayTeam>();
     }
 
     @JsonPOJOBuilder(withPrefix = "")
-    public static final class MatchDtoBuilder<HT extends TeamInMatchDto, AT extends TeamInMatchDto> {
+    public static final class MatchDtoBuilder<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMatchDto> {
 
     }
 
