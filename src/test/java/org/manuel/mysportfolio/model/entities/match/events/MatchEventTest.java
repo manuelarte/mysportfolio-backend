@@ -1,4 +1,4 @@
-package org.manuel.mysportfolio.model.dtos.match.events;
+package org.manuel.mysportfolio.model.entities.match.events;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,9 +6,6 @@ import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.config.AppConfig;
-import org.manuel.mysportfolio.model.entities.match.events.DefaultMatchEvent;
-import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
-import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
 
 import java.io.IOException;
 

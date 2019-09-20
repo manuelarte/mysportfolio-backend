@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportType;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
+import org.manuel.mysportfolio.model.dtos.match.MatchEventDto;
 import org.manuel.mysportfolio.model.dtos.team.AnonymousTeamDto;
 import org.manuel.mysportfolio.model.dtos.team.RegisteredTeamDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
@@ -12,7 +13,12 @@ import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
+import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
 import org.manuel.mysportfolio.model.entities.team.Team;
+
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class TestUtils {
 
@@ -55,12 +61,22 @@ public class TestUtils {
         return match;
     }
 
-    public static <HT extends TeamInMatchDto, AT extends TeamInMatchDto> MatchDto<HT, AT> createMockMatchDto(final HT homeTeam, final AT awayTeam) {
+    public static MatchEventDto createMockGoal(final GoalMatchEvent.GoalTeam goalTeam) {
+        final var matchEventDto = new MatchEventDto();
+        matchEventDto.set("type", "goal");
+        matchEventDto.set("team", goalTeam);
+        return matchEventDto;
+    }
+
+    public static <HT extends TeamInMatchDto, AT extends TeamInMatchDto> MatchDto<HT, AT> createMockMatchDto(final HT homeTeam, final AT awayTeam, final int homeTeamGoalsNumber, final int awayTeamGoalsNumber) {
+        final var goals = IntStream.range(0, homeTeamGoalsNumber).mapToObj(i -> createMockGoal(GoalMatchEvent.GoalTeam.HOME_TEAM)).collect(Collectors.toList());
+        goals.addAll(IntStream.range(0, awayTeamGoalsNumber).mapToObj(i -> createMockGoal(GoalMatchEvent.GoalTeam.AWAY_TEAM)).collect(Collectors.toList()));
         return MatchDto.builder()
                 .sport(Sport.FOOTBALL)
                 .type(SportType.ELEVEN_A_SIDE)
                 .homeTeam(homeTeam)
                 .awayTeam(awayTeam)
+                .events(goals)
                 .build();
     }
 }

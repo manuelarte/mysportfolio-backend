@@ -1,11 +1,18 @@
 package org.manuel.mysportfolio.model.dtos.match;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportType;
 import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @JsonDeserialize(builder = MatchDto.MatchDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -23,7 +30,7 @@ public class MatchDto<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMa
     private final HomeTeam homeTeam;
     private final AwayTeam awayTeam;
 
-    // private final Set<EventDto> events;
+    private final List<MatchEventDto> events;
 
     private final String createdBy;
 
@@ -33,7 +40,6 @@ public class MatchDto<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMa
 
     @JsonPOJOBuilder(withPrefix = "")
     public static final class MatchDtoBuilder<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMatchDto> {
-
     }
 
 }

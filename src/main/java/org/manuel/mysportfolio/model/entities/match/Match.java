@@ -3,12 +3,15 @@ package org.manuel.mysportfolio.model.entities.match;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportType;
+import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Document(collection = "matches")
@@ -28,7 +31,7 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
 
     private AwayTeamType awayTeam;
 
-    private Set<String> events = new HashSet<>();
+    private List<MatchEvent> events = new ArrayList<>();
 
     @CreatedBy
     @NotNull

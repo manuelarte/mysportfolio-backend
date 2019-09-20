@@ -7,12 +7,15 @@ import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.dtos.match.MatchInListDto;
 import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 import org.manuel.mysportfolio.model.entities.match.Match;
+import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
 import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.manuel.mysportfolio.transformers.match.AnonymousTeamToTeamInMatchInListDtoTransformer;
 import org.manuel.mysportfolio.transformers.match.MatchToMatchInListDtoTransformer;
 import org.manuel.mysportfolio.transformers.match.RegisteredTeamToTeamInMatchInListDtoTransformer;
 import org.manuel.mysportfolio.transformers.match.TeamTypeToTeamInMatchListDtoTransformer;
 import org.mockito.Mock;
+
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -36,7 +39,7 @@ public class MatchToMatchInListDtoTransformerTest {
     }
 
     @Test
-    public void test() {
+    public void testMatchWithNoGoals() {
         final var match = new Match<AnonymousTeam, AnonymousTeam>();
         match.setId(new ObjectId());
         match.setHomeTeam(TestUtils.createMockAnonymousTeam());
@@ -45,9 +48,27 @@ public class MatchToMatchInListDtoTransformerTest {
         final var expected = MatchInListDto.builder()
                 .id(match.getId().toString())
                 .homeTeam(match.getHomeTeam().getName())
-                .homeGoals(2)
+                .homeGoals(0)
                 .awayTeam(match.getAwayTeam().getName())
-                .awayGoals(1).build();
+                .awayGoals(0).build();
+        final var actual = matchToMatchInListDtoTransformer.apply(match);
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    public void testMatchWithOneHomeGoal() {
+        final var match = new Match<AnonymousTeam, AnonymousTeam>();
+        match.setId(new ObjectId());
+        match.setHomeTeam(TestUtils.createMockAnonymousTeam());
+        match.setAwayTeam(TestUtils.createMockAnonymousTeam());
+        match.setEvents(Collections.singletonList(new GoalMatchEvent(null, GoalMatchEvent.GoalTeam.HOME_TEAM, null, null, null)));
+
+        final var expected = MatchInListDto.builder()
+                .id(match.getId().toString())
+                .homeTeam(match.getHomeTeam().getName())
+                .homeGoals(1)
+                .awayTeam(match.getAwayTeam().getName())
+                .awayGoals(0).build();
         final var actual = matchToMatchInListDtoTransformer.apply(match);
         assertEquals(actual, expected);
     }

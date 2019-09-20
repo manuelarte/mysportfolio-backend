@@ -61,7 +61,7 @@ public class MatchCommandControllerTest {
         final var teamSaved = teamRepository.save(TestUtils.createMockTeam());
 
         final var matchDto = TestUtils.createMockMatchDto(TestUtils.createMockRegisteredTeamDto(teamSaved.getId()),
-                TestUtils.createMockAnonymousTeamDto());
+                TestUtils.createMockAnonymousTeamDto(), 1, 2);
 
         mvc.perform(post("/api/v1/matches").contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(matchDto)))
@@ -78,7 +78,7 @@ public class MatchCommandControllerTest {
     @Test
     public void testSaveMatchWithTwoAnonymousTeams() throws Exception {
         final var matchDto = TestUtils.createMockMatchDto(TestUtils.createMockAnonymousTeamDto(),
-                TestUtils.createMockAnonymousTeamDto());
+                TestUtils.createMockAnonymousTeamDto(), 0, 0);
 
         mvc.perform(post("/api/v1/matches").contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(matchDto)))
