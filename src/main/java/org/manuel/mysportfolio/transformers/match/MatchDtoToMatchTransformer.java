@@ -27,6 +27,11 @@ public class MatchDtoToMatchTransformer implements Function<MatchDto, Match> {
         match.setId(Optional.ofNullable(matchDto.getId()).map(ObjectId::new).orElse(null));
         match.setSport(matchDto.getSport());
         match.setType(matchDto.getType());
+
+        match.setAddress(matchDto.getAddress());
+        match.setStartDate(matchDto.getStartDate());
+        match.setEndDate(matchDto.getEndDate());
+
         final Stream<MatchEvent> stream = Optional.ofNullable(matchDto.getEvents()).orElse(new ArrayList<>())
                 .stream().map(matchEventDtoToMatchEventTransformer);
         match.setEvents(stream.collect(Collectors.toList()));

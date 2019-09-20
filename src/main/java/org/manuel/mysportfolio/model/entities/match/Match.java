@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -30,6 +31,11 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
     private HomeTeamType homeTeam;
 
     private AwayTeamType awayTeam;
+
+    private String address;
+
+    private Instant startDate;
+    private Instant endDate;
 
     private List<MatchEvent> events = new ArrayList<>();
 

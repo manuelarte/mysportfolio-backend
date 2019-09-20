@@ -26,6 +26,9 @@ public class MatchToMatchDtoTransformer implements Function<Match, MatchDto> {
                 .type(match.getType())
                 .homeTeam(teamTypeToTeamInMatchDtoTransformer.apply(match.getHomeTeam()))
                 .awayTeam(teamTypeToTeamInMatchDtoTransformer.apply(match.getAwayTeam()))
+                .address(match.getAddress())
+                .startDate(match.getStartDate())
+                .endDate(match.getEndDate())
                 .events(eventsStream.collect(Collectors.toList()))
                 .createdBy(match.getCreatedBy())
                 .build();
