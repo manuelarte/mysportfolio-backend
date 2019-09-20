@@ -31,7 +31,9 @@ public class MatchEventDto {
     @JsonAnySetter
     @SuppressWarnings("unused")
     public void set(final String key, final Object value) {
-        properties.put(key, value);
+        if (value != null) {
+            properties.put(key, value);
+        }
     }
 
     @JsonIgnore
