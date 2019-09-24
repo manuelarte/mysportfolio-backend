@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.geo.Point;
 
 import javax.validation.constraints.NotNull;
 
@@ -29,6 +30,10 @@ public class GoalMatchEvent implements MatchEvent {
     private String playerId;
 
     private Integer minute;
+
+    private Point goalCoordinates;
+
+    private BodyPart bodyPart;
 
     private String description;
 
