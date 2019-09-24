@@ -19,7 +19,7 @@ public class MatchEventTest {
     @Test
     public void testSerializeGoal() throws JsonProcessingException {
         final var event = new GoalMatchEvent(new ObjectId(),
-                GoalMatchEvent.GoalTeam.HOME_TEAM, "12345", 30, "A very nice volley");
+                GoalMatchEvent.GoalTeam.HOME_TEAM, "12345", 30, null, null, "A very nice volley");
         final var json = new JSONObject(OBJECT_MAPPER.writeValueAsString(event));
         assertEquals(json.get("id"), event.getId().toString());
         assertEquals(json.get("type"), "goal");

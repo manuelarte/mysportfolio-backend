@@ -61,7 +61,7 @@ public class MatchToMatchInListDtoTransformerTest {
         match.setId(new ObjectId());
         match.setHomeTeam(TestUtils.createMockAnonymousTeam());
         match.setAwayTeam(TestUtils.createMockAnonymousTeam());
-        match.setEvents(Collections.singletonList(new GoalMatchEvent(null, GoalMatchEvent.GoalTeam.HOME_TEAM, null, null, null)));
+        match.setEvents(Collections.singletonList(new GoalMatchEvent(null, GoalMatchEvent.GoalTeam.HOME_TEAM, null, null, null, null, null)));
 
         final var expected = MatchInListDto.builder()
                 .id(match.getId().toString())
