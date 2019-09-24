@@ -3,3 +3,5 @@ spring:
   data:
     mongodb:
       uri: ${MONGODB_URI:mongodb://localhost:27017/mysportfolio}
+  profiles:
+    active: ${SPRING_PROFILE:dev}
