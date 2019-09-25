@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.config.AppConfig;
+import org.manuel.mysportfolio.model.entities.TeamOption;
 
 import java.io.IOException;
 
@@ -19,7 +20,7 @@ public class MatchEventTest {
     @Test
     public void testSerializeGoal() throws JsonProcessingException {
         final var event = new GoalMatchEvent(new ObjectId(),
-                GoalMatchEvent.GoalTeam.HOME_TEAM, "12345", 30, null, null, "A very nice volley");
+                TeamOption.HOME_TEAM, "12345", 30, null, null, "A very nice volley");
         final var json = new JSONObject(OBJECT_MAPPER.writeValueAsString(event));
         assertEquals(json.get("id"), event.getId().toString());
         assertEquals(json.get("type"), "goal");

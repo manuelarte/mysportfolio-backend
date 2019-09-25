@@ -2,6 +2,7 @@ package org.manuel.mysportfolio.transformers.match;
 
 import org.manuel.mysportfolio.model.dtos.match.MatchInListDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamDto;
+import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
@@ -26,9 +27,10 @@ public class MatchToMatchInListDtoTransformer implements Function<Match, MatchIn
                 .type(match.getType())
                 .homeTeam(getTeamName(match.getHomeTeam()))
                 .awayTeam(getTeamName(match.getAwayTeam()))
+                .playedFor(match.getPlayedFor())
                 // TODO
-                .homeGoals(getGoals(match.getEvents(), GoalMatchEvent.GoalTeam.HOME_TEAM))
-                .awayGoals(getGoals(match.getEvents(), GoalMatchEvent.GoalTeam.AWAY_TEAM))
+                .homeGoals(getGoals(match.getEvents(), TeamOption.HOME_TEAM))
+                .awayGoals(getGoals(match.getEvents(), TeamOption.AWAY_TEAM))
                 .build();
     }
 
@@ -36,8 +38,8 @@ public class MatchToMatchInListDtoTransformer implements Function<Match, MatchIn
         return Optional.ofNullable(teamTypeToTeamInMatchListDtoTransformer.apply(team)).map(TeamDto::getName).orElse(null);
     }
 
-    private int getGoals(final List<MatchEvent> events, final GoalMatchEvent.GoalTeam goalTeam) {
-        return (int) events.stream().filter(e -> e instanceof GoalMatchEvent).filter(gE -> goalTeam.equals(((GoalMatchEvent) gE).getTeam())).count();
+    private int getGoals(final List<MatchEvent> events, final TeamOption teamOption) {
+        return (int) events.stream().filter(e -> e instanceof GoalMatchEvent).filter(gE -> teamOption.equals(((GoalMatchEvent) gE).getTeam())).count();
     }
 
 }

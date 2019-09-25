@@ -9,6 +9,7 @@ import org.manuel.mysportfolio.model.dtos.match.MatchEventDto;
 import org.manuel.mysportfolio.model.dtos.team.AnonymousTeamDto;
 import org.manuel.mysportfolio.model.dtos.team.RegisteredTeamDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
+import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
@@ -61,7 +62,7 @@ public class TestUtils {
         return match;
     }
 
-    public static MatchEventDto createMockGoal(final GoalMatchEvent.GoalTeam goalTeam) {
+    public static MatchEventDto createMockGoal(final TeamOption goalTeam) {
         final var matchEventDto = new MatchEventDto();
         matchEventDto.set("type", "goal");
         matchEventDto.set("team", goalTeam);
@@ -69,8 +70,8 @@ public class TestUtils {
     }
 
     public static <HT extends TeamInMatchDto, AT extends TeamInMatchDto> MatchDto<HT, AT> createMockMatchDto(final HT homeTeam, final AT awayTeam, final int homeTeamGoalsNumber, final int awayTeamGoalsNumber) {
-        final var goals = IntStream.range(0, homeTeamGoalsNumber).mapToObj(i -> createMockGoal(GoalMatchEvent.GoalTeam.HOME_TEAM)).collect(Collectors.toList());
-        goals.addAll(IntStream.range(0, awayTeamGoalsNumber).mapToObj(i -> createMockGoal(GoalMatchEvent.GoalTeam.AWAY_TEAM)).collect(Collectors.toList()));
+        final var goals = IntStream.range(0, homeTeamGoalsNumber).mapToObj(i -> createMockGoal(TeamOption.HOME_TEAM)).collect(Collectors.toList());
+        goals.addAll(IntStream.range(0, awayTeamGoalsNumber).mapToObj(i -> createMockGoal(TeamOption.AWAY_TEAM)).collect(Collectors.toList()));
         return MatchDto.builder()
                 .sport(Sport.FOOTBALL)
                 .type(SportType.ELEVEN_A_SIDE)

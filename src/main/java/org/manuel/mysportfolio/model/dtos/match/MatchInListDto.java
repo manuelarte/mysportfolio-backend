@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportType;
+import org.manuel.mysportfolio.model.entities.TeamOption;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -28,6 +29,8 @@ public class MatchInListDto {
 
     private final String homeTeam;
     private final String awayTeam;
+
+    private final TeamOption playedFor;
 
     @Min(0)
     private final int homeGoals;

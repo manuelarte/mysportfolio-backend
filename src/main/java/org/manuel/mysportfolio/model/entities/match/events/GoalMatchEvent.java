@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
+import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.geo.Point;
 
@@ -16,16 +17,12 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class GoalMatchEvent implements MatchEvent {
 
-    public enum GoalTeam {
-        HOME_TEAM, AWAY_TEAM
-    }
-
     @Id
     @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId id;
 
     @NotNull
-    private GoalTeam team;
+    private TeamOption team;
 
     private String playerId;
 

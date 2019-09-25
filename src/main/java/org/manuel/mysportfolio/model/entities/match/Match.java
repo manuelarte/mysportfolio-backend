@@ -3,6 +3,7 @@ package org.manuel.mysportfolio.model.entities.match;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportType;
+import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.Id;
@@ -24,13 +25,19 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
     @Id
     private ObjectId id;
 
+    @NotNull
     private Sport sport;
 
     private SportType type;
 
+    @NotNull
     private HomeTeamType homeTeam;
 
+    @NotNull
     private AwayTeamType awayTeam;
+
+    @NotNull
+    private TeamOption playedFor;
 
     private String address;
 

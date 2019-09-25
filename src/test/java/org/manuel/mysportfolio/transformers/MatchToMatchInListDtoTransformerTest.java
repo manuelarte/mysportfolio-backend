@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.dtos.match.MatchInListDto;
+import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
@@ -44,13 +45,16 @@ public class MatchToMatchInListDtoTransformerTest {
         match.setId(new ObjectId());
         match.setHomeTeam(TestUtils.createMockAnonymousTeam());
         match.setAwayTeam(TestUtils.createMockAnonymousTeam());
+        match.setPlayedFor(TeamOption.HOME_TEAM);
 
         final var expected = MatchInListDto.builder()
                 .id(match.getId().toString())
                 .homeTeam(match.getHomeTeam().getName())
                 .homeGoals(0)
                 .awayTeam(match.getAwayTeam().getName())
-                .awayGoals(0).build();
+                .awayGoals(0)
+                .playedFor(match.getPlayedFor())
+                .build();
         final var actual = matchToMatchInListDtoTransformer.apply(match);
         assertEquals(actual, expected);
     }
@@ -61,14 +65,17 @@ public class MatchToMatchInListDtoTransformerTest {
         match.setId(new ObjectId());
         match.setHomeTeam(TestUtils.createMockAnonymousTeam());
         match.setAwayTeam(TestUtils.createMockAnonymousTeam());
-        match.setEvents(Collections.singletonList(new GoalMatchEvent(null, GoalMatchEvent.GoalTeam.HOME_TEAM, null, null, null, null, null)));
+        match.setPlayedFor(TeamOption.AWAY_TEAM);
+        match.setEvents(Collections.singletonList(new GoalMatchEvent(null, TeamOption.HOME_TEAM, null, null, null, null, null)));
 
         final var expected = MatchInListDto.builder()
                 .id(match.getId().toString())
                 .homeTeam(match.getHomeTeam().getName())
                 .homeGoals(1)
                 .awayTeam(match.getAwayTeam().getName())
-                .awayGoals(0).build();
+                .awayGoals(0)
+                .playedFor(match.getPlayedFor())
+                .build();
         final var actual = matchToMatchInListDtoTransformer.apply(match);
         assertEquals(actual, expected);
     }
