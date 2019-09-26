@@ -31,6 +31,7 @@ public class MatchToMatchInListDtoTransformer implements Function<Match, MatchIn
                 // TODO
                 .homeGoals(getGoals(match.getEvents(), TeamOption.HOME_TEAM))
                 .awayGoals(getGoals(match.getEvents(), TeamOption.AWAY_TEAM))
+                .chips(match.getChips())
                 .build();
     }
 

@@ -8,6 +8,7 @@ import org.manuel.mysportfolio.model.entities.TeamOption;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -36,6 +37,8 @@ public class MatchInListDto {
     private final int homeGoals;
     @Min(0)
     private final int awayGoals;
+
+    private final Set<String> chips;
 
     @JsonPOJOBuilder(withPrefix = "")
     public static final class MatchInListDtoBuilder {

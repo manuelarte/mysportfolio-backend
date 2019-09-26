@@ -30,6 +30,8 @@ public class MatchToMatchDtoTransformer implements Function<Match, MatchDto> {
                 .startDate(match.getStartDate())
                 .endDate(match.getEndDate())
                 .events(eventsStream.collect(Collectors.toList()))
+                .description(match.getDescription())
+                .chips(match.getChips())
                 .createdBy(match.getCreatedBy())
                 .build();
     }

@@ -9,6 +9,7 @@ import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 
 @JsonDeserialize(builder = MatchDto.MatchDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -32,6 +33,10 @@ public class MatchDto<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMa
 
     private final Instant startDate;
     private final Instant endDate;
+
+    private final String description;
+
+    private final Set<String> chips;
 
     private final String createdBy;
 

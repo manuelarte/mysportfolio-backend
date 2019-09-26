@@ -50,6 +50,10 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
     @NotNull
     private String createdBy;
 
+    private String description;
+
+    private Set<String> chips;
+
     @SuppressWarnings("unused")
     private void setCreator(final String createdBy) {
         this.createdBy = createdBy;

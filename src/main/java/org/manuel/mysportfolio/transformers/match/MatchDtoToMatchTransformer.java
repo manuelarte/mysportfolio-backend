@@ -39,6 +39,9 @@ public class MatchDtoToMatchTransformer implements Function<MatchDto, Match> {
         match.setHomeTeam(teamInMatchDtoToTeamTypeTransformer.apply(matchDto.getHomeTeam()));
         match.setAwayTeam(teamInMatchDtoToTeamTypeTransformer.apply(matchDto.getAwayTeam()));
 
+        match.setDescription(matchDto.getDescription());
+        match.setChips(match.getChips());
+
         return match;
     }
 }
