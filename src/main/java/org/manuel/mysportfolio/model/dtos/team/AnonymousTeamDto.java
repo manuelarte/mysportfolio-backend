@@ -5,9 +5,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
-import java.net.URL;
+import javax.validation.constraints.Size;
 
 /**
  * Dto to be used if the home/away team is an anonymous team when user inputs a match
@@ -21,11 +20,11 @@ import java.net.URL;
 public class AnonymousTeamDto implements TeamInMatchDto {
 
     @NotEmpty
-    @Max(30)
+    @Size(max = 30)
     private final String name;
 
     @org.hibernate.validator.constraints.URL
-    private final URL imageLink;
+    private final String imageLink;
 
     @JsonPOJOBuilder(withPrefix = "")
     public static final class AnonymousTeamDtoBuilder {

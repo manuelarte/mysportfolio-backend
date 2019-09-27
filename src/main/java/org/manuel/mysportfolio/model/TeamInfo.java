@@ -6,5 +6,5 @@ public interface TeamInfo {
 
     String getName();
 
-    URL getImageLink();
+    String getImageLink();
 }

@@ -7,6 +7,7 @@ import org.manuel.mysportfolio.model.TeamInfo;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.net.URL;
 
 /**
@@ -14,7 +15,7 @@ import java.net.URL;
  * or
  * when the team info is displayed
  */
-@JsonDeserialize(builder = TeamDto.NewTeamDtoBuilder.class)
+@JsonDeserialize(builder = TeamDto.TeamDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @lombok.AllArgsConstructor
 @lombok.Value
@@ -24,14 +25,16 @@ public class TeamDto implements TeamInfo {
     private final String id;
 
     @NotEmpty
-    @Max(30)
+    @Size(max = 30)
     private final String name;
 
     @org.hibernate.validator.constraints.URL
-    private final URL imageLink;
+    private final String imageLink;
+
+    private final String createdBy;
 
     @JsonPOJOBuilder(withPrefix = "")
-    public static final class NewTeamDtoBuilder {
+    public static final class TeamDtoBuilder {
 
     }
 }
