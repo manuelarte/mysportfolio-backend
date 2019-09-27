@@ -10,9 +10,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -41,6 +41,8 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
 
     private String address;
 
+    @NotNull
+    @Past
     private Instant startDate;
     private Instant endDate;
 

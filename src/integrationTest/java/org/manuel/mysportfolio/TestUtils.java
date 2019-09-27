@@ -14,10 +14,10 @@ import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
-import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
 import org.manuel.mysportfolio.model.entities.team.Team;
 
-import java.util.Set;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -78,6 +78,7 @@ public class TestUtils {
                 .playedFor(TeamOption.HOME_TEAM)
                 .homeTeam(homeTeam)
                 .awayTeam(awayTeam)
+                .startDate(Instant.now().minus(1, ChronoUnit.DAYS))
                 .events(goals)
                 .build();
     }
