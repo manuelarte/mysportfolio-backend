@@ -14,7 +14,7 @@ import java.net.URL;
  */
 @JsonDeserialize(builder = AnonymousTeamDto.AnonymousTeamDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonTypeName("anonnymous")
+@JsonTypeName("anonymous")
 @lombok.AllArgsConstructor
 @lombok.Value
 @lombok.Builder(toBuilder = true)
