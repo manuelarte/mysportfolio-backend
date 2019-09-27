@@ -8,7 +8,6 @@ import org.manuel.mysportfolio.transformers.match.events.MatchEventDtoToMatchEve
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -35,6 +34,8 @@ public class MatchDtoToMatchTransformer implements Function<MatchDto, Match> {
         final Stream<MatchEvent> stream = Optional.ofNullable(matchDto.getEvents()).orElse(new ArrayList<>())
                 .stream().map(matchEventDtoToMatchEventTransformer);
         match.setEvents(stream.collect(Collectors.toList()));
+
+        match.setPlayedFor(matchDto.getPlayedFor());
 
         match.setHomeTeam(teamInMatchDtoToTeamTypeTransformer.apply(matchDto.getHomeTeam()));
         match.setAwayTeam(teamInMatchDtoToTeamTypeTransformer.apply(matchDto.getAwayTeam()));

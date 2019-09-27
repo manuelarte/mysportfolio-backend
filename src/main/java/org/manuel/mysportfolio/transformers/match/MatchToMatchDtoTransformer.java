@@ -24,6 +24,7 @@ public class MatchToMatchDtoTransformer implements Function<Match, MatchDto> {
                 .id(match.getId().toString())
                 .sport(match.getSport())
                 .type(match.getType())
+                .playedFor(match.getPlayedFor())
                 .homeTeam(teamTypeToTeamInMatchDtoTransformer.apply(match.getHomeTeam()))
                 .awayTeam(teamTypeToTeamInMatchDtoTransformer.apply(match.getAwayTeam()))
                 .address(match.getAddress())

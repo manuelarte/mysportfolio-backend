@@ -75,6 +75,7 @@ public class TestUtils {
         return MatchDto.builder()
                 .sport(Sport.FOOTBALL)
                 .type(SportType.ELEVEN_A_SIDE)
+                .playedFor(TeamOption.HOME_TEAM)
                 .homeTeam(homeTeam)
                 .awayTeam(awayTeam)
                 .events(goals)

@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/matches")
 @AllArgsConstructor
@@ -23,7 +25,7 @@ public class MatchCommandController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MatchDto<TeamInMatchDto, TeamInMatchDto>> saveMatch(
-            @RequestBody final MatchDto<TeamInMatchDto, TeamInMatchDto> matchDto) {
+            @Valid @RequestBody final MatchDto<TeamInMatchDto, TeamInMatchDto> matchDto) {
         final var saved = matchCommandService.save(matchDtoToMatchTransformer.apply(matchDto));
 
         final var location = ServletUriComponentsBuilder

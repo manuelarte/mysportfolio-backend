@@ -6,7 +6,10 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportType;
 import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
+import org.manuel.mysportfolio.model.entities.TeamOption;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.Instant;
 import java.util.List;
 import java.util.Set;
@@ -20,17 +23,25 @@ public class MatchDto<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMa
 
     private final String id;
 
+    @NotNull
     private final Sport sport;
 
     private final SportType type;
 
+    @NotNull
+    private final TeamOption playedFor;
+
+    @NotNull
     private final HomeTeam homeTeam;
+
+    @NotNull
     private final AwayTeam awayTeam;
 
     private final List<MatchEventDto> events;
 
     private final String address;
 
+    @Past
     private final Instant startDate;
     private final Instant endDate;
 
