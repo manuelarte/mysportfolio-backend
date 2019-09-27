@@ -9,6 +9,8 @@ import org.manuel.mysportfolio.model.entities.TeamOption;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
 
@@ -29,6 +31,10 @@ public class MatchInListDto {
     private final Sport sport;
 
     private final SportType type;
+
+    @NotNull
+    @Past
+    private final Instant startDate;
 
     @NotNull
     private final String homeTeam;

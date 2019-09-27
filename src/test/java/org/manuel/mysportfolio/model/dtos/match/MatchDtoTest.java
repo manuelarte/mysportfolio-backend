@@ -9,8 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.config.AppConfig;
 import org.manuel.mysportfolio.model.dtos.team.AnonymousTeamDto;
 import org.manuel.mysportfolio.model.dtos.team.RegisteredTeamDto;
+import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,15 +29,18 @@ public class MatchDtoTest {
 
     @Test
     public void testSerializeMatchWithTwoAnonymousTeams() throws JsonProcessingException {
+        final var startDate = Instant.now().minus(1, ChronoUnit.DAYS);
         final MatchDto<AnonymousTeamDto, AnonymousTeamDto> matchDto =
                 MatchDto.<AnonymousTeamDto, AnonymousTeamDto>builder()
-                .id(UUID.randomUUID().toString())
-                .homeTeam(createMockAnonymousTeamDto())
-                .awayTeam(createMockAnonymousTeamDto())
-                .createdBy(UUID.randomUUID().toString())
-                .build();
+                        .id(UUID.randomUUID().toString())
+                        .homeTeam(createMockAnonymousTeamDto())
+                        .startDate(startDate)
+                        .awayTeam(createMockAnonymousTeamDto())
+                        .createdBy(UUID.randomUUID().toString())
+                        .build();
         JSONObject json = new JSONObject(OBJECT_MAPPER.writeValueAsString(matchDto));
         assertEquals(json.getString("id"), matchDto.getId());
+        assertEquals(json.getString("startDate"), matchDto.getStartDate().toString());
         assertEquals(json.getJSONObject("homeTeam").getString("name"), matchDto.getHomeTeam().getName());
         assertFalse(json.getJSONObject("homeTeam").has("id"));
         assertEquals(json.getJSONObject("awayTeam").getString("name"), matchDto.getAwayTeam().getName());

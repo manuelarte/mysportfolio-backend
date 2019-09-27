@@ -11,6 +11,7 @@ import org.manuel.mysportfolio.transformers.match.MatchToMatchDtoTransformer;
 import org.manuel.mysportfolio.transformers.match.MatchToMatchInListDtoTransformer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +29,8 @@ public class MatchQueryController {
     private final MatchToMatchInListDtoTransformer matchToMatchInListDtoTransformer;
     private final MatchToMatchDtoTransformer matchToMatchDtoTransformer;
 
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Page<MatchInListDto>> findByPage(@PageableDefault final Pageable pageable) {
+    public ResponseEntity<Page<MatchInListDto>> findByPage(@PageableDefault(sort = "startDate", direction = Sort.Direction.DESC) final Pageable pageable) {
         return ResponseEntity.ok(matchQueryService.findAll(pageable).map(matchToMatchInListDtoTransformer));
     }
 

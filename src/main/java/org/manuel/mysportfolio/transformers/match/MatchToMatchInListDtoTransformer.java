@@ -25,10 +25,10 @@ public class MatchToMatchInListDtoTransformer implements Function<Match, MatchIn
                 .id(match.getId().toString())
                 .sport(match.getSport())
                 .type(match.getType())
+                .startDate(match.getStartDate())
                 .homeTeam(getTeamName(match.getHomeTeam()))
                 .awayTeam(getTeamName(match.getAwayTeam()))
                 .playedFor(match.getPlayedFor())
-                // TODO
                 .homeGoals(getGoals(match.getEvents(), TeamOption.HOME_TEAM))
                 .awayGoals(getGoals(match.getEvents(), TeamOption.AWAY_TEAM))
                 .chips(match.getChips())
