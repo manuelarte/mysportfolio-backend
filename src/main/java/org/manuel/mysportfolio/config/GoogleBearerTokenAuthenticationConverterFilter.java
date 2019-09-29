@@ -5,16 +5,18 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Strings;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,31 +25,31 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Component
 @Profile("prod")
-public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTokenAuthenticationConverterFilter {
+public class GoogleBearerTokenAuthenticationConverterFilter implements Filter {
 
-    private final String clientId;
+    private final GoogleIdTokenVerifier verifier;
 
     public GoogleBearerTokenAuthenticationConverterFilter(@Value("${authentication.client-id}") final String clientId) {
-        this.clientId = clientId;
+        final var transport = new NetHttpTransport();
+        final var jacksonFactory = new JacksonFactory();
+        verifier = new GoogleIdTokenVerifier.Builder(transport, jacksonFactory)
+                // Specify the CLIENT_ID of the app that accesses the backend:
+                .setAudience(Collections.singletonList(clientId))
+                .setAcceptableTimeSkewSeconds(10000000)
+                .build();
     }
 
     @Override
-    public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) {
+    public void init(FilterConfig filterConfig) throws ServletException {
 
-        final var transport = new NetHttpTransport();
-        final var jacksonFactory = new JacksonFactory();
+    }
 
-        final var verifier = new GoogleIdTokenVerifier.Builder(transport, jacksonFactory)
-                // Specify the CLIENT_ID of the app that accesses the backend:
-                .setAudience(Collections.singletonList(clientId))
-                // Or, if multiple clients access the backend:
-                //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
-                .setAcceptableTimeSkewSeconds(10000000)
-                .build();
-
-        final var authorizationHeaderValue = request.getHeader(AUTHORIZATION);
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        final var httpRequest = (HttpServletRequest) request;
+        final var authorizationHeaderValue = httpRequest.getHeader(AUTHORIZATION);
         if (!Strings.isNullOrEmpty(authorizationHeaderValue) && authorizationHeaderValue.contains("Bearer ")) {
-            final var idTokenString = request.getHeader(AUTHORIZATION).substring(7);
+            final var idTokenString = httpRequest.getHeader(AUTHORIZATION).substring(7);
             try {
                 final var idToken = verifier.verify(idTokenString);
                 if (idToken != null) {
@@ -55,7 +57,6 @@ public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTok
 
                     // Print user identifier
                     final var userId = payload.getSubject();
-                    System.out.println("User ID: " + userId);
 
                     // Get profile information from payload
                     final var email = payload.getEmail();
@@ -81,12 +82,9 @@ public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTok
                     attributes.put("picture", pictureUrl);
 
                     final var principal = new DefaultOAuth2User(new HashSet<>(authorities), attributes, "name");
-
                     final var oAuth2AuthenticationToken =
-                        new OAuth2AuthenticationToken(principal, authorities, "clientRegistrationId");
-
+                            new OAuth2AuthenticationToken(principal, authorities, "clientRegistrationId");
                     SecurityContextHolder.getContext().setAuthentication(oAuth2AuthenticationToken);
-
                 } else {
                     // TODO log that they are trying to access with invalid token
                     System.out.println("Invalid ID token.");
@@ -97,8 +95,11 @@ public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTok
                 System.out.println("Error when validating token.");
             }
         }
-
-        return true;
+        chain.doFilter(request, response);
     }
 
+    @Override
+    public void destroy() {
+
+    }
 }

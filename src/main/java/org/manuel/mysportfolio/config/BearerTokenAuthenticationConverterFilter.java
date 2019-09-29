@@ -1,6 +1,6 @@
 package org.manuel.mysportfolio.config;
 
-import org.springframework.web.servlet.HandlerInterceptor;
+import javax.servlet.Filter;
 
-public interface BearerTokenAuthenticationConverterFilter extends HandlerInterceptor {
+public interface BearerTokenAuthenticationConverterFilter extends Filter {
 }

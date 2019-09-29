@@ -7,8 +7,10 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,7 +22,12 @@ import java.util.Random;
 public class DevBearerTokenAuthenticationConverterFilter implements BearerTokenAuthenticationConverterFilter {
 
     @Override
-    public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) {
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         final var authorities =
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
@@ -43,7 +50,12 @@ public class DevBearerTokenAuthenticationConverterFilter implements BearerTokenA
                 new OAuth2AuthenticationToken(principal, authorities, "clientRegistrationId");
 
         SecurityContextHolder.getContext().setAuthentication(oAuth2AuthenticationToken);
-        return true;
+        chain.doFilter(request, response);
+    }
+
+    @Override
+    public void destroy() {
+
     }
 
 }
