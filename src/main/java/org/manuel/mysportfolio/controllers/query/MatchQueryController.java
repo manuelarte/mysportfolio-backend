@@ -2,6 +2,7 @@ package org.manuel.mysportfolio.controllers.query;
 
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
+import org.manuel.mysportfolio.config.UserIdProviderBySecurity;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.match.MatchInListDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
@@ -28,17 +29,24 @@ public class MatchQueryController {
     private final MatchQueryService matchQueryService;
     private final MatchToMatchInListDtoTransformer matchToMatchInListDtoTransformer;
     private final MatchToMatchDtoTransformer matchToMatchDtoTransformer;
+    private final UserIdProviderBySecurity userIdProviderBySecurity;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Page<MatchInListDto>> findByPage(@PageableDefault(sort = "startDate", direction = Sort.Direction.DESC) final Pageable pageable) {
-        return ResponseEntity.ok(matchQueryService.findAll(pageable).map(matchToMatchInListDtoTransformer));
+    public ResponseEntity<Page<MatchInListDto>> findByPage(
+            @PageableDefault(sort = "startDate", direction = Sort.Direction.DESC) final Pageable pageable) {
+        return ResponseEntity.ok(matchQueryService.findAllCreatedBy(pageable, getUserId()).map(matchToMatchInListDtoTransformer));
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MatchDto<TeamInMatchDto, TeamInMatchDto>> findOne(@PathVariable final String id) {
+        // TODO, fix that if the user can't see the match
         final Match match = matchQueryService.findOne(new ObjectId(id)).orElseThrow(() ->
                 new IllegalArgumentException(String.format("Match with id %s not found", id)));
         return ResponseEntity.ok(matchToMatchDtoTransformer.apply(match));
+    }
+
+    private String getUserId() {
+        return userIdProviderBySecurity.getUserId();
     }
 
 }

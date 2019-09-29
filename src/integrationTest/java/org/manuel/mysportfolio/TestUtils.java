@@ -8,6 +8,7 @@ import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.match.MatchEventDto;
 import org.manuel.mysportfolio.model.dtos.team.AnonymousTeamDto;
 import org.manuel.mysportfolio.model.dtos.team.RegisteredTeamDto;
+import org.manuel.mysportfolio.model.dtos.team.TeamDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
@@ -22,6 +23,13 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class TestUtils {
+
+    public static TeamDto createMockTeamDto() {
+        return TeamDto.builder()
+                .name(RandomStringUtils.randomAlphabetic(5))
+                .imageLink(null)
+                .build();
+    }
 
     public static Team createMockTeam() {
         final var team = new Team();
@@ -53,12 +61,13 @@ public class TestUtils {
                 .build();
     }
 
-    public static Match createMockMatch(final TeamType homeTeam, final TeamType awayTeam) {
+    public static Match createMockMatch(final TeamType homeTeam, final TeamType awayTeam, final String createdBy) {
         final var match = new Match();
         match.setSport(Sport.FOOTBALL);
         match.setType(SportType.ELEVEN_A_SIDE);
         match.setHomeTeam(homeTeam);
         match.setAwayTeam(awayTeam);
+        match.setCreatedBy(createdBy);
         return match;
     }
 

@@ -1,13 +1,10 @@
 package org.manuel.mysportfolio.controllers.query;
 
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.manuel.mysportfolio.TestUtils;
-import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
-import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
 import org.manuel.mysportfolio.repositories.MatchRepository;
 import org.manuel.mysportfolio.repositories.TeamRepository;
@@ -58,8 +55,10 @@ public class MatchQueryControllerTest {
         final var registeredTeam = new RegisteredTeam();
         registeredTeam.setTeamId(teamSaved.getId());
 
-        matchRepository.save(TestUtils.createMockMatch(registeredTeam, TestUtils.createMockAnonymousTeam()));
-        matchRepository.save(TestUtils.createMockMatch(TestUtils.createMockAnonymousTeam(), registeredTeam));
+        final String createdBy = "123456789";
+
+        matchRepository.save(TestUtils.createMockMatch(registeredTeam, TestUtils.createMockAnonymousTeam(), createdBy));
+        matchRepository.save(TestUtils.createMockMatch(TestUtils.createMockAnonymousTeam(), registeredTeam, createdBy));
 
         mvc.perform(get("/api/v1/matches").contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())

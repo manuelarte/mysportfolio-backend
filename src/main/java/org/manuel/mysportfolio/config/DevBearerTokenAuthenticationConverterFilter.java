@@ -1,34 +1,33 @@
 package org.manuel.mysportfolio.config;
 
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Random;
 
 @Component
-@Profile("dev")
+@Profile("!prod")
 @lombok.AllArgsConstructor
-public class DevAuthenticationProvider implements AuthenticationProvider {
-
-    private final Random random = new Random();
+public class DevBearerTokenAuthenticationConverterFilter implements BearerTokenAuthenticationConverterFilter {
 
     @Override
-    public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
+    public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) {
 
         final var authorities =
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
 
         // attributes
         final var attributes = new HashMap<String, Object>();
-        attributes.put("sub", random.nextLong());
+        attributes.put("sub", 123456789);
         attributes.put("email_verified", true);
         attributes.put("iss", "https://accounts.google.com");
         attributes.put("given_name", "Test");
@@ -43,11 +42,8 @@ public class DevAuthenticationProvider implements AuthenticationProvider {
         final var oAuth2AuthenticationToken =
                 new OAuth2AuthenticationToken(principal, authorities, "clientRegistrationId");
 
-        return oAuth2AuthenticationToken;
-    }
-
-    @Override
-    public boolean supports(Class<?> authentication) {
+        SecurityContextHolder.getContext().setAuthentication(oAuth2AuthenticationToken);
         return true;
     }
+
 }

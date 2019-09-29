@@ -9,23 +9,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
-@Profile("dev")
 @lombok.AllArgsConstructor
-public class DevSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    private final DevAuthenticationProvider authProvider;
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeRequests().anyRequest().authenticated().and()
-                .httpBasic();
-    }
-
-    @Override
-    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authProvider);
+        http.csrf().disable()
+                .authorizeRequests().anyRequest().authenticated();
     }
 
 }

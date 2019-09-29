@@ -23,8 +23,8 @@ public class MatchQueryServiceImpl implements MatchQueryService {
     }
 
     @Override
-    public Page<Match> findAll(Pageable pageable) {
-        return matchRepository.findAll(pageable);
+    public Page<Match> findAllCreatedBy(final Pageable pageable, final String userId) {
+        return matchRepository.findAllByCreatedByIs(pageable, userId);
     }
 
 }

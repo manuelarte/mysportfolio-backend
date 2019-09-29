@@ -11,6 +11,6 @@ public interface MatchQueryService {
 
     Optional<Match> findOne(ObjectId id);
 
-    Page<Match> findAll(Pageable pageable);
+    Page<Match> findAllCreatedBy(Pageable pageable, String createdBy);
 
 }

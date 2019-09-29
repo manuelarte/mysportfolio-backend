@@ -1,4 +1,6 @@
 logging.level.org.springframework: DEBUG
+authentication:
+  client-id: ${CLIENT_ID}
 spring:
   data:
     mongodb:

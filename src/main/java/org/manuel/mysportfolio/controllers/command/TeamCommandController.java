@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 
@@ -26,7 +27,12 @@ public class TeamCommandController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<TeamDto> saveTeam(@Valid @RequestBody final TeamDto teamDto) {
         final var saved = teamCommandService.save(teamDtoToTeamTransformer.apply(teamDto));
-        return ResponseEntity.ok(teamToTeamDtoTransformer.apply(saved));
+        final var location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(saved.getId()).toUri();
+        return ResponseEntity.created(location).body(teamToTeamDtoTransformer.apply(saved));
+
+
     }
 
 }
