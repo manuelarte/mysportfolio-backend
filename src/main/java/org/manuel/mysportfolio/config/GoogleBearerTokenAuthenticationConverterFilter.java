@@ -25,7 +25,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Component
 @Profile("prod")
-public class GoogleBearerTokenAuthenticationConverterFilter implements Filter {
+public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTokenAuthenticationConverterFilter {
 
     private final GoogleIdTokenVerifier verifier;
 
