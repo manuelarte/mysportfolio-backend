@@ -15,9 +15,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Performance {
 
     @Digits(integer = 10, fraction = 2)
-    @Size(max = 10, min = 0)
+    @Size(max = 10)
     @NotNull
     private BigDecimal performance;
+
     private String description;
 
 }

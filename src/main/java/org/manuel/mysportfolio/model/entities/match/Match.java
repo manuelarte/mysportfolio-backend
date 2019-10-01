@@ -5,8 +5,7 @@ import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportType;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
@@ -14,6 +13,7 @@ import javax.validation.constraints.Past;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Document(collection = "matches")
@@ -37,7 +37,7 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
     private AwayTeamType awayTeam;
 
     @NotNull
-    private TeamOption playedFor;
+    private Map<String, TeamOption> playedFor;
 
     private String address;
 
@@ -51,6 +51,16 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
     @CreatedBy
     @NotNull
     private String createdBy;
+
+    @CreatedDate
+    @NotNull
+    private Instant createdDate;
+
+    @LastModifiedBy
+    private String lastModifiedBy;
+
+    @LastModifiedDate
+    private Instant lastModifiedDate;
 
     private String description;
 

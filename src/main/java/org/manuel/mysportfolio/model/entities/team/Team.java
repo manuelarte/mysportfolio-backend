@@ -3,12 +3,14 @@ package org.manuel.mysportfolio.model.entities.team;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.TeamInfo;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.Instant;
 
 @Document(collection = "teams")
 @lombok.Data
@@ -32,6 +34,10 @@ public class Team implements TeamInfo {
     @CreatedBy
     @NotNull
     private String createdBy;
+
+    @CreatedDate
+    @NotNull
+    private Instant createdDate;
 
     @SuppressWarnings("unused")
     private void setCreator(final String createdBy) {

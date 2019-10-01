@@ -11,6 +11,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.Instant;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -43,7 +44,7 @@ public class MatchInListDto {
     private final String awayTeam;
 
     @NotNull
-    private final TeamOption playedFor;
+    private final Map<String, TeamOption> playedFor;
 
     @Min(0)
     private final int homeGoals;

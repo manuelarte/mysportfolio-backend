@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @JsonDeserialize(builder = MatchDto.MatchDtoBuilder.class)
@@ -29,7 +30,7 @@ public class MatchDto<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMa
     private final SportType type;
 
     @NotNull
-    private final TeamOption playedFor;
+    private final Map<String, TeamOption> playedFor;
 
     @NotNull
     private final HomeTeam homeTeam;
