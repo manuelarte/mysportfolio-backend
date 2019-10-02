@@ -24,6 +24,8 @@ public class MatchDto<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMa
 
     private final String id;
 
+    private final Long version;
+
     @NotNull
     private final Sport sport;
 

@@ -19,6 +19,8 @@ import org.manuel.mysportfolio.model.entities.team.Team;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -78,13 +80,13 @@ public class TestUtils {
         return matchEventDto;
     }
 
-    public static <HT extends TeamInMatchDto, AT extends TeamInMatchDto> MatchDto<HT, AT> createMockMatchDto(final HT homeTeam, final AT awayTeam, final int homeTeamGoalsNumber, final int awayTeamGoalsNumber) {
+    public static <HT extends TeamInMatchDto, AT extends TeamInMatchDto> MatchDto<HT, AT> createMockMatchDto(final HT homeTeam, final AT awayTeam, final int homeTeamGoalsNumber, final int awayTeamGoalsNumber, final Map<String, TeamOption> playedFor) {
         final var goals = IntStream.range(0, homeTeamGoalsNumber).mapToObj(i -> createMockGoal(TeamOption.HOME_TEAM)).collect(Collectors.toList());
         goals.addAll(IntStream.range(0, awayTeamGoalsNumber).mapToObj(i -> createMockGoal(TeamOption.AWAY_TEAM)).collect(Collectors.toList()));
         return MatchDto.builder()
                 .sport(Sport.FOOTBALL)
                 .type(SportType.ELEVEN_A_SIDE)
-                .playedFor(TeamOption.HOME_TEAM)
+                .playedFor(playedFor)
                 .homeTeam(homeTeam)
                 .awayTeam(awayTeam)
                 .startDate(Instant.now().minus(1, ChronoUnit.DAYS))

@@ -25,6 +25,9 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
     @Id
     private ObjectId id;
 
+    @Version
+    private Long version;
+
     @NotNull
     private Sport sport;
 

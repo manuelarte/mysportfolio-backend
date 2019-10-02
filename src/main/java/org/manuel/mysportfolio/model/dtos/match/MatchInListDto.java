@@ -29,6 +29,9 @@ public class MatchInListDto {
     private final String id;
 
     @NotNull
+    private final Long version;
+
+    @NotNull
     private final Sport sport;
 
     private final SportType type;

@@ -9,7 +9,10 @@ import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)
 @DataMongoTest
@@ -36,6 +39,20 @@ public class MatchRepositoryTest {
         match.setAwayTeam(TestUtils.createMockAnonymousTeam());
 
         matchRepository.save(match);
+    }
+
+    @DisplayName("update match with different lock version")
+    @Test
+    public void testUpdateMatchWithDifferentVersion() {
+        final var match = new Match<RegisteredTeam, AnonymousTeam>();
+        match.setHomeTeam(TestUtils.createMockRegisteredTeam());
+        match.setAwayTeam(TestUtils.createMockAnonymousTeam());
+
+        final var saved = matchRepository.save(match);
+        saved.setVersion(5L);
+        assertThrows(OptimisticLockingFailureException.class, () -> {
+            matchRepository.save(saved);
+        });
     }
 
 

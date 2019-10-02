@@ -22,6 +22,7 @@ public class MatchToMatchDtoTransformer implements Function<Match, MatchDto> {
         final Stream<MatchDto> eventsStream = match.getEvents().stream().map(matchEventToMatchEventDtoTransformer);
         return match == null ? null : MatchDto.builder()
                 .id(match.getId().toString())
+                .version(match.getVersion())
                 .sport(match.getSport())
                 .type(match.getType())
                 .playedFor(match.getPlayedFor())
