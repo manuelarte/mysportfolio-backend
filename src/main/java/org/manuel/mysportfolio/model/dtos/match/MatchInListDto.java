@@ -28,6 +28,8 @@ public class MatchInListDto {
     @NotNull
     private final String id;
 
+    private final String competitionId;
+
     @NotNull
     private final Long version;
 

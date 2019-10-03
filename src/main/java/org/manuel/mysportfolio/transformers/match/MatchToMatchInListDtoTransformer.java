@@ -23,6 +23,7 @@ public class MatchToMatchInListDtoTransformer implements Function<Match, MatchIn
     public MatchInListDto apply(final Match match) {
         return match == null ? null : MatchInListDto.builder()
                 .id(match.getId().toString())
+                .competitionId(Optional.ofNullable(match.getCompetitionId()).map(c -> c.toString()).orElse(null))
                 .version(match.getVersion())
                 .sport(match.getSport())
                 .type(match.getType())

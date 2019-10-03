@@ -24,6 +24,7 @@ public class MatchDtoToMatchTransformer implements Function<MatchDto, Match> {
     public Match apply(final MatchDto matchDto) {
         final var match = new Match();
         match.setId(Optional.ofNullable(matchDto.getId()).map(ObjectId::new).orElse(null));
+        match.setCompetitionId(Optional.ofNullable(matchDto.getCompetitionId()).map(ObjectId::new).orElse(null));
         match.setVersion(matchDto.getVersion());
         match.setSport(matchDto.getSport());
         match.setType(matchDto.getType());

@@ -6,6 +6,8 @@ import org.manuel.mysportfolio.transformers.match.events.MatchEventToMatchEventD
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -22,6 +24,7 @@ public class MatchToMatchDtoTransformer implements Function<Match, MatchDto> {
         final Stream<MatchDto> eventsStream = match.getEvents().stream().map(matchEventToMatchEventDtoTransformer);
         return match == null ? null : MatchDto.builder()
                 .id(match.getId().toString())
+                .competitionId(Optional.ofNullable(match.getCompetitionId()).map(c -> c.toString()).orElse(null))
                 .version(match.getVersion())
                 .sport(match.getSport())
                 .type(match.getType())

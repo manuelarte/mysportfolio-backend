@@ -40,7 +40,7 @@ public class MatchQueryController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MatchDto<TeamInMatchDto, TeamInMatchDto>> findOne(@PathVariable final String id) {
         // TODO, fix that if the user can't see the match
-        final Match match = matchQueryService.findOne(new ObjectId(id)).orElseThrow(() ->
+        final var match = matchQueryService.findOne(new ObjectId(id)).orElseThrow(() ->
                 new IllegalArgumentException(String.format("Match with id %s not found", id)));
         return ResponseEntity.ok(matchToMatchDtoTransformer.apply(match));
     }

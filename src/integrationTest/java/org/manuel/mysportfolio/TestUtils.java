@@ -19,7 +19,6 @@ import org.manuel.mysportfolio.model.entities.team.Team;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -69,7 +68,7 @@ public class TestUtils {
         match.setType(SportType.ELEVEN_A_SIDE);
         match.setHomeTeam(homeTeam);
         match.setAwayTeam(awayTeam);
-        match.setCreatedBy(createdBy);
+        // match.setCreatedBy(createdBy);
         return match;
     }
 
