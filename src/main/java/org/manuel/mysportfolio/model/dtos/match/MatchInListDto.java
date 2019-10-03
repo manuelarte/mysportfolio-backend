@@ -1,12 +1,15 @@
 package org.manuel.mysportfolio.model.dtos.match;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.apache.logging.log4j.util.Strings;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportType;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -61,5 +64,11 @@ public class MatchInListDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static final class MatchInListDtoBuilder {
 
+    }
+
+    @AssertTrue
+    @JsonIgnore
+    private boolean isOneTeamExist() {
+        return Strings.isNotEmpty(homeTeam) || Strings.isNotEmpty(awayTeam);
     }
 }

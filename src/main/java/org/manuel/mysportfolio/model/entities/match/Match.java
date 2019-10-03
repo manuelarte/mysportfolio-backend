@@ -8,13 +8,11 @@ import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
 import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Document(collection = "matches")
 @lombok.Data
@@ -91,5 +89,9 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    @AssertTrue
+    private boolean isOneTeamExist() {
+        return Objects.nonNull(homeTeam) || Objects.nonNull(awayTeam);
+    }
 
 }

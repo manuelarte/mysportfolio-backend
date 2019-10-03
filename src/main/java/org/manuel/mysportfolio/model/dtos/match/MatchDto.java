@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.model.dtos.match;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
@@ -8,11 +9,13 @@ import org.manuel.mysportfolio.model.SportType;
 import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 @JsonDeserialize(builder = MatchDto.MatchDtoBuilder.class)
@@ -36,10 +39,8 @@ public class MatchDto<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMa
     @NotNull
     private final Map<String, TeamOption> playedFor;
 
-    @NotNull
     private final HomeTeam homeTeam;
 
-    @NotNull
     private final AwayTeam awayTeam;
 
     private final List<MatchEventDto> events;
@@ -63,6 +64,12 @@ public class MatchDto<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMa
 
     @JsonPOJOBuilder(withPrefix = "")
     public static final class MatchDtoBuilder<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMatchDto> {
+    }
+
+    @AssertTrue
+    @JsonIgnore
+    private boolean isOneTeamExist() {
+        return Objects.nonNull(homeTeam) || Objects.nonNull(awayTeam);
     }
 
 }
