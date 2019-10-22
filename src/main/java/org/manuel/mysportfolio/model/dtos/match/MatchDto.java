@@ -68,6 +68,7 @@ public class MatchDto<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMa
 
     @AssertTrue
     @JsonIgnore
+    @SuppressWarnings("unused")
     private boolean isOneTeamExist() {
         return Objects.nonNull(homeTeam) || Objects.nonNull(awayTeam);
     }
