@@ -11,7 +11,7 @@ public class ITConfiguration {
     @Bean
     @Primary
     public UserIdProvider userIdProvider() {
-        return () -> "123456789";
+        return () -> "integrationTest";
     }
 
 }

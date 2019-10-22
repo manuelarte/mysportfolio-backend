@@ -1,12 +1,8 @@
 package org.manuel.mysportfolio.controllers.query;
 
-import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.config.UserIdProviderBySecurity;
+import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.model.dtos.CompetitionDto;
-import org.manuel.mysportfolio.model.dtos.match.MatchDto;
-import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
-import org.manuel.mysportfolio.model.entities.Competition;
 import org.manuel.mysportfolio.services.query.CompetitionQueryService;
 import org.manuel.mysportfolio.transformers.CompetitionToCompetitionDtoTransformer;
 import org.springframework.data.domain.Page;
@@ -21,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/competitions")
-@AllArgsConstructor
+@lombok.AllArgsConstructor
 public class CompetitionQueryController {
 
     private final CompetitionQueryService competitionQueryService;
     private final CompetitionToCompetitionDtoTransformer competitionToCompetitionDtoTransformer;
-    private final UserIdProviderBySecurity userIdProviderBySecurity;
+    private final UserIdProvider userIdProvider;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<CompetitionDto>> findByPage(
@@ -43,7 +39,7 @@ public class CompetitionQueryController {
     }
 
     private String getUserId() {
-        return userIdProviderBySecurity.getUserId();
+        return userIdProvider.getUserId();
     }
 
 }
