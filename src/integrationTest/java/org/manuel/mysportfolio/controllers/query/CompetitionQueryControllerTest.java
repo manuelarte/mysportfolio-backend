@@ -19,6 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static java.time.DayOfWeek.MONDAY;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.manuel.mysportfolio.model.Sport.FOOTBALL;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -51,7 +52,7 @@ public class CompetitionQueryControllerTest {
     @Test
     public void testGetCompetitions() throws Exception {
         final var competitionSaved = competitionRepository.save(
-                new Competition(null, null, "KNVB 4th Klass", MONDAY, null, null, null));
+                new Competition(null, null, "KNVB 4th Klass", FOOTBALL, MONDAY, null, null, null));
 
         mvc.perform(get("/api/v1/competitions").contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())

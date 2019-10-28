@@ -2,11 +2,7 @@ package org.manuel.mysportfolio.model.dtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Version;
+import org.manuel.mysportfolio.model.Sport;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,6 +22,9 @@ public class CompetitionDto {
 
     @NotNull
     private final String name;
+
+    @NotNull
+    private final Sport sport;
 
     private final DayOfWeek defaultMatchDay;
 

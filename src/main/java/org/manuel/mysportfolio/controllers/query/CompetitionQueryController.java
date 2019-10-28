@@ -2,6 +2,7 @@ package org.manuel.mysportfolio.controllers.query;
 
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
+import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.dtos.CompetitionDto;
 import org.manuel.mysportfolio.services.query.CompetitionQueryService;
 import org.manuel.mysportfolio.transformers.CompetitionToCompetitionDtoTransformer;
@@ -10,10 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/competitions")
@@ -26,7 +24,7 @@ public class CompetitionQueryController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<CompetitionDto>> findByPage(
-            @PageableDefault final Pageable pageable) {
+            @PageableDefault final Pageable pageable, @RequestParam(required = false, value = "sport") final Sport sport) {
         return ResponseEntity.ok(competitionQueryService.findAllCreatedBy(pageable, getUserId()).map(competitionToCompetitionDtoTransformer));
     }
 

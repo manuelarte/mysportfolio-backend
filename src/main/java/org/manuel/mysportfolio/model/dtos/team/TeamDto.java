@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.manuel.mysportfolio.model.TeamInfo;
+import org.manuel.mysportfolio.validation.NewEntity;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
@@ -24,7 +25,7 @@ public class TeamDto implements TeamInfo {
 
     private final String id;
 
-    @NotEmpty
+    @NotEmpty(groups = NewEntity.class)
     @Size(max = 30)
     private final String name;
 

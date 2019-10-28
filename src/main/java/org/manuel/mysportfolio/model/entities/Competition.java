@@ -33,6 +33,9 @@ public class Competition {
     @NotNull
     private String name;
 
+    @NotNull
+    private Sport sport;
+
     private DayOfWeek defaultMatchDay;
 
     @Size(max = 200)

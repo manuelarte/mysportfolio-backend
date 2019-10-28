@@ -16,6 +16,7 @@ import java.time.Instant;
 @lombok.Data
 @lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
+@lombok.Builder(toBuilder = true)
 public class Team implements TeamInfo {
 
     @Id

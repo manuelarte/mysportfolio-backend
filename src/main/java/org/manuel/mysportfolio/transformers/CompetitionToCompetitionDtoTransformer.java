@@ -15,6 +15,7 @@ public class CompetitionToCompetitionDtoTransformer implements Function<Competit
                 .id(competition.getId().toString())
                 .name(competition.getName())
                 .description(competition.getDescription())
+                .sport(competition.getSport())
                 .defaultMatchDay(competition.getDefaultMatchDay())
                 .createdBy(competition.getCreatedBy())
                 .createdDate(competition.getCreatedDate())
