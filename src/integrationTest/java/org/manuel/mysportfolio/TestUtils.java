@@ -4,12 +4,14 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportType;
+import org.manuel.mysportfolio.model.dtos.CompetitionDto;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.match.MatchEventDto;
 import org.manuel.mysportfolio.model.dtos.team.AnonymousTeamDto;
 import org.manuel.mysportfolio.model.dtos.team.RegisteredTeamDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
+import org.manuel.mysportfolio.model.entities.Competition;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 import org.manuel.mysportfolio.model.entities.match.Match;
@@ -17,6 +19,7 @@ import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.manuel.mysportfolio.model.entities.team.Team;
 
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
@@ -32,10 +35,28 @@ public class TestUtils {
                 .build();
     }
 
+    public static CompetitionDto createMockCompetitionDto() {
+        return CompetitionDto.builder()
+                .name(RandomStringUtils.randomAlphabetic(5))
+                .sport(Sport.FOOTBALL)
+                .defaultMatchDay(DayOfWeek.MONDAY)
+                .description("Nice competition")
+                .build();
+    }
+
     public static Team createMockTeam() {
         final var team = new Team();
         team.setName(RandomStringUtils.randomAlphabetic(5));
         return team;
+    }
+
+    public static Competition createMockCompetition() {
+        final var competition = new Competition();
+        competition.setName(RandomStringUtils.randomAlphabetic(5));
+        competition.setSport(Sport.FOOTBALL);
+        competition.setDefaultMatchDay(DayOfWeek.SATURDAY);
+        competition.setVersion(0L);
+        return competition;
     }
 
     public static AnonymousTeam createMockAnonymousTeam() {

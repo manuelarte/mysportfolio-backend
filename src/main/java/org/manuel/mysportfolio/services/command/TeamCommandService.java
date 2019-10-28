@@ -4,6 +4,6 @@ import org.manuel.mysportfolio.model.entities.team.Team;
 
 public interface TeamCommandService {
 
-    Team save(Team match);
+    Team save(Team team);
 
 }

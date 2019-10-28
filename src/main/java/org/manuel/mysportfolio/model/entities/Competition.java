@@ -22,6 +22,7 @@ import java.util.Set;
 @lombok.Data
 @lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
+@lombok.Builder(toBuilder = true)
 public class Competition {
 
     @Id

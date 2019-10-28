@@ -2,7 +2,9 @@ package org.manuel.mysportfolio.model.dtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.manuel.mysportfolio.model.Sport;
+import org.manuel.mysportfolio.validation.NewEntity;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -20,10 +22,11 @@ public class CompetitionDto {
 
     private final Long version;
 
-    @NotNull
+    @NotNull(groups = NewEntity.class)
+    @Size(max = 30)
     private final String name;
 
-    @NotNull
+    @NotNull(groups = NewEntity.class)
     private final Sport sport;
 
     private final DayOfWeek defaultMatchDay;
@@ -34,4 +37,9 @@ public class CompetitionDto {
     private final String createdBy;
 
     private final Instant createdDate;
+
+    @JsonPOJOBuilder(withPrefix = "")
+    public static final class CompetitionDtoBuilder {
+
+    }
 }
