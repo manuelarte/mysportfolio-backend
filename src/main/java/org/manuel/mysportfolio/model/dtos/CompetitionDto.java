@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.validation.NewEntity;
+import org.manuel.mysportfolio.validation.PartialUpdateEntity;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import java.time.DayOfWeek;
 import java.time.Instant;
@@ -18,6 +20,7 @@ import java.time.Instant;
 @lombok.Builder(toBuilder = true)
 public class CompetitionDto {
 
+    @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
     private final String id;
 
     private final Long version;
@@ -34,8 +37,10 @@ public class CompetitionDto {
     @Size(max = 200)
     private final String description;
 
+    @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
     private final String createdBy;
 
+    @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
     private final Instant createdDate;
 
     @JsonPOJOBuilder(withPrefix = "")

@@ -8,9 +8,12 @@ import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportType;
 import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
 import org.manuel.mysportfolio.model.entities.TeamOption;
+import org.manuel.mysportfolio.validation.NewEntity;
+import org.manuel.mysportfolio.validation.PartialUpdateEntity;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Past;
 import java.time.Instant;
 import java.util.List;
@@ -25,10 +28,12 @@ import java.util.Set;
 @lombok.Builder(toBuilder = true)
 public class MatchDto<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMatchDto> {
 
+    @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
     private final String id;
 
     private final String competitionId;
 
+    @Null(groups = NewEntity.class)
     private final Long version;
 
     @NotNull
@@ -56,6 +61,7 @@ public class MatchDto<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMa
 
     private final Set<String> chips;
 
+    @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
     private final String createdBy;
 
     public static <HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMatchDto> MatchDtoBuilder builder() {

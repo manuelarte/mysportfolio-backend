@@ -22,9 +22,6 @@ public class Team implements TeamInfo {
     @Id
     private ObjectId id;
 
-    @CreatedBy
-    private String playerId;
-
     @NotEmpty
     @Size(max = 30)
     private String name;

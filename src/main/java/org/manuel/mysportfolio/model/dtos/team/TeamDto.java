@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.manuel.mysportfolio.model.TeamInfo;
 import org.manuel.mysportfolio.validation.NewEntity;
+import org.manuel.mysportfolio.validation.PartialUpdateEntity;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import java.net.URL;
 
@@ -23,6 +25,7 @@ import java.net.URL;
 @lombok.Builder(toBuilder = true)
 public class TeamDto implements TeamInfo {
 
+    @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
     private final String id;
 
     @NotEmpty(groups = NewEntity.class)
@@ -32,6 +35,7 @@ public class TeamDto implements TeamInfo {
     @org.hibernate.validator.constraints.URL
     private final String imageLink;
 
+    @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
     private final String createdBy;
 
     @JsonPOJOBuilder(withPrefix = "")
