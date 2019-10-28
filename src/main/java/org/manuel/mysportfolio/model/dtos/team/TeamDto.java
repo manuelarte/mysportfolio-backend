@@ -6,11 +6,9 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.manuel.mysportfolio.model.TeamInfo;
 import org.manuel.mysportfolio.validation.NewEntity;
 import org.manuel.mysportfolio.validation.PartialUpdateEntity;
+import org.manuel.mysportfolio.validation.UpdateEntity;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Null;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.net.URL;
 
 /**
@@ -26,16 +24,17 @@ import java.net.URL;
 public class TeamDto implements TeamInfo {
 
     @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
+    @NotNull(groups = UpdateEntity.class)
     private final String id;
 
-    @NotEmpty(groups = NewEntity.class)
+    @NotEmpty(groups = {NewEntity.class, UpdateEntity.class})
     @Size(max = 30)
     private final String name;
 
     @org.hibernate.validator.constraints.URL
     private final String imageLink;
 
-    @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
+    @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
     private final String createdBy;
 
     @JsonPOJOBuilder(withPrefix = "")
