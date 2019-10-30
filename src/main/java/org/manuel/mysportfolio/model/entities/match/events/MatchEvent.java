@@ -10,5 +10,6 @@ import org.bson.types.ObjectId;
 public interface MatchEvent {
 
     ObjectId getId();
+    void setId(ObjectId id);
 
 }

@@ -27,14 +27,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class MatchQueryController {
 
     private final MatchQueryService matchQueryService;
-    private final MatchToMatchInListDtoTransformer matchToMatchInListDtoTransformer;
     private final MatchToMatchDtoTransformer matchToMatchDtoTransformer;
     private final UserIdProviderBySecurity userIdProviderBySecurity;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Page<MatchInListDto>> findByPage(
+    public ResponseEntity<Page<MatchDto>> findByPage(
             @PageableDefault(sort = "startDate", direction = Sort.Direction.DESC) final Pageable pageable) {
-        return ResponseEntity.ok(matchQueryService.findAllCreatedBy(pageable, getUserId()).map(matchToMatchInListDtoTransformer));
+        return ResponseEntity.ok(matchQueryService.findAllCreatedBy(pageable, getUserId()).map(matchToMatchDtoTransformer));
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

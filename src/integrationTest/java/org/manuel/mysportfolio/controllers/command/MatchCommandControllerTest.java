@@ -101,7 +101,8 @@ public class MatchCommandControllerTest {
                 .andExpect(jsonPath("$.homeTeam.type").value("anonymous"))
                 .andExpect(jsonPath("$.homeTeam.name").value(matchDto.getHomeTeam().getName()))
                 .andExpect(jsonPath("$.awayTeam.type").value("anonymous"))
-                .andExpect(jsonPath("$.awayTeam.name").value(matchDto.getAwayTeam().getName()));
+                .andExpect(jsonPath("$.awayTeam.name").value(matchDto.getAwayTeam().getName()))
+                .andExpect(jsonPath("$.events[*].id", Matchers.notNullValue()));
     }
 
     private Authentication createAuthentication() {
