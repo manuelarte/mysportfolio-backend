@@ -4,9 +4,14 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Strings;
+import org.manuel.mysportfolio.model.entities.user.AppUser;
+import org.manuel.mysportfolio.model.entities.user.AuthProvider;
+import org.manuel.mysportfolio.model.entities.user.Membership;
+import org.manuel.mysportfolio.repositories.AppUserRepository;
+import org.manuel.mysportfolio.services.command.AppUserCommandService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.annotation.Order;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -15,8 +20,8 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,8 +33,13 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTokenAuthenticationConverterFilter {
 
     private final GoogleIdTokenVerifier verifier;
+    private final AppUserRepository appUserRepository;
+    private final AppUserCommandService appUserCommandService;
 
-    public GoogleBearerTokenAuthenticationConverterFilter(@Value("${authentication.client-id}") final String clientId) {
+    public GoogleBearerTokenAuthenticationConverterFilter(
+            @Value("${authentication.client-id}") final String clientId,
+            final AppUserRepository appUserRepository,
+            final AppUserCommandService appUserCommandService) {
         final var transport = new NetHttpTransport();
         final var jacksonFactory = new JacksonFactory();
         verifier = new GoogleIdTokenVerifier.Builder(transport, jacksonFactory)
@@ -37,10 +47,13 @@ public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTok
                 .setAudience(Collections.singletonList(clientId))
                 .setAcceptableTimeSkewSeconds(10000000)
                 .build();
+
+        this.appUserRepository = appUserRepository;
+        this.appUserCommandService = appUserCommandService;
     }
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(final FilterConfig filterConfig) throws ServletException {
 
     }
 
@@ -69,8 +82,19 @@ public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTok
 
                     // Use or store profile information
                     // ...
-                    final var authorities =
-                            Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+                    final var appUser = appUserRepository.findByExternalId(userId).orElseGet(
+                            () -> AppUser.builder()
+                                    .authProvider(AuthProvider.GOOGLE)
+                                    .externalId(userId)
+                                    .membership(Membership.FREE)
+                                    .build()
+                    );
+
+                    final var authorities = new ArrayList<GrantedAuthority>();
+                    authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+                    if (appUser.getAdmin() == true) {
+                        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                    }
                     final var attributes = new HashMap<String, Object>();
                     attributes.put("sub", userId);
                     attributes.put("email_verified", emailVerified);
@@ -85,6 +109,11 @@ public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTok
                     final var oAuth2AuthenticationToken =
                             new OAuth2AuthenticationToken(principal, authorities, "clientRegistrationId");
                     SecurityContextHolder.getContext().setAuthentication(oAuth2AuthenticationToken);
+
+                    if (appUser.isNew()) {
+                        // TODO check if do it in aspect
+                        appUserCommandService.save(appUser);
+                    }
                 } else {
                     // TODO log that they are trying to access with invalid token
                     System.out.println("Invalid ID token.");
