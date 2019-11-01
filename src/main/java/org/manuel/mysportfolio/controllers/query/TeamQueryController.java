@@ -33,8 +33,8 @@ public class TeamQueryController {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TeamDto> findOne(@PathVariable final String id) {
-        final Team team = teamQueryService.findOne(new ObjectId(id)).orElseThrow(() ->
+    public ResponseEntity<TeamDto> findOne(@PathVariable final ObjectId id) {
+        final Team team = teamQueryService.findOne(id).orElseThrow(() ->
                 new IllegalArgumentException(String.format("Team with id %s not found", id)));
         return ResponseEntity.ok(teamToTeamDtoTransformer.apply(team));
     }

@@ -21,12 +21,12 @@ import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
 public class PerformanceDto {
 
     @Digits(integer=2, fraction=2)
-    @Size(min = 0, max = 10)
+    @Size(max = 10)
     @NotNull
-    private final BigDecimal performance;
+    private final BigDecimal rate;
 
-    @Size(max = 500)
-    private final String description;
+    @Size(max = 200)
+    private final String notes;
 
     @JsonPOJOBuilder(withPrefix = "")
     public static final class PerformanceDtoBuilder {

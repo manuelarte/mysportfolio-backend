@@ -2,14 +2,11 @@ package org.manuel.mysportfolio.controllers.query;
 
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.config.UserIdProviderBySecurity;
+import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
-import org.manuel.mysportfolio.model.dtos.match.MatchInListDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
-import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
 import org.manuel.mysportfolio.transformers.match.MatchToMatchDtoTransformer;
-import org.manuel.mysportfolio.transformers.match.MatchToMatchInListDtoTransformer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,7 +25,7 @@ public class MatchQueryController {
 
     private final MatchQueryService matchQueryService;
     private final MatchToMatchDtoTransformer matchToMatchDtoTransformer;
-    private final UserIdProviderBySecurity userIdProviderBySecurity;
+    private final UserIdProvider userIdProvider;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<MatchDto>> findByPage(
@@ -45,7 +42,7 @@ public class MatchQueryController {
     }
 
     private String getUserId() {
-        return userIdProviderBySecurity.getUserId();
+        return userIdProvider.getUserId();
     }
 
 }

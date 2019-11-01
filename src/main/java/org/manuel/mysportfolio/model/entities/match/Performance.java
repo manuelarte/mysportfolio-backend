@@ -17,8 +17,9 @@ public class Performance {
     @Digits(integer = 10, fraction = 2)
     @Size(max = 10)
     @NotNull
-    private BigDecimal performance;
+    private BigDecimal rate;
 
-    private String description;
+    @Size(max = 200)
+    private String notes;
 
 }

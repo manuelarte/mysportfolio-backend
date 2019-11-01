@@ -1,0 +1,34 @@
+package org.manuel.mysportfolio.controllers.query;
+
+import lombok.AllArgsConstructor;
+import org.bson.types.ObjectId;
+import org.manuel.mysportfolio.config.UserIdProvider;
+import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
+import org.manuel.mysportfolio.model.dtos.match.PerformanceDto;
+import org.manuel.mysportfolio.services.command.PlayersPerformanceCommandService;
+import org.manuel.mysportfolio.services.query.PlayersPerformanceQueryService;
+import org.manuel.mysportfolio.transformers.PerformanceDtoToPerformanceTransformer;
+import org.manuel.mysportfolio.transformers.PerformanceToPerformanceDtoTransformer;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/v1/matches/{matchId}/performances")
+@AllArgsConstructor
+public class PlayersPerformanceQueryController {
+
+    private final PerformanceToPerformanceDtoTransformer performanceToPerformanceDtoTransformer;
+    private final PlayersPerformanceQueryService playersPerformanceQueryService;
+
+    @GetMapping(value = "/{playerId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PerformanceDto> getPerformanceOf(
+            @PathVariable final ObjectId matchId,
+            @PathVariable final String playerId) {
+        final var retrieved = playersPerformanceQueryService.findByMatchIdAndPlayerId(matchId, playerId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        String.format("Player %s performance not found in match %s", playerId, matchId.toString())));
+        return ResponseEntity.ok(performanceToPerformanceDtoTransformer.apply(retrieved));
+    }
+
+}

@@ -10,7 +10,7 @@ public class PerformanceDtoToPerformanceTransformer implements Function<Performa
 
     @Override
     public Performance apply(PerformanceDto performanceDto) {
-        return new Performance(performanceDto.getPerformance(), performanceDto.getDescription());
+        return new Performance(performanceDto.getRate(), performanceDto.getNotes());
     }
 
 }

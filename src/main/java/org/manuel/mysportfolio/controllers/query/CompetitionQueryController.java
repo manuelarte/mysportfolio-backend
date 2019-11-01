@@ -29,9 +29,9 @@ public class CompetitionQueryController {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CompetitionDto> findOne(@PathVariable final String id) {
+    public ResponseEntity<CompetitionDto> findOne(@PathVariable final ObjectId id) {
         // TODO, fix that if the user can't see the competition
-        final var competition = competitionQueryService.findOne(new ObjectId(id)).orElseThrow(() ->
+        final var competition = competitionQueryService.findOne(id).orElseThrow(() ->
                 new IllegalArgumentException(String.format("Competition with id %s not found", id)));
         return ResponseEntity.ok(competitionToCompetitionDtoTransformer.apply(competition));
     }
