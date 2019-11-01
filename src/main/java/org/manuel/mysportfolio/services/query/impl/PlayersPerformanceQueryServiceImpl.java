@@ -1,7 +1,6 @@
 package org.manuel.mysportfolio.services.query.impl;
 
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.entities.match.Performance;
 import org.manuel.mysportfolio.repositories.PlayersPerformanceRepository;
 import org.manuel.mysportfolio.services.query.PlayersPerformanceQueryService;

@@ -2,16 +2,16 @@ package org.manuel.mysportfolio.controllers.query;
 
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.match.PerformanceDto;
-import org.manuel.mysportfolio.services.command.PlayersPerformanceCommandService;
 import org.manuel.mysportfolio.services.query.PlayersPerformanceQueryService;
-import org.manuel.mysportfolio.transformers.PerformanceDtoToPerformanceTransformer;
 import org.manuel.mysportfolio.transformers.PerformanceToPerformanceDtoTransformer;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/matches/{matchId}/performances")
