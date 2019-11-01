@@ -1,10 +1,11 @@
 package org.manuel.mysportfolio.controllers.query;
 
-import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
+import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
+import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
 import org.manuel.mysportfolio.transformers.match.MatchToMatchDtoTransformer;
 import org.springframework.data.domain.Page;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/matches")
-@AllArgsConstructor
+@lombok.AllArgsConstructor
 public class MatchQueryController {
 
     private final MatchQueryService matchQueryService;
@@ -34,10 +35,10 @@ public class MatchQueryController {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MatchDto<TeamInMatchDto, TeamInMatchDto>> findOne(@PathVariable final String id) {
+    public ResponseEntity<MatchDto<TeamInMatchDto, TeamInMatchDto>> findOne(@PathVariable final ObjectId id) {
         // TODO, fix that if the user can't see the match
-        final var match = matchQueryService.findOne(new ObjectId(id)).orElseThrow(() ->
-                new IllegalArgumentException(String.format("Match with id %s not found", id)));
+        final var match = matchQueryService.findOne(id).orElseThrow(() ->
+                new EntityNotFoundException(Match.class, id.toString()));
         return ResponseEntity.ok(matchToMatchDtoTransformer.apply(match));
     }
 

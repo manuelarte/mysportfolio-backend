@@ -2,6 +2,7 @@ package org.manuel.mysportfolio.controllers.query;
 
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
+import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.team.TeamDto;
 import org.manuel.mysportfolio.model.entities.team.Team;
 import org.manuel.mysportfolio.services.query.TeamQueryService;
@@ -35,7 +36,7 @@ public class TeamQueryController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TeamDto> findOne(@PathVariable final ObjectId id) {
         final Team team = teamQueryService.findOne(id).orElseThrow(() ->
-                new IllegalArgumentException(String.format("Team with id %s not found", id)));
+                new EntityNotFoundException(Team.class, id.toString()));
         return ResponseEntity.ok(teamToTeamDtoTransformer.apply(team));
     }
 
