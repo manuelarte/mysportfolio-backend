@@ -29,7 +29,7 @@ public class MatchQueryController {
     private final UserIdProvider userIdProvider;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Page<MatchDto>> findByPage(
+    public ResponseEntity<Page<MatchDto<TeamInMatchDto, TeamInMatchDto>>> findByPage(
             @PageableDefault(sort = "startDate", direction = Sort.Direction.DESC) final Pageable pageable) {
         return ResponseEntity.ok(matchQueryService.findAllCreatedBy(pageable, getUserId()).map(matchToMatchDtoTransformer));
     }

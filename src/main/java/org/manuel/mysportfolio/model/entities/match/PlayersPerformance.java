@@ -40,7 +40,7 @@ public class PlayersPerformance implements Auditable<String, ObjectId, Instant> 
     private Instant createdDate;
 
     @LastModifiedBy
-    private String LastModifiedBy;
+    private String lastModifiedBy;
 
     @LastModifiedDate
     private Instant lastModifiedDate;
@@ -70,7 +70,7 @@ public class PlayersPerformance implements Auditable<String, ObjectId, Instant> 
 
     @Override
     public Optional<String> getLastModifiedBy() {
-        return Optional.ofNullable(LastModifiedBy);
+        return Optional.ofNullable(lastModifiedBy);
     }
 
     @Override

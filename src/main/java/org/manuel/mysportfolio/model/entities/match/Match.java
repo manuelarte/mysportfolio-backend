@@ -6,6 +6,7 @@ import org.manuel.mysportfolio.model.SportType;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
 import org.springframework.data.annotation.*;
+import org.springframework.data.domain.Auditable;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.AssertTrue;
@@ -18,7 +19,7 @@ import java.util.*;
 @lombok.Data
 @lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
-public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType> {
+public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType> implements Auditable<String, ObjectId, Instant> {
 
     @Id
     private ObjectId id;
@@ -69,23 +70,39 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
 
     private Set<String> chips;
 
+    public Optional<String> getCreatedBy() {
+        return Optional.ofNullable(createdBy);
+    }
+
     @SuppressWarnings("unused")
-    private void setCreatedBy(final String createdBy) {
+    public void setCreatedBy(final String createdBy) {
         this.createdBy = createdBy;
     }
 
+    public Optional<Instant> getCreatedDate() {
+        return Optional.ofNullable(createdDate);
+    }
+
     @SuppressWarnings("unused")
-    private void setCreatedDate(final Instant createdDate) {
+    public void setCreatedDate(final Instant createdDate) {
         this.createdDate = createdDate;
     }
 
-    @SuppressWarnings("unused")
-    private void setLastModifiedBy(final String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
+    public Optional<String> getLastModifiedBy() {
+        return Optional.ofNullable(lastModifiedBy);
     }
 
     @SuppressWarnings("unused")
-    private void setLastModifiedDate(final Instant lastModifiedDate) {
+    public void setLastModifiedBy(final String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public Optional<Instant> getLastModifiedDate() {
+        return Optional.ofNullable(lastModifiedDate);
+    }
+
+    @SuppressWarnings("unused")
+    public void setLastModifiedDate(final Instant lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 
@@ -94,4 +111,8 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
         return Objects.nonNull(homeTeam) || Objects.nonNull(awayTeam);
     }
 
+    @Override
+    public boolean isNew() {
+        return id == null;
+    }
 }

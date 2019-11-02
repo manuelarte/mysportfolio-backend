@@ -6,12 +6,17 @@ import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
 import org.manuel.mysportfolio.services.command.MatchCommandService;
 import org.manuel.mysportfolio.transformers.match.MatchDtoToMatchTransformer;
 import org.manuel.mysportfolio.transformers.match.MatchToMatchDtoTransformer;
+import org.manuel.mysportfolio.validation.NewEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
+import javax.validation.groups.Default;
 
 @RestController
 @RequestMapping("/api/v1/matches")
@@ -25,7 +30,7 @@ public class MatchCommandController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MatchDto<TeamInMatchDto, TeamInMatchDto>> saveMatch(
-            @Valid @RequestBody final MatchDto<TeamInMatchDto, TeamInMatchDto> matchDto) {
+            @Validated({Default.class, NewEntity.class}) @RequestBody final MatchDto<TeamInMatchDto, TeamInMatchDto> matchDto) {
         final var saved = matchCommandService.save(matchDtoToMatchTransformer.apply(matchDto));
 
         final var location = ServletUriComponentsBuilder

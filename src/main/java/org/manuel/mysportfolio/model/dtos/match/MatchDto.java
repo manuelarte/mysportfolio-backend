@@ -10,11 +10,9 @@ import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.validation.NewEntity;
 import org.manuel.mysportfolio.validation.PartialUpdateEntity;
+import org.manuel.mysportfolio.validation.UpdateEntity;
 
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.*;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +29,7 @@ public class MatchDto<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMa
     @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
     private final String id;
 
+    @Size(max = 24)
     private final String competitionId;
 
     @Null(groups = NewEntity.class)
@@ -61,7 +60,7 @@ public class MatchDto<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMa
 
     private final Set<String> chips;
 
-    @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
+    @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
     private final String createdBy;
 
     public static <HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMatchDto> MatchDtoBuilder builder() {
