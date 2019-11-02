@@ -19,16 +19,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-@JsonDeserialize(builder = MatchDto.MatchDtoBuilder.class)
+@JsonDeserialize(builder = MatchUpdateDto.MatchUpdateDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @lombok.AllArgsConstructor
 @lombok.Value
 @lombok.Builder(toBuilder = true)
-public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> {
-
-    @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
-    @NotNull(groups = UpdateEntity.class)
-    private final String id;
+public class MatchUpdateDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> {
 
     @Null(groups = NewEntity.class)
     @NotNull(groups = { UpdateEntity.class, PartialUpdateEntity.class })
@@ -62,15 +58,12 @@ public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto
 
     private final Set<String> chips;
 
-    @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
-    private final String createdBy;
-
-    public static <HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> MatchDtoBuilder builder() {
-        return new MatchDtoBuilder<HomeTeam, AwayTeam>();
+    public static <HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> MatchUpdateDtoBuilder builder() {
+        return new MatchUpdateDtoBuilder<HomeTeam, AwayTeam>();
     }
 
     @JsonPOJOBuilder(withPrefix = "")
-    public static final class MatchDtoBuilder<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> {
+    public static final class MatchUpdateDtoBuilder<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> {
     }
 
     @AssertTrue

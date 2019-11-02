@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 @lombok.AllArgsConstructor
 @lombok.Value
 @lombok.Builder(toBuilder = true)
-public class AnonymousTeamDto implements TeamInMatchDto {
+public class AnonymousTeamDto implements TeamTypeDto {
 
     @NotEmpty
     @Size(max = 30)

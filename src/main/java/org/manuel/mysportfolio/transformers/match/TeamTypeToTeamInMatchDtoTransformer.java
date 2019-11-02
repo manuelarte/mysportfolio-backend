@@ -1,6 +1,6 @@
 package org.manuel.mysportfolio.transformers.match;
 
-import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
+import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
@@ -10,13 +10,13 @@ import java.util.function.Function;
 
 @Component
 @lombok.AllArgsConstructor
-public class TeamTypeToTeamInMatchDtoTransformer<T> implements Function<TeamType, TeamInMatchDto> {
+public class TeamTypeToTeamInMatchDtoTransformer<T> implements Function<TeamType, TeamTypeDto> {
 
     private final RegisteredTeamToRegisteredTeamDtoTransformer registeredTeamToRegisteredTeamDtoTransformer;
     private final AnonymousTeamToAnonymousTeamDtoTransformer anonymousTeamToAnonymousTeamDtoTransformer;
 
     @Override
-    public TeamInMatchDto apply(final TeamType o) {
+    public TeamTypeDto apply(final TeamType o) {
         if (o == null) {
             return null;
         }

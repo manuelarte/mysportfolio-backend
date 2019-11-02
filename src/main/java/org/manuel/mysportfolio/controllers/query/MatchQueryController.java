@@ -4,7 +4,7 @@ import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
-import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
+import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
 import org.manuel.mysportfolio.transformers.match.MatchToMatchDtoTransformer;
@@ -29,13 +29,13 @@ public class MatchQueryController {
     private final UserIdProvider userIdProvider;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Page<MatchDto<TeamInMatchDto, TeamInMatchDto>>> findByPage(
+    public ResponseEntity<Page<MatchDto<TeamTypeDto, TeamTypeDto>>> findByPage(
             @PageableDefault(sort = "startDate", direction = Sort.Direction.DESC) final Pageable pageable) {
         return ResponseEntity.ok(matchQueryService.findAllCreatedBy(pageable, getUserId()).map(matchToMatchDtoTransformer));
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MatchDto<TeamInMatchDto, TeamInMatchDto>> findOne(@PathVariable final ObjectId id) {
+    public ResponseEntity<MatchDto<TeamTypeDto, TeamTypeDto>> findOne(@PathVariable final ObjectId id) {
         // TODO, fix that if the user can't see the match
         final var match = matchQueryService.findOne(id).orElseThrow(() ->
                 new EntityNotFoundException(Match.class, id.toString()));

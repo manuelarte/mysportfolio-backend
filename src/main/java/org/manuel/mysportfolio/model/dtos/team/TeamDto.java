@@ -27,6 +27,10 @@ public class TeamDto implements TeamInfo {
     @NotNull(groups = UpdateEntity.class)
     private final String id;
 
+    @Null(groups = NewEntity.class)
+    @NotNull(groups = { UpdateEntity.class, PartialUpdateEntity.class })
+    private final Long version;
+
     @NotEmpty(groups = {NewEntity.class, UpdateEntity.class})
     @Size(max = 30)
     private final String name;

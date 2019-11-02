@@ -2,14 +2,12 @@ package org.manuel.mysportfolio.transformers.match;
 
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.match.MatchEventDto;
-import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
+import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.manuel.mysportfolio.transformers.match.events.MatchEventToMatchEventDtoTransformer;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -17,13 +15,13 @@ import java.util.stream.Stream;
 
 @Component
 @lombok.AllArgsConstructor
-public class MatchToMatchDtoTransformer implements Function<Match<? extends TeamType, ? extends TeamType>, MatchDto<TeamInMatchDto, TeamInMatchDto>> {
+public class MatchToMatchDtoTransformer implements Function<Match<? extends TeamType, ? extends TeamType>, MatchDto<TeamTypeDto, TeamTypeDto>> {
 
     private final TeamTypeToTeamInMatchDtoTransformer teamTypeToTeamInMatchDtoTransformer;
     private final MatchEventToMatchEventDtoTransformer matchEventToMatchEventDtoTransformer;
 
     @Override
-    public MatchDto<TeamInMatchDto, TeamInMatchDto> apply(final Match<?, ?> match) {
+    public MatchDto<TeamTypeDto, TeamTypeDto> apply(final Match<? extends TeamType, ? extends TeamType> match) {
         final Stream<MatchEventDto> eventsStream = match.getEvents().stream().map(matchEventToMatchEventDtoTransformer);
         return match == null ? null : MatchDto.builder()
                 .id(match.getId().toString())
