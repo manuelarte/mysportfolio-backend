@@ -4,11 +4,13 @@ import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.Competition;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PostAuthorize;
 
 import java.util.Optional;
 
 public interface CompetitionQueryService {
 
+    @PostAuthorize("hasRole('ROLE_ADMIN') or #returnObject.orElse(null)?.createdBy == authentication.principal.attributes['sub']")
     Optional<Competition> findOne(ObjectId id);
 
     Page<Competition> findAllCreatedBy(Pageable pageable, String createdBy);

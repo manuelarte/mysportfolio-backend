@@ -18,6 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -65,7 +66,6 @@ public class MatchRepositoryTest {
 
     @DisplayName("load match by query for start date")
     @Test
-    @Disabled("Query with dates don't work in embedded mongodb")
     public void testGetMatchesWithStartDateGreaterThan() {
         final var expected = new Match<AnonymousTeam, AnonymousTeam>();
         expected.setHomeTeam(TestUtils.createMockAnonymousTeam());
@@ -81,8 +81,9 @@ public class MatchRepositoryTest {
         matchRepository.save(notExpected);
 
         final Query query = new Query();
-        final Object instant = Instant.now().minus(16, ChronoUnit.DAYS);
-        final var criteria = Criteria.where("startDate").gt(instant.toString());
+        final Instant instant = Instant.now().minus(16, ChronoUnit.DAYS);
+        // it does not work with instants
+        final var criteria = Criteria.where("startDate").gt(new Date(instant.toEpochMilli()));
         query.addCriteria(criteria);
 
         final var allByQuery = matchRepository.findQueryAllCreatedBy(query, Pageable.unpaged());

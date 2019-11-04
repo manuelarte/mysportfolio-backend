@@ -5,6 +5,7 @@ import org.springframework.data.annotation.*;
 import org.springframework.data.domain.Auditable;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.Optional;
@@ -23,11 +24,19 @@ public class AppUser implements Auditable<String, ObjectId, Instant> {
     private Long version;
 
     @NotNull
+    private String fullName;
+
+    @Email
+    @NotNull
+    private String email;
+
+    @NotNull
     private String externalId;
 
     @NotNull
     private AuthProvider authProvider;
 
+    @NotNull
     private Membership membership;
 
     private Boolean admin;

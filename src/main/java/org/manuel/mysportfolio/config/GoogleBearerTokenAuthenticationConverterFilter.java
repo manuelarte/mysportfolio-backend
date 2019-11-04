@@ -1,6 +1,7 @@
 package org.manuel.mysportfolio.config;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.BasicAuthentication;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Strings;
@@ -21,10 +22,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -82,13 +80,22 @@ public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTok
 
                     // Use or store profile information
                     // ...
-                    final var appUser = appUserRepository.findByExternalId(userId).orElseGet(
-                            () -> AppUser.builder()
-                                    .authProvider(AuthProvider.GOOGLE)
-                                    .externalId(userId)
-                                    .membership(Membership.FREE)
-                                    .build()
-                    );
+                    AppUser appUser = null;
+                    try {
+                        SecurityContextHolder.getContext().setAuthentication(new SystemAuthentication());
+                        appUser = appUserRepository.findByExternalId(userId).orElseGet(
+                                () -> AppUser.builder()
+                                        .fullName(name)
+                                        .email(email)
+                                        .authProvider(AuthProvider.GOOGLE)
+                                        .externalId(userId)
+                                        .membership(Membership.FREE)
+                                        .build()
+                        );
+                    } finally {
+                        SecurityContextHolder.clearContext();
+                    }
+
 
                     final var authorities = new ArrayList<GrantedAuthority>();
                     authorities.add(new SimpleGrantedAuthority("ROLE_USER"));

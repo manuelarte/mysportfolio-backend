@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @lombok.AllArgsConstructor
-class WebConfig implements WebMvcConfigurer {
+class WebMvcConfig implements WebMvcConfigurer {
 
     private final StringToQueryCriteriaConverter stringToQueryCriteriaConverter;
 
