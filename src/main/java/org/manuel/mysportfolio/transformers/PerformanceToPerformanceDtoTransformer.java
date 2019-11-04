@@ -10,7 +10,7 @@ public class PerformanceToPerformanceDtoTransformer implements Function<Performa
 
     @Override
     public PerformanceDto apply(final Performance performance) {
-        return performance == null ? null : new PerformanceDto(performance.getPerformance(), performance.getDescription());
+        return performance == null ? null : new PerformanceDto(performance.getRate(), performance.getNotes());
     }
 
 }

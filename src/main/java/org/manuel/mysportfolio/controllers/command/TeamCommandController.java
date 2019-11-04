@@ -1,7 +1,6 @@
 package org.manuel.mysportfolio.controllers.command;
 
 import io.jsonwebtoken.lang.Assert;
-import lombok.AllArgsConstructor;
 import org.manuel.mysportfolio.model.dtos.team.TeamDto;
 import org.manuel.mysportfolio.services.command.TeamCommandService;
 import org.manuel.mysportfolio.transformers.team.PartialTeamDtoToTeamTransformer;
@@ -9,19 +8,18 @@ import org.manuel.mysportfolio.transformers.team.TeamDtoToExistingTeamTransforme
 import org.manuel.mysportfolio.transformers.team.TeamDtoToTeamTransformer;
 import org.manuel.mysportfolio.transformers.team.TeamToTeamDtoTransformer;
 import org.manuel.mysportfolio.validation.NewEntity;
-import org.manuel.mysportfolio.validation.UpdateEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import javax.validation.groups.Default;
 
 @RestController
 @RequestMapping("/api/v1/teams")
-@AllArgsConstructor
+@lombok.AllArgsConstructor
+@lombok.extern.slf4j.Slf4j
 public class TeamCommandController {
 
     private final TeamCommandService teamCommandService;
@@ -36,6 +34,7 @@ public class TeamCommandController {
         final var location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(saved.getId()).toUri();
+        log.info("Team with id {}, created by {} saved", saved.getId(), saved.getCreatedBy());
         return ResponseEntity.created(location).body(teamToTeamDtoTransformer.apply(saved));
     }
 

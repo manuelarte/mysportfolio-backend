@@ -1,12 +1,13 @@
 package org.manuel.mysportfolio.transformers.match;
 
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
+import org.manuel.mysportfolio.model.dtos.match.MatchEventDto;
+import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.entities.match.Match;
+import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.manuel.mysportfolio.transformers.match.events.MatchEventToMatchEventDtoTransformer;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -14,14 +15,14 @@ import java.util.stream.Stream;
 
 @Component
 @lombok.AllArgsConstructor
-public class MatchToMatchDtoTransformer implements Function<Match, MatchDto> {
+public class MatchToMatchDtoTransformer implements Function<Match<? extends TeamType, ? extends TeamType>, MatchDto<TeamTypeDto, TeamTypeDto>> {
 
     private final TeamTypeToTeamInMatchDtoTransformer teamTypeToTeamInMatchDtoTransformer;
     private final MatchEventToMatchEventDtoTransformer matchEventToMatchEventDtoTransformer;
 
     @Override
-    public MatchDto apply(final Match match) {
-        final Stream<MatchDto> eventsStream = match.getEvents().stream().map(matchEventToMatchEventDtoTransformer);
+    public MatchDto<TeamTypeDto, TeamTypeDto> apply(final Match<? extends TeamType, ? extends TeamType> match) {
+        final Stream<MatchEventDto> eventsStream = match.getEvents().stream().map(matchEventToMatchEventDtoTransformer);
         return match == null ? null : MatchDto.builder()
                 .id(match.getId().toString())
                 .competitionId(Optional.ofNullable(match.getCompetitionId()).map(c -> c.toString()).orElse(null))
@@ -37,7 +38,7 @@ public class MatchToMatchDtoTransformer implements Function<Match, MatchDto> {
                 .events(eventsStream.collect(Collectors.toList()))
                 .description(match.getDescription())
                 .chips(match.getChips())
-                .createdBy(match.getCreatedBy())
+                .createdBy(match.getCreatedBy().orElse(null))
                 .build();
     }
 

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.validation.NewEntity;
 import org.manuel.mysportfolio.validation.PartialUpdateEntity;
+import org.manuel.mysportfolio.validation.UpdateEntity;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
@@ -23,6 +24,8 @@ public class CompetitionDto {
     @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
     private final String id;
 
+    @Null(groups = NewEntity.class)
+    @NotNull(groups = { UpdateEntity.class, PartialUpdateEntity.class })
     private final Long version;
 
     @NotNull(groups = NewEntity.class)

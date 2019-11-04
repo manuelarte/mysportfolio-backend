@@ -6,15 +6,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportType;
-import org.manuel.mysportfolio.model.dtos.team.TeamInMatchDto;
+import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.validation.NewEntity;
 import org.manuel.mysportfolio.validation.PartialUpdateEntity;
+import org.manuel.mysportfolio.validation.UpdateEntity;
 
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.*;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -26,15 +24,18 @@ import java.util.Set;
 @lombok.AllArgsConstructor
 @lombok.Value
 @lombok.Builder(toBuilder = true)
-public class MatchDto<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMatchDto> {
+public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> {
 
     @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
+    @NotNull(groups = UpdateEntity.class)
     private final String id;
 
-    private final String competitionId;
-
     @Null(groups = NewEntity.class)
+    @NotNull(groups = { UpdateEntity.class, PartialUpdateEntity.class })
     private final Long version;
+
+    @Size(max = 24)
+    private final String competitionId;
 
     @NotNull
     private final Sport sport;
@@ -61,15 +62,15 @@ public class MatchDto<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMa
 
     private final Set<String> chips;
 
-    @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
+    @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
     private final String createdBy;
 
-    public static <HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMatchDto> MatchDtoBuilder builder() {
+    public static <HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> MatchDtoBuilder builder() {
         return new MatchDtoBuilder<HomeTeam, AwayTeam>();
     }
 
     @JsonPOJOBuilder(withPrefix = "")
-    public static final class MatchDtoBuilder<HomeTeam extends TeamInMatchDto, AwayTeam extends TeamInMatchDto> {
+    public static final class MatchDtoBuilder<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> {
     }
 
     @AssertTrue

@@ -31,13 +31,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(ITConfiguration.class)
 @ExtendWith({SpringExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class PerformanceCommandControllerTest {
+public class PlayersPerformanceCommandControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @Autowired
-    private TeamRepository teamRepository;
 
     @Autowired
     private MatchRepository matchRepository;
@@ -58,7 +55,6 @@ public class PerformanceCommandControllerTest {
     @AfterEach
     public void tearDown() {
         matchRepository.deleteAll();
-        teamRepository.deleteAll();
         playersPerformanceRepository.deleteAll();
     }
 
@@ -72,8 +68,8 @@ public class PerformanceCommandControllerTest {
         mvc.perform(patch("/api/v1/matches/{matchId}/performances", match.getId()).contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(performanceDto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.performance").value("8"))
-                .andExpect(jsonPath("$.description").doesNotExist());
+                .andExpect(jsonPath("$.rate").value("8"))
+                .andExpect(jsonPath("$.notes").doesNotExist());
     }
 
 }

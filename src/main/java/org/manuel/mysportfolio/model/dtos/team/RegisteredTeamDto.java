@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @lombok.AllArgsConstructor
 @lombok.Value
 @lombok.Builder(toBuilder = true)
-public class RegisteredTeamDto implements TeamInMatchDto {
+public class RegisteredTeamDto implements TeamTypeDto {
 
     @NotNull
     private final String teamId;
