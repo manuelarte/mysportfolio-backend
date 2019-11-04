@@ -24,6 +24,7 @@ public class AnonymousTeamDto implements TeamTypeDto {
     private final String name;
 
     @org.hibernate.validator.constraints.URL
+    @Size(max = 200)
     private final String imageLink;
 
     @JsonPOJOBuilder(withPrefix = "")

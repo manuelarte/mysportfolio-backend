@@ -27,6 +27,7 @@ public class Team implements TeamInfo {
     private String name;
 
     @org.hibernate.validator.constraints.URL
+    @Size(max = 200)
     private String imageLink;
 
     @CreatedBy

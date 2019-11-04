@@ -9,7 +9,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MatchRepository extends PagingAndSortingRepository<Match<? extends TeamType, ? extends TeamType>, ObjectId> {
+public interface MatchRepository
+        extends PagingAndSortingRepository<Match<? extends TeamType, ? extends TeamType>, ObjectId> {
 
     Page<Match<TeamType, TeamType>> findAllByCreatedByIs(Pageable pageable, String createdBy);
+
 }

@@ -7,7 +7,9 @@ import org.manuel.mysportfolio.model.QueryCriteria;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.entities.match.Match;
+import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
+import org.manuel.mysportfolio.transformers.QueryCriteriaToMongoQueryTransformer;
 import org.manuel.mysportfolio.transformers.match.MatchToMatchDtoTransformer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,11 +30,19 @@ public class MatchQueryController {
     private final MatchToMatchDtoTransformer matchToMatchDtoTransformer;
     private final UserIdProvider userIdProvider;
 
+    private final QueryCriteriaToMongoQueryTransformer queryCriteriaToMongoQueryTransformer;
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<MatchDto<TeamTypeDto, TeamTypeDto>>> findByPage(
             @PageableDefault(sort = "startDate", direction = Sort.Direction.DESC) final Pageable pageable,
             @RequestParam(required = false) Optional<QueryCriteria> q) {
-        return ResponseEntity.ok(matchQueryService.findAllCreatedBy(pageable, getUserId()).map(matchToMatchDtoTransformer));
+        final Page<Match<TeamType, TeamType>> page;
+        if (q.isPresent()) {
+            page = matchQueryService.findQueryAllCreatedBy(queryCriteriaToMongoQueryTransformer.apply(q.get(), Match.class), pageable, getUserId());
+        } else {
+            page = matchQueryService.findAllCreatedBy(pageable, getUserId());
+        }
+        return ResponseEntity.ok(page.map(matchToMatchDtoTransformer));
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

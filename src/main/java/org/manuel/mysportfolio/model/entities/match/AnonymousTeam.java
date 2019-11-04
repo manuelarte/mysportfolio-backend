@@ -15,6 +15,7 @@ public class AnonymousTeam implements TeamType, TeamInfo {
     private String name;
 
     @org.hibernate.validator.constraints.URL
+    @Size(max = 200)
     private String imageLink;
 
     @Override
