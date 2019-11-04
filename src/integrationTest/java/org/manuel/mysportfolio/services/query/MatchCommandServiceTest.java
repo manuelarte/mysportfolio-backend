@@ -53,10 +53,10 @@ class MatchCommandServiceTest {
         final var criteria = Criteria.where("startDate").gt(instant.toString());
         query.addCriteria(criteria);
 
-        final var allByQuery = matchQueryService.findQueryAllCreatedBy(query, Pageable.unpaged());
+        final var allByQuery = matchQueryService.findQueryAllCreatedBy(query, Pageable.unpaged(), "123456789");
         assertEquals(1, allByQuery.getTotalElements());
         assertMatch(expected, allByQuery.getContent().get(0));
-
+        // TODO it's failing and don't know why, because in live it's working
     }
 
     private void assertMatch(final Match expected, final Match actual) {
