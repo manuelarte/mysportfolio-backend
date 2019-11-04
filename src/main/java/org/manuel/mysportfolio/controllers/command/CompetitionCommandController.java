@@ -6,10 +6,8 @@ import org.manuel.mysportfolio.transformers.CompetitionDtoToCompetitionTransform
 import org.manuel.mysportfolio.transformers.CompetitionToCompetitionDtoTransformer;
 import org.manuel.mysportfolio.transformers.PartialCompetitionDtoToCompetitionTransformer;
 import org.manuel.mysportfolio.validation.NewEntity;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -19,6 +17,7 @@ import javax.validation.groups.Default;
 @RestController
 @RequestMapping("/api/v1/competitions")
 @lombok.AllArgsConstructor
+@lombok.extern.slf4j.Slf4j
 public class CompetitionCommandController {
 
     private final CompetitionCommandService competitionCommandService;
@@ -32,6 +31,7 @@ public class CompetitionCommandController {
         final var location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(saved.getId()).toUri();
+        log.info("Competition with id {}, created by {} saved", saved.getId(), saved.getCreatedBy());
         return ResponseEntity.created(location).body(competitionToCompetitionDtoTransformer.apply(saved));
 
     }

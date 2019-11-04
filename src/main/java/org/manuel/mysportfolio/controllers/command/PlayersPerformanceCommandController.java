@@ -1,6 +1,5 @@
 package org.manuel.mysportfolio.controllers.command;
 
-import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.model.dtos.match.PerformanceDto;
@@ -9,15 +8,12 @@ import org.manuel.mysportfolio.transformers.PerformanceDtoToPerformanceTransform
 import org.manuel.mysportfolio.transformers.PerformanceToPerformanceDtoTransformer;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/matches/{matchId}/performances")
-@AllArgsConstructor
+@lombok.AllArgsConstructor
+@lombok.extern.slf4j.Slf4j
 public class PlayersPerformanceCommandController {
 
     private final PerformanceDtoToPerformanceTransformer performanceDtoToPerformanceTransformer;
@@ -30,6 +26,7 @@ public class PlayersPerformanceCommandController {
             @PathVariable final ObjectId matchId,
             @RequestBody final PerformanceDto performanceDto) {
         final var updated = playersPerformanceCommandService.updatePerformance(matchId, getUserId(), performanceDtoToPerformanceTransformer.apply(performanceDto));
+        log.info("Players performance for player {} patched for Match id {}", getUserId(), matchId);
         return ResponseEntity.ok(performanceToPerformanceDtoTransformer.apply(updated));
     }
 

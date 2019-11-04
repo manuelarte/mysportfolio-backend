@@ -3,6 +3,7 @@ package org.manuel.mysportfolio.controllers.query;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
+import org.manuel.mysportfolio.model.QueryCriteria;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.entities.match.Match;
@@ -14,10 +15,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/matches")
@@ -30,7 +30,8 @@ public class MatchQueryController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<MatchDto<TeamTypeDto, TeamTypeDto>>> findByPage(
-            @PageableDefault(sort = "startDate", direction = Sort.Direction.DESC) final Pageable pageable) {
+            @PageableDefault(sort = "startDate", direction = Sort.Direction.DESC) final Pageable pageable,
+            @RequestParam(required = false) Optional<QueryCriteria> q) {
         return ResponseEntity.ok(matchQueryService.findAllCreatedBy(pageable, getUserId()).map(matchToMatchDtoTransformer));
     }
 

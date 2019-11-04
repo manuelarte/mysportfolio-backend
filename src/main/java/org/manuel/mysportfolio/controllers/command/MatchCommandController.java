@@ -1,6 +1,5 @@
 package org.manuel.mysportfolio.controllers.command;
 
-import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
@@ -24,7 +23,8 @@ import javax.validation.groups.Default;
 
 @RestController
 @RequestMapping("/api/v1/matches")
-@AllArgsConstructor
+@lombok.AllArgsConstructor
+@lombok.extern.slf4j.Slf4j
 public class MatchCommandController {
 
     private final MatchCommandService matchCommandService;
@@ -42,6 +42,7 @@ public class MatchCommandController {
         final var location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(saved.getId()).toUri();
+        log.info("Match with id {}, created by {} saved", saved.getId(), saved.getCreatedBy());
         return ResponseEntity.created(location).body(matchToMatchDtoTransformer.apply(saved));
     }
 
@@ -52,6 +53,7 @@ public class MatchCommandController {
         final var originalMatch = matchQueryService.findOne(matchId).orElseThrow(() ->
                 new EntityNotFoundException(Match.class, matchId.toString()));
         final var updated = matchCommandService.save(matchUpdateDtoToMatchTransformer.apply(originalMatch, matchDto));
+        log.info("Match with id {}, updated by {}", updated.getId(), updated.getLastModifiedBy());
         return ResponseEntity.ok(matchToMatchDtoTransformer.apply(updated));
     }
 
