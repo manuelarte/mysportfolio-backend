@@ -130,7 +130,7 @@ public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTok
         final var attributes = new HashMap<String, Object>();
         attributes.put("sub", payload.getSubject());
         attributes.put("email", payload.getEmail());
-        attributes.put("email_verified", Boolean.valueOf(payload.getEmailVerified()));
+        attributes.put("email_verified", payload.getEmailVerified());
         attributes.put("iss", payload.getIssuer());
         attributes.put("given_name", payload.get("given_name"));
         attributes.put("family_name", payload.get("family_name"));

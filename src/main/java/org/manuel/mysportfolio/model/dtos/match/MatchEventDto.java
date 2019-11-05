@@ -43,7 +43,7 @@ public class MatchEventDto {
 
     @AssertTrue
     @SuppressWarnings("unused")
-    public void containsType() {
-        this.properties.containsKey("type");
+    public boolean containsType() {
+        return this.properties.containsKey("type");
     }
 }

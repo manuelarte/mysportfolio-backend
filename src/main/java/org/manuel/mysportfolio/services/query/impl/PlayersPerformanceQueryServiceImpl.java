@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Component
 @lombok.AllArgsConstructor
-public class PlayersPerformanceQueryServiceImpl implements PlayersPerformanceQueryService {
+class PlayersPerformanceQueryServiceImpl implements PlayersPerformanceQueryService {
 
     private final PlayersPerformanceRepository playersPerformanceRepository;
 

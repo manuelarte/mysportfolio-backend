@@ -1,6 +1,5 @@
 package org.manuel.mysportfolio.transformers.match;
 
-import org.manuel.mysportfolio.model.dtos.team.AnonymousTeamDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamDto;
 import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 import org.springframework.stereotype.Component;

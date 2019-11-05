@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class CompetitionQueryServiceImpl implements CompetitionQueryService {
+class CompetitionQueryServiceImpl implements CompetitionQueryService {
 
     private final CompetitionRepository competitionRepository;
 

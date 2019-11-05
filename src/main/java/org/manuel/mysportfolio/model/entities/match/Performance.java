@@ -1,13 +1,10 @@
 package org.manuel.mysportfolio.model.entities.match;
 
 import java.math.BigDecimal;
-import java.util.Map;
+
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @lombok.Data
 @lombok.AllArgsConstructor

@@ -1,6 +1,5 @@
 package org.manuel.mysportfolio.transformers.match;
 
-import org.manuel.mysportfolio.model.dtos.team.RegisteredTeamDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamDto;
 import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
 import org.manuel.mysportfolio.repositories.TeamRepository;
@@ -18,11 +17,11 @@ public class RegisteredTeamToTeamInMatchInListDtoTransformer implements Function
     public TeamDto apply(final RegisteredTeam registeredTeam) {
         final var team = teamRepository.findById(registeredTeam.getTeamId())
                 .orElseThrow(() -> new IllegalArgumentException(String.format("The team with id %s not found", registeredTeam.getTeamId())));
-        return registeredTeam == null ? null : TeamDto.builder()
-                .id(team.getId().toString())
-                .name(team.getName())
-                .imageLink(team.getImageLink())
-                .build();
+        return TeamDto.builder()
+                        .id(team.getId().toString())
+                        .name(team.getName())
+                        .imageLink(team.getImageLink())
+                        .build();
     }
 
 }

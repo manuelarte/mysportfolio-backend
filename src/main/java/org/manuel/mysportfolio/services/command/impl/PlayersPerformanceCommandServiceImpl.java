@@ -3,7 +3,6 @@ package org.manuel.mysportfolio.services.command.impl;
 import java.util.HashMap;
 
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.entities.match.Performance;
 import org.manuel.mysportfolio.model.entities.match.PlayersPerformance;
 import org.manuel.mysportfolio.repositories.PlayersPerformanceRepository;

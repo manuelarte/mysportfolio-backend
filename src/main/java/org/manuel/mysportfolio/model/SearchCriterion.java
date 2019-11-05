@@ -1,7 +1,6 @@
 package org.manuel.mysportfolio.model;
 
 import org.manuel.mysportfolio.config.operators.QueryOperator;
-import org.springframework.data.mongodb.core.query.Criteria;
 
 @lombok.AllArgsConstructor
 @lombok.Data

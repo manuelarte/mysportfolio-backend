@@ -9,7 +9,6 @@ import org.manuel.mysportfolio.validation.PartialUpdateEntity;
 import org.manuel.mysportfolio.validation.UpdateEntity;
 
 import javax.validation.constraints.*;
-import java.net.URL;
 
 /**
  * Dto to use when the user is registering a new team

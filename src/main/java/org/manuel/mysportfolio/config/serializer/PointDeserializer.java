@@ -23,7 +23,7 @@ public class PointDeserializer extends StdDeserializer<Point> {
     public Point deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
         final var node = jp.getCodec().readTree(jp);
         final double x = ((DoubleNode) node.get("x")).doubleValue();
-        final double y = ((DoubleNode) node.get("y")).doubleValue();;
+        final double y = ((DoubleNode) node.get("y")).doubleValue();
 
         return new Point(x, y);
     }

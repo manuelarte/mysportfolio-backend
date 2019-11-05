@@ -2,21 +2,13 @@ package org.manuel.mysportfolio.model.entities;
 
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
-import org.manuel.mysportfolio.model.SportType;
-import org.manuel.mysportfolio.model.entities.TeamOption;
-import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
 import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.DayOfWeek;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @Document(collection = "competitions")
 @lombok.Data

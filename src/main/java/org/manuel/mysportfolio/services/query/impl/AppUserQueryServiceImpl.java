@@ -1,6 +1,5 @@
 package org.manuel.mysportfolio.services.query.impl;
 
-import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
@@ -12,8 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
-public class AppUserQueryServiceImpl implements AppUserQueryService {
+@lombok.AllArgsConstructor
+class AppUserQueryServiceImpl implements AppUserQueryService {
 
     private final AppUserRepository appUserRepository;
 

@@ -24,6 +24,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/matches")
 @lombok.AllArgsConstructor
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class MatchQueryController {
 
     private final MatchQueryService matchQueryService;

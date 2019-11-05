@@ -2,7 +2,6 @@ package org.manuel.mysportfolio.config.database;
 
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.match.Match;
-import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
 import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;

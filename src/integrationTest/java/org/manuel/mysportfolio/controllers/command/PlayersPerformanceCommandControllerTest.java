@@ -2,7 +2,7 @@ package org.manuel.mysportfolio.controllers.command;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
-import org.hamcrest.Matchers;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,6 @@ import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.dtos.match.PerformanceDto;
 import org.manuel.mysportfolio.repositories.MatchRepository;
 import org.manuel.mysportfolio.repositories.PlayersPerformanceRepository;
-import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;

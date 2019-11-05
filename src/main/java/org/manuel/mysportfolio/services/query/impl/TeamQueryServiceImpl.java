@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class TeamQueryServiceImpl implements TeamQueryService {
+class TeamQueryServiceImpl implements TeamQueryService {
 
     private final TeamRepository teamRepository;
 

@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Service
 @lombok.AllArgsConstructor
-public class AppUserCommandServiceImpl implements AppUserCommandService {
+class AppUserCommandServiceImpl implements AppUserCommandService {
 
     private final AppUserRepository appUserRepository;
 

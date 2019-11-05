@@ -7,12 +7,9 @@ import org.manuel.mysportfolio.model.QueryCriteria;
 import org.manuel.mysportfolio.model.SearchCriterion;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.services.TypeConversionService;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.util.Pair;
 
 import java.util.Collections;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class QueryCriteriaToMongoQueryTransformerTest {
     

@@ -6,13 +6,10 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.config.AppConfig;
 import org.manuel.mysportfolio.model.dtos.match.MatchEventDto;
-import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
-import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MatchEventDtoTest {
 

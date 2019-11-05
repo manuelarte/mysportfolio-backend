@@ -57,7 +57,7 @@ public class StringToQueryCriteriaConverter implements Converter<String, QueryCr
         if (key.length() == 0 || operator == null || value.length() == 0) {
             throw new RuntimeException(String.format("Query param %s malformed", string));
         }
-        return new SearchCriterion(key.toString(), operator, value.toString());
+        return new SearchCriterion<>(key.toString(), operator, value.toString());
     }
 
     private boolean isOperator(final char c) {

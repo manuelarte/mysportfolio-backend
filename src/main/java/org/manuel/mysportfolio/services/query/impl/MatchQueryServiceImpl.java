@@ -12,13 +12,12 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class MatchQueryServiceImpl implements MatchQueryService {
+class MatchQueryServiceImpl implements MatchQueryService {
 
     private final MatchRepository matchRepository;
 

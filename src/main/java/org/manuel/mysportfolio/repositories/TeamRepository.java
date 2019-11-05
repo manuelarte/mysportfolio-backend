@@ -1,7 +1,6 @@
 package org.manuel.mysportfolio.repositories;
 
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.team.Team;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

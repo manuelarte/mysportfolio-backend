@@ -2,7 +2,6 @@ package org.manuel.mysportfolio.repositories;
 
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.Competition;
-import org.manuel.mysportfolio.model.entities.match.Match;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;

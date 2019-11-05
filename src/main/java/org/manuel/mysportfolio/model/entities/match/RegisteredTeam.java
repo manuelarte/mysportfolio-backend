@@ -3,10 +3,7 @@ package org.manuel.mysportfolio.model.entities.match;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedBy;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.net.URL;
 
 @lombok.Data
 @lombok.AllArgsConstructor

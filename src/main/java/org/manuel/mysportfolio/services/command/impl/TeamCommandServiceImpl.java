@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Service
 @lombok.AllArgsConstructor
-public class TeamCommandServiceImpl implements TeamCommandService {
+class TeamCommandServiceImpl implements TeamCommandService {
 
     private final TeamRepository teamRepository;
 

@@ -9,12 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.config.AppConfig;
 import org.manuel.mysportfolio.model.dtos.team.AnonymousTeamDto;
 import org.manuel.mysportfolio.model.dtos.team.RegisteredTeamDto;
-import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
