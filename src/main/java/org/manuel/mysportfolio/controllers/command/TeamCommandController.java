@@ -8,6 +8,7 @@ import org.manuel.mysportfolio.transformers.team.TeamDtoToExistingTeamTransforme
 import org.manuel.mysportfolio.transformers.team.TeamDtoToTeamTransformer;
 import org.manuel.mysportfolio.transformers.team.TeamToTeamDtoTransformer;
 import org.manuel.mysportfolio.validation.NewEntity;
+import org.manuel.mysportfolio.validation.PartialUpdateEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -48,7 +49,7 @@ public class TeamCommandController {
 
     @PatchMapping(value = "/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<TeamDto> partialUpdateTeam(@PathVariable final String teamId,
-                                                     @Validated(Default.class) @RequestBody final TeamDto teamDto) {
+                                                     @Validated({ Default.class, PartialUpdateEntity.class} ) @RequestBody final TeamDto teamDto) {
         final var updated = partialTeamDtoToTeamTransformer.apply(teamId, teamDto);
         return ResponseEntity.ok(teamToTeamDtoTransformer.apply(teamCommandService.save(updated)));
 

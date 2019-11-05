@@ -23,8 +23,13 @@ public class CompetitionQueryServiceImpl implements CompetitionQueryService {
     }
 
     @Override
-    public Page<Competition> findAllCreatedBy(final Pageable pageable, final String userId) {
-        return competitionRepository.findAllByCreatedByIs(pageable, userId);
+    public Page<Competition> findAllCreatedBy(final Pageable pageable, final String createdBy) {
+        return competitionRepository.findAllByCreatedByIs(pageable, createdBy);
+    }
+
+    @Override
+    public int countAllByCreatedBy(final String createdBy) {
+        return competitionRepository.countAllByCreatedBy(createdBy);
     }
 
 }

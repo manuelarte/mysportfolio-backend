@@ -1,6 +1,5 @@
 package org.manuel.mysportfolio.repositories;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,6 +7,7 @@ import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
+import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -17,6 +17,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
@@ -64,18 +65,11 @@ public class MatchRepositoryTest {
         });
     }
 
-    @DisplayName("load match by query for start date")
+    @DisplayName("load matches by created date, one match recorded yesterday")
     @Test
     public void testGetMatchesWithStartDateGreaterThan() {
-        final var expected = new Match<AnonymousTeam, AnonymousTeam>();
-        expected.setHomeTeam(TestUtils.createMockAnonymousTeam());
-        expected.setAwayTeam(TestUtils.createMockAnonymousTeam());
-        expected.setStartDate(Instant.now());
-
-        final var notExpected = new Match<AnonymousTeam, AnonymousTeam>();
-        notExpected.setHomeTeam(TestUtils.createMockAnonymousTeam());
-        notExpected.setAwayTeam(TestUtils.createMockAnonymousTeam());
-        notExpected.setStartDate(Instant.now().minus(80, ChronoUnit.DAYS));
+        final var expected = createMatch("1234", Instant.now());
+        final var notExpected = createMatch("1234", Instant.now().minus(80, ChronoUnit.DAYS));
 
         matchRepository.save(expected);
         matchRepository.save(notExpected);
@@ -91,9 +85,47 @@ public class MatchRepositoryTest {
         assertMatch(expected, allByQuery.getContent().get(0));
     }
 
+    @DisplayName("load matches by created date, two matches expected recorded in same day")
+    @Test
+    public void testGetMatchesBetweenDate() {
+
+        // match played yesterday and recorded yesterday
+        final var expected = createMatch("123456", Instant.now().minus(1, ChronoUnit.DAYS));
+
+        // match played long ago but recorded yesterday
+        final var expected2 = createMatch("123456", Instant.now().minus(30, ChronoUnit.DAYS),
+                Instant.now().minus(1, ChronoUnit.DAYS));
+
+        // match played long long time ago and recorded long long time ago
+        final var notExpected = createMatch("123456", Instant.now().minus(80, ChronoUnit.DAYS));
+
+        matchRepository.save(expected);
+        matchRepository.save(expected2);
+        matchRepository.save(notExpected);
+
+        final LocalDate localDate = LocalDate.now().minus(16, ChronoUnit.DAYS);
+
+        final var count = matchRepository.countAllByCreatedDateBetweenAndCreatedBy(localDate, LocalDate.now(), "123456");
+        assertEquals(2, count);
+    }
+
     private void assertMatch(final Match expected, final Match actual) {
         assertEquals(expected.getId(), actual.getId());
         assertEquals(expected.getStartDate().toEpochMilli(), actual.getStartDate().toEpochMilli());
+    }
+
+    private Match<TeamType, TeamType> createMatch(final String createdBy, final Instant startDate) {
+        return createMatch(createdBy, startDate, startDate);
+    }
+
+    private Match<TeamType, TeamType> createMatch(final String createdBy, final Instant startDate, final Instant createdDate) {
+        final var expected = new Match<>();
+        expected.setHomeTeam(TestUtils.createMockAnonymousTeam());
+        expected.setAwayTeam(TestUtils.createMockAnonymousTeam());
+        expected.setStartDate(startDate);
+        expected.setCreatedBy(createdBy);
+        expected.setCreatedDate(createdDate);
+        return expected;
     }
 
 

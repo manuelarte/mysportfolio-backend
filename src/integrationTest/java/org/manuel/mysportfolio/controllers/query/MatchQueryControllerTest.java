@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(ITConfiguration.class)
 @ExtendWith({SpringExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class MatchQueryControllerTest {
+class MatchQueryControllerTest {
 
     @Autowired
     private TeamRepository teamRepository;
@@ -45,7 +45,6 @@ public class MatchQueryControllerTest {
     @BeforeEach
     public void setup() {
         mvc = MockMvcBuilders.webAppContextSetup(context)
-                // TODO CHECK TO REMOVE THAT, AND USE THE USER ID PROVIDER MAYBE
                 .apply(springSecurity())
                 .build();
     }

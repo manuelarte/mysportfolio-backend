@@ -13,4 +13,6 @@ public interface TeamRepository extends PagingAndSortingRepository<Team, ObjectI
 
     Page<Team> findAllByCreatedByIs(Pageable pageable, String createdBy);
 
+    int countAllByCreatedBy(String createdBy);
+
 }

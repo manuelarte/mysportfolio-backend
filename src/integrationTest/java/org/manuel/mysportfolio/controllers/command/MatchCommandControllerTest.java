@@ -58,6 +58,7 @@ public class MatchCommandControllerTest {
     @BeforeEach
     public void setup() {
         mvc = MockMvcBuilders.webAppContextSetup(context)
+                .apply(springSecurity())
                 .build();
     }
 

@@ -27,4 +27,9 @@ public class TeamQueryServiceImpl implements TeamQueryService {
         return teamRepository.findById(id);
     }
 
+    @Override
+    public int countAllByCreatedBy(final String createdBy) {
+        return teamRepository.countAllByCreatedBy(createdBy);
+    }
+
 }

@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.config;
 
+import org.manuel.mysportfolio.model.entities.user.AppMembership;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,7 +35,7 @@ public class DevBearerTokenAuthenticationConverterFilter implements BearerTokenA
 
         // attributes
         final var attributes = new HashMap<String, Object>();
-        attributes.put("sub", 123456789);
+        attributes.put("sub", "123456789");
         attributes.put("email_verified", true);
         attributes.put("iss", "https://accounts.google.com");
         attributes.put("given_name", "Test");
@@ -43,6 +44,7 @@ public class DevBearerTokenAuthenticationConverterFilter implements BearerTokenA
         attributes.put("email", "test@test.com");
         attributes.put("picture", "https://lh3.googleusercontent.com/a-/AAuE7mBk0hY2RSA_JMUDFNo2wT54GjycNKMGgtLfw5X1LpQ=s96-c");
         //aud=[318145913734-n58mtpcgt54rq5ni4rb4bpaf3huf5tfq.apps.googleusercontent.com]
+        attributes.put("app-membership", AppMembership.FREE);
 
         final var principal = new DefaultOAuth2User(new HashSet<>(authorities), attributes, "name");
 

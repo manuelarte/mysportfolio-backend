@@ -12,4 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface CompetitionRepository extends PagingAndSortingRepository<Competition, ObjectId> {
 
     Page<Competition> findAllByCreatedByIs(Pageable pageable, String createdBy);
+
+    int countAllByCreatedBy(String createdBy);
+
 }

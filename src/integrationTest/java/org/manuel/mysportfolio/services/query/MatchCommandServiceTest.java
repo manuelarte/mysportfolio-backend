@@ -15,10 +15,20 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -56,9 +66,18 @@ class MatchCommandServiceTest {
         final var criteria = Criteria.where("sport").is(Sport.FOOTBALL);
         query.addCriteria(criteria);
 
-        final var allByQuery = matchQueryService.findQueryAllCreatedBy(query, Pageable.unpaged(), "123456789");
-        assertEquals(1, allByQuery.getTotalElements());
-        assertMatch(expected, allByQuery.getContent().get(0));
+        try {
+            final Set<GrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+            final OAuth2User principal = new DefaultOAuth2User(authorities, Collections.singletonMap("sub", "123456789"), "sub");
+            final Authentication authentication = new OAuth2AuthenticationToken(principal, authorities, "sub");
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            final var allByQuery = matchQueryService.findQueryAllCreatedBy(query, Pageable.unpaged(), "123456789");
+            assertEquals(1, allByQuery.getTotalElements());
+            assertMatch(expected, allByQuery.getContent().get(0));
+        } finally {
+            SecurityContextHolder.clearContext();
+        }
+
     }
 
     private void assertMatch(final Match expected, final Match actual) {

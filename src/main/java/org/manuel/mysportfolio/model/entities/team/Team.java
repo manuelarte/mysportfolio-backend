@@ -5,6 +5,7 @@ import org.manuel.mysportfolio.model.TeamInfo;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
@@ -21,6 +22,9 @@ public class Team implements TeamInfo {
 
     @Id
     private ObjectId id;
+
+    @Version
+    private Long version;
 
     @NotEmpty
     @Size(max = 30)

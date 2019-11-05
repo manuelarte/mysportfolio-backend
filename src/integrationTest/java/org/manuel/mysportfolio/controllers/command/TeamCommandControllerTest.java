@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -45,6 +46,7 @@ public class TeamCommandControllerTest {
     @BeforeEach
     public void setup() {
         mvc = MockMvcBuilders.webAppContextSetup(context)
+                .apply(springSecurity())
                 .build();
     }
 
@@ -75,8 +77,11 @@ public class TeamCommandControllerTest {
 
     @Test
     public void testPartialUpdateTeam() throws Exception {
-        final var originalTeam = teamRepository.save(TestUtils.createMockTeam());
+        final var originalTeam = TestUtils.createMockTeam();
+        originalTeam.setCreatedBy("123456789");
+        final var originalTeamSaved = teamRepository.save(originalTeam);
         final var teamDto = TeamDto.builder()
+                .version(originalTeamSaved.getVersion())
                 .name("new name")
                 .build();
 

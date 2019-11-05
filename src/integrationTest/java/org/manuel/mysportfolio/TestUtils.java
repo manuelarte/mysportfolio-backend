@@ -89,7 +89,7 @@ public class TestUtils {
         match.setType(SportType.ELEVEN_A_SIDE);
         match.setHomeTeam(homeTeam);
         match.setAwayTeam(awayTeam);
-        // match.setCreatedBy(createdBy);
+        match.setCreatedBy(createdBy);
         return match;
     }
 

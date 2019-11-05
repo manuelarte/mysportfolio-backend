@@ -7,16 +7,24 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Optional;
 
 public interface MatchQueryService {
 
-    @PostAuthorize("hasRole('ROLE_ADMIN') or #returnObject.orElse(null)?.createdBy == authentication.principal.attributes['sub']")
+    @PostAuthorize("hasRole('ROLE_ADMIN') or returnObject.orElse(null)?.createdBy == authentication.principal.attributes['sub']")
     Optional<Match<? extends TeamType, ? extends TeamType>> findOne(ObjectId id);
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #createdBy == authentication.principal.attributes['sub']")
     Page<Match<TeamType, TeamType>> findAllCreatedBy(Pageable pageable, String createdBy);
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #createdBy == authentication.principal.attributes['sub']")
     Page<Match<TeamType, TeamType>> findQueryAllCreatedBy(Query query, Pageable pageable, String createdBy);
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #createdBy == authentication.principal.attributes['sub']")
+    int countAllByCreatedDateBetweenAndCreatedBy(LocalDate from, LocalDate to, String createdBy);
 
 }

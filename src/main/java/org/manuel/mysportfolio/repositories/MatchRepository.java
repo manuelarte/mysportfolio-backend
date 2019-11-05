@@ -8,10 +8,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
+import java.time.LocalDate;
+
 @Repository
 public interface MatchRepository
         extends PagingAndSortingRepository<Match<? extends TeamType, ? extends TeamType>, ObjectId>, MatchRepositoryCustom {
 
     Page<Match<TeamType, TeamType>> findAllByCreatedByIs(Pageable pageable, String createdBy);
+
+    int countAllByCreatedDateBetweenAndCreatedBy(LocalDate from, LocalDate to, String createdBy);
 
 }

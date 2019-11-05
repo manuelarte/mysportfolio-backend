@@ -1,13 +1,13 @@
 package org.manuel.mysportfolio.config;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.BasicAuthentication;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Strings;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.model.entities.user.AuthProvider;
-import org.manuel.mysportfolio.model.entities.user.Membership;
+import org.manuel.mysportfolio.model.entities.user.AppMembership;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.services.command.AppUserCommandService;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,11 +23,13 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Supplier;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Component
 @Profile("prod")
+@lombok.extern.slf4j.Slf4j
 public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTokenAuthenticationConverterFilter {
 
     private final GoogleIdTokenVerifier verifier;
@@ -71,64 +73,45 @@ public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTok
 
                     // Get profile information from payload
                     final var email = payload.getEmail();
-                    final var emailVerified = Boolean.valueOf(payload.getEmailVerified());
                     final var name = (String) payload.get("name");
-                    final var pictureUrl = (String) payload.get("picture");
-                    final var locale = (String) payload.get("locale");
-                    final var familyName = (String) payload.get("family_name");
-                    final var givenName = (String) payload.get("given_name");
 
                     // Use or store profile information
-                    // ...
-                    AppUser appUser = null;
-                    try {
-                        SecurityContextHolder.getContext().setAuthentication(new SystemAuthentication());
-                        appUser = appUserRepository.findByExternalId(userId).orElseGet(
-                                () -> AppUser.builder()
-                                        .fullName(name)
-                                        .email(email)
-                                        .authProvider(AuthProvider.GOOGLE)
-                                        .externalId(userId)
-                                        .membership(Membership.FREE)
-                                        .build()
-                        );
-                    } finally {
-                        SecurityContextHolder.clearContext();
-                    }
+                    final AppUser appUser = doWithSystemAuthentication(
+                            () -> appUserRepository.findByExternalId(userId).orElseGet(
+                                    () -> AppUser.builder()
+                                            .fullName(name)
+                                            .email(email)
+                                            .authProvider(AuthProvider.GOOGLE)
+                                            .externalId(userId)
+                                            .appMembership(AppMembership.FREE)
+                                            .build())
+                    );
 
 
                     final var authorities = new ArrayList<GrantedAuthority>();
                     authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-                    if (appUser.getAdmin() == true) {
+                    if (Boolean.TRUE.equals(appUser.getAdmin())) {
                         authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
                     }
-                    final var attributes = new HashMap<String, Object>();
-                    attributes.put("sub", userId);
-                    attributes.put("email_verified", emailVerified);
-                    attributes.put("iss", payload.getIssuer());
-                    attributes.put("given_name", givenName);
-                    attributes.put("family_name", familyName);
-                    attributes.put("name", name);
-                    attributes.put("email", email);
-                    attributes.put("picture", pictureUrl);
+                    final var attributes = createAttributes(payload);
+                    // custom attributes
+                    attributes.put("app-membership", appUser.getAppMembership());
 
                     final var principal = new DefaultOAuth2User(new HashSet<>(authorities), attributes, "name");
                     final var oAuth2AuthenticationToken =
                             new OAuth2AuthenticationToken(principal, authorities, "clientRegistrationId");
                     SecurityContextHolder.getContext().setAuthentication(oAuth2AuthenticationToken);
 
+                    // TODO check if do it in aspect
                     if (appUser.isNew()) {
-                        // TODO check if do it in aspect
                         appUserCommandService.save(appUser);
                     }
                 } else {
-                    // TODO log that they are trying to access with invalid token
-                    System.out.println("Invalid ID token.");
+                    log.info("Invalid ID token");
                 }
 
             } catch(final Exception e) {
-                // TODO log that they are trying to access with invalid token
-                System.out.println("Error when validating token.");
+                log.info("Error when validating token.");
             }
         }
         chain.doFilter(request, response);
@@ -138,4 +121,34 @@ public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTok
     public void destroy() {
 
     }
+
+    private Map<String, Object> createAttributes(final GoogleIdToken.Payload payload) {
+
+        // Get profile information from payload
+        // final var locale = (String) payload.get("locale");
+
+        final var attributes = new HashMap<String, Object>();
+        attributes.put("sub", payload.getSubject());
+        attributes.put("email", payload.getEmail());
+        attributes.put("email_verified", Boolean.valueOf(payload.getEmailVerified()));
+        attributes.put("iss", payload.getIssuer());
+        attributes.put("given_name", payload.get("given_name"));
+        attributes.put("family_name", payload.get("family_name"));
+        attributes.put("name", payload.get("name"));
+
+        attributes.put("picture", payload.get("picture"));
+
+        return attributes;
+    }
+
+    private AppUser doWithSystemAuthentication(final Supplier<AppUser> action) {
+        try {
+            SecurityContextHolder.getContext().setAuthentication(new SystemAuthentication());
+            return action.get();
+        } finally {
+            SecurityContextHolder.clearContext();
+        }
+    }
+
+
 }

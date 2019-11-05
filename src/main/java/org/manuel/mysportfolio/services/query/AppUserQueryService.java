@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface AppUserQueryService {
 
     // TODO add rights
-    @PostAuthorize("hasRole('ROLE_ADMIN') or #returnObject.orElse(null)?.externalId == authentication.principal.attributes['sub']")
+    @PostAuthorize("hasRole('ROLE_ADMIN') or returnObject.orElse(null)?.externalId == authentication.principal.attributes['sub']")
     Optional<AppUser> findOne(ObjectId id);
 
     // TODO add rights

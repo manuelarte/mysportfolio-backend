@@ -12,6 +12,8 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -26,14 +28,19 @@ public class MatchQueryServiceImpl implements MatchQueryService {
     }
 
     @Override
-    public Page<Match<TeamType, TeamType>> findAllCreatedBy(final Pageable pageable, final String userId) {
-        return matchRepository.findAllByCreatedByIs(pageable, userId);
+    public Page<Match<TeamType, TeamType>> findAllCreatedBy(final Pageable pageable, final String createdBy) {
+        return matchRepository.findAllByCreatedByIs(pageable, createdBy);
     }
 
     @Override
     public Page<Match<TeamType, TeamType>> findQueryAllCreatedBy(final Query query, final Pageable pageable, final String createdBy) {
         query.addCriteria(Criteria.where("createdBy").is(createdBy));
         return matchRepository.findQueryAllCreatedBy(query, pageable);
+    }
+
+    @Override
+    public int countAllByCreatedDateBetweenAndCreatedBy(final LocalDate from, final LocalDate to, final String createdBy) {
+        return matchRepository.countAllByCreatedDateBetweenAndCreatedBy(from, to, createdBy);
     }
 
 }

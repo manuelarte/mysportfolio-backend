@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface PlayersPerformanceQueryService {
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #playerId == authentication.principal.attributes['sub']")
+    @PostAuthorize("hasRole('ROLE_ADMIN') or !returnObject.present or #playerId == authentication.principal.attributes['sub']")
     Optional<Performance> findByMatchIdAndPlayerId(ObjectId matchId, String playerId);
 
 }
