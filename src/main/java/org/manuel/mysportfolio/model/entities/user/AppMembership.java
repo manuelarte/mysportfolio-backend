@@ -6,9 +6,7 @@ import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.time.DayOfWeek;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
