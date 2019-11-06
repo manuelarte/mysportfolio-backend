@@ -19,14 +19,14 @@ class QueryCriteriaToMongoQueryTransformerTest {
     @Test
     public void test() {
         final var first = new SearchCriterion<>("startDate",
-                new GreaterThanQueryOperator(), "2019-10-20T14:12:04.537881500Z");
+                new GreaterThanQueryOperator(), "2019-10-20");
 
         final var second = new SearchCriterion<>("startDate",
-                new LowerThanQueryOperator(), "2019-11-04T14:12:04.537881500Z");
+                new LowerThanQueryOperator(), "2019-11-04");
 
 
         final QueryCriteria queryCriteria = new QueryCriteria(new SearchCriterion<>("startDate", 
-                new GreaterThanQueryOperator(), "2019-11-04T14:12:04.537881500Z"),
+                new GreaterThanQueryOperator(), "2019-11-04"),
                 Collections.singletonList(Pair.of(QueryCriteria.QueryOption.AND, second)));
 
         final var query = QUERY_CRITERIA_TO_MONGO_QUERY_TRANSFORMER.apply(queryCriteria, Match.class);
