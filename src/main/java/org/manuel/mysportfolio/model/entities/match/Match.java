@@ -52,6 +52,10 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
 
     private List<MatchEvent> events = new ArrayList<>();
 
+    private String description;
+
+    private Set<String> chips;
+
     @CreatedBy
     @NotNull
     private String createdBy;
@@ -66,44 +70,20 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
     @LastModifiedDate
     private Instant lastModifiedDate;
 
-    private String description;
-
-    private Set<String> chips;
-
     public Optional<String> getCreatedBy() {
         return Optional.ofNullable(createdBy);
-    }
-
-    @SuppressWarnings("unused")
-    public void setCreatedBy(final String createdBy) {
-        this.createdBy = createdBy;
     }
 
     public Optional<Instant> getCreatedDate() {
         return Optional.ofNullable(createdDate);
     }
 
-    @SuppressWarnings("unused")
-    public void setCreatedDate(final Instant createdDate) {
-        this.createdDate = createdDate;
-    }
-
     public Optional<String> getLastModifiedBy() {
         return Optional.ofNullable(lastModifiedBy);
     }
 
-    @SuppressWarnings("unused")
-    public void setLastModifiedBy(final String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
     public Optional<Instant> getLastModifiedDate() {
         return Optional.ofNullable(lastModifiedDate);
-    }
-
-    @SuppressWarnings("unused")
-    public void setLastModifiedDate(final Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
     }
 
     @AssertTrue

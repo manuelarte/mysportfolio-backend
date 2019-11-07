@@ -24,8 +24,8 @@ public class TeamDtoToExistingTeamTransformer implements BiFunction<String, Team
         team.setId(originalTeam.getId());
         team.setName(teamDto.getName());
         team.setImageLink(teamDto.getImageLink());
-        team.setCreatedBy(originalTeam.getCreatedBy());
-        team.setCreatedDate(originalTeam.getCreatedDate());
+        team.setCreatedBy(originalTeam.getCreatedBy().orElse(null));
+        team.setCreatedDate(originalTeam.getCreatedDate().orElse(null));
 
         return team;
     }

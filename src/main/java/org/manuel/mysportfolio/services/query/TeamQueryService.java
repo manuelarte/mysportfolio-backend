@@ -13,7 +13,7 @@ public interface TeamQueryService {
     //@PostAuthorize("hasRole('ROLE_ADMIN') or returnObject.content[]?.createdBy == authentication.principal.attributes['sub']")
     Page<Team> findAllCreatedBy(Pageable pageable, String createdBy);
 
-    @PostAuthorize("hasRole('ROLE_ADMIN') or returnObject.orElse(null)?.createdBy == authentication.principal.attributes['sub']")
+    @PostAuthorize("hasRole('ROLE_ADMIN') or returnObject.orElse(null)?.createdBy.get() == authentication.principal.attributes['sub']")
     Optional<Team> findOne(ObjectId id);
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or #createdBy == authentication.principal.attributes['sub']")

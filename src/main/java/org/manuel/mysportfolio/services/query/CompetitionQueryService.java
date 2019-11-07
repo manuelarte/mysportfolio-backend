@@ -14,7 +14,7 @@ public interface CompetitionQueryService {
     //@PostAuthorize("hasRole('ROLE_ADMIN') or returnObject.orElse(null)?.createdBy == authentication.principal.attributes['sub']")
     Page<Competition> findAllCreatedBy(Pageable pageable, String createdBy);
 
-    @PostAuthorize("hasRole('ROLE_ADMIN') or returnObject.orElse(null)?.createdBy == authentication.principal.attributes['sub']")
+    @PostAuthorize("hasRole('ROLE_ADMIN') or returnObject.orElse(null)?.createdBy.get() == authentication.principal.attributes['sub']")
     Optional<Competition> findOne(ObjectId id);
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or #createdBy == authentication.principal.attributes['sub']")

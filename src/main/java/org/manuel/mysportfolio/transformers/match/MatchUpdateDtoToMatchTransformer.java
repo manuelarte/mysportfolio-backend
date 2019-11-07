@@ -31,8 +31,8 @@ public class MatchUpdateDtoToMatchTransformer implements
         updatedMatch.setId(originalMatch.getId());
         updatedMatch.setCreatedBy(originalMatch.getCreatedBy().get());
         updatedMatch.setCreatedDate(originalMatch.getCreatedDate().get());
-        updatedMatch.setLastModifiedBy(originalMatch.getLastModifiedBy().get());
-        updatedMatch.setLastModifiedDate(originalMatch.getLastModifiedDate().get());
+        updatedMatch.setLastModifiedBy(originalMatch.getLastModifiedBy().orElse(null));
+        updatedMatch.setLastModifiedDate(originalMatch.getLastModifiedDate().orElse(null));
 
         // Fields that can be modified
         updatedMatch.setVersion(matchUpdateDto.getVersion());

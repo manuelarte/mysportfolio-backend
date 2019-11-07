@@ -3,19 +3,21 @@ package org.manuel.mysportfolio.model.entities;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
 import org.springframework.data.annotation.*;
+import org.springframework.data.domain.Auditable;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.DayOfWeek;
 import java.time.Instant;
+import java.util.Optional;
 
 @Document(collection = "competitions")
 @lombok.Data
 @lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
 @lombok.Builder(toBuilder = true)
-public class Competition {
+public class Competition implements Auditable<String, ObjectId, Instant> {
 
     @Id
     private ObjectId id;
@@ -35,21 +37,36 @@ public class Competition {
     private String description;
 
     @CreatedBy
-    @NotNull
     private String createdBy;
 
     @CreatedDate
-    @NotNull
     private Instant createdDate;
 
-    @SuppressWarnings("unused")
-    private void setCreatedBy(final String createdBy) {
-        this.createdBy = createdBy;
+    @LastModifiedBy
+    private String lastModifiedBy;
+
+    @LastModifiedDate
+    private Instant lastModifiedDate;
+
+    public Optional<String> getCreatedBy() {
+        return Optional.ofNullable(createdBy);
     }
 
-    @SuppressWarnings("unused")
-    private void setCreatedDate(final Instant createdDate) {
-        this.createdDate = createdDate;
+    public Optional<Instant> getCreatedDate() {
+        return Optional.ofNullable(createdDate);
+    }
+
+    public Optional<String> getLastModifiedBy() {
+        return Optional.ofNullable(lastModifiedBy);
+    }
+
+    public Optional<Instant> getLastModifiedDate() {
+        return Optional.ofNullable(lastModifiedDate);
+    }
+
+    @Override
+    public boolean isNew() {
+        return id == null;
     }
 
 }

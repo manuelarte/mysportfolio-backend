@@ -1,16 +1,17 @@
 package org.manuel.mysportfolio.config;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Strings;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
+import org.manuel.mysportfolio.model.entities.user.AppMembership;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.model.entities.user.AuthProvider;
-import org.manuel.mysportfolio.model.entities.user.AppMembership;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.services.command.AppUserCommandService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,7 +23,10 @@ import org.springframework.stereotype.Component;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.function.Supplier;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -30,23 +34,23 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @Component
 @Profile("prod")
 @lombok.extern.slf4j.Slf4j
-public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTokenAuthenticationConverterFilter {
+public class FirebaseBearerTokenAuthenticationConverterFilter implements BearerTokenAuthenticationConverterFilter {
 
-    private final GoogleIdTokenVerifier verifier;
     private final AppUserRepository appUserRepository;
     private final AppUserCommandService appUserCommandService;
 
-    public GoogleBearerTokenAuthenticationConverterFilter(
-            @Value("${authentication.client-id}") final String clientId,
+    public FirebaseBearerTokenAuthenticationConverterFilter(
             final AppUserRepository appUserRepository,
-            final AppUserCommandService appUserCommandService) {
-        final var transport = new NetHttpTransport();
-        final var jacksonFactory = new JacksonFactory();
-        verifier = new GoogleIdTokenVerifier.Builder(transport, jacksonFactory)
-                // Specify the CLIENT_ID of the app that accesses the backend:
-                .setAudience(Collections.singletonList(clientId))
-                .setAcceptableTimeSkewSeconds(10000000)
+            final AppUserCommandService appUserCommandService) throws IOException {
+        final var serviceAccount = this.getClass().getClassLoader().getResourceAsStream("./mysportfolio-test-firebase-adminsdk-e6qol-ea622e03c3.json");
+
+        final var options = new FirebaseOptions.Builder()
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .setDatabaseUrl("https://mysportfolio-test.firebaseio.com")
                 .build();
+
+        FirebaseApp.initializeApp(options);
+
 
         this.appUserRepository = appUserRepository;
         this.appUserCommandService = appUserCommandService;
@@ -61,22 +65,19 @@ public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTok
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         final var httpRequest = (HttpServletRequest) request;
         final var authorizationHeaderValue = httpRequest.getHeader(AUTHORIZATION);
+
         if (!Strings.isNullOrEmpty(authorizationHeaderValue) && authorizationHeaderValue.contains("Bearer ")) {
             final var idTokenString = httpRequest.getHeader(AUTHORIZATION).substring(7);
             try {
-                final var idToken = verifier.verify(idTokenString);
-                if (idToken != null) {
-                    final var payload = idToken.getPayload();
+                final var idToken = FirebaseAuth.getInstance().verifyIdToken(idTokenString);
+                final var userId = (String) idToken.getClaims().get("user_id");
 
-                    // Print user identifier
-                    final var userId = payload.getSubject();
+                // Get profile information from payload
+                final var email = idToken.getEmail();
+                final var name = idToken.getName();
 
-                    // Get profile information from payload
-                    final var email = payload.getEmail();
-                    final var name = (String) payload.get("name");
-
-                    // Use or store profile information
-                    final AppUser appUser = doWithSystemAuthentication(
+                // Use or store profile information
+                final AppUser appUser = doWithSystemAuthentication(
                             () -> appUserRepository.findByExternalId(userId).orElseGet(
                                     () -> AppUser.builder()
                                             .fullName(name)
@@ -85,7 +86,7 @@ public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTok
                                             .externalId(userId)
                                             .appMembership(AppMembership.FREE)
                                             .build())
-                    );
+                );
 
 
                     final var authorities = new ArrayList<GrantedAuthority>();
@@ -93,7 +94,7 @@ public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTok
                     if (Boolean.TRUE.equals(appUser.getAdmin())) {
                         authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
                     }
-                    final var attributes = createAttributes(payload);
+                    final var attributes = createAttributes(idToken);
                     // custom attributes
                     attributes.put("app-membership", appUser.getAppMembership());
 
@@ -106,12 +107,9 @@ public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTok
                     if (appUser.isNew()) {
                         appUserCommandService.save(appUser);
                     }
-                } else {
-                    log.info("Invalid ID token");
-                }
 
-            } catch(final Exception e) {
-                log.info("Error when validating token.");
+            } catch(final FirebaseAuthException e) {
+                log.info("Error when validating firebase token.", e);
             }
         }
         chain.doFilter(request, response);
@@ -122,21 +120,19 @@ public class GoogleBearerTokenAuthenticationConverterFilter implements BearerTok
 
     }
 
-    private Map<String, Object> createAttributes(final GoogleIdToken.Payload payload) {
+    private Map<String, Object> createAttributes(final FirebaseToken idToken) {
 
         // Get profile information from payload
         // final var locale = (String) payload.get("locale");
 
         final var attributes = new HashMap<String, Object>();
-        attributes.put("sub", payload.getSubject());
-        attributes.put("email", payload.getEmail());
-        attributes.put("email_verified", payload.getEmailVerified());
-        attributes.put("iss", payload.getIssuer());
-        attributes.put("given_name", payload.get("given_name"));
-        attributes.put("family_name", payload.get("family_name"));
-        attributes.put("name", payload.get("name"));
+        attributes.put("sub", idToken.getClaims().get("sub"));
+        attributes.put("email", idToken.getEmail());
+        attributes.put("email_verified", idToken.isEmailVerified());
+        attributes.put("iss", idToken.getIssuer());
+        attributes.put("name", idToken.getName());
 
-        attributes.put("picture", payload.get("picture"));
+        attributes.put("picture", idToken.getPicture());
 
         return attributes;
     }

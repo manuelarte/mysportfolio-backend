@@ -17,8 +17,8 @@ public class CompetitionToCompetitionDtoTransformer implements Function<Competit
                 .description(competition.getDescription())
                 .sport(competition.getSport())
                 .defaultMatchDay(competition.getDefaultMatchDay())
-                .createdBy(competition.getCreatedBy())
-                .createdDate(competition.getCreatedDate())
+                .createdBy(competition.getCreatedBy().orElse(null))
+                .createdDate(competition.getCreatedDate().orElse(null))
                 .build();
     }
 }

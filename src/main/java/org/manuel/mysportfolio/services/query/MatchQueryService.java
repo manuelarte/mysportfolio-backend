@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public interface MatchQueryService {
 
-    @PostAuthorize("hasRole('ROLE_ADMIN') or returnObject.orElse(null)?.createdBy == authentication.principal.attributes['sub']")
+    @PostAuthorize("hasRole('ROLE_ADMIN') or returnObject.orElse(null)?.createdBy.get() == authentication.principal.attributes['sub']")
     Optional<Match<? extends TeamType, ? extends TeamType>> findOne(ObjectId id);
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or #createdBy == authentication.principal.attributes['sub']")
