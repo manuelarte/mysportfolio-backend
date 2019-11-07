@@ -34,9 +34,6 @@ public class AppUser implements Auditable<String, ObjectId, Instant> {
     private String externalId;
 
     @NotNull
-    private AuthProvider authProvider;
-
-    @NotNull
     private AppMembership appMembership;
 
     private Boolean admin;

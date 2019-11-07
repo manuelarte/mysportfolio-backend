@@ -9,9 +9,9 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import org.manuel.mysportfolio.model.entities.user.AppMembership;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
-import org.manuel.mysportfolio.model.entities.user.AuthProvider;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.services.command.AppUserCommandService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,18 +41,16 @@ public class FirebaseBearerTokenAuthenticationConverterFilter implements BearerT
     private final AppUserCommandService appUserCommandService;
 
     public FirebaseBearerTokenAuthenticationConverterFilter(
+            @Value("${FIREBASE_ADMIN_SDK}") final String json,
             final AppUserRepository appUserRepository,
             final AppUserCommandService appUserCommandService) throws IOException {
-        final var serviceAccount = this.getClass().getClassLoader().getResourceAsStream("./mysportfolio-test-firebase-adminsdk-e6qol-ea622e03c3.json");
 
+        final var serviceAccount = new ByteArrayInputStream( json.getBytes() ); //this.getClass().getClassLoader().getResourceAsStream("./mysportfolio-test-firebase-adminsdk-e6qol-ea622e03c3.json");
         final var options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .setDatabaseUrl("https://mysportfolio-test.firebaseio.com")
                 .build();
-
         FirebaseApp.initializeApp(options);
-
-
         this.appUserRepository = appUserRepository;
         this.appUserCommandService = appUserCommandService;
     }
@@ -78,35 +77,34 @@ public class FirebaseBearerTokenAuthenticationConverterFilter implements BearerT
 
                 // Use or store profile information
                 final AppUser appUser = doWithSystemAuthentication(
-                            () -> appUserRepository.findByExternalId(userId).orElseGet(
-                                    () -> AppUser.builder()
-                                            .fullName(name)
-                                            .email(email)
-                                            .authProvider(AuthProvider.GOOGLE)
-                                            .externalId(userId)
-                                            .appMembership(AppMembership.FREE)
-                                            .build())
+                        () -> appUserRepository.findByExternalId(userId).orElseGet(
+                            () -> AppUser.builder()
+                                .fullName(name)
+                                .email(email)
+                                //.externalId(userId)
+                                .appMembership(AppMembership.FREE)
+                                .build())
                 );
 
 
-                    final var authorities = new ArrayList<GrantedAuthority>();
-                    authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-                    if (Boolean.TRUE.equals(appUser.getAdmin())) {
-                        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-                    }
-                    final var attributes = createAttributes(idToken);
-                    // custom attributes
-                    attributes.put("app-membership", appUser.getAppMembership());
+                final var authorities = new ArrayList<GrantedAuthority>();
+                authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+                if (Boolean.TRUE.equals(appUser.getAdmin())) {
+                    authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                }
+                final var attributes = createAttributes(idToken);
+                // custom attributes
+                // check if I can receive this from firebase claims
+                attributes.put("app-membership", appUser.getAppMembership());
 
-                    final var principal = new DefaultOAuth2User(new HashSet<>(authorities), attributes, "name");
-                    final var oAuth2AuthenticationToken =
-                            new OAuth2AuthenticationToken(principal, authorities, "clientRegistrationId");
-                    SecurityContextHolder.getContext().setAuthentication(oAuth2AuthenticationToken);
-
-                    // TODO check if do it in aspect
-                    if (appUser.isNew()) {
-                        appUserCommandService.save(appUser);
-                    }
+                final var principal = new DefaultOAuth2User(new HashSet<>(authorities), attributes, "name");
+                final var oAuth2AuthenticationToken =
+                        new OAuth2AuthenticationToken(principal, authorities, "clientRegistrationId");
+                SecurityContextHolder.getContext().setAuthentication(oAuth2AuthenticationToken);
+                 // TODO check if do it in aspect
+                 if (appUser.isNew()) {
+                     // appUserCommandService.save(appUser);
+                 }
 
             } catch(final FirebaseAuthException e) {
                 log.info("Error when validating firebase token.", e);
