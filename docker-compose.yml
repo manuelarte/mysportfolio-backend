@@ -7,7 +7,7 @@ services:
       - "27017:27017"
 
   mysportfolio:
-    image: mysportfolio:1
+    image: mysportfolio:latest
     build:
       context: ./
       dockerfile: Dockerfile
