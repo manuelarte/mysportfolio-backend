@@ -1,5 +1,11 @@
 package org.manuel.mysportfolio.transformers;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
+import com.google.protobuf.MapEntry;
+import org.manuel.mysportfolio.config.operators.QueryOperator;
 import org.manuel.mysportfolio.model.QueryCriteria;
 import org.manuel.mysportfolio.model.SearchCriterion;
 import org.manuel.mysportfolio.services.TypeConversionService;
@@ -8,10 +14,13 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
-import java.util.List;
+import java.util.*;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 @lombok.AllArgsConstructor
@@ -21,22 +30,32 @@ public class QueryCriteriaToMongoQueryTransformer implements BiFunction<QueryCri
 
     @Override
     public Query apply(final QueryCriteria queryCriteria, final Class<?> clazz) {
-        final Query query = new Query();
+        final var groupByQueryOption = groupByQueryOption(queryCriteria);
+        final var criteria = new Criteria();
+        final Map<QueryCriteria.QueryOption, List<Criteria>> mapped = groupByQueryOption.asMap().keySet().stream().collect(Collectors.toMap(Function.identity(),
+                    x -> groupByQueryOption.get(x).stream().map(s -> createCriteria(s, clazz)).collect(Collectors.toList())));
 
-        final var criteria = createCriteria(queryCriteria.getFirst(), clazz);
-
-        final List<Pair<QueryCriteria.QueryOption, Criteria>> restCriteria = queryCriteria.getRest().stream().map(p -> Pair.of(p.getFirst(), createCriteria(p.getSecond(), clazz)) )
-                .collect(Collectors.toList());
-
-        for(Pair<QueryCriteria.QueryOption, Criteria> p: restCriteria) {
-            if (p.getFirst() == QueryCriteria.QueryOption.AND) {
-                criteria.andOperator(p.getSecond());
-            } else if (p.getFirst() == QueryCriteria.QueryOption.OR) {
-                criteria.orOperator(p.getSecond());
+        mapped.keySet().forEach( qO -> {
+            final var inArray = mapped.get(qO).toArray(new Criteria[mapped.get(qO).size()]);
+            switch (qO) {
+                case AND:
+                    criteria.andOperator(inArray);
+                    break;
+                case OR:
+                    criteria.orOperator(inArray);
+                    break;
             }
-        }
-        query.addCriteria(criteria);
-        return query;
+        });
+
+        return new Query(criteria);
+    }
+
+    private Multimap<QueryCriteria.QueryOption, SearchCriterion> groupByQueryOption(final QueryCriteria queryCriteria) {
+        final Multimap<QueryCriteria.QueryOption, SearchCriterion> groupByQueryOption = ArrayListMultimap.create();
+        groupByQueryOption.put(QueryCriteria.QueryOption.AND, queryCriteria.getFirst());
+
+        queryCriteria.getRest().forEach(qC -> groupByQueryOption.put(qC.getFirst(), qC.getSecond()));
+        return groupByQueryOption;
     }
 
     private <T> Criteria createCriteria(final SearchCriterion searchCriterion, final Class<T> clazz) {

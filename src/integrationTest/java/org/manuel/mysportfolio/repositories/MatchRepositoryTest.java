@@ -109,6 +109,47 @@ public class MatchRepositoryTest {
         assertEquals(2, count);
     }
 
+    @DisplayName("load matches by teamId")
+    @Test
+    // TODO
+    public void testGetMatchesForTeamId() {
+        final var lookedTeam = TestUtils.createMockRegisteredTeam();
+        final var homeTeamMatch = new Match<>();
+        homeTeamMatch.setHomeTeam(lookedTeam);
+        homeTeamMatch.setAwayTeam(TestUtils.createMockAnonymousTeam());
+        homeTeamMatch.setStartDate(Instant.now());
+        homeTeamMatch.setCreatedBy("1234");
+        //homeTeamMatch.setCreatedDate(createdDate);
+
+        final var awayTeamMatch = new Match<>();
+        awayTeamMatch.setHomeTeam(TestUtils.createMockAnonymousTeam());
+        awayTeamMatch.setAwayTeam(lookedTeam);
+        awayTeamMatch.setStartDate(Instant.now());
+        awayTeamMatch.setCreatedBy("1234");
+        //awayTeamMatch.setCreatedDate(createdDate);
+
+        matchRepository.save(homeTeamMatch);
+        matchRepository.save(awayTeamMatch);
+
+        final var homeTeamCriteria = Criteria.where("homeTeam.teamId").is(lookedTeam.getTeamId());
+        final var awayTeamCriteria = Criteria.where("awayTeam.teamId").is(lookedTeam.getTeamId());
+
+        // TODO not working now
+        final var matchHomeTeamCriteria = matchRepository.findQueryAllCreatedBy(new Query(homeTeamCriteria), Pageable.unpaged());
+        assertEquals(1, matchHomeTeamCriteria.getContent().size());
+        assertMatch(homeTeamMatch, matchHomeTeamCriteria.getContent().get(0));
+
+        final var matchAwayTeamCriteria = matchRepository.findQueryAllCreatedBy(new Query(awayTeamCriteria), Pageable.unpaged());
+        assertEquals(1, matchAwayTeamCriteria.getContent().size());
+        assertMatch(awayTeamMatch, matchAwayTeamCriteria.getContent().get(0));
+
+        var criteria = new Criteria().orOperator(homeTeamCriteria, awayTeamCriteria);
+        final var allByQuery = matchRepository.findQueryAllCreatedBy(new Query(criteria), Pageable.unpaged());
+        assertEquals(2, allByQuery.getTotalElements());
+        assertMatch(homeTeamMatch, allByQuery.getContent().get(0));
+        assertMatch(awayTeamMatch, allByQuery.getContent().get(1));
+    }
+
     private void assertMatch(final Match expected, final Match actual) {
         assertEquals(expected.getId(), actual.getId());
         assertEquals(expected.getStartDate().toEpochMilli(), actual.getStartDate().toEpochMilli());
