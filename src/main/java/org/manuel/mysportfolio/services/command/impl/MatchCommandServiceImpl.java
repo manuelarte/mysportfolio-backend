@@ -18,4 +18,11 @@ class MatchCommandServiceImpl implements MatchCommandService {
         Assert.notNull(match, "The match to save can't be null");
         return matchRepository.save(match);
     }
+
+    @Override
+    public Match<TeamType, TeamType> update(final Match<TeamType, TeamType> match) {
+        Assert.notNull(match, "The match to save can't be null");
+        Assert.notNull(match.getId(), "Can't update a new match");
+        return matchRepository.save(match);
+    }
 }

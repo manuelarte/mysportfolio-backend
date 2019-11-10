@@ -52,7 +52,7 @@ public class MatchCommandController {
             @Validated({Default.class, UpdateEntity.class}) @RequestBody final MatchUpdateDto<TeamTypeDto, TeamTypeDto> matchDto) {
         final var originalMatch = matchQueryService.findOne(matchId).orElseThrow(() ->
                 new EntityNotFoundException(Match.class, matchId.toString()));
-        final var updated = matchCommandService.save(matchUpdateDtoToMatchTransformer.apply(originalMatch, matchDto));
+        final var updated = matchCommandService.update(matchUpdateDtoToMatchTransformer.apply(originalMatch, matchDto));
         log.info("Match with id {}, updated by {}", updated.getId(), updated.getLastModifiedBy());
         return ResponseEntity.ok(matchToMatchDtoTransformer.apply(updated));
     }
