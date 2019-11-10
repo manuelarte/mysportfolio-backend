@@ -22,8 +22,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(bearerTokenAuthenticationConverterFilter, UsernamePasswordAuthenticationFilter.class)
                 .csrf().disable()
                 .authorizeRequests()
-                    .anyRequest().authenticated()
-                    .antMatchers("/swagger-ui.html").permitAll();
+                    .antMatchers("/swagger-ui.html").permitAll()
+                    .antMatchers("/actuator/**").permitAll()
+                    .anyRequest().authenticated();
 
     }
 

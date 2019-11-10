@@ -1,5 +1,7 @@
-authentication:
-  client-id: ${CLIENT_ID}
+info.app.name: mysportfolio
+info.app.description: Sportfolio backend app
+info.app.version: ${VERSION:unknown}
+
 spring:
   data:
     mongodb:
