@@ -43,7 +43,7 @@ public class TeamCommandController {
     public ResponseEntity<TeamDto> updateTeam(@PathVariable final String teamId,
                                               @Validated({Default.class}) @RequestBody final TeamDto teamDto) {
         Assert.isTrue(teamId.equals(teamDto.getId()), "Ids don't match");
-        final var saved = teamCommandService.save(teamDtoToExistingTeamTransformer.apply(teamId, teamDto));
+        final var saved = teamCommandService.update(teamDtoToExistingTeamTransformer.apply(teamId, teamDto));
         return ResponseEntity.ok(teamToTeamDtoTransformer.apply(saved));
     }
 
@@ -51,7 +51,7 @@ public class TeamCommandController {
     public ResponseEntity<TeamDto> partialUpdateTeam(@PathVariable final String teamId,
                                                      @Validated({ Default.class, PartialUpdateEntity.class} ) @RequestBody final TeamDto teamDto) {
         final var updated = partialTeamDtoToTeamTransformer.apply(teamId, teamDto);
-        return ResponseEntity.ok(teamToTeamDtoTransformer.apply(teamCommandService.save(updated)));
+        return ResponseEntity.ok(teamToTeamDtoTransformer.apply(teamCommandService.update(updated)));
 
 
     }

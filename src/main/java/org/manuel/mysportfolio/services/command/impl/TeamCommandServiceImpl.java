@@ -4,6 +4,7 @@ import org.manuel.mysportfolio.model.entities.team.Team;
 import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.manuel.mysportfolio.services.command.TeamCommandService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.validation.constraints.NotNull;
 
@@ -15,6 +16,12 @@ class TeamCommandServiceImpl implements TeamCommandService {
 
     @Override
     public Team save(@NotNull final Team team) {
+        return teamRepository.save(team);
+    }
+
+    @Override
+    public Team update(@NotNull final Team team) {
+        Assert.notNull(team.getId(), "Can't update a new team");
         return teamRepository.save(team);
     }
 }

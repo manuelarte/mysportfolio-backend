@@ -6,6 +6,7 @@ import org.manuel.mysportfolio.transformers.CompetitionDtoToCompetitionTransform
 import org.manuel.mysportfolio.transformers.CompetitionToCompetitionDtoTransformer;
 import org.manuel.mysportfolio.transformers.PartialCompetitionDtoToCompetitionTransformer;
 import org.manuel.mysportfolio.validation.NewEntity;
+import org.manuel.mysportfolio.validation.PartialUpdateEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -38,9 +39,9 @@ public class CompetitionCommandController {
 
     @PatchMapping(value = "/{competitionId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CompetitionDto> partialUpdateCompetition(@PathVariable final String competitionId,
-                                                     @Validated(Default.class) @RequestBody final CompetitionDto competitionDto) {
+                                                     @Validated({ Default.class, PartialUpdateEntity.class }) @RequestBody final CompetitionDto competitionDto) {
         final var updated = partialCompetitionDtoToCompetitionTransformer.apply(competitionId, competitionDto);
-        return ResponseEntity.ok(competitionToCompetitionDtoTransformer.apply(competitionCommandService.save(updated)));
+        return ResponseEntity.ok(competitionToCompetitionDtoTransformer.apply(competitionCommandService.update(updated)));
 
 
     }

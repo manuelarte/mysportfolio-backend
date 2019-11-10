@@ -83,6 +83,7 @@ public class CompetitionCommandControllerTest {
     public void testPartialUpdateCompetition() throws Exception {
         final var originalCompetition = competitionRepository.save(TestUtils.createMockCompetition());
         final var competitionDto = CompetitionDto.builder()
+                .version(originalCompetition.getVersion())
                 .name("new name")
                 .build();
 
