@@ -18,11 +18,19 @@ import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.manuel.mysportfolio.model.entities.team.Team;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -112,5 +120,12 @@ public class TestUtils {
                 .startDate(Instant.now().minus(1, ChronoUnit.DAYS))
                 .events(goals)
                 .build();
+    }
+
+    public static Authentication createAuthentication(final String userId) {
+        final Set<GrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+        final OAuth2User principal = new DefaultOAuth2User(authorities, Collections.singletonMap("sub", userId), "sub");
+        final Authentication authentication = new OAuth2AuthenticationToken(principal, authorities, "sub");
+        return authentication;
     }
 }
