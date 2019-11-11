@@ -19,4 +19,9 @@ public class GreaterThanQueryOperator implements QueryOperator {
         return c -> c.gt(value);
     }
 
+    @Override
+    public Object getValue(Object value) {
+        return value;
+    }
+
 }

@@ -58,11 +58,16 @@ public class QueryCriteriaToMongoQueryTransformer implements BiFunction<QueryCri
         return groupByQueryOption;
     }
 
-    private <T> Criteria createCriteria(final SearchCriterion searchCriterion, final Class<T> clazz) {
+    private <T> Criteria createCriteria(final SearchCriterion<String, Object> searchCriterion, final Class<T> clazz) {
         final var criteria = Criteria.where(searchCriterion.getKey());
         try {
             final Field field = clazz.getDeclaredField(searchCriterion.getKey());
-            final Object converted = typeConversionService.convert(searchCriterion.getValue(), field.getType());
+            final Object converted;
+            if (searchCriterion.getValue() instanceof Iterable) {
+                converted = typeConversionService.convertToList((Iterable)searchCriterion.getValue(), field.getType());
+            } else {
+                converted = typeConversionService.convert(searchCriterion.getValue(), field.getType());
+            }
             searchCriterion.getOperation().addOperation(converted).apply(criteria);
         } catch (final NoSuchFieldException e) {
             throw new RuntimeException(String.format("Field %s not found in class %s", searchCriterion.getKey(), clazz.getSimpleName()));

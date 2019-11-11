@@ -19,4 +19,9 @@ public class EqualQueryOperator implements QueryOperator {
         return c -> c.is(value);
     }
 
+    @Override
+    public Object getValue(Object value) {
+        return value;
+    }
+
 }

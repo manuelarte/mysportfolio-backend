@@ -19,4 +19,9 @@ public class GreaterThanOrEqualQueryOperator implements QueryOperator {
         return c -> c.gte(value);
     }
 
+    @Override
+    public Object getValue(Object value) {
+        return value;
+    }
+
 }

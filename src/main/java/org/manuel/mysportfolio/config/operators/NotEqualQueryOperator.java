@@ -19,4 +19,9 @@ public class NotEqualQueryOperator implements QueryOperator {
         return c -> c.not().is(value);
     }
 
+    @Override
+    public Object getValue(Object value) {
+        return value;
+    }
+
 }

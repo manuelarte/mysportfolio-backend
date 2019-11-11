@@ -4,10 +4,12 @@ import org.springframework.data.mongodb.core.query.Criteria;
 
 import java.util.function.Function;
 
-public interface QueryOperator {
+public interface QueryOperator<IN, OUT> {
 
     String getOperator();
 
-    Function<Criteria, Criteria> addOperation(Object value);
+    Function<Criteria, Criteria> addOperation(OUT value);
+
+    OUT getValue(IN value);
 
 }

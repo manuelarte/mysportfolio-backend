@@ -65,7 +65,7 @@ public class StringToQueryCriteriaConverter implements Converter<String, QueryCr
     private DataHelper convertToDataHelper(final String string) {
         StringBuilder key = new StringBuilder();
         QueryOperator operator = null;
-        StringBuilder value = new StringBuilder();
+        Object value = null;
 
         DataHelper dataHelper = new DataHelper();
         int index = 0;
@@ -83,31 +83,31 @@ public class StringToQueryCriteriaConverter implements Converter<String, QueryCr
             }
 
             if (isSeparator(string.charAt(i))) {
-                value.append(string, index, i);
+                value = operator.getValue(string.substring(index, i));
                 index = i;
                 break;
             }
         }
 
         // if no separator everything is a value
-        if (value.length() == 0) {
-            value.append(string, index, string.length());
+        if (value == null) {
+            value = operator.getValue(string.substring(index));
             index = string.length();
         }
         dataHelper.rest = string.substring(index);
 
 
-        if (key.length() == 0 || operator == null || value.length() == 0) {
+        if (key.length() == 0 || operator == null || value == null) {
             throw new RuntimeException(String.format("Query param %s malformed", string));
         }
-        dataHelper.searchCriterion = new SearchCriterion<>(key.toString(), operator, value.toString());
+        dataHelper.searchCriterion = new SearchCriterion(key.toString(), operator, value);
         return dataHelper;
     }
 
     @AllArgsConstructor
     @NoArgsConstructor
     private class DataHelper {
-        public SearchCriterion<String> searchCriterion;
+        public SearchCriterion searchCriterion;
         public QueryCriteria.QueryOption queryOption;
         public String rest;
     }

@@ -20,4 +20,9 @@ public class LowerThanQueryOperator implements QueryOperator {
         return c -> c.lt(value);
     }
 
+    @Override
+    public Object getValue(Object value) {
+        return value;
+    }
+
 }

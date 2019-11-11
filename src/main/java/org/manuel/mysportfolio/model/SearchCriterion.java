@@ -4,11 +4,11 @@ import org.manuel.mysportfolio.config.operators.QueryOperator;
 
 @lombok.AllArgsConstructor
 @lombok.Data
-public class SearchCriterion<T> {
+public class SearchCriterion<IN, OUT> {
 
-    private final String key;
-    private final QueryOperator operation;
-    private final T value;
+    private final IN key;
+    private final QueryOperator<IN, OUT> operation;
+    private final OUT value;
 
     /*
     public Criteria createCriteria() {
