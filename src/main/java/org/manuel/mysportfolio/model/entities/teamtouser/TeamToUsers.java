@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-@Document(collection = "team2User")
+@Document(collection = "team-to-users")
 @lombok.Data
 @lombok.NoArgsConstructor
 @lombok.EqualsAndHashCode(callSuper = true)
