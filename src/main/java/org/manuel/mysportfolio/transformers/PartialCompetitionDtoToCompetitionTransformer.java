@@ -21,10 +21,10 @@ public class PartialCompetitionDtoToCompetitionTransformer implements BiFunction
         final var original = competitionQueryService.findOne(new ObjectId(competitionId))
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Competition with id %s not found and can't be patch", competitionId)));
         final var competition = original.toBuilder();
-        Optional.ofNullable(competitionDto.getName()).ifPresent(name -> competition.name(name));
-        Optional.ofNullable(competitionDto.getDescription()).ifPresent(description -> competition.description(description));
-        Optional.ofNullable(competitionDto.getSport()).ifPresent(sport -> competition.sport(sport));
-        Optional.ofNullable(competitionDto.getDefaultMatchDay()).ifPresent(defaultMatchDay -> competition.defaultMatchDay(defaultMatchDay));
+        Optional.ofNullable(competitionDto.getName()).ifPresent(competition::name);
+        Optional.ofNullable(competitionDto.getDescription()).ifPresent(competition::description);
+        Optional.ofNullable(competitionDto.getSport()).ifPresent(competition::sport);
+        Optional.ofNullable(competitionDto.getDefaultMatchDay()).ifPresent(competition::defaultMatchDay);
         return competition.build();
     }
 }

@@ -1,6 +1,5 @@
 package org.manuel.mysportfolio.model.entities;
 
-import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.*;
 import org.springframework.data.domain.Auditable;
@@ -31,7 +30,7 @@ public class BaseEntity implements Auditable<String, ObjectId, Instant> {
     @LastModifiedDate
     protected Instant lastModifiedDate;
 
-    public BaseEntity(final ObjectId id, final Long version) {
+    protected BaseEntity(final ObjectId id, final Long version) {
         this.id = id;
         this.version = version;
     }

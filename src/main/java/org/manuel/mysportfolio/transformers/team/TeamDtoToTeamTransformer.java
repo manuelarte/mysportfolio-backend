@@ -15,7 +15,7 @@ public class TeamDtoToTeamTransformer implements Function<TeamDto, Team> {
     public Team apply(final TeamDto teamDto) {
         final var team = new Team();
         Optional.ofNullable(teamDto.getId()).ifPresent(id -> team.setId(new ObjectId(id)));
-        Optional.ofNullable(teamDto.getVersion()).ifPresent(version -> team.setVersion(version));
+        Optional.ofNullable(teamDto.getVersion()).ifPresent(team::setVersion);
         team.setName(teamDto.getName());
         team.setImageLink(teamDto.getImageLink());
 

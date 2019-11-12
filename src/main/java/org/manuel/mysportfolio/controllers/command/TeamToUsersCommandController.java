@@ -9,7 +9,6 @@ import org.manuel.mysportfolio.transformers.teamtousers.TeamToUsersToTeamToUsers
 import org.manuel.mysportfolio.transformers.teamtousers.UserInTeamDtoToUserInTeamTransformer;
 import org.manuel.mysportfolio.transformers.teamtousers.UserInTeamToUserInTeamDtoTransformer;
 import org.manuel.mysportfolio.validation.NewEntity;
-import org.manuel.mysportfolio.validation.PartialUpdateEntity;
 import org.manuel.mysportfolio.validation.UpdateEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

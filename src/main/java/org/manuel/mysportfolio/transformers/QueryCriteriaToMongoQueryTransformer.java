@@ -1,26 +1,19 @@
 package org.manuel.mysportfolio.transformers;
 
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
-import com.google.protobuf.MapEntry;
-import org.manuel.mysportfolio.config.operators.QueryOperator;
 import org.manuel.mysportfolio.model.QueryCriteria;
 import org.manuel.mysportfolio.model.SearchCriterion;
 import org.manuel.mysportfolio.services.TypeConversionService;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 @lombok.AllArgsConstructor

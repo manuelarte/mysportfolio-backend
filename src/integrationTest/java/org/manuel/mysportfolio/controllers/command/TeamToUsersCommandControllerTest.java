@@ -100,12 +100,14 @@ class TeamToUsersCommandControllerTest {
 
     @Test
     public void testUpdateUserInTeam() throws Exception {
-        final var userId = "123456";
+        final var userId = "123456789";
         final var userInTeam = new UserInTeam();
         userInTeam.setFrom(LocalDate.now().minus(1, ChronoUnit.MONTHS));
         userInTeam.setRoles(Collections.singleton(UserInTeam.UserInTeamRole.PLAYER));
 
+        final var teamId = new ObjectId();
         final var teamToUsers = new TeamToUsers();
+        teamToUsers.setTeamId(teamId);
         teamToUsers.setUsers(Collections.singletonMap(userId, userInTeam));
         teamToUsers.setAdmins(Collections.singleton(userId));
         teamToUsersRepository.save(teamToUsers);
@@ -116,15 +118,39 @@ class TeamToUsersCommandControllerTest {
                 .roles(userInTeam.getRoles())
                 .build();
 
-        final var teamId = new ObjectId().toString();
-        final var rolesInArray = expected.getRoles().stream().map(Objects::toString).collect(Collectors.toList()).toArray();
-        mvc.perform(put("/api/v1/teams/{teamId}/users/{userId}", teamId, userId).contentType(APPLICATION_JSON)
+        final var rolesInArray = expected.getRoles().stream().map(Objects::toString).toArray();
+        mvc.perform(put("/api/v1/teams/{teamId}/users/{userId}", teamId.toString(), userId).contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(expected)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.from").value(expected.getFrom().toString()))
                 .andExpect(jsonPath("$.to").value(expected.getTo().toString()))
                 .andExpect(jsonPath("$.roles",
                         Matchers.containsInAnyOrder(rolesInArray)));
+    }
+
+    @Test
+    public void testUpdateUserInTeamUserNotAllowed() throws Exception {
+        final var userId = "differentUser";
+        final var userInTeam = new UserInTeam();
+        userInTeam.setFrom(LocalDate.now().minus(1, ChronoUnit.MONTHS));
+        userInTeam.setRoles(Collections.singleton(UserInTeam.UserInTeamRole.PLAYER));
+
+        final var teamId = new ObjectId();
+        final var teamToUsers = new TeamToUsers();
+        teamToUsers.setTeamId(teamId);
+        teamToUsers.setUsers(Collections.singletonMap(userId, userInTeam));
+        teamToUsers.setAdmins(Collections.singleton(userId));
+        teamToUsersRepository.save(teamToUsers);
+
+        final var expected = UserInTeamDto.builder()
+                .from(userInTeam.getFrom())
+                .to(LocalDate.now())
+                .roles(userInTeam.getRoles())
+                .build();
+
+        mvc.perform(put("/api/v1/teams/{teamId}/users/{userId}", teamId.toString(), userId).contentType(APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(expected)))
+                .andExpect(status().isForbidden());
     }
 
 

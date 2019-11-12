@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.transformers.match;
 
+import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.match.MatchEventDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
@@ -25,7 +26,7 @@ public class MatchToMatchDtoTransformer implements Function<Match<? extends Team
         final Stream<MatchEventDto> eventsStream = match.getEvents().stream().map(matchEventToMatchEventDtoTransformer);
         return match == null ? null : MatchDto.builder()
                 .id(match.getId().toString())
-                .competitionId(Optional.ofNullable(match.getCompetitionId()).map(c -> c.toString()).orElse(null))
+                .competitionId(Optional.ofNullable(match.getCompetitionId()).map(ObjectId::toString).orElse(null))
                 .version(match.getVersion())
                 .sport(match.getSport())
                 .type(match.getType())

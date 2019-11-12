@@ -125,7 +125,6 @@ public class TestUtils {
     public static Authentication createAuthentication(final String userId) {
         final Set<GrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
         final OAuth2User principal = new DefaultOAuth2User(authorities, Collections.singletonMap("sub", userId), "sub");
-        final Authentication authentication = new OAuth2AuthenticationToken(principal, authorities, "sub");
-        return authentication;
+        return new OAuth2AuthenticationToken(principal, authorities, "sub");
     }
 }

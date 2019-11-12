@@ -1,6 +1,5 @@
 package org.manuel.mysportfolio.services;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.manuel.mysportfolio.model.Sport;
 import org.springframework.stereotype.Service;
 import pl.jsolve.typeconverter.Converter;
@@ -35,10 +34,10 @@ public class TypeConversionService {
     }
 
     private Converter<String, Sport> stringToSportConversion() {
-        return source -> Sport.valueOf(source);
+        return Sport::valueOf;
     }
 
     private Converter<String, LocalDate> localDateConversion() {
-        return source -> LocalDate.parse(source);
+        return LocalDate::parse;
     }
 }

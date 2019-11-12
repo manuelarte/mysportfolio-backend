@@ -21,8 +21,8 @@ public class PartialTeamDtoToTeamTransformer implements BiFunction<String, TeamD
         final var originalTeam = teamQueryService.findOne(new ObjectId(teamId))
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Team with id %s not found and can't be patch", updatedFieldsTeamDto.getId())));
         final var mixed = originalTeam.toBuilder();
-        Optional.ofNullable(updatedFieldsTeamDto.getName()).ifPresent(name -> mixed.name(name));
-        Optional.ofNullable(updatedFieldsTeamDto.getImageLink()).ifPresent(imageLink -> mixed.imageLink(imageLink));
+        Optional.ofNullable(updatedFieldsTeamDto.getName()).ifPresent(mixed::name);
+        Optional.ofNullable(updatedFieldsTeamDto.getImageLink()).ifPresent(mixed::imageLink);
         return mixed.build();
     }
 }

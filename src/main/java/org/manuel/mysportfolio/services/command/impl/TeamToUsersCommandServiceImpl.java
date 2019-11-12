@@ -8,7 +8,6 @@ import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.manuel.mysportfolio.model.events.TeamCreatedEvent;
 import org.manuel.mysportfolio.repositories.TeamToUsersRepository;
 import org.manuel.mysportfolio.services.command.TeamToUsersCommandService;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
@@ -40,7 +39,9 @@ public class TeamToUsersCommandServiceImpl implements TeamToUsersCommandService 
         return teamToUsersRepository.updateUserInTeam(teamId, userId, userInTeam);
     }
 
+    @Override
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
+    @SuppressWarnings("unused")
     public void handleTeamCreatedEvent(final TeamCreatedEvent teamCreatedEvent) {
         log.info("Handling context started event {}.", teamCreatedEvent);
         final var team = (Team) teamCreatedEvent.getSource();

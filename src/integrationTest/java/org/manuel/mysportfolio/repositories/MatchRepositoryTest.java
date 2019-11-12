@@ -60,9 +60,7 @@ public class MatchRepositoryTest {
 
         final var saved = matchRepository.save(match);
         saved.setVersion(5L);
-        assertThrows(OptimisticLockingFailureException.class, () -> {
-            matchRepository.save(saved);
-        });
+        assertThrows(OptimisticLockingFailureException.class, () -> matchRepository.save(saved));
     }
 
     @DisplayName("load matches by created date, one match recorded yesterday")

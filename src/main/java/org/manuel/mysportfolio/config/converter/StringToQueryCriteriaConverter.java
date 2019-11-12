@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Component
 @lombok.AllArgsConstructor
@@ -36,19 +35,16 @@ public class StringToQueryCriteriaConverter implements Converter<String, QueryCr
 
     private QueryCriteria.QueryOption getQueryOption(final char theChar) {
         final QueryCriteria.QueryOption toReturn;
-        switch(theChar) {
-            case '|':
-                toReturn = QueryCriteria.QueryOption.OR;
-                break;
-            default:
-                toReturn = QueryCriteria.QueryOption.AND;
-                break;
+        if (theChar == '|') {
+            toReturn = QueryCriteria.QueryOption.OR;
+        } else {
+            toReturn = QueryCriteria.QueryOption.AND;
         }
         return toReturn;
     }
 
     private boolean isOperator(final char c) {
-        return queryOperators.stream().filter(q -> q.getOperator().charAt(0) == c).findAny().isPresent();
+        return queryOperators.stream().anyMatch(q -> q.getOperator().charAt(0) == c);
     }
 
     private Optional<QueryOperator> getOperator(final String string) {
@@ -77,8 +73,7 @@ public class StringToQueryCriteriaConverter implements Converter<String, QueryCr
             if (isOperator(string.charAt(i)) && getOperator(string.substring(i)).isPresent()) {
                 key.append(string, index, i);
                 operator = getOperator(string.substring(i)).get();
-                final var to = i + operator.getOperator().length();
-                index = to;
+                index = i + operator.getOperator().length();
                 i = index;
             }
 

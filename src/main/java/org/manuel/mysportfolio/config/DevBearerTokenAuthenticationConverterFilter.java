@@ -21,7 +21,7 @@ import java.util.HashSet;
 public class DevBearerTokenAuthenticationConverterFilter implements BearerTokenAuthenticationConverterFilter {
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 
