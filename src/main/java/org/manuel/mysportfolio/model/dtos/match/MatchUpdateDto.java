@@ -49,7 +49,7 @@ public class MatchUpdateDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamT
 
     private final String address;
 
-    @Past
+    @PastOrPresent
     @NotNull
     private final Instant startDate;
     private final Instant endDate;

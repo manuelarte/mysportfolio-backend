@@ -2,8 +2,7 @@ package org.manuel.mysportfolio.model.dtos.teamtousers;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.manuel.mysportfolio.validation.NewEntity;
 import org.manuel.mysportfolio.validation.PartialUpdateEntity;
 import org.manuel.mysportfolio.validation.UpdateEntity;
@@ -29,14 +28,17 @@ public class TeamToUsersDto {
     @NotNull(groups = { UpdateEntity.class, PartialUpdateEntity.class })
     private final Long version;
 
-    @Null(groups = {PartialUpdateEntity.class, PartialUpdateEntity.class})
-    @NotNull(groups = NewEntity.class)
-    private String teamId;
+    @NotEmpty(groups = { NewEntity.class, UpdateEntity.class})
+    @lombok.Singular
+    private Map<String, UserInTeamDto> users;
 
     @NotEmpty(groups = { NewEntity.class, UpdateEntity.class})
-    private Map<String, UserInTeam> users;
-
-    @NotEmpty(groups = { NewEntity.class, UpdateEntity.class})
+    @lombok.Singular
     private Set<String> admins;
+
+    @JsonPOJOBuilder(withPrefix = "")
+    public static final class TeamToUsersDtoBuilder {
+
+    }
 
 }

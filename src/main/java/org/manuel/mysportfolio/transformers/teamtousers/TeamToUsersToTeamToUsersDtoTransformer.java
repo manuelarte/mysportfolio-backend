@@ -7,18 +7,21 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
+@lombok.AllArgsConstructor
 public class TeamToUsersToTeamToUsersDtoTransformer implements Function<TeamToUsers, TeamToUsersDto> {
 
+    private final UserInTeamToUserInTeamDtoTransformer userInTeamToUserInTeamDtoTransformer;
 
     @Override
     public TeamToUsersDto apply(final TeamToUsers teamToUsers) {
+        final var users = teamToUsers.getUsers().entrySet().stream().collect(Collectors.toMap(it -> it.getKey(), it -> userInTeamToUserInTeamDtoTransformer.apply(it.getValue())));
         return TeamToUsersDto.builder()
                 .id(Optional.ofNullable(teamToUsers.getId()).map(ObjectId::toString).orElse(null))
                 .version(teamToUsers.getVersion())
-                .teamId(teamToUsers.getTeamId().toString())
-                .users(teamToUsers.getUsers())
+                .users(users)
                 .admins(teamToUsers.getAdmins())
                 .build();
     }

@@ -53,7 +53,7 @@ public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto
 
     private final String address;
 
-    @Past
+    @PastOrPresent
     @NotNull
     private final Instant startDate;
     private final Instant endDate;

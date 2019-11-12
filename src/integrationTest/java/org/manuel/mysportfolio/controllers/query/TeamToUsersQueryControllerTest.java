@@ -68,8 +68,7 @@ public class TeamToUsersQueryControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", Matchers.notNullValue()))
                 .andExpect(jsonPath("$.version").value(0))
-                .andExpect(jsonPath("$.teamId").value(actual.getTeamId().toString()))
-                .andExpect(jsonPath("$.users."+ userId + ".role").value(UserInTeam.UserInTeamRole.PLAYER.toString()));
+                .andExpect(jsonPath("$.users."+ userId + ".roles", Matchers.contains(UserInTeam.UserInTeamRole.PLAYER.toString())));
     }
 
     @Test

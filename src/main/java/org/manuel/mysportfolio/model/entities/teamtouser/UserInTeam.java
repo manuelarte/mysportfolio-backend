@@ -17,7 +17,11 @@ public class UserInTeam {
 
     private LocalDate to;
 
-    private Set<UserInTeamRole> role;
+    private Set<UserInTeamRole> roles;
+
+    public UserInTeam(final LocalDate from, final LocalDate to, final UserInTeamRole... roles) {
+        this(from, to, Set.of(roles));
+    }
 
     @AssertTrue
     private boolean fromBeforeTo() {
