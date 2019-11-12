@@ -33,6 +33,7 @@ public class TeamToUsersCommandController {
     private final UserInTeamDtoToUserInTeamTransformer userInTeamDtoToUserInTeamTransformer;
     private final UserInTeamToUserInTeamDtoTransformer userInTeamToUserInTeamDtoTransformer;
 
+    // This should not be used, because it should be created every time a new team is created
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<TeamToUsersDto> saveTeamToUsers(
             @PathVariable final ObjectId teamId,

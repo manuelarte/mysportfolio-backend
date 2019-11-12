@@ -6,7 +6,7 @@ import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 
 public interface TeamToUsersCommandService {
 
-    // TODO
+    // This method should not be called, since it's always done by the application event listener
     TeamToUsers save(TeamToUsers teamToUsers);
 
     // TODO

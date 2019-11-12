@@ -1,6 +1,7 @@
 package org.manuel.mysportfolio.controllers.command;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.bson.types.ObjectId;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +10,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.manuel.mysportfolio.ITConfiguration;
 import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.dtos.team.TeamDto;
+import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
 import org.manuel.mysportfolio.repositories.TeamRepository;
+import org.manuel.mysportfolio.repositories.TeamToUsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -19,6 +22,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -37,6 +43,9 @@ public class TeamCommandControllerTest {
 
     @Autowired
     private TeamRepository teamRepository;
+
+    @Autowired
+    private TeamToUsersRepository teamToUsersRepository;
 
     @Autowired
     private WebApplicationContext context;
@@ -58,12 +67,17 @@ public class TeamCommandControllerTest {
     @Test
     public void testSaveTeamAllFieldsValid() throws Exception {
         final var teamDto = TestUtils.createMockTeamDto();
-
-        mvc.perform(post("/api/v1/teams").contentType(APPLICATION_JSON)
+        final var saved = objectMapper.readValue(mvc.perform(post("/api/v1/teams").contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(teamDto)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", Matchers.notNullValue()))
-                .andExpect(jsonPath("$.name").value(teamDto.getName()));
+                .andExpect(jsonPath("$.name").value(teamDto.getName()))
+        .andReturn().getResponse().getContentAsString(), TeamDto.class);
+
+        // test team to users entry is created
+        final var byTeamId = teamToUsersRepository.findByTeamId(new ObjectId(saved.getId()));
+        assertTrue(byTeamId.isPresent());
+        assertTrue(byTeamId.get().getAdmins().contains("123456789"));
     }
 
     @Test

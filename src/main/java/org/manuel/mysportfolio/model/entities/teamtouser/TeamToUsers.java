@@ -34,4 +34,11 @@ public class TeamToUsers extends BaseEntity {
     @NotEmpty
     private Set<String> admins;
 
+    public void addUser(final String userId, final UserInTeam userInTeam) {
+        if (users == null) {
+            users = new HashMap<>();
+        }
+        users.put(userId, userInTeam);
+    }
+
 }
