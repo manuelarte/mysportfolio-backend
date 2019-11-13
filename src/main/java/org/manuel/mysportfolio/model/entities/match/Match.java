@@ -9,9 +9,7 @@ import org.springframework.data.annotation.*;
 import org.springframework.data.domain.Auditable;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.*;
 import java.time.Instant;
 import java.util.*;
 
@@ -34,10 +32,8 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
 
     private SportType type;
 
-    @NotNull
     private HomeTeamType homeTeam;
 
-    @NotNull
     private AwayTeamType awayTeam;
 
     @NotNull
@@ -54,14 +50,13 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
 
     private String description;
 
+    @Size(max = 5)
     private Set<String> chips;
 
     @CreatedBy
-    @NotNull
     private String createdBy;
 
     @CreatedDate
-    @NotNull
     private Instant createdDate;
 
     @LastModifiedBy

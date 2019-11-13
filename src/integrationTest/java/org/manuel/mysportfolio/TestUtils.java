@@ -97,6 +97,8 @@ public class TestUtils {
         match.setType(SportType.ELEVEN_A_SIDE);
         match.setHomeTeam(homeTeam);
         match.setAwayTeam(awayTeam);
+        match.setStartDate(Instant.now());
+        match.setPlayedFor(Collections.singletonMap(createdBy, TeamOption.HOME_TEAM));
         match.setCreatedBy(createdBy);
         return match;
     }

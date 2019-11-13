@@ -60,6 +60,7 @@ public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto
 
     private final String description;
 
+    @Size(max = 5)
     private final Set<String> chips;
 
     @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})

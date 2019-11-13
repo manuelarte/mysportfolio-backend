@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.manuel.mysportfolio.ITConfiguration;
 import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.Sport;
+import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.repositories.MatchRepository;
@@ -51,12 +52,14 @@ class MatchCommandServiceTest {
         expected.setSport(Sport.FOOTBALL);
         expected.setStartDate(Instant.now());
         expected.setCreatedBy("123456789");
+        expected.setPlayedFor(Collections.singletonMap("123456789", TeamOption.HOME_TEAM));
 
         final var notExpected = new Match<AnonymousTeam, AnonymousTeam>();
         notExpected.setSport(Sport.FUTSAL);
         notExpected.setHomeTeam(TestUtils.createMockAnonymousTeam());
         notExpected.setAwayTeam(TestUtils.createMockAnonymousTeam());
         notExpected.setStartDate(Instant.now().minus(80, ChronoUnit.DAYS));
+        notExpected.setPlayedFor(Collections.singletonMap("123456789", TeamOption.HOME_TEAM));
 
         matchRepository.save(expected);
         matchRepository.save(notExpected);
