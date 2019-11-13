@@ -7,10 +7,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Set;
+
 @Repository
 public interface TeamRepository extends PagingAndSortingRepository<Team, ObjectId> {
 
-    Page<Team> findAllByCreatedByIs(Pageable pageable, String createdBy);
+    Page<Team> findAllByIdIsIn(Pageable pageable, Set<ObjectId> ids);
 
     int countAllByCreatedBy(String createdBy);
 

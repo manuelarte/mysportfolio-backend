@@ -29,7 +29,7 @@ public class TeamQueryController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<TeamDto>> findAllTeamsCreatedByMe(@PageableDefault final Pageable pageable) {
-        final Page<Team> teams = teamQueryService.findAllCreatedBy(pageable, getUserId());
+        final Page<Team> teams = teamQueryService.findAllForUser(pageable, getUserId());
         return ResponseEntity.ok(teams.map(teamToTeamDtoTransformer));
     }
 

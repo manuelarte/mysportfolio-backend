@@ -10,8 +10,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 public interface TeamQueryService {
 
-    //@PostAuthorize("hasRole('ROLE_ADMIN') or returnObject.content[]?.createdBy == authentication.principal.attributes['sub']")
-    Page<Team> findAllCreatedBy(Pageable pageable, String createdBy);
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #userId == authentication.principal.attributes['sub']")
+    Page<Team> findAllForUser(Pageable pageable, String userId);
 
     @PostAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     Optional<Team> findOne(ObjectId id);

@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @lombok.AllArgsConstructor
-public class TeamToUsersQueryServiceImpl implements TeamToUsersQueryService {
+class TeamToUsersQueryServiceImpl implements TeamToUsersQueryService {
 
     private final TeamToUsersRepository teamToUsersRepository;
 

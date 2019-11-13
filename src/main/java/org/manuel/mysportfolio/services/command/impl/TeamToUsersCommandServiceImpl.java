@@ -18,7 +18,7 @@ import java.util.Collections;
 @Service
 @lombok.AllArgsConstructor
 @lombok.extern.slf4j.Slf4j
-public class TeamToUsersCommandServiceImpl implements TeamToUsersCommandService {
+class TeamToUsersCommandServiceImpl implements TeamToUsersCommandService {
 
     private final TeamToUsersRepository teamToUsersRepository;
 
