@@ -14,7 +14,7 @@ public class AnonymousTeamToTeamInMatchInListDtoTransformer implements Function<
     public TeamDto apply(final AnonymousTeam anonymousTeam) {
         return anonymousTeam == null ? null : TeamDto.builder()
                 .name(anonymousTeam.getName())
-                .imageLink(anonymousTeam.getImageLink())
+                .teamImage(anonymousTeam.getTeamImage())
                 .build();
     }
 

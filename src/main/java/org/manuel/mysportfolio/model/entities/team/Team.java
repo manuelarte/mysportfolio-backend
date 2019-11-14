@@ -28,9 +28,7 @@ public class Team implements TeamInfo, Auditable<String, ObjectId, Instant> {
     @Size(max = 30)
     private String name;
 
-    @org.hibernate.validator.constraints.URL
-    @Size(max = 200)
-    private String imageLink;
+    private TeamImage teamImage;
 
     @CreatedBy
     private String createdBy;

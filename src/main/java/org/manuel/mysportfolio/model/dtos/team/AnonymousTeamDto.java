@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.manuel.mysportfolio.model.entities.team.TeamImage;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -23,9 +24,7 @@ public class AnonymousTeamDto implements TeamTypeDto {
     @Size(max = 30)
     private final String name;
 
-    @org.hibernate.validator.constraints.URL
-    @Size(max = 200)
-    private final String imageLink;
+    private final TeamImage teamImage;
 
     @JsonPOJOBuilder(withPrefix = "")
     public static final class AnonymousTeamDtoBuilder {

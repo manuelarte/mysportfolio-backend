@@ -20,7 +20,7 @@ public class RegisteredTeamToTeamInMatchInListDtoTransformer implements Function
         return TeamDto.builder()
                         .id(team.getId().toString())
                         .name(team.getName())
-                        .imageLink(team.getImageLink())
+                        .teamImage(team.getTeamImage())
                         .build();
     }
 

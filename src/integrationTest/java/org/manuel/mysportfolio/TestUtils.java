@@ -39,7 +39,7 @@ public class TestUtils {
     public static TeamDto createMockTeamDto() {
         return TeamDto.builder()
                 .name(RandomStringUtils.randomAlphabetic(5))
-                .imageLink(null)
+                .teamImage(null)
                 .build();
     }
 

@@ -18,7 +18,7 @@ public class AnonymousTeamDtoToAnonymousTeamTransformer implements Function<Anon
     private AnonymousTeam create(final AnonymousTeamDto anonymousTeamDto) {
         final var anonymousTeam = new AnonymousTeam();
         anonymousTeam.setName(anonymousTeamDto.getName());
-        anonymousTeam.setImageLink(anonymousTeamDto.getImageLink());
+        anonymousTeam.setTeamImage(anonymousTeamDto.getTeamImage());
         return anonymousTeam;
     }
 

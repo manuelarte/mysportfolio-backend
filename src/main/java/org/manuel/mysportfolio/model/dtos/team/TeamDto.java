@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.manuel.mysportfolio.model.TeamInfo;
+import org.manuel.mysportfolio.model.entities.team.TeamImage;
 import org.manuel.mysportfolio.validation.NewEntity;
 import org.manuel.mysportfolio.validation.PartialUpdateEntity;
 import org.manuel.mysportfolio.validation.UpdateEntity;
@@ -34,8 +35,7 @@ public class TeamDto implements TeamInfo {
     @Size(max = 30)
     private final String name;
 
-    @org.hibernate.validator.constraints.URL
-    private final String imageLink;
+    private final TeamImage teamImage;
 
     @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
     private final String createdBy;

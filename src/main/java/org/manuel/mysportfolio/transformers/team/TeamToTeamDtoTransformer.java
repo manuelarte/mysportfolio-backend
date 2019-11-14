@@ -14,7 +14,7 @@ public class TeamToTeamDtoTransformer implements Function<Team, TeamDto> {
                 .id(team.getId().toString())
                 .version(team.getVersion())
                 .name(team.getName())
-                .imageLink(team.getImageLink())
+                .teamImage(team.getTeamImage())
                 .createdBy(team.getCreatedBy().orElse(null))
                 .build();
     }

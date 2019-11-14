@@ -1,6 +1,7 @@
 package org.manuel.mysportfolio.model.entities.match;
 
 import org.manuel.mysportfolio.model.TeamInfo;
+import org.manuel.mysportfolio.model.entities.team.TeamImage;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -14,9 +15,7 @@ public class AnonymousTeam implements TeamType, TeamInfo {
     @Size(max = 30)
     private String name;
 
-    @org.hibernate.validator.constraints.URL
-    @Size(max = 200)
-    private String imageLink;
+    private TeamImage teamImage;
 
     @Override
     public String getType() {

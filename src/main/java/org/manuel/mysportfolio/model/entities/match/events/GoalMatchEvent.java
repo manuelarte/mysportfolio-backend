@@ -2,9 +2,6 @@ package org.manuel.mysportfolio.model.entities.match.events;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.springframework.data.annotation.Id;
@@ -13,9 +10,9 @@ import org.springframework.data.geo.Point;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@lombok.Data
+@lombok.AllArgsConstructor
+@lombok.NoArgsConstructor
 public class GoalMatchEvent implements MatchEvent {
 
     @Id
