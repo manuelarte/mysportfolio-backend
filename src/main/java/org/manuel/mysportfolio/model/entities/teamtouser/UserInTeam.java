@@ -10,7 +10,7 @@ import java.util.Set;
 public class UserInTeam {
 
     public enum UserInTeamRole {
-        PLAYER, COACH, MANAGER
+        PLAYER, COACH, MANAGER, SUPPORTER
     }
 
     private LocalDate from;
