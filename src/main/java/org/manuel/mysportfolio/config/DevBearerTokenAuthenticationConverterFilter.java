@@ -18,7 +18,7 @@ import java.util.HashSet;
 @Component
 @Profile("!prod")
 @lombok.AllArgsConstructor
-public class DevBearerTokenAuthenticationConverterFilter implements BearerTokenAuthenticationConverterFilter {
+class DevBearerTokenAuthenticationConverterFilter implements BearerTokenAuthenticationConverterFilter {
 
     @Override
     public void init(FilterConfig filterConfig) {

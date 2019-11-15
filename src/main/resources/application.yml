@@ -1,5 +1,5 @@
 info.app.name: mysportfolio
-info.app.description: Sportfolio backend app
+info.app.description: MySportfolio backend app
 info.app.version: ${VERSION:unknown}
 
 spring:

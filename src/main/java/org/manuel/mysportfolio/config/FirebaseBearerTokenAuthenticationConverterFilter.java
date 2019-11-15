@@ -81,7 +81,7 @@ public class FirebaseBearerTokenAuthenticationConverterFilter implements BearerT
                             () -> AppUser.builder()
                                 .fullName(name)
                                 .email(email)
-                                //.externalId(userId)
+                                .externalId(userId)
                                 .appMembership(AppMembership.FREE)
                                 .build())
                 );
@@ -101,11 +101,6 @@ public class FirebaseBearerTokenAuthenticationConverterFilter implements BearerT
                 final var oAuth2AuthenticationToken =
                         new OAuth2AuthenticationToken(principal, authorities, "clientRegistrationId");
                 SecurityContextHolder.getContext().setAuthentication(oAuth2AuthenticationToken);
-                 // TODO check if do it in aspect
-                 if (appUser.isNew()) {
-                     // appUserCommandService.save(appUser);
-                 }
-
             } catch(final FirebaseAuthException e) {
                 log.info("Error when validating firebase token.", e);
             }
@@ -125,11 +120,10 @@ public class FirebaseBearerTokenAuthenticationConverterFilter implements BearerT
 
         final var attributes = new HashMap<String, Object>();
         attributes.put("sub", idToken.getClaims().get("sub"));
+        attributes.put("name", idToken.getName());
         attributes.put("email", idToken.getEmail());
         attributes.put("email_verified", idToken.isEmailVerified());
         attributes.put("iss", idToken.getIssuer());
-        attributes.put("name", idToken.getName());
-
         attributes.put("picture", idToken.getPicture());
 
         return attributes;

@@ -1,5 +1,6 @@
-package org.manuel.mysportfolio.config;
+package org.manuel.mysportfolio.config.mvc;
 
+import org.manuel.mysportfolio.config.BearerTokenAuthenticationConverterFilter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

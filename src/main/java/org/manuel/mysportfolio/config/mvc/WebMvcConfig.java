@@ -1,4 +1,4 @@
-package org.manuel.mysportfolio.config;
+package org.manuel.mysportfolio.config.mvc;
 
 import org.manuel.mysportfolio.config.converter.StringToQueryCriteriaConverter;
 import org.springframework.context.annotation.Configuration;
