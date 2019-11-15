@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,9 @@ public interface TeamToUsersQueryService {
     // only admins or people that one time where in the team can get that info
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     Optional<TeamToUsers> findByTeamId(ObjectId teamId);
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    List<TeamToUsers> findByTeamIdIn(Collection<ObjectId> teamIds);
 
     // admin or the same user can perform this call
     @PreAuthorize("hasRole('ROLE_ADMIN') or #userId == authentication.principal.attributes['sub']")

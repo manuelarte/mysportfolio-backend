@@ -2,6 +2,7 @@ package org.manuel.mysportfolio.controllers.query;
 
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
+import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.team.TeamDto;
 import org.manuel.mysportfolio.model.entities.team.Team;
@@ -26,6 +27,7 @@ public class TeamQueryController {
 
     private final TeamQueryService teamQueryService;
     private final TeamToTeamDtoTransformer teamToTeamDtoTransformer;
+    private final UserIdProvider userIdProvider;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<TeamDto>> findAllTeamsCreatedByMe(@PageableDefault final Pageable pageable) {
@@ -41,8 +43,7 @@ public class TeamQueryController {
     }
 
     private String getUserId() {
-        return ((DefaultOAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                .getAttributes().get("sub").toString();
+        return userIdProvider.getUserId();
     }
 
 }

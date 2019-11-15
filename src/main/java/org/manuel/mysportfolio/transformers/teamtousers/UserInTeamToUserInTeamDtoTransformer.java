@@ -12,6 +12,9 @@ public class UserInTeamToUserInTeamDtoTransformer implements Function<UserInTeam
 
     @Override
     public UserInTeamDto apply(final UserInTeam userInTeam) {
+        if (userInTeam == null) {
+            return null;
+        }
         return UserInTeamDto.builder()
                 .from(userInTeam.getFrom())
                 .to(userInTeam.getTo())
