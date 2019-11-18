@@ -35,7 +35,6 @@ class DevBearerTokenAuthenticationConverterFilter implements BearerTokenAuthenti
         final var attributes = new HashMap<String, Object>();
         // NO-COMMIT
         attributes.put("sub", "123456789");
-        //attributes.put("sub", "tnRQ9lTWuBTJ1fdBH1wvYuv5kPG3");
         attributes.put("email_verified", true);
         attributes.put("iss", "https://accounts.google.com");
         attributes.put("given_name", "Test");
