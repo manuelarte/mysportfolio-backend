@@ -5,12 +5,9 @@ import javax.validation.constraints.NotNull;
 @lombok.Data
 @lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
-public class KitBasicImage implements TeamImage {
+public class PlainKitPart implements KitPart {
 
     @NotNull
-    private int shirtColour;
-
-    @NotNull
-    private int pantsColour;
+    private int colour;
 
 }

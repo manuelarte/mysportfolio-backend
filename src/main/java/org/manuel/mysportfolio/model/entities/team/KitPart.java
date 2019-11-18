@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = UrlImage.class, name = "url")
-})
-public interface TeamImage {
-
+        @JsonSubTypes.Type(value = PlainKitPart.class, name = "plain")})
+public interface KitPart {
 }

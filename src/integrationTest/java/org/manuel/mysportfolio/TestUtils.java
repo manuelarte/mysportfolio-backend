@@ -17,7 +17,9 @@ import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
+import org.manuel.mysportfolio.model.entities.team.PlainKitPart;
 import org.manuel.mysportfolio.model.entities.team.Team;
+import org.manuel.mysportfolio.model.entities.team.TeamKit;
 import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
 import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.springframework.security.core.Authentication;
@@ -43,6 +45,7 @@ public class TestUtils {
         return TeamDto.builder()
                 .name(RandomStringUtils.randomAlphabetic(5))
                 .teamImage(null)
+                .teamKit(new TeamKit(new PlainKitPart(123), new PlainKitPart(321)))
                 .build();
     }
 
@@ -58,6 +61,7 @@ public class TestUtils {
     public static Team createMockTeam() {
         final var team = new Team();
         team.setName(RandomStringUtils.randomAlphabetic(5));
+        team.setTeamKit(new TeamKit(new PlainKitPart(123), new PlainKitPart(321)));
         return team;
     }
 

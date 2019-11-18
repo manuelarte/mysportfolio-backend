@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.manuel.mysportfolio.model.TeamInfo;
 import org.manuel.mysportfolio.model.entities.team.TeamImage;
+import org.manuel.mysportfolio.model.entities.team.TeamKit;
 import org.manuel.mysportfolio.validation.NewEntity;
 import org.manuel.mysportfolio.validation.PartialUpdateEntity;
 import org.manuel.mysportfolio.validation.UpdateEntity;
@@ -36,6 +37,9 @@ public class TeamDto implements TeamInfo {
     private final String name;
 
     private final TeamImage teamImage;
+
+    @NotNull(groups = {NewEntity.class, UpdateEntity.class})
+    private final TeamKit teamKit;
 
     @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
     private final String createdBy;

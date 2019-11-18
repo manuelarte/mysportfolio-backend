@@ -32,23 +32,4 @@ class TeamImageTest {
         assertEquals(expected, OBJECT_MAPPER.readValue(json.toString(), TeamImage.class));
     }
 
-    @Test
-    public void testSerializeKitBasic() throws JsonProcessingException {
-        final var teamImage = new KitBasicImage(123, 456);
-        final var json = new JSONObject(OBJECT_MAPPER.writeValueAsString(teamImage));
-        assertEquals("kit-basic", json.get("type"));
-        assertEquals(teamImage.getShirtColour(), json.get("shirtColour"));
-        assertEquals(teamImage.getPantsColour(), json.get("pantsColour"));
-    }
-
-    @Test
-    public void testDeserializeKitBasic() throws IOException {
-        final var expected = new KitBasicImage(123, 456);
-        final var json = new JSONObject();
-        json.put("type", "kit-basic");
-        json.put("shirtColour", expected.getShirtColour());
-        json.put("pantsColour", expected.getPantsColour());
-        assertEquals(expected, OBJECT_MAPPER.readValue(json.toString(), TeamImage.class));
-    }
-
 }
