@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.manuel.mysportfolio.model.entities.team.KitPart;
 import org.manuel.mysportfolio.model.entities.team.TeamImage;
+import org.manuel.mysportfolio.model.entities.team.TeamKit;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -23,6 +25,8 @@ public class AnonymousTeamDto implements TeamTypeDto {
     @NotEmpty
     @Size(max = 30)
     private final String name;
+
+    private final TeamKit<KitPart, KitPart> teamKit;
 
     private final TeamImage teamImage;
 

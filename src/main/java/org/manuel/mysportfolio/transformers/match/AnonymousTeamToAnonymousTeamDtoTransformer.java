@@ -14,6 +14,7 @@ public class AnonymousTeamToAnonymousTeamDtoTransformer implements Function<Anon
     public AnonymousTeamDto apply(final AnonymousTeam anonymousTeam) {
         return anonymousTeam == null ? null : AnonymousTeamDto.builder()
                 .name(anonymousTeam.getName())
+                .teamKit(anonymousTeam.getTeamKit())
                 .teamImage(anonymousTeam.getTeamImage())
                 .build();
     }
