@@ -5,6 +5,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.manuel.mysportfolio.config.SystemAuthentication;
 import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.model.entities.user.AppMembership;
+import org.manuel.mysportfolio.model.entities.user.AppSettings;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.services.command.AppUserCommandService;
@@ -44,6 +45,7 @@ public class AuthenticationAspect {
                                 .email(email)
                                 .externalId(externalId)
                                 .appMembership(AppMembership.FREE)
+                                .settings(new AppSettings(true))
                                 .build());
 
         if (appUser.isNew()) {

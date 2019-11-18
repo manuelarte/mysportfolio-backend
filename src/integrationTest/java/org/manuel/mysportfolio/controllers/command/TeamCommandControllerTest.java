@@ -96,6 +96,9 @@ public class TeamCommandControllerTest {
                 .name("new name")
                 .build();
 
+        final var teamToUser = TestUtils.createMockTeamToUsers(originalTeam);
+        teamToUsersRepository.save(teamToUser);
+
         mvc.perform(patch("/api/v1/teams/{teamId}", originalTeam.getId()).contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(teamDto)))
                 .andExpect(status().isOk())

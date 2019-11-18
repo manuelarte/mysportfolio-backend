@@ -7,11 +7,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.DayOfWeek;
+import java.util.List;
+
 @Repository
 public interface CompetitionRepository extends PagingAndSortingRepository<Competition, ObjectId> {
 
     Page<Competition> findAllByCreatedByIs(Pageable pageable, String createdBy);
 
     int countAllByCreatedBy(String createdBy);
+
+    List<Competition> findByDefaultMatchDayIs(DayOfWeek dayOfWeek);
 
 }

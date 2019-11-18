@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import org.manuel.mysportfolio.model.entities.user.AppMembership;
+import org.manuel.mysportfolio.model.entities.user.AppSettings;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.services.command.AppUserCommandService;
@@ -24,10 +25,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -76,26 +74,18 @@ public class FirebaseBearerTokenAuthenticationConverterFilter implements BearerT
                 final var name = idToken.getName();
 
                 // Use or store profile information
-                final AppUser appUser = doWithSystemAuthentication(
-                        () -> appUserRepository.findByExternalId(userId).orElseGet(
-                            () -> AppUser.builder()
-                                .fullName(name)
-                                .email(email)
-                                .externalId(userId)
-                                .appMembership(AppMembership.FREE)
-                                .build())
-                );
-
+                final Optional<AppUser> appUser = doWithSystemAuthentication(
+                        () -> appUserRepository.findByExternalId(userId));
 
                 final var authorities = new ArrayList<GrantedAuthority>();
                 authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-                if (Boolean.TRUE.equals(appUser.getAdmin())) {
+                if (Boolean.TRUE.equals(appUser.map(AppUser::getAdmin).orElse(false))) {
                     authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
                 }
                 final var attributes = createAttributes(idToken);
                 // custom attributes
                 // check if I can receive this from firebase claims
-                attributes.put("app-membership", appUser.getAppMembership());
+                attributes.put("app-membership", appUser.map(AppUser::getAppMembership).orElse(AppMembership.FREE));
 
                 final var principal = new DefaultOAuth2User(new HashSet<>(authorities), attributes, "name");
                 final var oAuth2AuthenticationToken =
@@ -129,7 +119,7 @@ public class FirebaseBearerTokenAuthenticationConverterFilter implements BearerT
         return attributes;
     }
 
-    private AppUser doWithSystemAuthentication(final Supplier<AppUser> action) {
+    private <T> T doWithSystemAuthentication(final Supplier<T> action) {
         try {
             SecurityContextHolder.getContext().setAuthentication(new SystemAuthentication());
             return action.get();

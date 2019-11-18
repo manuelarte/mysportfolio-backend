@@ -38,6 +38,10 @@ public class AppUser implements Auditable<String, ObjectId, Instant> {
 
     private Boolean admin;
 
+    private String registrationToken;
+
+    private AppSettings settings;
+
     @CreatedBy
     private String createdBy;
 

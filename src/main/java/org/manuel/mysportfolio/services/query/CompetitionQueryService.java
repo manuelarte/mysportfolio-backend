@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import java.time.DayOfWeek;
+import java.util.List;
 import java.util.Optional;
 
 public interface CompetitionQueryService {
@@ -19,5 +21,8 @@ public interface CompetitionQueryService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or #createdBy == authentication.principal.attributes['sub']")
     int countAllByCreatedBy(String createdBy);
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SYSTEM')")
+    List<Competition> findAllPlaying(DayOfWeek dayOfWeek);
 
 }

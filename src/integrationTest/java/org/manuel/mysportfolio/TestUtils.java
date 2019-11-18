@@ -18,6 +18,8 @@ import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.manuel.mysportfolio.model.entities.team.Team;
+import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
+import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,6 +29,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.time.DayOfWeek;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.Map;
@@ -56,6 +59,13 @@ public class TestUtils {
         final var team = new Team();
         team.setName(RandomStringUtils.randomAlphabetic(5));
         return team;
+    }
+
+    public static TeamToUsers createMockTeamToUsers(final Team team) {
+        return new TeamToUsers(null, null, team.getId(),
+                Collections.singletonMap(team.getCreatedBy().get(),
+                        new UserInTeam(LocalDate.now(), null, UserInTeam.UserInTeamRole.PLAYER)),
+                Collections.singleton(team.getCreatedBy().get()));
     }
 
     public static Competition createMockCompetition() {

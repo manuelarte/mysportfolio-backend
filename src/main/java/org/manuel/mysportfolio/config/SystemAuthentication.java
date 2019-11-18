@@ -8,7 +8,7 @@ import java.util.Collections;
 public class SystemAuthentication extends AbstractAuthenticationToken {
 
     public SystemAuthentication() {
-        super(Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
+        super(Collections.singletonList(new SimpleGrantedAuthority("ROLE_SYSTEM")));
     }
 
     @Override

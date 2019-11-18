@@ -8,7 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @lombok.AllArgsConstructor
@@ -29,6 +32,11 @@ class AppUserQueryServiceImpl implements AppUserQueryService {
     @Override
     public Page<AppUser> findAll(final Pageable pageable) {
         return appUserRepository.findAll(pageable);
+    }
+
+    @Override
+    public Set<AppUser> findByExternalIds(final Collection<String> externalIds) {
+        return appUserRepository.findByExternalIdInAndRegistrationTokenNotNull(externalIds);
     }
 
 }
