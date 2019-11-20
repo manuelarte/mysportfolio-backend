@@ -45,9 +45,7 @@ class TeamToUsersCommandServiceImpl implements TeamToUsersCommandService {
     public void handleTeamCreatedEvent(final TeamCreatedEvent teamCreatedEvent) {
         log.info("Handling context started event {}.", teamCreatedEvent);
         final var team = (Team) teamCreatedEvent.getSource();
-        final var userInTeam = new UserInTeam();
-        userInTeam.setFrom(LocalDate.now());
-        userInTeam.setRoles(Collections.singleton(UserInTeam.UserInTeamRole.PLAYER));
+        final var userInTeam = new UserInTeam(LocalDate.now(), null, UserInTeam.UserInTeamRole.PLAYER);
         final var entity = new TeamToUsers();
         entity.setTeamId(team.getId());
         entity.addUser(team.getCreatedBy().get(), userInTeam);

@@ -2,6 +2,7 @@ package org.manuel.mysportfolio.controllers.command.user;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.team.TeamDto;
@@ -21,10 +22,7 @@ import org.manuel.mysportfolio.validation.NewEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -49,6 +47,18 @@ public class UserCommandController {
         user.setRegistrationToken(data.registrationToken);
         appUserCommandService.save(user);
         log.info("Registration token received for user %s", userId);
+        return ResponseEntity.accepted().build();
+    }
+
+    @PostMapping(value = "notifications/{notificationId}")
+    public ResponseEntity<Void> acceptNotification(@PathVariable final ObjectId notificationId) {
+        appUserCommandService.acceptUserNotification(notificationId);
+        return ResponseEntity.accepted().build();
+    }
+
+    @DeleteMapping(value = "notifications/{notificationId}")
+    public ResponseEntity<Void> rejectNotification(@PathVariable final ObjectId notificationId) {
+        appUserCommandService.rejectUserNotification(notificationId);
         return ResponseEntity.accepted().build();
     }
 

@@ -2,6 +2,7 @@ package org.manuel.mysportfolio.services.query;
 
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
+import org.manuel.mysportfolio.model.entities.usernotification.UserNotification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -28,5 +29,8 @@ public interface AppUserQueryService {
 
     @RolesAllowed({"ROLE_ADMIN", "ROLE_SYSTEM"})
     Set<AppUser> findByExternalIds(Collection<String> externalIds);
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SYSTEM') or #externalId == authentication.principal.attributes['sub']")
+    Page<UserNotification> getUserNotifications(Pageable pageable, String externalId);
 
 }

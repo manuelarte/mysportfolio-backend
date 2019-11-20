@@ -2,14 +2,15 @@ package org.manuel.mysportfolio.services.query.impl;
 
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
+import org.manuel.mysportfolio.model.entities.usernotification.UserNotification;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
+import org.manuel.mysportfolio.repositories.UserNotificationRepository;
 import org.manuel.mysportfolio.services.query.AppUserQueryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -18,6 +19,7 @@ import java.util.Set;
 class AppUserQueryServiceImpl implements AppUserQueryService {
 
     private final AppUserRepository appUserRepository;
+    private final UserNotificationRepository userNotificationRepository;
 
     @Override
     public Optional<AppUser> findOne(final ObjectId id) {
@@ -37,6 +39,11 @@ class AppUserQueryServiceImpl implements AppUserQueryService {
     @Override
     public Set<AppUser> findByExternalIds(final Collection<String> externalIds) {
         return appUserRepository.findByExternalIdInAndRegistrationTokenNotNull(externalIds);
+    }
+
+    @Override
+    public Page<UserNotification> getUserNotifications(final Pageable pageable, final String externalId) {
+        return userNotificationRepository.findAllByToIsAndStatusIsNull(pageable, externalId);
     }
 
 }
