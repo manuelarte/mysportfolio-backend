@@ -1,7 +1,9 @@
 package org.manuel.mysportfolio.transformers.usernotification;
 
 import org.bson.types.ObjectId;
+import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.usernotification.TeamAddUserNotificationDto;
+import org.manuel.mysportfolio.model.entities.team.Team;
 import org.manuel.mysportfolio.model.entities.usernotification.TeamAddUserNotification;
 import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.manuel.mysportfolio.services.query.TeamQueryService;
@@ -20,7 +22,8 @@ public class TeamAddUserNotificationToTeamAddUserNotificationDtoTransformer impl
 
     @Override
     public TeamAddUserNotificationDto apply(final TeamAddUserNotification teamAddUserNotification) {
-        final var team = teamQueryService.findOne(teamAddUserNotification.getTeamId()).get();
+        final var team = teamQueryService.findOne(teamAddUserNotification.getTeamId())
+                .orElseThrow(() -> new EntityNotFoundException(Team.class, teamAddUserNotification.getTeamId().toString()));
         return TeamAddUserNotificationDto.builder()
                 .id(Optional.ofNullable(teamAddUserNotification.getId()).map(ObjectId::toString).orElse(null))
                 .version(teamAddUserNotification.getVersion())

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportType;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
+import org.manuel.mysportfolio.model.entities.Place;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.validation.NewEntity;
 import org.manuel.mysportfolio.validation.PartialUpdateEntity;
@@ -51,7 +52,7 @@ public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto
 
     private final List<MatchEventDto> events;
 
-    private final String address;
+    private final Place address;
 
     @PastOrPresent
     @NotNull
