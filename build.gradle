@@ -31,10 +31,6 @@ repositories {
 	maven { url 'https://repo.spring.io/snapshot' }
 }
 
-ext {
-	set('snippetsDir', file("build/generated-snippets"))
-}
-
 dependencies {
 
 	implementation 'javax.validation:validation-api:2.0.1.Final'
