@@ -1,6 +1,5 @@
 package org.manuel.mysportfolio;
 
-import com.google.firebase.messaging.FirebaseMessagingException;
 import org.manuel.mysportfolio.config.SystemAuthentication;
 import org.manuel.mysportfolio.exceptions.NotificationException;
 import org.manuel.mysportfolio.model.entities.Competition;
