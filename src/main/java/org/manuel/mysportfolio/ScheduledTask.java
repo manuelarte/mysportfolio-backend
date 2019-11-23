@@ -35,7 +35,7 @@ public class ScheduledTask {
     private final FirebaseNotificationService notificationsService;
 
     @Scheduled(
-            cron = "0 0 21 ? * * *"
+            cron = "0 0 21 ? * *"
             //fixedRate = 1 * 60 * 60 * 24 * 1000
     )
     public void sendCompetitionDay() {
