@@ -7,6 +7,8 @@ import org.manuel.mysportfolio.config.serializer.PointDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.geo.Point;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 
 @Configuration
 public class AppConfig {
@@ -19,4 +21,10 @@ public class AppConfig {
                 .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
                 .registerModule(module);
     }
+
+    //@Bean
+    //public TaskScheduler taskScheduler() {
+    //    return new ConcurrentTaskScheduler(); //single threaded by default
+    //}
+
 }

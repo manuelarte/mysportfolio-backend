@@ -33,10 +33,10 @@ public class ScheduledTask {
     private final AppUserQueryService appUserQueryService;
     private final FirebaseNotificationService notificationsService;
 
-    @Scheduled(
-            cron = "0 0 21 ? * *"
+    //@Scheduled(
+    //        cron = "0 0 21 ? * *"
             //fixedRate = 1 * 60 * 60 * 24 * 1000
-    )
+    //)
     public void sendCompetitionDay() {
         final DayOfWeek from = DayOfWeek.from(LocalDate.now()).minus(1);
         final List<Competition> competitionsPlayedToday = doWithSystemAuthentication(() -> competitionQueryService.findAllPlaying(from));
