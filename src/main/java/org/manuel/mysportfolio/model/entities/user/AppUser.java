@@ -3,6 +3,7 @@ package org.manuel.mysportfolio.model.entities.user;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.*;
 import org.springframework.data.domain.Auditable;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
@@ -31,6 +32,7 @@ public class AppUser implements Auditable<String, ObjectId, Instant> {
     private String email;
 
     @NotNull
+    @Indexed(unique = true)
     private String externalId;
 
     @NotNull
