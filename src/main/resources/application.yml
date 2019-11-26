@@ -1,6 +1,5 @@
 info.app.name: mysportfolio
 info.app.description: MySportfolio backend app
-info.app.version: ${VERSION:unknown}
 
 spring:
   data:
