@@ -2,7 +2,6 @@ package org.manuel.mysportfolio.services.command.impl;
 
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
-import org.manuel.mysportfolio.model.entities.usernotification.UserNotification;
 import org.manuel.mysportfolio.model.entities.usernotification.UserNotificationStatus;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.repositories.UserNotificationRepository;

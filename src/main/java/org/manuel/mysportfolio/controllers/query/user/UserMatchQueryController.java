@@ -44,7 +44,7 @@ public class UserMatchQueryController {
         return ResponseEntity.ok(matches.map(m -> new UserMatchDto(matchToMatchDtoTransformer.apply(m), getPerformance(m, appUser))));
     }
 
-    private final PerformanceDto getPerformance(final Match match, final AppUser appUser) {
+    private PerformanceDto getPerformance(final Match match, final AppUser appUser) {
         return playersPerformanceQueryService.findByMatchIdAndPlayerId(match.getId(), appUser.getExternalId()).map(performanceToPerformanceDtoTransformer)
                 .orElse(null);
     }

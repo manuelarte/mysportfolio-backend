@@ -2,7 +2,6 @@ package org.manuel.mysportfolio.model.entities;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 
 @JsonDeserialize(builder = Place.PlaceBuilder.class)
 @lombok.AllArgsConstructor

@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -25,7 +24,7 @@ class TeamQueryServiceImpl implements TeamQueryService {
     @Override
     public Page<Team> findAllForUser(final Pageable pageable, final String userId) {
         final var byUsersExists = teamToUsersQueryService.findByUsersExists(userId);
-        return teamRepository.findAllByIdIsIn(pageable, byUsersExists.stream().map(it -> it.getTeamId()).collect(Collectors.toSet()));
+        return teamRepository.findAllByIdIsIn(pageable, byUsersExists.stream().map(TeamToUsers::getTeamId).collect(Collectors.toSet()));
     }
 
     @Override

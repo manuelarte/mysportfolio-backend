@@ -5,7 +5,6 @@ import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.usernotification.TeamAddUserNotificationDto;
 import org.manuel.mysportfolio.model.entities.team.Team;
 import org.manuel.mysportfolio.model.entities.usernotification.TeamAddUserNotification;
-import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.manuel.mysportfolio.services.query.TeamQueryService;
 import org.manuel.mysportfolio.transformers.team.TeamToTeamDtoTransformer;
 import org.springframework.stereotype.Component;

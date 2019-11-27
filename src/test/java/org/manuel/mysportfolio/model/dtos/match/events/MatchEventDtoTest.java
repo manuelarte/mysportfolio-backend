@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MatchEventDtoTest {
+class MatchEventDtoTest {
 
     private static final ObjectMapper OBJECT_MAPPER = new AppConfig().objectMapper();
 
@@ -27,4 +27,21 @@ public class MatchEventDtoTest {
         assertEquals(matchEvent.get("team"), json.get("team"));
         assertEquals(matchEvent.get("minute"), json.get("minute"));
     }
+
+    @Test
+    public void testDeserializeSubstitution() throws IOException {
+        final var json = new JSONObject();
+        json.put("id", new ObjectId().toString());
+        json.put("type", "substitution");
+        json.put("team", "HOME_TEAM");
+        json.put("minute", 70);
+        json.put("in", "123456789");
+        final var matchEvent = OBJECT_MAPPER.readValue(json.toString(), MatchEventDto.class);
+        assertEquals(matchEvent.get("id"), json.get("id"));
+        assertEquals(matchEvent.get("team"), json.get("team"));
+        assertEquals(matchEvent.get("minute"), json.get("minute"));
+        assertEquals(matchEvent.get("in"), json.get("in"));
+    }
+
+
 }

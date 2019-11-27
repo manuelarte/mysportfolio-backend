@@ -1,7 +1,5 @@
 package org.manuel.mysportfolio.services;
 
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import org.manuel.mysportfolio.exceptions.NotificationException;
 import org.springframework.context.annotation.Profile;
