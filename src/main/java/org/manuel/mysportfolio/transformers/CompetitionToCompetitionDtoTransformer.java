@@ -13,6 +13,7 @@ public class CompetitionToCompetitionDtoTransformer implements Function<Competit
     public CompetitionDto apply(Competition competition) {
         return CompetitionDto.builder()
                 .id(competition.getId().toString())
+                .version(competition.getVersion())
                 .name(competition.getName())
                 .description(competition.getDescription())
                 .sport(competition.getSport())

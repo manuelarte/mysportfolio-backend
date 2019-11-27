@@ -15,6 +15,7 @@ public class CompetitionDtoToCompetitionTransformer implements Function<Competit
     public Competition apply(CompetitionDto competitionDto) {
         final var competition = new Competition();
         Optional.ofNullable(competitionDto.getId()).ifPresent(id -> competition.setId(new ObjectId(id)));
+        competition.setVersion(competitionDto.getVersion());
         competition.setName(competitionDto.getName());
         competition.setDescription(competitionDto.getDescription());
         competition.setSport(competitionDto.getSport());
