@@ -7,6 +7,7 @@ import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.geo.Point;
 
+import javax.validation.constraints.AssertFalse;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 
@@ -32,6 +33,8 @@ public class GoalMatchEvent implements MatchEvent {
 
     private String description;
 
+    private AssistDetails assist;
+
     @AssertTrue
     private boolean validGoalCoordinates() {
         if (goalCoordinates != null) {
@@ -39,6 +42,14 @@ public class GoalMatchEvent implements MatchEvent {
                     goalCoordinates.getY() <= 0.5 && goalCoordinates.getY() >= -0.5;
         }
         return true;
+    }
+
+    @AssertFalse
+    private boolean assistAndGoalTheSamePerson() {
+        if (assist != null && playerId != null) {
+            return playerId.equals(assist);
+        }
+        return false;
     }
 
 }
