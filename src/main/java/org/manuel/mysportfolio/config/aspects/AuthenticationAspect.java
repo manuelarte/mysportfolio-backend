@@ -2,19 +2,14 @@ package org.manuel.mysportfolio.config.aspects;
 
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
-import org.manuel.mysportfolio.config.SystemAuthentication;
-import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.model.entities.user.AppMembership;
 import org.manuel.mysportfolio.model.entities.user.AppSettings;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
-import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.services.command.AppUserCommandService;
 import org.manuel.mysportfolio.services.query.AppUserQueryService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Component;
-
-import java.util.function.Supplier;
 
 @Component
 @Aspect

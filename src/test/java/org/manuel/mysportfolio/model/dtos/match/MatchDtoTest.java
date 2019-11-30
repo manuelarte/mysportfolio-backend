@@ -16,7 +16,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MatchDtoTest {
+class MatchDtoTest {
 
     private static final ObjectMapper OBJECT_MAPPER = new AppConfig().objectMapper();
 

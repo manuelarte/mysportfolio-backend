@@ -101,7 +101,7 @@ public class StringToQueryCriteriaConverter implements Converter<String, QueryCr
 
     @AllArgsConstructor
     @NoArgsConstructor
-    private class DataHelper {
+    private static class DataHelper {
         public SearchCriterion searchCriterion;
         public QueryCriteria.QueryOption queryOption;
         public String rest;

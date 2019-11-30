@@ -9,7 +9,6 @@ import org.manuel.mysportfolio.services.FirebaseNotificationService;
 import org.manuel.mysportfolio.services.query.AppUserQueryService;
 import org.manuel.mysportfolio.services.query.CompetitionQueryService;
 import org.springframework.context.annotation.Profile;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -41,10 +40,10 @@ public class ScheduledTask {
         final DayOfWeek from = DayOfWeek.from(LocalDate.now()).minus(1);
         final List<Competition> competitionsPlayedToday = doWithSystemAuthentication(() -> competitionQueryService.findAllPlaying(from));
         final AtomicInteger numberSent = new AtomicInteger(0);
-        final Map<String, AppUser> users = appUserQueryService.findByExternalIds(competitionsPlayedToday.stream().map(it -> it.getCreatedBy())
+        final Map<String, AppUser> users = appUserQueryService.findByExternalIds(competitionsPlayedToday.stream().map(Competition::getCreatedBy)
                 .map(Optional::get).collect(Collectors.toList())).stream().collect(Collectors.toMap(AppUser::getExternalId, Function.identity()));
         // TODO, filter if the user submitted today a match with the same competition
-        competitionsPlayedToday.stream().filter(it -> users.containsKey(it.getCreatedBy().get()) && users.get(it.getCreatedBy().get()).getSettings().getReceiveCompetitionsNotifications() == true )
+        competitionsPlayedToday.stream().filter(it -> users.containsKey(it.getCreatedBy().get()) && users.get(it.getCreatedBy().get()).getSettings().getReceiveCompetitionsNotifications())
                 .forEach(
                         it -> {
                             final var message = NotificationsFactory.createCompetitionsReminderNotification(users.get(it.getCreatedBy().get()).getRegistrationToken(), it);

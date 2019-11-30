@@ -5,30 +5,15 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
-import org.manuel.mysportfolio.model.dtos.team.TeamDto;
-import org.manuel.mysportfolio.model.dtos.user.UserTeamDto;
-import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.services.command.AppUserCommandService;
-import org.manuel.mysportfolio.services.command.TeamCommandService;
-import org.manuel.mysportfolio.services.command.TeamToUsersCommandService;
 import org.manuel.mysportfolio.services.query.AppUserQueryService;
-import org.manuel.mysportfolio.services.query.TeamToUsersQueryService;
-import org.manuel.mysportfolio.transformers.team.TeamDtoToTeamTransformer;
-import org.manuel.mysportfolio.transformers.team.TeamToTeamDtoTransformer;
-import org.manuel.mysportfolio.transformers.teamtousers.UserInTeamDtoToUserInTeamTransformer;
-import org.manuel.mysportfolio.transformers.teamtousers.UserInTeamToUserInTeamDtoTransformer;
-import org.manuel.mysportfolio.validation.NewEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.groups.Default;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/users/me")
@@ -46,7 +31,7 @@ public class UserCommandController {
         final var user = appUserQueryService.findByExternalId(userId).orElseThrow(() -> new EntityNotFoundException(AppUser.class, userId));
         user.setRegistrationToken(data.registrationToken);
         appUserCommandService.save(user);
-        log.info("Registration token received for user %s", userId);
+        log.info("Registration token received for user {}", userId);
         return ResponseEntity.accepted().build();
     }
 

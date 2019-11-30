@@ -85,3 +85,7 @@ test {
 integrationTest {
 	useJUnitPlatform()
 }
+
+springBoot {
+	buildInfo()
+}

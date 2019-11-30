@@ -1,21 +1,16 @@
 package org.manuel.mysportfolio.controllers.command.user;
 
-import io.jsonwebtoken.lang.Assert;
 import org.manuel.mysportfolio.config.UserIdProvider;
-import org.manuel.mysportfolio.model.dtos.team.TeamDto;
 import org.manuel.mysportfolio.model.dtos.user.UserTeamDto;
 import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.manuel.mysportfolio.services.command.TeamCommandService;
 import org.manuel.mysportfolio.services.command.TeamToUsersCommandService;
 import org.manuel.mysportfolio.services.query.TeamToUsersQueryService;
-import org.manuel.mysportfolio.transformers.team.PartialTeamDtoToTeamTransformer;
-import org.manuel.mysportfolio.transformers.team.TeamDtoToExistingTeamTransformer;
 import org.manuel.mysportfolio.transformers.team.TeamDtoToTeamTransformer;
 import org.manuel.mysportfolio.transformers.team.TeamToTeamDtoTransformer;
 import org.manuel.mysportfolio.transformers.teamtousers.UserInTeamDtoToUserInTeamTransformer;
 import org.manuel.mysportfolio.transformers.teamtousers.UserInTeamToUserInTeamDtoTransformer;
 import org.manuel.mysportfolio.validation.NewEntity;
-import org.manuel.mysportfolio.validation.PartialUpdateEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

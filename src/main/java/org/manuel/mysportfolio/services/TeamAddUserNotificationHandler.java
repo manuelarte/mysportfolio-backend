@@ -1,11 +1,8 @@
 package org.manuel.mysportfolio.services;
 
-import org.apache.tomcat.jni.Local;
 import org.manuel.mysportfolio.config.SystemAuthentication;
 import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.manuel.mysportfolio.model.entities.usernotification.TeamAddUserNotification;
-import org.manuel.mysportfolio.repositories.TeamRepository;
-import org.manuel.mysportfolio.services.command.AppUserCommandService;
 import org.manuel.mysportfolio.services.command.TeamToUsersCommandService;
 import org.manuel.mysportfolio.services.query.TeamToUsersQueryService;
 import org.springframework.security.core.Authentication;

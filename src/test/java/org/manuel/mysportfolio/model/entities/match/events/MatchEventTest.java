@@ -13,14 +13,14 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MatchEventTest {
+class MatchEventTest {
 
     private static final ObjectMapper OBJECT_MAPPER = new AppConfig().objectMapper();
 
     @Test
     public void testSerializeGoal() throws JsonProcessingException {
         final var event = new GoalMatchEvent(new ObjectId(),
-                TeamOption.HOME_TEAM, "12345", 30, null, null, "A very nice volley");
+                TeamOption.HOME_TEAM, "12345", 30, null, null, "A very nice volley", null);
         final var json = new JSONObject(OBJECT_MAPPER.writeValueAsString(event));
         assertEquals(json.get("id"), event.getId().toString());
         assertEquals(json.get("type"), "goal");
@@ -42,6 +42,37 @@ public class MatchEventTest {
         assertEquals(goalMatchEvent.getId().toString(), json.get("id"));
         assertEquals(goalMatchEvent.getTeam().toString(), json.get("team"));
         assertEquals(goalMatchEvent.getMinute(), json.get("minute"));
+    }
+
+    @Test
+    public void testSerializeSubstitution() throws JsonProcessingException {
+        final var event = new SubstitutionMatchEvent(new ObjectId(),
+                TeamOption.HOME_TEAM, 75, "12345", null, null);
+        final var json = new JSONObject(OBJECT_MAPPER.writeValueAsString(event));
+        assertEquals(json.get("id"), event.getId().toString());
+        assertEquals(json.get("type"), "substitution");
+        assertEquals(json.get("team"), event.getTeam().toString());
+        assertEquals(json.get("minute"), event.getMinute());
+        assertEquals(json.get("in"), event.getIn());
+        assertEquals(json.get("out"), event.getOut());
+    }
+
+    @Test
+    public void testDeserializeSubstitution() throws IOException {
+        final var json = new JSONObject();
+        json.put("id", new ObjectId().toString());
+        json.put("type", "substitution");
+        json.put("team", "HOME_TEAM");
+        json.put("minute", 60);
+        json.put("out", "12345");
+        final var matchEvent = OBJECT_MAPPER.readValue(json.toString(), MatchEvent.class);
+        assertTrue(matchEvent instanceof SubstitutionMatchEvent);
+        final var substitutionMatchEvent = (SubstitutionMatchEvent) matchEvent;
+        assertEquals(substitutionMatchEvent.getId().toString(), json.get("id"));
+        assertEquals(substitutionMatchEvent.getTeam().toString(), json.get("team"));
+        assertEquals(substitutionMatchEvent.getMinute(), json.get("minute"));
+        assertTrue(json.isNull("in"));
+        assertEquals(substitutionMatchEvent.getOut(), json.get("out"));
     }
 
     @Test
