@@ -5,9 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.jsolve.typeconverter.Converter;
 import pl.jsolve.typeconverter.TypeConverter;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -30,7 +28,7 @@ public class TypeConversionService {
     }
 
     private Converter<String, Instant> instantConversion() {
-        return source -> LocalDate.parse(source).atStartOfDay(ZoneId.systemDefault()).toInstant();
+        return source -> LocalDate.parse(source).atTime(LocalTime.MAX).toInstant(ZoneOffset.UTC);
     }
 
     private Converter<String, Sport> stringToSportConversion() {
