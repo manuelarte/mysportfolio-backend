@@ -2,6 +2,7 @@ package org.manuel.mysportfolio.services.command.impl;
 
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
+import org.manuel.mysportfolio.publishers.MatchCreatedEventPublisher;
 import org.manuel.mysportfolio.repositories.MatchRepository;
 import org.manuel.mysportfolio.services.command.MatchCommandService;
 import org.springframework.stereotype.Service;
@@ -12,11 +13,14 @@ import org.springframework.util.Assert;
 class MatchCommandServiceImpl implements MatchCommandService {
 
     private final MatchRepository matchRepository;
+    private final MatchCreatedEventPublisher matchCreatedEventPublisher;
 
     @Override
     public Match<TeamType, TeamType> save(final Match<TeamType, TeamType> match) {
         Assert.notNull(match, "The match to save can't be null");
-        return matchRepository.save(match);
+        final var saved = matchRepository.save(match);
+        matchCreatedEventPublisher.publishEvent(saved);
+        return saved;
     }
 
     @Override
