@@ -8,7 +8,7 @@ plugins {
 apply plugin: 'io.spring.dependency-management'
 
 group = 'org.manuel'
-version = '0.2.4'
+version = '0.2.5'
 sourceCompatibility = '11'
 
 facets {
@@ -89,5 +89,3 @@ integrationTest {
 springBoot {
 	buildInfo()
 }
-
-jib.to.image = 'gcr.io/mysportfolio-backend/mysportfolio:0.2.4'
