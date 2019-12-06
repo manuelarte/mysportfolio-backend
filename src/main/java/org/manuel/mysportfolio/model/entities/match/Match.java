@@ -5,6 +5,7 @@ import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportType;
 import org.manuel.mysportfolio.model.entities.Place;
 import org.manuel.mysportfolio.model.entities.TeamOption;
+import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
 import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
 import org.springframework.data.annotation.*;
 import org.springframework.data.domain.Auditable;
@@ -91,4 +92,10 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
     public boolean isNew() {
         return id == null;
     }
+
+    public int getGoals(final TeamOption teamOption) {
+        return (int) Optional.ofNullable(events).orElse(Collections.emptyList()).stream().filter(it -> it instanceof GoalMatchEvent)
+            .filter(it -> ((GoalMatchEvent) it).getTeam() == teamOption).count();
+    }
+
 }

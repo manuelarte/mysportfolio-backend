@@ -1,4 +1,8 @@
 version: 2.1 # use CircleCI 2.1
+orbs:
+  gcp-cli: circleci/gcp-cli@1.8.3
+  gcp-gke: circleci/gcp-gke@0.1.0
+  gcr: circleci/gcp-gcr@0.0.2
 jobs: # a collection of steps
   build:
     # Remove if parallelism is not desired
@@ -56,8 +60,35 @@ jobs: # a collection of steps
       - store_artifacts:
           path: build/libs
       # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
+  Build-Push-Image-Docker:
+    description: Build and push image to Google Container Registry
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Set project version environment variable
+          command: |
+            export PROJECT_VERSION=`./gradlew properties -q | grep "version:" | awk '{print $2}'`
+            echo PROJECT_VERSION=$PROJECT_VERSION >> $BASH_ENV
+            source $BASH_ENV
+      - gcr/gcr-auth
+      - gcr/build-image:
+          image: mysportfolio
+          tag: $PROJECT_VERSION-$CIRCLE_BUILD_NUM
+      - gcr/push-image:
+          image: mysportfolio
+          tag: $PROJECT_VERSION-$CIRCLE_BUILD_NUM
 workflows:
   version: 2.1
   workflow:
     jobs:
-      - build
+      - build:
+          context: MySportfolioDEV
+      - Build-Push-Image-Docker:
+          context: MySportfolioDEV
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - develop

@@ -8,7 +8,7 @@ plugins {
 apply plugin: 'io.spring.dependency-management'
 
 group = 'org.manuel'
-version = '0.2.5'
+version = '0.2.6'
 sourceCompatibility = '11'
 
 facets {
