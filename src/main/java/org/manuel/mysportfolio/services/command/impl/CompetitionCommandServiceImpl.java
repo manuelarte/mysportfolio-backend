@@ -1,6 +1,7 @@
 package org.manuel.mysportfolio.services.command.impl;
 
 import org.manuel.mysportfolio.model.entities.Competition;
+import org.manuel.mysportfolio.publishers.CompetitionCreatedEventPublisher;
 import org.manuel.mysportfolio.repositories.CompetitionRepository;
 import org.manuel.mysportfolio.services.command.CompetitionCommandService;
 import org.springframework.stereotype.Service;
@@ -12,11 +13,14 @@ import javax.validation.constraints.NotNull;
 @lombok.AllArgsConstructor
 class CompetitionCommandServiceImpl implements CompetitionCommandService {
 
+    private final CompetitionCreatedEventPublisher competitionCreatedEventPublisher;
     private final CompetitionRepository competitionRepository;
 
     @Override
     public Competition save(@NotNull final Competition competition) {
-        return competitionRepository.save(competition);
+        final var saved = competitionRepository.save(competition);
+        competitionCreatedEventPublisher.publishEvent(saved);
+        return saved;
     }
 
     @Override

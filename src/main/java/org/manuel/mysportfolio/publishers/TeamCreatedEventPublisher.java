@@ -14,7 +14,7 @@ public class TeamCreatedEventPublisher {
 
     public void publishEvent(final Team createdTeam) {
         log.info("Publishing team created event for team {}.", createdTeam.getId().toString());
-        final TeamCreatedEvent teamCreatedEvent = new TeamCreatedEvent(createdTeam);
+        final var teamCreatedEvent = new TeamCreatedEvent(createdTeam);
         applicationEventPublisher.publishEvent(teamCreatedEvent);
     }
 

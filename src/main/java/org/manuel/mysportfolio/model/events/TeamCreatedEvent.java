@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationEvent;
 public class TeamCreatedEvent extends ApplicationEvent {
 
     /**
-     * Create a new ApplicationEvent.
+     * Create a new TeamCreatedEvent.
      *
      * @param source the object on which the event initially occurred (never {@code null})
      */

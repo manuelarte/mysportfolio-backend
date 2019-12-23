@@ -2,6 +2,7 @@ package org.manuel.mysportfolio.model.entities;
 
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
+import org.manuel.mysportfolio.model.SportDependent;
 import org.springframework.data.annotation.*;
 import org.springframework.data.domain.Auditable;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,7 +18,7 @@ import java.util.Optional;
 @lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
 @lombok.Builder(toBuilder = true)
-public class Competition implements Auditable<String, ObjectId, Instant> {
+public class Competition implements SportDependent, Auditable<String, ObjectId, Instant> {
 
     @Id
     private ObjectId id;

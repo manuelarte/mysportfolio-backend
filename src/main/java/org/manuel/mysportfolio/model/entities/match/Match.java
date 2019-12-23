@@ -2,6 +2,7 @@ package org.manuel.mysportfolio.model.entities.match;
 
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
+import org.manuel.mysportfolio.model.SportDependent;
 import org.manuel.mysportfolio.model.SportType;
 import org.manuel.mysportfolio.model.entities.Place;
 import org.manuel.mysportfolio.model.entities.TeamOption;
@@ -19,7 +20,8 @@ import java.util.*;
 @lombok.Data
 @lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
-public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType> implements Auditable<String, ObjectId, Instant> {
+public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType> implements
+    SportDependent, Auditable<String, ObjectId, Instant> {
 
     @Id
     private ObjectId id;
