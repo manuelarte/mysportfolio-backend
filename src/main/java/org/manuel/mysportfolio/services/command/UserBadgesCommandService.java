@@ -15,6 +15,6 @@ public interface UserBadgesCommandService {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SYSTEM')")
 	UserBadges addBadges(String userId, Set<Badge> badges);
 
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SYSTEM')")
+	@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_SYSTEM')")
 	<T extends ApplicationEvent> UserBadges addBadges(String userId, T event);
 }
