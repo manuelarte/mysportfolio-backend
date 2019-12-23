@@ -2,6 +2,8 @@ package org.manuel.mysportfolio.model.entities.match.events;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.springframework.data.annotation.Id;
@@ -31,6 +33,10 @@ public class GoalMatchEvent implements TeamMatchEvent {
     private Point goalCoordinates;
 
     private BodyPart bodyPart;
+
+    @Min(0)
+    @Max(5)
+    private Integer rate;
 
     @Size(max = 200)
     private String description;
