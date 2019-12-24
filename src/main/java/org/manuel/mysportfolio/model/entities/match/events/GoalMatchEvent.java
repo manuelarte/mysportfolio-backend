@@ -5,17 +5,14 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.entities.TeamOption;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.geo.Point;
-
 import javax.validation.constraints.AssertFalse;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.bson.types.ObjectId;
+import org.manuel.mysportfolio.model.entities.TeamOption;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.geo.Point;
 
 @lombok.Data
 @lombok.AllArgsConstructor
@@ -47,7 +44,8 @@ public class GoalMatchEvent implements TeamMatchEvent {
 
     private AssistDetails assist;
 
-    @AssertTrue
+  @AssertTrue(message = "The goal coordinates aren't valid")
+  @SuppressWarnings("unused")
     private boolean validGoalCoordinates() {
         if (goalCoordinates != null) {
             return goalCoordinates.getX() <= 0.5 && goalCoordinates.getX() >= -0.5 &&
@@ -56,7 +54,8 @@ public class GoalMatchEvent implements TeamMatchEvent {
         return true;
     }
 
-    @AssertFalse
+  @AssertFalse(message = "The scorer and assister can't be the same person")
+  @SuppressWarnings("unused")
     private boolean assistAndGoalTheSamePerson() {
         if (assist != null && playerId != null) {
             return playerId.equals(assist);
@@ -65,6 +64,7 @@ public class GoalMatchEvent implements TeamMatchEvent {
     }
 
     @AssertFalse(message = "The rate values aren't valid")
+    @SuppressWarnings("unused")
     private boolean isRateValid() {
         return Optional.ofNullable(rate).orElse(Collections.emptyMap()).values()
             .stream().anyMatch(it -> it < 0 && it > 5);

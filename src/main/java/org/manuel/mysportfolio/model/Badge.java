@@ -1,8 +1,10 @@
 package org.manuel.mysportfolio.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.function.BiPredicate;
+import java.util.stream.Stream;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.events.AssistDetails;
@@ -22,6 +24,9 @@ public enum Badge {
 			instanceOf(MatchCreatedEvent.class, Badge.<Match<?, ?>>isSport(Sport.FOOTBALL).and(isUserGoal(1)))),
 	FOOTBALL_FIRST_HATTRICK(200, "https://drive.google.com/uc?id=1WuRTDzrM-tPMyht9bSQ-_17G6h3p8Nus",
 			instanceOf(MatchCreatedEvent.class, Badge.<Match<?, ?>>isSport(Sport.FOOTBALL).and(isUserGoal(3)))),
+	FOOTBALL_FIRST_5_STARS_GOAL(100, null,
+			instanceOf(MatchCreatedEvent.class,
+					Badge.<Match<?, ?>>isSport(Sport.FOOTBALL).and(isUserGoalAndRateIs(5)))),
 	FOOTBALL_FIRST_ASSIST(20, "https://drive.google.com/uc?id=1gaxh3yh932NMEh86QiGHPWKQI-wl0lLA",
 			instanceOf(MatchCreatedEvent.class, Badge.<Match<?, ?>>isSport(Sport.FOOTBALL).and(isAssist(1)))),
 
@@ -33,6 +38,9 @@ public enum Badge {
 			instanceOf(MatchCreatedEvent.class, Badge.<Match<?, ?>>isSport(Sport.FUTSAL).and(isUserGoal(1)))),
 	FUTSAL_FIRST_HATTRICK(200, "https://drive.google.com/uc?id=1U7qV0HZYAn_--kriwIznev6_cA8vx-tK",
 			instanceOf(MatchCreatedEvent.class, Badge.<Match<?, ?>>isSport(Sport.FUTSAL).and(isUserGoal(3)))),
+	FUTSAL_FIRST_5_STARS_GOAL(100, null,
+			instanceOf(MatchCreatedEvent.class,
+					Badge.<Match<?, ?>>isSport(Sport.FUTSAL).and(isUserGoalAndRateIs(5)))),
 	FUTSAL_FIRST_ASSIST(20, "https://drive.google.com/uc?id=1F8nd0BGGUn3xnWoRQwfR_UK5AhIrjLqY",
 			instanceOf(MatchCreatedEvent.class, Badge.<Match<?, ?>>isSport(Sport.FUTSAL).and(isAssist(1)))),
 
@@ -88,22 +96,36 @@ public enum Badge {
 	private static BiPredicate<String, Match> isUserGoal(int min) {
 		return (userId, match) -> {
 			final var teamOption = match.getPlayedFor().get(userId);
-			return Optional.ofNullable(match.getEvents()).orElse(Collections.emptyList()).stream()
-					.filter(GoalMatchEvent.class::isInstance)
-					.filter(it -> ((GoalMatchEvent) it).getTeam().equals(teamOption))
-					.filter(it -> userId.equals(((GoalMatchEvent) it).getPlayerId())).count() >= min;
+			return goalMatchEventStream(match)
+					.filter(it -> it.getTeam().equals(teamOption))
+					.filter(it -> userId.equals(it.getPlayerId())).count() >= min;
+		};
+	}
+
+	private static BiPredicate<String, Match> isUserGoalAndRateIs(int rate) {
+		return (userId, match) -> {
+			final var teamOption = match.getPlayedFor().get(userId);
+			return goalMatchEventStream(match)
+					.filter(it -> it.getTeam().equals(teamOption))
+					.filter(it -> userId.equals(it.getPlayerId()))
+					.flatMap(it -> it.getRate().values().stream()).anyMatch(it -> it == rate);
 		};
 	}
 
 	private static BiPredicate<String, Match> isAssist(int min) {
 		return (userId, match) -> {
 			final var teamOption = match.getPlayedFor().get(userId);
-			return Optional.ofNullable(match.getEvents()).orElse(Collections.emptyList()).stream()
-					.filter(GoalMatchEvent.class::isInstance)
-					.filter(it -> ((GoalMatchEvent) it).getTeam().equals(teamOption))
-					.filter(it -> userId.equals(Optional.ofNullable(((GoalMatchEvent) it).getAssist()).map(
+			return goalMatchEventStream(match)
+					.filter(it -> it.getTeam().equals(teamOption))
+					.filter(it -> userId.equals(Optional.ofNullable(it.getAssist()).map(
 							AssistDetails::getWho).orElse(null))).count() >= min;
 		};
+	}
+
+	private static Stream<GoalMatchEvent> goalMatchEventStream(final Match<?, ?> match) {
+		return Optional.ofNullable(match.getEvents()).orElseGet(ArrayList::new).stream()
+				.filter(GoalMatchEvent.class::isInstance)
+				.map(GoalMatchEvent.class::cast);
 	}
 
 }
