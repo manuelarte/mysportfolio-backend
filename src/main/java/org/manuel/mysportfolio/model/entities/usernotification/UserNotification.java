@@ -1,21 +1,24 @@
 package org.manuel.mysportfolio.model.entities.usernotification;
 
+import javax.validation.constraints.NotNull;
 import org.bson.types.ObjectId;
+import org.manuel.mysportfolio.model.entities.BaseEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.annotation.Nullable;
-
 @Document(collection = "user-notifications")
-public interface UserNotification {
+@lombok.NoArgsConstructor
+@lombok.Data
+public abstract class UserNotification extends BaseEntity {
 
-    ObjectId getId();
+    @NotNull
+    protected String to;
 
-    Long getVersion();
+    protected UserNotificationStatus status;
 
-    String getTo();
-
-    @Nullable UserNotificationStatus getStatus();
-
-    void setStatus(UserNotificationStatus status);
+    protected UserNotification(final ObjectId id, final Long version, final String to, final UserNotificationStatus status) {
+        super(id, version);
+        this.to = to;
+        this.status = status;
+    }
 
 }
