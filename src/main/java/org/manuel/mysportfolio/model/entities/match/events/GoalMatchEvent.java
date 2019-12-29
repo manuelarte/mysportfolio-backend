@@ -64,7 +64,7 @@ public class GoalMatchEvent implements TeamMatchEvent {
         return false;
     }
 
-    @AssertFalse(message = "The rate values aren't valid")
+    @AssertFalse(message = "The rates values aren't valid")
     @SuppressWarnings("unused")
     private boolean isRatesValid() {
         return Optional.ofNullable(rates).orElse(Collections.emptyMap()).values()
