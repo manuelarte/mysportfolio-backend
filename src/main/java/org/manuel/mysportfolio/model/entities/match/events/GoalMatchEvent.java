@@ -2,6 +2,7 @@ package org.manuel.mysportfolio.model.entities.match.events;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -37,7 +38,7 @@ public class GoalMatchEvent implements TeamMatchEvent {
     /**
      * Rate of the goal depending on the player
      */
-    private Map<String, Integer> rate;
+    private Map<String, BigDecimal> rates;
 
     @Size(max = 200)
     private String description;
@@ -65,9 +66,10 @@ public class GoalMatchEvent implements TeamMatchEvent {
 
     @AssertFalse(message = "The rate values aren't valid")
     @SuppressWarnings("unused")
-    private boolean isRateValid() {
-        return Optional.ofNullable(rate).orElse(Collections.emptyMap()).values()
-            .stream().anyMatch(it -> it < 0 && it > 5);
+    private boolean isRatesValid() {
+        return Optional.ofNullable(rates).orElse(Collections.emptyMap()).values()
+            .stream().anyMatch(it -> it.compareTo(BigDecimal.ZERO) < 0
+                && it.compareTo(new BigDecimal("5")) > 1 );
     }
 
 
