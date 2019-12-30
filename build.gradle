@@ -32,6 +32,9 @@ repositories {
     maven { url 'https://repo.spring.io/snapshot' }
 }
 
+// https://stackoverflow.com/questions/54598484/gradle-5-junit-bom-and-spring-boot-incorrect-versions
+ext['junit-jupiter.version'] = '5.6.0-M1'
+
 dependencies {
 
     implementation 'javax.validation:validation-api:2.0.1.Final'
