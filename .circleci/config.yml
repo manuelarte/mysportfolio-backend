@@ -71,7 +71,7 @@ jobs: # a collection of steps
             # export PROJECT_VERSION=`./gradlew properties -q | grep "version:" | awk '{print $2}'`
             # echo PROJECT_VERSION=$PROJECT_VERSION >> $BASH_ENV
             export DOCKER_TAG=`date`
-            echo DOCKER_TAG=DOCKER_TAG >> $BASH_ENV
+            echo DOCKER_TAG=$DOCKER_TAG >> $BASH_ENV
             source $BASH_ENV
       - gcr/gcr-auth
       - gcr/build-image:
