@@ -11,9 +11,10 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "badges")
-@lombok.Data
 @lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
+@lombok.Data
+@lombok.EqualsAndHashCode(callSuper = true)
 @lombok.Builder(toBuilder = true)
 public class UserBadges  extends BaseEntity {
 
