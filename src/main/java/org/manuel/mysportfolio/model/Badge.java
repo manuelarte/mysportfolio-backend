@@ -2,7 +2,6 @@ package org.manuel.mysportfolio.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.stream.Stream;
@@ -105,18 +104,14 @@ public enum Badge {
 	private static BiPredicate<String, Match<?, ?>> matchWon() {
 		return (userId, match) -> {
 			final var option = match.getPlayedFor().get(userId);
-			if ((option == TeamOption.HOME_TEAM && match.getGoals(TeamOption.HOME_TEAM) > match
+			return (option == TeamOption.HOME_TEAM && match.getGoals(TeamOption.HOME_TEAM) > match
 					.getGoals(TeamOption.AWAY_TEAM))
 					|| (option == TeamOption.AWAY_TEAM && match.getGoals(TeamOption.HOME_TEAM) < match
-					.getGoals(TeamOption.AWAY_TEAM))) {
-				return true;
-			} else {
-				return false;
-			}
+					.getGoals(TeamOption.AWAY_TEAM));
 		};
 	}
 
-	private static BiPredicate<String, Match> isUserGoal(int min) {
+	private static BiPredicate<String, Match<?, ?>> isUserGoal(int min) {
 		return (userId, match) -> {
 			final var teamOption = match.getPlayedFor().get(userId);
 			return goalMatchEventStream(match)
@@ -125,7 +120,7 @@ public enum Badge {
 		};
 	}
 
-	private static BiPredicate<String, Match> isUserGoalAndRateIs(BigDecimal rate) {
+	private static BiPredicate<String, Match<?, ?>> isUserGoalAndRateIs(BigDecimal rate) {
 		return (userId, match) -> {
 			final var teamOption = match.getPlayedFor().get(userId);
 			return goalMatchEventStream(match)
@@ -135,7 +130,7 @@ public enum Badge {
 		};
 	}
 
-	private static BiPredicate<String, Match> isAssist(int min) {
+	private static BiPredicate<String, Match<?, ?>> isAssist(int min) {
 		return (userId, match) -> {
 			final var teamOption = match.getPlayedFor().get(userId);
 			return goalMatchEventStream(match)
