@@ -70,13 +70,13 @@ public class MatchCommandControllerTest {
 
     @Test
     public void testSaveMatchWithOneTeamRegistered() throws Exception {
-        SecurityContextHolder.getContext().setAuthentication(createAuthentication());
-        final var teamSaved = teamRepository.save(TestUtils.createMockTeam());
-
-        final var matchDto = TestUtils.createMockMatchDto(TestUtils.createMockRegisteredTeamDto(teamSaved.getId()),
+        try {
+            SecurityContextHolder.getContext().setAuthentication(createAuthentication());
+            final var teamSaved = teamRepository.save(TestUtils.createMockTeam());
+            final var matchDto = TestUtils.createMockMatchDto(TestUtils.createMockRegisteredTeamDto(teamSaved.getId()),
                 TestUtils.createMockAnonymousTeamDto(), 1, 2, Collections.singletonMap("123456789", TeamOption.HOME_TEAM));
 
-        mvc.perform(post("/api/v1/matches").contentType(APPLICATION_JSON)
+            mvc.perform(post("/api/v1/matches").contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(matchDto)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", Matchers.notNullValue()))
@@ -86,6 +86,9 @@ public class MatchCommandControllerTest {
                 .andExpect(jsonPath("$.homeTeam.teamId").value(matchDto.getHomeTeam().getTeamId()))
                 .andExpect(jsonPath("$.awayTeam.type").value("anonymous"))
                 .andExpect(jsonPath("$.awayTeam.name").value(matchDto.getAwayTeam().getName()));
+        } finally {
+            SecurityContextHolder.clearContext();
+        }
     }
 
     @Test
