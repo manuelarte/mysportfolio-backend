@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.Optional;
 import javax.validation.constraints.AssertFalse;
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.bson.types.ObjectId;
@@ -38,7 +41,11 @@ public class GoalMatchEvent implements TeamMatchEvent {
     /**
      * Rate of the goal depending on the player
      */
-    private Map<String, BigDecimal> rates;
+    private Map<@NotNull String,
+        @Digits(integer = 1, fraction = 1)
+        @Min(0)
+        @Max(5)
+        @NotNull BigDecimal> rates;
 
     @Size(max = 200)
     private String description;
@@ -63,14 +70,5 @@ public class GoalMatchEvent implements TeamMatchEvent {
         }
         return false;
     }
-
-    @AssertFalse(message = "The rates values aren't valid")
-    @SuppressWarnings("unused")
-    private boolean isRatesValid() {
-        return Optional.ofNullable(rates).orElse(Collections.emptyMap()).values()
-            .stream().anyMatch(it -> it.compareTo(BigDecimal.ZERO) < 0
-                && it.compareTo(new BigDecimal("5")) > 1 );
-    }
-
 
 }
