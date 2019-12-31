@@ -2,10 +2,9 @@ package org.manuel.mysportfolio.services.command.impl;
 
 import java.util.Arrays;
 import java.util.Set;
-
 import java.util.stream.Collectors;
-import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.Util;
+import org.manuel.mysportfolio.badges.BadgeUtilHandler;
 import org.manuel.mysportfolio.model.Badge;
 import org.manuel.mysportfolio.model.entities.badges.UserBadges;
 import org.manuel.mysportfolio.repositories.UserBadgesRepository;
@@ -20,6 +19,7 @@ public class UserBadgesCommandServiceImpl implements UserBadgesCommandService {
 
 	private final UserBadgesQueryService userBadgesQueryService;
 	private final UserBadgesRepository userBadgesRepository;
+	private final BadgeUtilHandler badgeUtilHandler;
 
 	@Override
 	public UserBadges save(final UserBadges userBadges) {
@@ -38,7 +38,7 @@ public class UserBadgesCommandServiceImpl implements UserBadgesCommandService {
 		final var completedBadges = userBadgesQueryService.findByUser(userId).getBadges();
 
 		final var newBadges = Arrays.stream(Badge.values()).filter(b -> !completedBadges.contains(b))
-				.filter(b -> b.getPredicate().test(userId, event))
+				.filter(b -> b.getPredicate().test(badgeUtilHandler, event))
 				.collect(Collectors.toSet());
 		return Util.doWithSystemAuthentication(() -> addBadges(userId, newBadges));
 	}

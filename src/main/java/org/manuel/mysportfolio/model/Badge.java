@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
+import org.manuel.mysportfolio.badges.BadgeUtilHandler;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.Performance;
@@ -13,7 +15,9 @@ import org.manuel.mysportfolio.model.entities.match.events.AssistDetails;
 import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
 import org.manuel.mysportfolio.model.events.CompetitionCreatedEvent;
 import org.manuel.mysportfolio.model.events.MatchCreatedEvent;
+import org.manuel.mysportfolio.model.events.PlayersPerformanceUpdatedEvent;
 import org.manuel.mysportfolio.model.events.TeamCreatedEvent;
+import org.manuel.mysportfolio.repositories.MatchRepository;
 import org.springframework.context.ApplicationEvent;
 
 public enum Badge {
@@ -28,49 +32,63 @@ public enum Badge {
 			instanceOf(MatchCreatedEvent.class, Badge.<Match<?, ?>>isSport(Sport.FOOTBALL).and(isUserGoal(1)))),
 
 	FOOTBALL_FIRST_HATTRICK(200, "https://drive.google.com/uc?id=1WuRTDzrM-tPMyht9bSQ-_17G6h3p8Nus",
-			instanceOf(MatchCreatedEvent.class, Badge.<Match<?, ?>>isSport(Sport.FOOTBALL).and(isUserGoal(3)))),
+			instanceOf(MatchCreatedEvent.class,
+					Badge.<Match<?, ?>>isSport(Sport.FOOTBALL).and(isUserGoal(3)))),
 
-	FOOTBALL_FIRST_FIVE_STARS_GOAL(100, "https://drive.google.com/uc?id=1NDl5LrFHNPuVDg1K-HPVG5y3G9kEJA_j",
+	FOOTBALL_FIRST_FIVE_STARS_GOAL(100,
+			"https://drive.google.com/uc?id=1NDl5LrFHNPuVDg1K-HPVG5y3G9kEJA_j",
 			instanceOf(MatchCreatedEvent.class,
 					Badge.<Match<?, ?>>isSport(Sport.FOOTBALL).and(isUserGoalAndRateIs(new BigDecimal(5))))),
 
 	FOOTBALL_FIRST_ASSIST(20, "https://drive.google.com/uc?id=1gaxh3yh932NMEh86QiGHPWKQI-wl0lLA",
-			instanceOf(MatchCreatedEvent.class, Badge.<Match<?, ?>>isSport(Sport.FOOTBALL).and(isAssist(1)))),
+			instanceOf(MatchCreatedEvent.class,
+					Badge.<Match<?, ?>>isSport(Sport.FOOTBALL).and(isAssist(1)))),
 
-	// TODO, we can't check whether it's futsal or football
-	//FOOTBALL_TEN_STAR_PERFORMANCE(100, "https://drive.google.com/uc?id=1i_z-bsD3pn8iMCfulYoyYmF0DFRqTrrK",
-	//		instanceOf(PlayersPerformanceUpdatedEvent.class, Badge.isPerformanceRate(new BigDecimal("10")))),
+	FOOTBALL_TEN_STAR_PERFORMANCE(100,
+			"https://drive.google.com/uc?id=1i_z-bsD3pn8iMCfulYoyYmF0DFRqTrrK",
+			instanceOf(PlayersPerformanceUpdatedEvent.class,
+					Badge.<PlayersPerformance>matchMatches(match -> match.getSport() == Sport.FOOTBALL)
+							.and(Badge.isPerformanceRate(new BigDecimal("10"))))),
 
 	FUTSAL_FIRST_MATCH(100, "https://drive.google.com/uc?id=18HuWT_FSCG0RSmmA5PD4t38mimUMUBWm",
 			instanceOf(MatchCreatedEvent.class, isSport(Sport.FUTSAL))),
 
 	FUTSAL_FIRST_MATCH_WON(50, "https://drive.google.com/uc?id=1GVuxzxikDoBoynT5Df2PFmDL9sQ2GLli",
-			instanceOf(MatchCreatedEvent.class, Badge.<Match<?, ?>>isSport(Sport.FUTSAL).and(matchWon()))),
+			instanceOf(MatchCreatedEvent.class,
+					Badge.<Match<?, ?>>isSport(Sport.FUTSAL).and(matchWon()))),
 
 	FUTSAL_FIRST_GOAL(50, "https://drive.google.com/uc?id=1lnQiHawCi1tGye0wwB-Ie7XlG9caDuGb",
-			instanceOf(MatchCreatedEvent.class, Badge.<Match<?, ?>>isSport(Sport.FUTSAL).and(isUserGoal(1)))),
+			instanceOf(MatchCreatedEvent.class,
+					Badge.<Match<?, ?>>isSport(Sport.FUTSAL).and(isUserGoal(1)))),
 
 	FUTSAL_FIRST_HATTRICK(200, "https://drive.google.com/uc?id=1U7qV0HZYAn_--kriwIznev6_cA8vx-tK",
-			instanceOf(MatchCreatedEvent.class, Badge.<Match<?, ?>>isSport(Sport.FUTSAL).and(isUserGoal(3)))),
+			instanceOf(MatchCreatedEvent.class,
+					Badge.<Match<?, ?>>isSport(Sport.FUTSAL).and(isUserGoal(3)))),
 
-	FUTSAL_FIRST_FIVE_STARS_GOAL(100, "https://drive.google.com/uc?id=1MOszlS9h3sz6m2cFkHfKobrywaEfOyaS",
+	FUTSAL_FIRST_FIVE_STARS_GOAL(100,
+			"https://drive.google.com/uc?id=1MOszlS9h3sz6m2cFkHfKobrywaEfOyaS",
 			instanceOf(MatchCreatedEvent.class,
 					Badge.<Match<?, ?>>isSport(Sport.FUTSAL).and(isUserGoalAndRateIs(new BigDecimal(5))))),
 
 	FUTSAL_FIRST_ASSIST(20, "https://drive.google.com/uc?id=1F8nd0BGGUn3xnWoRQwfR_UK5AhIrjLqY",
-			instanceOf(MatchCreatedEvent.class, Badge.<Match<?, ?>>isSport(Sport.FUTSAL).and(isAssist(1)))),
+			instanceOf(MatchCreatedEvent.class,
+					Badge.<Match<?, ?>>isSport(Sport.FUTSAL).and(isAssist(1)))),
 
-	// TODO, we can't check whether it's futsal or football
-	//FUTSAL_TEN_STAR_PERFORMANCE(100, "https://drive.google.com/uc?id=1FOtOgCrRQ1tNplx8H194uvrsBLolnDdn",
-	//		instanceOf(PlayersPerformanceUpdatedEvent.class, Badge.isPerformanceRate(new BigDecimal("10")))),
+	FUTSAL_TEN_STAR_PERFORMANCE(100,
+			"https://drive.google.com/uc?id=1FOtOgCrRQ1tNplx8H194uvrsBLolnDdn",
+			instanceOf(PlayersPerformanceUpdatedEvent.class,
+					Badge.<PlayersPerformance>matchMatches(match -> match.getSport() == Sport.FUTSAL)
+							.and(Badge.isPerformanceRate(new BigDecimal("10"))))),
 
 	TEAM_FIRST_ADDED(100, "https://drive.google.com/uc?id=1_E1wjcUOJZq13wp_43-49M3EpZ79PeUl",
 			instanceOf(TeamCreatedEvent.class)),
 
-	COMPETITION_FOOTBALL_FIRST_ADDED(50, "https://drive.google.com/uc?id=1pXMg-DB5nZq4xS9bZ4iifHZ8lgki_rAj",
+	COMPETITION_FOOTBALL_FIRST_ADDED(50,
+			"https://drive.google.com/uc?id=1pXMg-DB5nZq4xS9bZ4iifHZ8lgki_rAj",
 			instanceOf(CompetitionCreatedEvent.class, isSport(Sport.FOOTBALL))),
 
-	COMPETITION_FUTSAL_FIRST_ADDED(50, "https://drive.google.com/uc?id=1e27MgxXvelL7mxzZEKf87oYEQ_6kYCyr",
+	COMPETITION_FUTSAL_FIRST_ADDED(50,
+			"https://drive.google.com/uc?id=1e27MgxXvelL7mxzZEKf87oYEQ_6kYCyr",
 			instanceOf(CompetitionCreatedEvent.class, isSport(Sport.FUTSAL)));
 
 	@lombok.Getter
@@ -80,29 +98,36 @@ public enum Badge {
 	private final String imageUrl;
 
 	@lombok.Getter
-	private final BiPredicate<String, Object> predicate;
+	private final BiPredicate<BadgeUtilHandler, Object> predicate;
 
-	Badge(final int points, final String imageUrl, final BiPredicate<String, Object> predicate) {
+	Badge(final int points, final String imageUrl,
+			final BiPredicate<BadgeUtilHandler, Object> predicate) {
 		this.points = points;
 		this.imageUrl = imageUrl;
 		this.predicate = predicate;
 	}
 
-	private static <T extends ApplicationEvent, Y> BiPredicate<String, Object> instanceOf(final Class<T> clazz,
-			final BiPredicate<String, Y> filter) {
-		return (userId, it) -> clazz.isInstance(it) && filter.test(userId, (Y) ((T)it).getSource());
+	private static <T extends ApplicationEvent, Y> BiPredicate<BadgeUtilHandler, Object> instanceOf(
+			final Class<T> clazz,
+			final BiPredicate<BadgeUtilHandler, Y> filter) {
+		return (badgeUtilHandler, it) -> clazz.isInstance(it) && filter
+				.test(badgeUtilHandler, (Y) ((T) it).getSource());
 	}
 
-	private static <T extends ApplicationEvent> BiPredicate<String, Object> instanceOf(final Class<T> clazz) {
-		return instanceOf(clazz, (x,y) -> true);
+	private static <T extends ApplicationEvent> BiPredicate<BadgeUtilHandler, Object> instanceOf(
+			final Class<T> clazz) {
+		return instanceOf(clazz, (x, y) -> true);
 	}
 
-	private static <T extends SportDependent> BiPredicate<String, T> isSport(final Sport sport) {
-		return (userId, m) -> m.getSport().equals(sport);
+	private static <T extends SportDependent> BiPredicate<BadgeUtilHandler, T> isSport(
+			final Sport sport) {
+		return (badgeUtilHandler, m) -> m.getSport().equals(sport);
 	}
 
-	private static BiPredicate<String, Match<?, ?>> matchWon() {
-		return (userId, match) -> {
+
+	private static BiPredicate<BadgeUtilHandler, Match<?, ?>> matchWon() {
+		return (badgeUtilHandler, match) -> {
+			final var userId = badgeUtilHandler.getUserId();
 			final var option = match.getPlayedFor().get(userId);
 			return (option == TeamOption.HOME_TEAM && match.getGoals(TeamOption.HOME_TEAM) > match
 					.getGoals(TeamOption.AWAY_TEAM))
@@ -111,8 +136,9 @@ public enum Badge {
 		};
 	}
 
-	private static BiPredicate<String, Match<?, ?>> isUserGoal(int min) {
-		return (userId, match) -> {
+	private static BiPredicate<BadgeUtilHandler, Match<?, ?>> isUserGoal(int min) {
+		return (badgeUtilHandler, match) -> {
+			final var userId = badgeUtilHandler.getUserId();
 			final var teamOption = match.getPlayedFor().get(userId);
 			return goalMatchEventStream(match)
 					.filter(it -> it.getTeam().equals(teamOption))
@@ -120,8 +146,9 @@ public enum Badge {
 		};
 	}
 
-	private static BiPredicate<String, Match<?, ?>> isUserGoalAndRateIs(BigDecimal rate) {
-		return (userId, match) -> {
+	private static BiPredicate<BadgeUtilHandler, Match<?, ?>> isUserGoalAndRateIs(BigDecimal rate) {
+		return (badgeUtilHandler, match) -> {
+			final var userId = badgeUtilHandler.getUserId();
 			final var teamOption = match.getPlayedFor().get(userId);
 			return goalMatchEventStream(match)
 					.filter(it -> it.getTeam().equals(teamOption))
@@ -130,8 +157,9 @@ public enum Badge {
 		};
 	}
 
-	private static BiPredicate<String, Match<?, ?>> isAssist(int min) {
-		return (userId, match) -> {
+	private static BiPredicate<BadgeUtilHandler, Match<?, ?>> isAssist(int min) {
+		return (badgeUtilHandler, match) -> {
+			final var userId = badgeUtilHandler.getUserId();
 			final var teamOption = match.getPlayedFor().get(userId);
 			return goalMatchEventStream(match)
 					.filter(it -> it.getTeam().equals(teamOption))
@@ -146,10 +174,20 @@ public enum Badge {
 				.map(GoalMatchEvent.class::cast);
 	}
 
-	private static BiPredicate<String, PlayersPerformance> isPerformanceRate(
+	private static <T extends MatchDependent> BiPredicate<BadgeUtilHandler, T> matchMatches(
+			final Predicate<Match<?, ?>> predicate) {
+		return (badgeUtilHandler, t) -> badgeUtilHandler.getRepository(MatchRepository.class)
+				.flatMap(it -> it.findById(t.getMatchId()))
+				.map(predicate::test).orElse(false);
+	}
+
+	private static BiPredicate<BadgeUtilHandler, PlayersPerformance> isPerformanceRate(
 			BigDecimal rateExpected) {
-		return (userId, playersPerformance) -> playersPerformance.getPerformance(userId).map(Performance::getRate)
-				.map(r -> r.equals(rateExpected)).orElse(false);
+		return (badgeUtilHandler, playersPerformance) -> {
+			final var userId = badgeUtilHandler.getUserId();
+			return playersPerformance.getPerformance(userId).map(Performance::getRate)
+					.map(r -> r.equals(rateExpected)).orElse(false);
+		};
 	}
 
 }
