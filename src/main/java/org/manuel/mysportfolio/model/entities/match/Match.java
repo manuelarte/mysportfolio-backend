@@ -1,5 +1,18 @@
 package org.manuel.mysportfolio.model.entities.match;
 
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportDependent;
@@ -8,13 +21,14 @@ import org.manuel.mysportfolio.model.entities.Place;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
 import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
-import org.springframework.data.annotation.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.domain.Auditable;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.validation.constraints.*;
-import java.time.Instant;
-import java.util.*;
 
 @Document(collection = "matches")
 @lombok.Data
@@ -55,7 +69,7 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
     private String description;
 
     @Size(max = 5)
-    private Set<String> chips;
+    private Set<@Size(max = 20) String> chips = new HashSet<>();
 
     @CreatedBy
     private String createdBy;

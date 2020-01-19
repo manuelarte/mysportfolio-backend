@@ -1,6 +1,19 @@
 package org.manuel.mysportfolio.controllers.command;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,16 +37,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @Import(ITConfiguration.class)
@@ -99,19 +102,45 @@ public class MatchCommandControllerTest {
         mvc.perform(post("/api/v1/matches").contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(matchDto)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id", Matchers.notNullValue()))
-                .andExpect(jsonPath("$.sport").value(matchDto.getSport().name()))
-                .andExpect(jsonPath("$.type").value(matchDto.getType().name()))
-                .andExpect(jsonPath("$.homeTeam.type").value("anonymous"))
-                .andExpect(jsonPath("$.homeTeam.name").value(matchDto.getHomeTeam().getName()))
-                .andExpect(jsonPath("$.awayTeam.type").value("anonymous"))
-                .andExpect(jsonPath("$.awayTeam.name").value(matchDto.getAwayTeam().getName()))
-                .andExpect(jsonPath("$.events[*].id", Matchers.notNullValue()));
+            .andExpect(jsonPath("$.id", Matchers.notNullValue()))
+            .andExpect(jsonPath("$.sport").value(matchDto.getSport().name()))
+            .andExpect(jsonPath("$.type").value(matchDto.getType().name()))
+            .andExpect(jsonPath("$.homeTeam.type").value("anonymous"))
+            .andExpect(jsonPath("$.homeTeam.name").value(matchDto.getHomeTeam().getName()))
+            .andExpect(jsonPath("$.awayTeam.type").value("anonymous"))
+            .andExpect(jsonPath("$.awayTeam.name").value(matchDto.getAwayTeam().getName()))
+            .andExpect(jsonPath("$.events[*].id", Matchers.notNullValue()));
+    }
+
+    @Test
+    public void testSaveMatchWithChipTooBig() throws Exception {
+        final var matchDto = TestUtils.createMockMatchDto(TestUtils.createMockAnonymousTeamDto(),
+            TestUtils.createMockAnonymousTeamDto(), 0, 0,
+            Collections.singletonMap("123456789", TeamOption.HOME_TEAM),
+            RandomStringUtils.randomAlphabetic(22));
+
+        mvc.perform(post("/api/v1/matches").contentType(APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(matchDto)))
+            .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void testSaveMatchWithTooManyChips() throws Exception {
+        final Set<String> chips = IntStream.range(0, 6).mapToObj(it -> RandomStringUtils.random(5))
+            .collect(Collectors.toSet());
+        final var matchDto = TestUtils.createMockMatchDto(TestUtils.createMockAnonymousTeamDto(),
+            TestUtils.createMockAnonymousTeamDto(), 0, 0,
+            Collections.singletonMap("123456789", TeamOption.HOME_TEAM),
+            chips.toArray(new String[]{}));
+
+        mvc.perform(post("/api/v1/matches").contentType(APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(matchDto)))
+            .andExpect(status().is4xxClientError());
     }
 
     private Authentication createAuthentication() {
         final var authorities =
-                Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+            Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
         final var attributes = new HashMap<String, Object>();
         attributes.put("sub", 123456789);
         attributes.put("email_verified", true);

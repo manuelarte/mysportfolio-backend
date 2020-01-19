@@ -4,6 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportType;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
@@ -12,13 +22,6 @@ import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.validation.NewEntity;
 import org.manuel.mysportfolio.validation.PartialUpdateEntity;
 import org.manuel.mysportfolio.validation.UpdateEntity;
-
-import javax.validation.constraints.*;
-import java.time.Instant;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 @JsonDeserialize(builder = MatchDto.MatchDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -62,7 +65,8 @@ public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto
     private final String description;
 
     @Size(max = 5)
-    private final Set<String> chips;
+    @lombok.Singular
+    private final Set<@Size(max = 20) String> chips;
 
     @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
     private final String createdBy;
