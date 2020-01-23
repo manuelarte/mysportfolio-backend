@@ -1,30 +1,17 @@
 package org.manuel.mysportfolio.model.entities;
 
+import java.time.DayOfWeek;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportDependent;
-import org.springframework.data.annotation.*;
-import org.springframework.data.domain.Auditable;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.time.DayOfWeek;
-import java.time.Instant;
-import java.util.Optional;
 
 @Document(collection = "competitions")
 @lombok.Data
-@lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
-@lombok.Builder(toBuilder = true)
-public class Competition implements SportDependent, Auditable<String, ObjectId, Instant> {
-
-    @Id
-    private ObjectId id;
-
-    @Version
-    private Long version;
+public class Competition extends BaseEntity implements SportDependent {
 
     @NotNull
     private String name;
@@ -37,32 +24,16 @@ public class Competition implements SportDependent, Auditable<String, ObjectId, 
     @Size(max = 200)
     private String description;
 
-    @CreatedBy
-    private String createdBy;
-
-    @CreatedDate
-    private Instant createdDate;
-
-    @LastModifiedBy
-    private String lastModifiedBy;
-
-    @LastModifiedDate
-    private Instant lastModifiedDate;
-
-    public Optional<String> getCreatedBy() {
-        return Optional.ofNullable(createdBy);
+    public Competition(final ObjectId id, final Long lockVersion, final String name, final Sport sport, final DayOfWeek defaultMatchDay, final String description) {
+        super(id, lockVersion);
+        this.name = name;
+        this.sport = sport;
+        this.defaultMatchDay = defaultMatchDay;
+        this.description = description;
     }
 
-    public Optional<Instant> getCreatedDate() {
-        return Optional.ofNullable(createdDate);
-    }
-
-    public Optional<String> getLastModifiedBy() {
-        return Optional.ofNullable(lastModifiedBy);
-    }
-
-    public Optional<Instant> getLastModifiedDate() {
-        return Optional.ofNullable(lastModifiedDate);
+    public Competition(final String name, final Sport sport, final DayOfWeek defaultMatchDay, final String description) {
+        this(null, null, name, sport, defaultMatchDay, description);
     }
 
     @Override
