@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.2.4.RELEASE'
+    id 'org.springframework.boot' version '2.2.2.RELEASE'
     id 'java'
     id "nebula.facet" version "6.0.3"
     id 'com.google.cloud.tools.jib' version '1.8.0'
@@ -8,7 +8,7 @@ plugins {
 apply plugin: 'io.spring.dependency-management'
 
 group = 'org.manuel'
-version = '0.2.9'
+version = '0.2.10'
 sourceCompatibility = '11'
 
 facets {
