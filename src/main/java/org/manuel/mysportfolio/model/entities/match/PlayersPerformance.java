@@ -1,23 +1,29 @@
 package org.manuel.mysportfolio.model.entities.match;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.*;
-import org.springframework.data.domain.Auditable;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import org.bson.types.ObjectId;
+import org.manuel.mysportfolio.model.MatchDependent;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Version;
+import org.springframework.data.domain.Auditable;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "players-performances")
 @lombok.Data
 @lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
-public class PlayersPerformance implements Auditable<String, ObjectId, Instant> {
+public class PlayersPerformance implements MatchDependent, Auditable<String, ObjectId, Instant> {
 
     @Id
     private ObjectId id;
@@ -54,27 +60,32 @@ public class PlayersPerformance implements Auditable<String, ObjectId, Instant> 
         return Optional.ofNullable(this.playerPerformance.get(playerId));
     }
 
+    @SuppressWarnings("unused")
     private Map<String, Performance> getPlayerPerformance() {
         return this.playerPerformance;
     }
 
     @Override
-    public Optional<String> getCreatedBy() {
+    public @Nonnull
+    Optional<String> getCreatedBy() {
         return Optional.ofNullable(createdBy);
     }
 
     @Override
-    public Optional<Instant> getCreatedDate() {
+    public @Nonnull
+    Optional<Instant> getCreatedDate() {
         return Optional.ofNullable(createdDate);
     }
 
     @Override
-    public Optional<String> getLastModifiedBy() {
+    public @Nonnull
+    Optional<String> getLastModifiedBy() {
         return Optional.ofNullable(lastModifiedBy);
     }
 
     @Override
-    public Optional<Instant> getLastModifiedDate() {
+    public @Nonnull
+    Optional<Instant> getLastModifiedDate() {
         return Optional.ofNullable(lastModifiedDate);
     }
 

@@ -1,5 +1,15 @@
 package org.manuel.mysportfolio;
 
+import java.time.DayOfWeek;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
@@ -28,16 +38,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-
-import java.time.DayOfWeek;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class TestUtils {
 
@@ -124,18 +124,31 @@ public class TestUtils {
         return matchEventDto;
     }
 
-    public static <HT extends TeamTypeDto, AT extends TeamTypeDto> MatchDto<HT, AT> createMockMatchDto(final HT homeTeam, final AT awayTeam, final int homeTeamGoalsNumber, final int awayTeamGoalsNumber, final Map<String, TeamOption> playedFor) {
-        final var goals = IntStream.range(0, homeTeamGoalsNumber).mapToObj(i -> createMockGoal(TeamOption.HOME_TEAM)).collect(Collectors.toList());
-        goals.addAll(IntStream.range(0, awayTeamGoalsNumber).mapToObj(i -> createMockGoal(TeamOption.AWAY_TEAM)).collect(Collectors.toList()));
+    public static <HT extends TeamTypeDto, AT extends TeamTypeDto> MatchDto<HT, AT> createMockMatchDto(
+        final HT homeTeam, final AT awayTeam, final int homeTeamGoalsNumber,
+        final int awayTeamGoalsNumber, final Map<String, TeamOption> playedFor) {
+        return createMockMatchDto(homeTeam, awayTeam, homeTeamGoalsNumber, awayTeamGoalsNumber,
+            playedFor, new String[]{});
+    }
+
+    public static <HT extends TeamTypeDto, AT extends TeamTypeDto> MatchDto<HT, AT> createMockMatchDto(
+        final HT homeTeam,
+        final AT awayTeam, final int homeTeamGoalsNumber, final int awayTeamGoalsNumber,
+        final Map<String, TeamOption> playedFor, final String... chips) {
+        final var goals = IntStream.range(0, homeTeamGoalsNumber)
+            .mapToObj(i -> createMockGoal(TeamOption.HOME_TEAM)).collect(Collectors.toList());
+        goals.addAll(IntStream.range(0, awayTeamGoalsNumber)
+            .mapToObj(i -> createMockGoal(TeamOption.AWAY_TEAM)).collect(Collectors.toList()));
         return MatchDto.builder()
-                .sport(Sport.FOOTBALL)
-                .type(SportType.ELEVEN_A_SIDE)
-                .playedFor(playedFor)
-                .homeTeam(homeTeam)
-                .awayTeam(awayTeam)
-                .startDate(Instant.now().minus(1, ChronoUnit.DAYS))
-                .events(goals)
-                .build();
+            .sport(Sport.FOOTBALL)
+            .type(SportType.ELEVEN_A_SIDE)
+            .playedFor(playedFor)
+            .homeTeam(homeTeam)
+            .awayTeam(awayTeam)
+            .startDate(Instant.now().minus(1, ChronoUnit.DAYS))
+            .events(goals)
+            .chips(Arrays.asList(chips))
+            .build();
     }
 
     public static Authentication createAuthentication(final String userId) {

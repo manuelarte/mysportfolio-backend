@@ -20,6 +20,9 @@ public class AppBadgeDto {
     private final Badge badge;
 
     @NotNull
+    private final String displayName;
+
+    @NotNull
     @org.hibernate.validator.constraints.URL
     private final String imageUrl;
 

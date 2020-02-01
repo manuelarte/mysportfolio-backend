@@ -1,9 +1,8 @@
 package org.manuel.mysportfolio.model.events;
 
 import org.manuel.mysportfolio.model.entities.match.PlayersPerformance;
-import org.springframework.context.ApplicationEvent;
 
-public class PlayersPerformanceUpdatedEvent extends ApplicationEvent {
+public class PlayersPerformanceUpdatedEvent extends SportEvent<PlayersPerformance> {
 
     /**
      * Create a new PlayersPerformanceUpdatedEvent.

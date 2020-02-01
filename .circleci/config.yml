@@ -68,16 +68,18 @@ jobs: # a collection of steps
       - run:
           name: Set project version environment variable
           command: |
-            export PROJECT_VERSION=`./gradlew properties -q | grep "version:" | awk '{print $2}'`
-            echo PROJECT_VERSION=$PROJECT_VERSION >> $BASH_ENV
+            # export PROJECT_VERSION=`./gradlew properties -q | grep "version:" | awk '{print $2}'`
+            # echo PROJECT_VERSION=$PROJECT_VERSION >> $BASH_ENV
+            export DOCKER_TAG=`date +%s`
+            echo DOCKER_TAG=$DOCKER_TAG >> $BASH_ENV
             source $BASH_ENV
       - gcr/gcr-auth
       - gcr/build-image:
           image: mysportfolio
-          tag: $PROJECT_VERSION-$CIRCLE_BUILD_NUM
+          tag: $DOCKER_TAG
       - gcr/push-image:
           image: mysportfolio
-          tag: $PROJECT_VERSION-$CIRCLE_BUILD_NUM
+          tag: $DOCKER_TAG
 workflows:
   version: 2.1
   workflow:
