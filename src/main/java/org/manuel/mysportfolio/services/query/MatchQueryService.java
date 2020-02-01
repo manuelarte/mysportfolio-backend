@@ -1,6 +1,9 @@
 package org.manuel.mysportfolio.services.query;
 
+import java.time.Instant;
+import java.util.Collection;
 import org.bson.types.ObjectId;
+import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.springframework.data.domain.Page;
@@ -27,5 +30,8 @@ public interface MatchQueryService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or #createdBy == authentication.principal.attributes['sub']")
     int countAllByCreatedDateBetweenAndCreatedBy(LocalDate from, LocalDate to, String createdBy);
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    Collection<Match<?, ?>> findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(String userId, LocalDate from, LocalDate to, Sport sport);
 
 }

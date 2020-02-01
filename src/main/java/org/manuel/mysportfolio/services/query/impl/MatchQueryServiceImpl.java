@@ -1,7 +1,10 @@
 package org.manuel.mysportfolio.services.query.impl;
 
+import java.time.Instant;
+import java.util.Collection;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
+import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.manuel.mysportfolio.repositories.MatchRepository;
@@ -40,6 +43,12 @@ class MatchQueryServiceImpl implements MatchQueryService {
     @Override
     public int countAllByCreatedDateBetweenAndCreatedBy(final LocalDate from, final LocalDate to, final String createdBy) {
         return matchRepository.countAllByCreatedDateBetweenAndCreatedBy(from, to, createdBy);
+    }
+
+    @Override
+    public Collection<Match<?,?>> findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(String userId,
+        LocalDate from, LocalDate to, Sport sport) {
+        return matchRepository.findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(userId, from, to, sport);
     }
 
 }

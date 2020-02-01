@@ -1,9 +1,18 @@
 package org.manuel.mysportfolio.repositories;
 
+import java.time.ZonedDateTime;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.manuel.mysportfolio.ITConfiguration;
 import org.manuel.mysportfolio.TestUtils;
+import org.manuel.mysportfolio.model.Sport;
+import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
@@ -148,6 +157,29 @@ public class MatchRepositoryTest {
         assertMatch(awayTeamMatch, allByQuery.getContent().get(1));
     }
 
+    @Test
+    @DisplayName("test get season statistics")
+    public void testGetMatchesForOneYear() {
+        final var expected = matchRepository.save(createMatch(ITConfiguration.IT_USER_ID, Instant.now()));
+
+        final var notExpectedPreviousYear = matchRepository.save(createMatch(ITConfiguration.IT_USER_ID,
+            ZonedDateTime.now().minusYears(1).toInstant()));
+
+        final var notExpectedAnotherSport = createMatch(ITConfiguration.IT_USER_ID, Instant.now());
+        notExpectedAnotherSport.setSport(Sport.FUTSAL);
+        matchRepository.save(notExpectedAnotherSport);
+
+        final var notExpectedIsAnotherUser = createMatch(ITConfiguration.IT_USER_ID, Instant.now());
+        notExpectedIsAnotherUser.setPlayedFor(Collections.singletonMap("otherUser", TeamOption.HOME_TEAM));
+        matchRepository.save(notExpectedIsAnotherUser);
+
+        final var from = LocalDate.now().with(TemporalAdjusters.firstDayOfYear());
+        final var to = LocalDate.now().with(TemporalAdjusters.lastDayOfYear());
+        final var actual = matchRepository.findAllByPlayedContainsAndSportIsAndStartDateIsBetween(ITConfiguration.IT_USER_ID, Sport.FOOTBALL, from, to);
+        assertEquals(1, actual.size());
+        assertEquals(expected.getId(), actual.get(0).getId());
+    }
+
     private void assertMatch(final Match expected, final Match actual) {
         assertEquals(expected.getId(), actual.getId());
         assertEquals(expected.getStartDate().toEpochMilli(), actual.getStartDate().toEpochMilli());
@@ -158,12 +190,16 @@ public class MatchRepositoryTest {
     }
 
     private Match<TeamType, TeamType> createMatch(final String createdBy, final Instant startDate, final Instant createdDate) {
+        final Map<String, TeamOption> playedFor = new HashMap<>();
+        playedFor.put(createdBy, TeamOption.HOME_TEAM);
         final var expected = new Match<>();
         expected.setHomeTeam(TestUtils.createMockAnonymousTeam());
         expected.setAwayTeam(TestUtils.createMockAnonymousTeam());
+        expected.setPlayedFor(playedFor);
         expected.setStartDate(startDate);
         expected.setCreatedBy(createdBy);
         expected.setCreatedDate(createdDate);
+        expected.setSport(Sport.FOOTBALL);
         return expected;
     }
 

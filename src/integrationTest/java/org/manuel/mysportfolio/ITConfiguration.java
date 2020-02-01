@@ -8,10 +8,12 @@ import org.springframework.context.annotation.Primary;
 @Configuration
 public class ITConfiguration {
 
+    public static final String IT_USER_ID = "123456789";
+
     @Bean
     @Primary
     public UserIdProvider userIdProvider() {
-        return () -> "123456789";
+        return () -> IT_USER_ID;
     }
 
 }

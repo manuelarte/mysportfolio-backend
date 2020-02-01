@@ -13,6 +13,8 @@ public interface AppUserRepository extends PagingAndSortingRepository<AppUser, O
 
     Optional<AppUser> findByExternalId(String externalId);
 
+    boolean existsByExternalId(String externalId);
+
     Set<AppUser> findByExternalIdInAndRegistrationTokenNotNull(Iterable<String> externalIds);
 
 }

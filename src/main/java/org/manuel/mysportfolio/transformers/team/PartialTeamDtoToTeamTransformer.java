@@ -24,10 +24,10 @@ public class PartialTeamDtoToTeamTransformer implements BiFunction<String, TeamD
         Assert.notNull(updatedFieldsTeamDto, "The updated pojo for team in a partial update can't be null");
         final var originalTeam = teamQueryService.findOne(new ObjectId(teamId))
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Team with id %s not found and can't be patch", updatedFieldsTeamDto.getId())));
-        final var mixed = originalTeam.toBuilder();
-        Optional.ofNullable(updatedFieldsTeamDto.getName()).ifPresent(mixed::name);
-        Optional.ofNullable(updatedFieldsTeamDto.getTeamKit()).ifPresent(mixed::teamKit);
-        Optional.ofNullable(updatedFieldsTeamDto.getTeamImage()).ifPresent(mixed::teamImage);
-        return mixed.build();
+        final var mixed = originalTeam;
+        Optional.ofNullable(updatedFieldsTeamDto.getName()).ifPresent(mixed::setName);
+        Optional.ofNullable(updatedFieldsTeamDto.getTeamKit()).ifPresent(mixed::setTeamKit);
+        Optional.ofNullable(updatedFieldsTeamDto.getTeamImage()).ifPresent(mixed::setTeamImage);
+        return mixed;
     }
 }
