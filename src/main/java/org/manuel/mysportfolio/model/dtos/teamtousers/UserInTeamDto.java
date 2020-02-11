@@ -3,6 +3,7 @@ package org.manuel.mysportfolio.model.dtos.teamtousers;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import javax.validation.constraints.AssertTrue;
 import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.manuel.mysportfolio.validation.NewEntity;
 import org.manuel.mysportfolio.validation.UpdateEntity;
@@ -33,6 +34,11 @@ public class UserInTeamDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static final class UserInTeamDtoBuilder {
 
+    }
+
+    @AssertTrue
+    private boolean fromBeforeTo() {
+        return from.compareTo(to) <= 0;
     }
 
 }

@@ -3,6 +3,7 @@ package org.manuel.mysportfolio.model.entities.teamtouser;
 import javax.validation.constraints.AssertTrue;
 import java.time.LocalDate;
 import java.util.Set;
+import javax.validation.constraints.PastOrPresent;
 
 @lombok.Data
 @lombok.AllArgsConstructor
@@ -10,9 +11,10 @@ import java.util.Set;
 public class UserInTeam {
 
     public enum UserInTeamRole {
-        PLAYER, COACH, MANAGER, SUPPORTER
+        PLAYER, CAPTAIN, COACH, MANAGER, SUPPORTER
     }
 
+    @PastOrPresent
     private LocalDate from;
 
     private LocalDate to;
