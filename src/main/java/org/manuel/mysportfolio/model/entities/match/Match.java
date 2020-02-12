@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
@@ -66,10 +67,14 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
 
     private List<MatchEvent> events = new ArrayList<>();
 
+    @Size(max = 300)
     private String description;
 
     @Size(max = 5)
-    private Set<@Size(max = 20) String> chips = new HashSet<>();
+    private Set<
+        @Size(max = 20)
+        @NotEmpty
+            String> chips = new HashSet<>();
 
     @CreatedBy
     private String createdBy;

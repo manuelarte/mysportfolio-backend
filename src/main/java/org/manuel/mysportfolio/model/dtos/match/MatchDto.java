@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.PastOrPresent;
@@ -62,11 +63,15 @@ public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto
     private final Instant startDate;
     private final Instant endDate;
 
+    @Size(max = 300)
     private final String description;
 
     @Size(max = 5)
     @lombok.Singular
-    private final Set<@Size(max = 20) String> chips;
+    private final Set<
+        @Size(max = 20)
+        @NotEmpty
+            String> chips;
 
     @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
     private final String createdBy;
