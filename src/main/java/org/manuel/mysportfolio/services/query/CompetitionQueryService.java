@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.services.query;
 
+import java.time.Year;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.Competition;
 import org.springframework.data.domain.Page;
@@ -20,7 +21,7 @@ public interface CompetitionQueryService {
     Optional<Competition> findOne(ObjectId id);
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or #createdBy == authentication.principal.attributes['sub']")
-    int countAllByCreatedBy(String createdBy);
+    int countAllByCreatedByInYear(String createdBy, Year year);
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SYSTEM')")
     List<Competition> findAllPlaying(DayOfWeek dayOfWeek);

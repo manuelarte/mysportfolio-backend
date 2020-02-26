@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.repositories;
 
+import java.time.Instant;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.Competition;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,7 @@ public interface CompetitionRepository extends PagingAndSortingRepository<Compet
 
     Page<Competition> findAllByCreatedByIs(Pageable pageable, String createdBy);
 
-    int countAllByCreatedBy(String createdBy);
+    int countAllByCreatedByAndCreatedDateIsBetween(String createdBy, Instant lowerLimit, Instant upperLimit);
 
     List<Competition> findByDefaultMatchDayIs(DayOfWeek dayOfWeek);
 

@@ -1,5 +1,7 @@
 package org.manuel.mysportfolio.services.query.impl;
 
+import java.time.Year;
+import java.time.ZoneOffset;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.Competition;
@@ -30,8 +32,10 @@ class CompetitionQueryServiceImpl implements CompetitionQueryService {
     }
 
     @Override
-    public int countAllByCreatedBy(final String createdBy) {
-        return competitionRepository.countAllByCreatedBy(createdBy);
+    public int countAllByCreatedByInYear(final String createdBy, final Year year) {
+        final var lowerLimit = year.atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC);
+        final var upperLimit = year.plusYears(1).atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC);
+        return competitionRepository.countAllByCreatedByAndCreatedDateIsBetween(createdBy, lowerLimit, upperLimit);
     }
 
     @Override
