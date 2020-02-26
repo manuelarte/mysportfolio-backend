@@ -1,6 +1,7 @@
 package org.manuel.mysportfolio.controllers.command;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.inject.Inject;
 import org.bson.types.ObjectId;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
@@ -13,7 +14,6 @@ import org.manuel.mysportfolio.model.dtos.teamtousers.UserInTeamDto;
 import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
 import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.manuel.mysportfolio.repositories.TeamToUsersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
@@ -40,13 +40,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class TeamToUsersCommandControllerTest {
 
-    @Autowired
+    @Inject
     private ObjectMapper objectMapper;
 
-    @Autowired
+    @Inject
     private TeamToUsersRepository teamToUsersRepository;
 
-    @Autowired
+    @Inject
     private WebApplicationContext context;
 
     private MockMvc mvc;

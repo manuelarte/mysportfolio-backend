@@ -3,6 +3,7 @@ package org.manuel.mysportfolio.controllers.command;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
 
+import javax.inject.Inject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,6 @@ import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.dtos.match.PerformanceDto;
 import org.manuel.mysportfolio.repositories.MatchRepository;
 import org.manuel.mysportfolio.repositories.PlayersPerformanceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
@@ -33,16 +33,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class PlayersPerformanceCommandControllerTest {
 
-    @Autowired
+    @Inject
     private ObjectMapper objectMapper;
 
-    @Autowired
+    @Inject
     private MatchRepository matchRepository;
 
-    @Autowired
+    @Inject
     private PlayersPerformanceRepository playersPerformanceRepository;
 
-    @Autowired
+    @Inject
     private WebApplicationContext context;
 
     private MockMvc mvc;

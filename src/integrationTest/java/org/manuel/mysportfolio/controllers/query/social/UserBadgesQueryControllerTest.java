@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Set;
+import javax.inject.Inject;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +17,6 @@ import org.manuel.mysportfolio.ITConfiguration;
 import org.manuel.mysportfolio.model.Badge;
 import org.manuel.mysportfolio.model.entities.badges.UserBadges;
 import org.manuel.mysportfolio.repositories.UserBadgesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -29,10 +29,10 @@ import org.springframework.web.context.WebApplicationContext;
 @ExtendWith({SpringExtension.class})
 public class UserBadgesQueryControllerTest {
 
-    @Autowired
+    @Inject
     private UserBadgesRepository userBadgesRepository;
 
-    @Autowired
+    @Inject
     private WebApplicationContext context;
 
     private MockMvc mvc;

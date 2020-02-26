@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.controllers.query;
 
+import javax.inject.Inject;
 import org.bson.types.ObjectId;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
@@ -10,7 +11,6 @@ import org.manuel.mysportfolio.ITConfiguration;
 import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
 import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.manuel.mysportfolio.repositories.TeamToUsersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -33,10 +33,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith({SpringExtension.class})
 public class TeamToUsersQueryControllerTest {
 
-    @Autowired
+    @Inject
     private TeamToUsersRepository teamToUsersRepository;
 
-    @Autowired
+    @Inject
     private WebApplicationContext context;
 
     private MockMvc mvc;

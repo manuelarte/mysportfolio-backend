@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.controllers.query;
 
+import javax.inject.Inject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,13 +32,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class MatchQueryControllerTest {
 
-    @Autowired
+    @Inject
     private TeamRepository teamRepository;
 
-    @Autowired
+    @Inject
     private MatchRepository matchRepository;
 
-    @Autowired
+    @Inject
     private WebApplicationContext context;
 
     private MockMvc mvc;

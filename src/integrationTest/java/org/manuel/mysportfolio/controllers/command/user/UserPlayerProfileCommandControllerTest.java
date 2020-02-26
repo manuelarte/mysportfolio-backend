@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Year;
+import javax.inject.Inject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,14 +17,11 @@ import org.manuel.mysportfolio.ITConfiguration;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileFootballInfoDto;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileSportInfoDto;
 import org.manuel.mysportfolio.model.entities.player.FootballPosition;
-import org.manuel.mysportfolio.model.entities.player.PlayerProfileFootballInfo;
-import org.manuel.mysportfolio.model.entities.player.PlayerProfileSportInfo;
 import org.manuel.mysportfolio.model.entities.user.AppMembership;
 import org.manuel.mysportfolio.model.entities.user.AppSettings;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.repositories.PlayerProfileRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
@@ -39,16 +37,16 @@ import org.springframework.web.util.NestedServletException;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class UserPlayerProfileCommandControllerTest {
 
-  @Autowired
+  @Inject
   private ObjectMapper objectMapper;
 
-  @Autowired
+  @Inject
   private AppUserRepository appUserRepository;
 
-  @Autowired
+  @Inject
   private PlayerProfileRepository playerProfileRepository;
 
-  @Autowired
+  @Inject
   private WebApplicationContext context;
 
   private MockMvc mvc;

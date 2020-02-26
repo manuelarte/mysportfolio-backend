@@ -5,6 +5,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import javax.inject.Inject;
 import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @DataMongoTest
 public class MatchRepositoryTest {
 
-    @Autowired
+    @Inject
     private MatchRepository matchRepository;
 
     @DisplayName("save match with two anonymous teams")

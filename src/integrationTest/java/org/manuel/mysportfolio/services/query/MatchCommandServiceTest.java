@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.services.query;
 
+import javax.inject.Inject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,10 +38,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith({SpringExtension.class})
 class MatchCommandServiceTest {
 
-    @Autowired
+    @Inject
     private MatchRepository matchRepository;
 
-    @Autowired
+    @Inject
     private MatchQueryService matchQueryService;
 
     @DisplayName("load match by query for sport")

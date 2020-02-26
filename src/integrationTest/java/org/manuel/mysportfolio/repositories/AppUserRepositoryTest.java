@@ -1,12 +1,12 @@
 package org.manuel.mysportfolio.repositories;
 
+import javax.inject.Inject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.manuel.mysportfolio.model.entities.user.AppMembership;
 import org.manuel.mysportfolio.model.entities.user.AppSettings;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @DataMongoTest
 class AppUserRepositoryTest {
 
-    @Autowired
+    @Inject
     private AppUserRepository appUserRepository;
 
     @DisplayName("Test not duplicated external id allowed")

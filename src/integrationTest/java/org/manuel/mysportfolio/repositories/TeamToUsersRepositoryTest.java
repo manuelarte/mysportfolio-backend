@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.repositories;
 
+import javax.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DataMongoTest
 public class TeamToUsersRepositoryTest {
 
-    @Autowired
+    @Inject
     private TeamToUsersRepository teamToUsersRepository;
 
     @Test

@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.controllers.query;
 
+import javax.inject.Inject;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.manuel.mysportfolio.ITConfiguration;
 import org.manuel.mysportfolio.model.entities.Competition;
 import org.manuel.mysportfolio.repositories.CompetitionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
@@ -31,10 +31,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class CompetitionQueryControllerTest {
 
-    @Autowired
+    @Inject
     private CompetitionRepository competitionRepository;
 
-    @Autowired
+    @Inject
     private WebApplicationContext context;
 
     private MockMvc mvc;
