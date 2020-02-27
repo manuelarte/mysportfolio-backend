@@ -1,8 +1,7 @@
 package org.manuel.mysportfolio.controllers.query.user;
 
-import lombok.AllArgsConstructor;
-import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
+import org.manuel.mysportfolio.controllers.Util;
 import org.manuel.mysportfolio.model.dtos.match.PerformanceDto;
 import org.manuel.mysportfolio.model.dtos.user.UserMatchDto;
 import org.manuel.mysportfolio.model.entities.match.Match;
@@ -25,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/users/me/matches")
-@AllArgsConstructor
+@lombok.AllArgsConstructor
 public class UserMatchQueryController {
 
     private final AppUserQueryService appUserQueryService;
@@ -39,25 +38,14 @@ public class UserMatchQueryController {
     public ResponseEntity<Page<UserMatchDto>> findAllMyUserMatches(
             @PathVariable final String userId,
             @PageableDefault final Pageable pageable) {
-        final AppUser appUser = getUser(userId);
+        final var appUser = Util.getUser(appUserQueryService, userIdProvider, userId);
         final Page<Match<TeamType, TeamType>> matches = matchQueryService.findAllCreatedBy(pageable, appUser.getExternalId());
         return ResponseEntity.ok(matches.map(m -> new UserMatchDto(matchToMatchDtoTransformer.apply(m), getPerformance(m, appUser))));
     }
 
-    private PerformanceDto getPerformance(final Match match, final AppUser appUser) {
+    private PerformanceDto getPerformance(final Match<TeamType, TeamType> match, final AppUser appUser) {
         return playersPerformanceQueryService.findByMatchIdAndPlayerId(match.getId(), appUser.getExternalId()).map(performanceToPerformanceDtoTransformer)
                 .orElse(null);
-    }
-
-
-    private AppUser getUser(final String userId) {
-        final AppUser user;
-        if ("me".equals(userId)) {
-            user = appUserQueryService.findByExternalId(userIdProvider.getUserId()).get();
-        } else {
-            user = appUserQueryService.findOne(new ObjectId(userId)).get();
-        }
-        return user;
     }
 
 }

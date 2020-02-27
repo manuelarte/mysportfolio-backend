@@ -1,10 +1,12 @@
 package org.manuel.mysportfolio.controllers.query;
 
-import lombok.AllArgsConstructor;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.config.UserIdProviderBySecurity;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.match.MatchEventDto;
+import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
 import org.manuel.mysportfolio.transformers.match.MatchToMatchDtoTransformer;
@@ -16,30 +18,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
-
 @RestController
 @RequestMapping("/api/v1/matches/{matchId}/events")
-@AllArgsConstructor
+@lombok.AllArgsConstructor
 public class MatchEventQueryController {
 
     private final MatchQueryService matchQueryService;
     private final MatchToMatchDtoTransformer matchToMatchDtoTransformer;
     private final MatchEventToMatchEventDtoTransformer matchEventToMatchEventDtoTransformer;
-    private final UserIdProviderBySecurity userIdProviderBySecurity;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<MatchEventDto>> findAll(@PathVariable final ObjectId matchId) {
         return ResponseEntity.ok(matchToMatchDtoTransformer.apply(matchQueryService.findOne(matchId)
-                .orElseThrow(() -> new EntityNotFoundException("Match not found"))).getEvents());
+                .orElseThrow(() -> new EntityNotFoundException(Match.class, matchId.toString()))).getEvents());
     }
 
     @GetMapping(value = "/{eventId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MatchEventDto> findOne(
-            @PathVariable final ObjectId matchId,
-            @PathVariable final ObjectId eventId) {
+    public ResponseEntity<MatchEventDto> findOne(@PathVariable final ObjectId matchId, @PathVariable final ObjectId eventId) {
         // TODO
         final var matchEvents = matchQueryService.findOne(matchId).orElseThrow(() ->
                 new EntityNotFoundException(String.format("Match with id %s not found", matchId))).getEvents();

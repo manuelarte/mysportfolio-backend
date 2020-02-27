@@ -1,6 +1,5 @@
 package org.manuel.mysportfolio.services.query.impl;
 
-import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.team.Team;
 import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
@@ -15,7 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@lombok.AllArgsConstructor
 class TeamQueryServiceImpl implements TeamQueryService {
 
     private final TeamRepository teamRepository;

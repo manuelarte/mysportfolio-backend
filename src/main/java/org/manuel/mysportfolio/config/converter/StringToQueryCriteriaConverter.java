@@ -1,16 +1,15 @@
 package org.manuel.mysportfolio.config.converter;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.manuel.mysportfolio.config.operators.QueryOperator;
 import org.manuel.mysportfolio.model.QueryCriteria;
 import org.manuel.mysportfolio.model.SearchCriterion;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 @lombok.AllArgsConstructor
@@ -29,7 +28,7 @@ public class StringToQueryCriteriaConverter implements Converter<String, QueryCr
         }
 
         final var first = test1.get(0).searchCriterion;
-        var rest = test1.subList(1, test1.size()).stream().map(dH -> Pair.of(dH.queryOption, dH.searchCriterion)).collect(Collectors.toList());
+        final var rest = test1.subList(1, test1.size()).stream().map(dH -> Pair.of(dH.queryOption, dH.searchCriterion)).collect(Collectors.toList());
         return new QueryCriteria(first, rest);
     }
 
@@ -99,8 +98,8 @@ public class StringToQueryCriteriaConverter implements Converter<String, QueryCr
         return dataHelper;
     }
 
-    @AllArgsConstructor
-    @NoArgsConstructor
+    @lombok.AllArgsConstructor
+    @lombok.NoArgsConstructor
     private static class DataHelper {
         public SearchCriterion searchCriterion;
         public QueryCriteria.QueryOption queryOption;
