@@ -21,38 +21,38 @@ class StringToQueryCriteriaConverterTest {
 
     @Test
     public void testOneSingleCriteriaWithLowerThanOperator() {
-        final SearchCriterion first = new SearchCriterion("startDate", new LowerThanQueryOperator(), "2001");
-        final QueryCriteria expected = new QueryCriteria(first, Collections.emptyList());
-        final String source = "startDate<:2001";
+        final var first = new SearchCriterion("startDate", new LowerThanQueryOperator(), "2001");
+        final var expected = new QueryCriteria(first, Collections.emptyList());
+        final var source = "startDate<:2001";
         assertEquals(expected, CONVERTER.convert(source));
     }
 
     @Test
     public void testTwoCriteriaWithLowerAndGreaterThanOperator() {
-        final SearchCriterion first = new SearchCriterion("startDate", new LowerThanQueryOperator(), "2001");
-        final SearchCriterion second = new SearchCriterion("startDate", new GreaterThanQueryOperator(), "1999");
-        final QueryCriteria expected = new QueryCriteria(first, Collections.singletonList(
+        final var first = new SearchCriterion("startDate", new LowerThanQueryOperator(), "2001");
+        final var second = new SearchCriterion("startDate", new GreaterThanQueryOperator(), "1999");
+        final var expected = new QueryCriteria(first, Collections.singletonList(
                 Pair.of(QueryCriteria.QueryOption.AND, second)));
-        final String source = "startDate<:2001;startDate>:1999";
+        final var source = "startDate<:2001;startDate>:1999";
         assertEquals(expected, CONVERTER.convert(source));
     }
 
     @Test
     public void testTwoCriteriaWithLowerAndGreaterThanOperatorAndOrInSport() {
-        final SearchCriterion first = new SearchCriterion("startDate", new LowerThanQueryOperator(), "2001");
-        final SearchCriterion second = new SearchCriterion("startDate", new GreaterThanQueryOperator(), "1999");
-        final SearchCriterion third = new SearchCriterion("sport", new EqualQueryOperator(), "FOOTBALL");
-        final QueryCriteria expected = new QueryCriteria(first, List.of(
+        final var first = new SearchCriterion("startDate", new LowerThanQueryOperator(), "2001");
+        final var second = new SearchCriterion("startDate", new GreaterThanQueryOperator(), "1999");
+        final var third = new SearchCriterion("sport", new EqualQueryOperator(), "FOOTBALL");
+        final var expected = new QueryCriteria(first, List.of(
                 Pair.of(QueryCriteria.QueryOption.AND, second), Pair.of(QueryCriteria.QueryOption.OR, third)));
-        final String source = "startDate<:2001;startDate>:1999|sport::FOOTBALL";
+        final var source = "startDate<:2001;startDate>:1999|sport::FOOTBALL";
         assertEquals(expected, CONVERTER.convert(source));
     }
 
     @Test
     public void testIn() {
-        final SearchCriterion first = new SearchCriterion("sport", new InQueryOperator(), Arrays.asList("FOOTBALL", "FUTSAL"));
-        final QueryCriteria expected = new QueryCriteria(first, Collections.emptyList());
-        final String source = "sport:in:FOOTBALL,FUTSAL";
+        final var first = new SearchCriterion("sport", new InQueryOperator(), Arrays.asList("FOOTBALL", "FUTSAL"));
+        final var expected = new QueryCriteria(first, Collections.emptyList());
+        final var source = "sport:in:FOOTBALL,FUTSAL";
         assertEquals(expected, CONVERTER.convert(source));
     }
 

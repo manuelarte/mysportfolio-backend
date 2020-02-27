@@ -12,9 +12,9 @@ public class QueryCriteria {
 
     public enum QueryOption { AND, OR }
 
-    private final SearchCriterion first;
+    private final SearchCriterion<?, ?> first;
 
     @lombok.Singular("addAnotherCriteria")
-    private final List<Pair<QueryOption, SearchCriterion>> rest;
+    private final List<Pair<QueryOption, ? extends SearchCriterion<?, ?>>> rest;
 
 }
