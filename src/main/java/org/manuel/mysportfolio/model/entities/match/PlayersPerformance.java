@@ -25,72 +25,72 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @lombok.NoArgsConstructor
 public class PlayersPerformance implements MatchDependent, Auditable<String, ObjectId, Instant> {
 
-    @Id
-    private ObjectId id;
+  @Id
+  private ObjectId id;
 
-    @Version
-    private Long version;
+  @Version
+  private Long version;
 
-    @NotNull
-    // @ExistingMatch
-    private ObjectId matchId;
+  @NotNull
+  // @ExistingMatch
+  private ObjectId matchId;
 
-    @NotEmpty
-    @Valid
-    private Map<String, Performance> playerPerformance = new HashMap<>();
+  @NotEmpty
+  @Valid
+  private Map<String, Performance> playerPerformance = new HashMap<>();
 
-    @CreatedBy
-    private String createdBy;
+  @CreatedBy
+  private String createdBy;
 
-    @CreatedDate
-    private Instant createdDate;
+  @CreatedDate
+  private Instant createdDate;
 
-    @LastModifiedBy
-    private String lastModifiedBy;
+  @LastModifiedBy
+  private String lastModifiedBy;
 
-    @LastModifiedDate
-    private Instant lastModifiedDate;
+  @LastModifiedDate
+  private Instant lastModifiedDate;
 
-    public Performance saveOrUpdate(final String playerId, final Performance performance) {
-        this.playerPerformance.put(playerId, performance);
-        return performance;
-    }
+  public Performance saveOrUpdate(final String playerId, final Performance performance) {
+    this.playerPerformance.put(playerId, performance);
+    return performance;
+  }
 
-    public Optional<Performance> getPerformance(final String playerId) {
-        return Optional.ofNullable(this.playerPerformance.get(playerId));
-    }
+  public Optional<Performance> getPerformance(final String playerId) {
+    return Optional.ofNullable(this.playerPerformance.get(playerId));
+  }
 
-    @SuppressWarnings("unused")
-    private Map<String, Performance> getPlayerPerformance() {
-        return this.playerPerformance;
-    }
+  @SuppressWarnings("unused")
+  private Map<String, Performance> getPlayerPerformance() {
+    return this.playerPerformance;
+  }
 
-    @Override
-    public @Nonnull
-    Optional<String> getCreatedBy() {
-        return Optional.ofNullable(createdBy);
-    }
+  @Override
+  public @Nonnull
+  Optional<String> getCreatedBy() {
+    return Optional.ofNullable(createdBy);
+  }
 
-    @Override
-    public @Nonnull
-    Optional<Instant> getCreatedDate() {
-        return Optional.ofNullable(createdDate);
-    }
+  @Override
+  public @Nonnull
+  Optional<Instant> getCreatedDate() {
+    return Optional.ofNullable(createdDate);
+  }
 
-    @Override
-    public @Nonnull
-    Optional<String> getLastModifiedBy() {
-        return Optional.ofNullable(lastModifiedBy);
-    }
+  @Override
+  public @Nonnull
+  Optional<String> getLastModifiedBy() {
+    return Optional.ofNullable(lastModifiedBy);
+  }
 
-    @Override
-    public @Nonnull
-    Optional<Instant> getLastModifiedDate() {
-        return Optional.ofNullable(lastModifiedDate);
-    }
+  @Override
+  public @Nonnull
+  Optional<Instant> getLastModifiedDate() {
+    return Optional.ofNullable(lastModifiedDate);
+  }
 
-    @Override
-    public boolean isNew() {
-        return id == null;
-    }
+  @Override
+  public boolean isNew() {
+    return id == null;
+  }
 }

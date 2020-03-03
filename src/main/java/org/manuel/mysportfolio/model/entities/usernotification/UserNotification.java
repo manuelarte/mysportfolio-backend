@@ -10,15 +10,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @lombok.Data
 public abstract class UserNotification extends BaseEntity {
 
-    @NotNull
-    protected String to;
+  @NotNull
+  protected String to;
 
-    protected UserNotificationStatus status;
+  protected UserNotificationStatus status;
 
-    protected UserNotification(final ObjectId id, final Long version, final String to, final UserNotificationStatus status) {
-        super(id, version);
-        this.to = to;
-        this.status = status;
-    }
+  protected UserNotification(final ObjectId id, final Long version, final String to,
+      final UserNotificationStatus status) {
+    super(id, version);
+    this.to = to;
+    this.status = status;
+  }
 
 }

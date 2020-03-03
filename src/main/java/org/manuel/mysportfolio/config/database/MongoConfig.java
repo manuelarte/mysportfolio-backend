@@ -15,28 +15,29 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 @EnableMongoAuditing
 public class MongoConfig {
 
-    @Bean
-    public ValidatingMongoEventListener validatingMongoEventListener() {
-        return new ValidatingMongoEventListener(validator());
-    }
+  @Bean
+  public ValidatingMongoEventListener validatingMongoEventListener() {
+    return new ValidatingMongoEventListener(validator());
+  }
 
-    @Bean
-    public LocalValidatorFactoryBean validator() {
-        return new LocalValidatorFactoryBean();
-    }
+  @Bean
+  public LocalValidatorFactoryBean validator() {
+    return new LocalValidatorFactoryBean();
+  }
 
-    @Bean
-    public MongoCustomConversions customConversions() {
-        final List<Converter<?, ?>> converterList = new ArrayList<>();
-        converterList.add(new MongoYearFromStringConverter());
-        return new MongoCustomConversions(converterList);
-    }
+  @Bean
+  public MongoCustomConversions customConversions() {
+    final List<Converter<?, ?>> converterList = new ArrayList<>();
+    converterList.add(new MongoYearFromStringConverter());
+    return new MongoCustomConversions(converterList);
+  }
 
-    private static final class MongoYearFromStringConverter implements Converter<String, Year> {
-        @Override
-        public Year convert(final String source) {
-            return Year.parse(source);
-        }
+  private static final class MongoYearFromStringConverter implements Converter<String, Year> {
+
+    @Override
+    public Year convert(final String source) {
+      return Year.parse(source);
     }
+  }
 
 }

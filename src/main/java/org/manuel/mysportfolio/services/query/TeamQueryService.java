@@ -9,13 +9,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 public interface TeamQueryService {
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    Page<Team> findAllForUser(Pageable pageable, String userId);
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+  Page<Team> findAllForUser(Pageable pageable, String userId);
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    Optional<Team> findOne(ObjectId id);
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+  Optional<Team> findOne(ObjectId id);
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #createdBy == authentication.principal.attributes['sub']")
-    int countAllByCreatedBy(String createdBy);
+  @PreAuthorize("hasRole('ROLE_ADMIN') or #createdBy == authentication.principal.attributes['sub']")
+  int countAllByCreatedBy(String createdBy);
 
 }

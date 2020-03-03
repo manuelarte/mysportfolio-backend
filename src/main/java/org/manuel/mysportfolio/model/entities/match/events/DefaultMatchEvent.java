@@ -15,22 +15,22 @@ import org.springframework.data.annotation.Id;
 @lombok.NoArgsConstructor
 public class DefaultMatchEvent implements MatchEvent {
 
-    @Id
-    @JsonSerialize(using = ToStringSerializer.class)
-    private ObjectId id;
+  @Id
+  @JsonSerialize(using = ToStringSerializer.class)
+  private ObjectId id;
 
-    private Map<String, Object> map = new HashMap<>();
+  private Map<String, Object> map = new HashMap<>();
 
-    @JsonAnyGetter
-    @SuppressWarnings("unused")
-    public Object get(final String key) {
-        return this.map.get(key);
-    }
+  @JsonAnyGetter
+  @SuppressWarnings("unused")
+  public Object get(final String key) {
+    return this.map.get(key);
+  }
 
-    @JsonAnySetter
-    @SuppressWarnings("unused")
-    public void set(final String key, final Object value) {
-        this.map.put(key, value);
-    }
+  @JsonAnySetter
+  @SuppressWarnings("unused")
+  public void set(final String key, final Object value) {
+    this.map.put(key, value);
+  }
 
 }

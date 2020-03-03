@@ -21,6 +21,7 @@ public class PlayerProfileQueryServiceImpl implements PlayerProfileQueryService 
     Assert.isTrue(appUserRepository.existsByExternalId(externalId),
         String.format("The user with external id %s does not exists", externalId));
     return playerProfileRepository
-        .findByExternalIdIs(externalId).orElseGet(() -> playerProfileRepository.save(new PlayerProfile(externalId)));
+        .findByExternalIdIs(externalId)
+        .orElseGet(() -> playerProfileRepository.save(new PlayerProfile(externalId)));
   }
 }

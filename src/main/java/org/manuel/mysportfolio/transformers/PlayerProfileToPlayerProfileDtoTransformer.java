@@ -11,14 +11,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 @lombok.AllArgsConstructor
-public class PlayerProfileToPlayerProfileDtoTransformer implements Function<PlayerProfile, PlayerProfileDto> {
+public class PlayerProfileToPlayerProfileDtoTransformer implements
+    Function<PlayerProfile, PlayerProfileDto> {
 
   private final PlayerProfileSportInfoToPlayerProfileSportInfoDtoTransformer transformer;
 
   @Override
   public PlayerProfileDto apply(final PlayerProfile playerProfile) {
-    final var info = playerProfile.getInfo().entrySet().stream().collect(Collectors.toMap(it -> it.getKey(),
-        it -> transformer.apply(playerProfile.getExternalId(), it.getKey(), it.getValue())));
+    final var info = playerProfile.getInfo().entrySet().stream()
+        .collect(Collectors.toMap(it -> it.getKey(),
+            it -> transformer.apply(playerProfile.getExternalId(), it.getKey(), it.getValue())));
     return PlayerProfileDto.builder()
         .id(Optional.ofNullable(playerProfile.getId()).map(ObjectId::toString).orElse(null))
         .info(info)

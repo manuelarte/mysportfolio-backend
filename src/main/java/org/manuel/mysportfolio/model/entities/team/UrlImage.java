@@ -8,9 +8,9 @@ import javax.validation.constraints.Size;
 @lombok.NoArgsConstructor
 public class UrlImage implements TeamImage {
 
-    @org.hibernate.validator.constraints.URL
-    @Size(max = 200)
-    @NotNull
-    private String url;
+  @org.hibernate.validator.constraints.URL
+  @Size(max = 200)
+  @NotNull
+  private String url;
 
 }

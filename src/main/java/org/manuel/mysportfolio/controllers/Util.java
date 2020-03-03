@@ -12,8 +12,8 @@ public class Util {
   public static AppUser getUser(final AppUserQueryService appUserQueryService,
       final UserIdProvider userIdProvider,
       final String userId) {
-    return ("me".equals(userId) ?
-        appUserQueryService.findByExternalId(userIdProvider.getUserId()) :
+    return ("me".equals(userId)
+        ? appUserQueryService.findByExternalId(userIdProvider.getUserId()) :
         appUserQueryService.findOne(new ObjectId(userId)))
         .orElseThrow(() -> new EntityNotFoundException(AppUser.class, userId));
   }

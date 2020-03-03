@@ -27,25 +27,30 @@ import org.springframework.web.bind.annotation.RestController;
 @lombok.AllArgsConstructor
 public class UserMatchQueryController {
 
-    private final AppUserQueryService appUserQueryService;
-    private final MatchQueryService matchQueryService;
-    private final PlayersPerformanceQueryService playersPerformanceQueryService;
-    private final MatchToMatchDtoTransformer matchToMatchDtoTransformer;
-    private final PerformanceToPerformanceDtoTransformer performanceToPerformanceDtoTransformer;
-    private final UserIdProvider userIdProvider;
+  private final AppUserQueryService appUserQueryService;
+  private final MatchQueryService matchQueryService;
+  private final PlayersPerformanceQueryService playersPerformanceQueryService;
+  private final MatchToMatchDtoTransformer matchToMatchDtoTransformer;
+  private final PerformanceToPerformanceDtoTransformer performanceToPerformanceDtoTransformer;
+  private final UserIdProvider userIdProvider;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Page<UserMatchDto>> findAllMyUserMatches(
-            @PathVariable final String userId,
-            @PageableDefault final Pageable pageable) {
-        final var appUser = Util.getUser(appUserQueryService, userIdProvider, userId);
-        final Page<Match<TeamType, TeamType>> matches = matchQueryService.findAllCreatedBy(pageable, appUser.getExternalId());
-        return ResponseEntity.ok(matches.map(m -> new UserMatchDto(matchToMatchDtoTransformer.apply(m), getPerformance(m, appUser))));
-    }
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Page<UserMatchDto>> findAllMyUserMatches(
+      @PathVariable final String userId,
+      @PageableDefault final Pageable pageable) {
+    final var appUser = Util.getUser(appUserQueryService, userIdProvider, userId);
+    final Page<Match<TeamType, TeamType>> matches = matchQueryService
+        .findAllCreatedBy(pageable, appUser.getExternalId());
+    return ResponseEntity.ok(matches.map(
+        m -> new UserMatchDto(matchToMatchDtoTransformer.apply(m), getPerformance(m, appUser))));
+  }
 
-    private PerformanceDto getPerformance(final Match<TeamType, TeamType> match, final AppUser appUser) {
-        return playersPerformanceQueryService.findByMatchIdAndPlayerId(match.getId(), appUser.getExternalId()).map(performanceToPerformanceDtoTransformer)
-                .orElse(null);
-    }
+  private PerformanceDto getPerformance(final Match<TeamType, TeamType> match,
+      final AppUser appUser) {
+    return playersPerformanceQueryService
+        .findByMatchIdAndPlayerId(match.getId(), appUser.getExternalId())
+        .map(performanceToPerformanceDtoTransformer)
+        .orElse(null);
+  }
 
 }

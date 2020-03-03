@@ -11,15 +11,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @lombok.Data
 @lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
-public class Team extends BaseEntity implements TeamInfo  {
+public class Team extends BaseEntity implements TeamInfo {
 
-    @NotEmpty
-    @Size(max = 30)
-    private String name;
+  @NotEmpty
+  @Size(max = 30)
+  private String name;
 
-    private TeamImage teamImage;
+  private TeamImage teamImage;
 
-    @NotNull
-    private TeamKit teamKit;
+  @NotNull
+  private TeamKit teamKit;
 
 }

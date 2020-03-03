@@ -28,8 +28,9 @@ public class PlayerProfileSportSeasonSummaryDtoTransformer implements
   @Override
   public PlayerProfileSportSeasonSummaryDto apply(final Sport sport) {
     final var from = year.atDay(1);
-    final var to = !year.isLeap() ?  year.atDay(365) : year.atDay(366);
-    final var matches = matchQueryService.findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(externalId, from, to, sport);
+    final var to = !year.isLeap() ? year.atDay(365) : year.atDay(366);
+    final var matches = matchQueryService
+        .findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(externalId, from, to, sport);
     final var userGoals = getGoalMatchEventOfUser(externalId, matches);
     final var assistCount = getNumberOfAssists(externalId, matches);
     final var summary = PlayerProfileSportSeasonSummaryDto.builder()
@@ -41,7 +42,8 @@ public class PlayerProfileSportSeasonSummaryDtoTransformer implements
     return summary;
   }
 
-  private Set<GoalMatchEvent> getGoalMatchEventOfUser(final String externalId, final Collection<Match<?, ?>> matches) {
+  private Set<GoalMatchEvent> getGoalMatchEventOfUser(final String externalId,
+      final Collection<Match<?, ?>> matches) {
     return matches.stream()
         .flatMap(it -> Optional.ofNullable(it.getEvents()).orElse(Collections.emptyList()).stream())
         .filter(event -> event instanceof GoalMatchEvent).map(event -> (GoalMatchEvent) event)
@@ -53,7 +55,8 @@ public class PlayerProfileSportSeasonSummaryDtoTransformer implements
     OptionalDouble average = goals.stream()
         .filter(it -> it.getRates() != null && !it.getRates().isEmpty())
         .map(it -> getAverageGoalRate(it)).mapToDouble(it -> it.doubleValue()).average();
-    return average.isPresent() ? new BigDecimal(average.getAsDouble()).setScale(1, RoundingMode.HALF_EVEN) : null;
+    return average.isPresent() ? new BigDecimal(average.getAsDouble())
+        .setScale(1, RoundingMode.HALF_EVEN) : null;
   }
 
   private BigDecimal getAverageGoalRate(final GoalMatchEvent goal) {
@@ -67,7 +70,8 @@ public class PlayerProfileSportSeasonSummaryDtoTransformer implements
     return matches.stream()
         .flatMap(it -> Optional.ofNullable(it.getEvents()).orElse(Collections.emptyList()).stream())
         .filter(event -> event instanceof GoalMatchEvent).map(event -> (GoalMatchEvent) event)
-        .filter(goalEvent -> externalId.equals(Optional.ofNullable(goalEvent.getAssist()).orElse(new AssistDetails()).getWho()))
+        .filter(goalEvent -> externalId.equals(
+            Optional.ofNullable(goalEvent.getAssist()).orElse(new AssistDetails()).getWho()))
         .count();
   }
 }

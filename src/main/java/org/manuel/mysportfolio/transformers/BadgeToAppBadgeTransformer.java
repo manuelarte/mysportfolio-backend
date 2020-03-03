@@ -11,27 +11,29 @@ import org.springframework.stereotype.Component;
 @Component
 public class BadgeToAppBadgeTransformer implements Function<Badge, AppBadgeDto> {
 
-	private final MessageSource badgesMessageSource;
+  private final MessageSource badgesMessageSource;
 
-	public BadgeToAppBadgeTransformer(@Qualifier("badgesMessageSource") final MessageSource badgesMessageSource) {
-		this.badgesMessageSource = badgesMessageSource;
-	}
+  public BadgeToAppBadgeTransformer(
+      @Qualifier("badgesMessageSource") final MessageSource badgesMessageSource) {
+    this.badgesMessageSource = badgesMessageSource;
+  }
 
-	@Override
-	public AppBadgeDto apply(final Badge badge) {
-		if (badge == null) {
-			return null;
-		}
-		return AppBadgeDto.builder()
-				.badge(badge)
-				.displayName(getDisplayName(badge))
-			  .imageUrl(badge.getImageUrl())
-			  .points(badge.getPoints())
-				.build();
-	}
+  @Override
+  public AppBadgeDto apply(final Badge badge) {
+    if (badge == null) {
+      return null;
+    }
+    return AppBadgeDto.builder()
+        .badge(badge)
+        .displayName(getDisplayName(badge))
+        .imageUrl(badge.getImageUrl())
+        .points(badge.getPoints())
+        .build();
+  }
 
-	private String getDisplayName(final Badge badge) {
-		return badgesMessageSource.getMessage(badge.name(), null, badge.name(), LocaleContextHolder.getLocale());
-	}
+  private String getDisplayName(final Badge badge) {
+    return badgesMessageSource
+        .getMessage(badge.name(), null, badge.name(), LocaleContextHolder.getLocale());
+  }
 
 }

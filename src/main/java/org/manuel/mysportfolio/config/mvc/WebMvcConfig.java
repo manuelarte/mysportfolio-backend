@@ -11,15 +11,15 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 @lombok.AllArgsConstructor
 class WebMvcConfig implements WebMvcConfigurer {
 
-    private final StringToQueryCriteriaConverter stringToQueryCriteriaConverter;
+  private final StringToQueryCriteriaConverter stringToQueryCriteriaConverter;
 
-    @Override
-    public void addFormatters(final FormatterRegistry registry) {
-        registry.addConverter(stringToQueryCriteriaConverter);
-    }
+  @Override
+  public void addFormatters(final FormatterRegistry registry) {
+    registry.addConverter(stringToQueryCriteriaConverter);
+  }
 
-    @Override
-    public void addInterceptors(final InterceptorRegistry registry) {
-        registry.addInterceptor(new LocaleChangeInterceptor());
-    }
+  @Override
+  public void addInterceptors(final InterceptorRegistry registry) {
+    registry.addInterceptor(new LocaleChangeInterceptor());
+  }
 }

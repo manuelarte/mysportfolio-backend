@@ -5,6 +5,6 @@ import org.manuel.mysportfolio.model.entities.match.Performance;
 
 public interface PlayersPerformanceCommandService {
 
-    Performance updatePerformance(ObjectId matchId, String playerId, Performance performance);
+  Performance updatePerformance(ObjectId matchId, String playerId, Performance performance);
 
 }

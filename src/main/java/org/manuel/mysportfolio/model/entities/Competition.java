@@ -13,32 +13,34 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @lombok.NoArgsConstructor
 public class Competition extends BaseEntity implements SportDependent {
 
-    @NotNull
-    private String name;
+  @NotNull
+  private String name;
 
-    @NotNull
-    private Sport sport;
+  @NotNull
+  private Sport sport;
 
-    private DayOfWeek defaultMatchDay;
+  private DayOfWeek defaultMatchDay;
 
-    @Size(max = 200)
-    private String description;
+  @Size(max = 200)
+  private String description;
 
-    public Competition(final ObjectId id, final Long lockVersion, final String name, final Sport sport, final DayOfWeek defaultMatchDay, final String description) {
-        super(id, lockVersion);
-        this.name = name;
-        this.sport = sport;
-        this.defaultMatchDay = defaultMatchDay;
-        this.description = description;
-    }
+  public Competition(final ObjectId id, final Long lockVersion, final String name,
+      final Sport sport, final DayOfWeek defaultMatchDay, final String description) {
+    super(id, lockVersion);
+    this.name = name;
+    this.sport = sport;
+    this.defaultMatchDay = defaultMatchDay;
+    this.description = description;
+  }
 
-    public Competition(final String name, final Sport sport, final DayOfWeek defaultMatchDay, final String description) {
-        this(null, null, name, sport, defaultMatchDay, description);
-    }
+  public Competition(final String name, final Sport sport, final DayOfWeek defaultMatchDay,
+      final String description) {
+    this(null, null, name, sport, defaultMatchDay, description);
+  }
 
-    @Override
-    public boolean isNew() {
-        return id == null;
-    }
+  @Override
+  public boolean isNew() {
+    return id == null;
+  }
 
 }

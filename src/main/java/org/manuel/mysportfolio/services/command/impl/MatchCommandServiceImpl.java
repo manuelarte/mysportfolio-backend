@@ -12,21 +12,21 @@ import org.springframework.util.Assert;
 @lombok.AllArgsConstructor
 class MatchCommandServiceImpl implements MatchCommandService {
 
-    private final MatchRepository matchRepository;
-    private final MatchCreatedEventPublisher matchCreatedEventPublisher;
+  private final MatchRepository matchRepository;
+  private final MatchCreatedEventPublisher matchCreatedEventPublisher;
 
-    @Override
-    public Match<TeamType, TeamType> save(final Match<TeamType, TeamType> match) {
-        Assert.notNull(match, "The match to save can't be null");
-        final var saved = matchRepository.save(match);
-        matchCreatedEventPublisher.publishEvent(saved);
-        return saved;
-    }
+  @Override
+  public Match<TeamType, TeamType> save(final Match<TeamType, TeamType> match) {
+    Assert.notNull(match, "The match to save can't be null");
+    final var saved = matchRepository.save(match);
+    matchCreatedEventPublisher.publishEvent(saved);
+    return saved;
+  }
 
-    @Override
-    public Match<TeamType, TeamType> update(final Match<TeamType, TeamType> match) {
-        Assert.notNull(match, "The match to save can't be null");
-        Assert.notNull(match.getId(), "Can't update a new match");
-        return matchRepository.save(match);
-    }
+  @Override
+  public Match<TeamType, TeamType> update(final Match<TeamType, TeamType> match) {
+    Assert.notNull(match, "The match to save can't be null");
+    Assert.notNull(match.getId(), "Can't update a new match");
+    return matchRepository.save(match);
+  }
 }

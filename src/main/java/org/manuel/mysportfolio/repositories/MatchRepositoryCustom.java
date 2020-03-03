@@ -11,8 +11,9 @@ import org.springframework.data.mongodb.core.query.Query;
 
 public interface MatchRepositoryCustom {
 
-    Page<Match<TeamType, TeamType>> findQueryAllCreatedBy(Query query, Pageable pageable);
+  Page<Match<TeamType, TeamType>> findQueryAllCreatedBy(Query query, Pageable pageable);
 
-    List<Match> findAllByPlayedContainsAndSportIsAndStartDateIsBetween(String externalId, Sport sport, LocalDate from, LocalDate to);
+  List<Match> findAllByPlayedContainsAndSportIsAndStartDateIsBetween(String externalId, Sport sport,
+      LocalDate from, LocalDate to);
 
 }

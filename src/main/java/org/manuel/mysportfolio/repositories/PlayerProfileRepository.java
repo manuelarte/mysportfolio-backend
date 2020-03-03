@@ -7,7 +7,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PlayerProfileRepository extends PagingAndSortingRepository<PlayerProfile, ObjectId> {
+public interface PlayerProfileRepository extends
+    PagingAndSortingRepository<PlayerProfile, ObjectId> {
 
   Optional<PlayerProfile> findByExternalIdIs(String externalId);
 

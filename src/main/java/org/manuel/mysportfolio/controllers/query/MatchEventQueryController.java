@@ -23,28 +23,32 @@ import org.springframework.web.bind.annotation.RestController;
 @lombok.AllArgsConstructor
 public class MatchEventQueryController {
 
-    private final MatchQueryService matchQueryService;
-    private final MatchToMatchDtoTransformer matchToMatchDtoTransformer;
-    private final MatchEventToMatchEventDtoTransformer matchEventToMatchEventDtoTransformer;
+  private final MatchQueryService matchQueryService;
+  private final MatchToMatchDtoTransformer matchToMatchDtoTransformer;
+  private final MatchEventToMatchEventDtoTransformer matchEventToMatchEventDtoTransformer;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<MatchEventDto>> findAll(@PathVariable final ObjectId matchId) {
-        return ResponseEntity.ok(matchToMatchDtoTransformer.apply(matchQueryService.findOne(matchId)
-                .orElseThrow(() -> new EntityNotFoundException(Match.class, matchId.toString()))).getEvents());
-    }
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<MatchEventDto>> findAll(@PathVariable final ObjectId matchId) {
+    return ResponseEntity.ok(matchToMatchDtoTransformer.apply(matchQueryService.findOne(matchId)
+        .orElseThrow(() -> new EntityNotFoundException(Match.class, matchId.toString())))
+        .getEvents());
+  }
 
-    @GetMapping(value = "/{eventId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MatchEventDto> findOne(@PathVariable final ObjectId matchId, @PathVariable final ObjectId eventId) {
-        // TODO
-        final var matchEvents = matchQueryService.findOne(matchId).orElseThrow(() ->
-                new EntityNotFoundException(String.format("Match with id %s not found", matchId))).getEvents();
-        final Optional<MatchEvent> event = matchEvents.stream().filter(predicate(eventId)).findFirst();
-        final MatchEvent matchEvent = event.orElseThrow(() -> new EntityNotFoundException(String.format("Event with id %s not found", eventId)));
-        return ResponseEntity.ok(matchEventToMatchEventDtoTransformer.apply(matchEvent));
-    }
+  @GetMapping(value = "/{eventId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<MatchEventDto> findOne(@PathVariable final ObjectId matchId,
+      @PathVariable final ObjectId eventId) {
+    // TODO
+    final var matchEvents = matchQueryService.findOne(matchId).orElseThrow(() ->
+        new EntityNotFoundException(String.format("Match with id %s not found", matchId)))
+        .getEvents();
+    final Optional<MatchEvent> event = matchEvents.stream().filter(predicate(eventId)).findFirst();
+    final MatchEvent matchEvent = event.orElseThrow(
+        () -> new EntityNotFoundException(String.format("Event with id %s not found", eventId)));
+    return ResponseEntity.ok(matchEventToMatchEventDtoTransformer.apply(matchEvent));
+  }
 
-    private Predicate<MatchEvent> predicate(final ObjectId eventId) {
-        return e -> e.getId().equals(eventId);
-    }
+  private Predicate<MatchEvent> predicate(final ObjectId eventId) {
+    return e -> e.getId().equals(eventId);
+  }
 
 }

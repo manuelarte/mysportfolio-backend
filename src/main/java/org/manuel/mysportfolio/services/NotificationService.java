@@ -5,6 +5,6 @@ import org.manuel.mysportfolio.exceptions.NotificationException;
 
 public interface NotificationService {
 
-    String send(Message message) throws NotificationException;
+  String send(Message message) throws NotificationException;
 
 }

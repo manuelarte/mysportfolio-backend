@@ -10,7 +10,8 @@ public class PlayerProfileFutsalInfoDtoToPlayerProfileFutsalInfoTransformer impl
     Function<PlayerProfileFutsalInfoDto, PlayerProfileFutsalInfo> {
 
   @Override
-  public PlayerProfileFutsalInfo apply(final PlayerProfileFutsalInfoDto playerProfileFutsalInfoDto) {
+  public PlayerProfileFutsalInfo apply(
+      final PlayerProfileFutsalInfoDto playerProfileFutsalInfoDto) {
     final var output = new PlayerProfileFutsalInfo();
     output.setPreferredPosition(playerProfileFutsalInfoDto.getPreferredPosition());
     output.setAlternativePositions(playerProfileFutsalInfoDto.getAlternativePositions());

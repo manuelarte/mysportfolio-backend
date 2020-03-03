@@ -10,12 +10,13 @@ import org.springframework.stereotype.Component;
 @lombok.extern.slf4j.Slf4j
 public class PlayersPerformanceUpdatedEventPublisher {
 
-    private ApplicationEventPublisher applicationEventPublisher;
+  private ApplicationEventPublisher applicationEventPublisher;
 
-    public void publishEvent(final PlayersPerformance playersPerformance) {
-        log.info("Publishing playersPerformance updated event for match {}.", playersPerformance.getMatchId());
-        final var teamCreatedEvent = new PlayersPerformanceUpdatedEvent(playersPerformance);
-        applicationEventPublisher.publishEvent(teamCreatedEvent);
-    }
+  public void publishEvent(final PlayersPerformance playersPerformance) {
+    log.info("Publishing playersPerformance updated event for match {}.",
+        playersPerformance.getMatchId());
+    final var teamCreatedEvent = new PlayersPerformanceUpdatedEvent(playersPerformance);
+    applicationEventPublisher.publishEvent(teamCreatedEvent);
+  }
 
 }

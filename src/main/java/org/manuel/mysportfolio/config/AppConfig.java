@@ -11,18 +11,18 @@ import org.springframework.data.geo.Point;
 @Configuration
 public class AppConfig {
 
-    @Bean
-    public ObjectMapper objectMapper() {
-        final var module = new SimpleModule();
-        module.addDeserializer(Point.class, new PointDeserializer());
-        return new ObjectMapper().findAndRegisterModules()
-                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-                .registerModule(module);
-    }
+  @Bean
+  public ObjectMapper objectMapper() {
+    final var module = new SimpleModule();
+    module.addDeserializer(Point.class, new PointDeserializer());
+    return new ObjectMapper().findAndRegisterModules()
+        .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+        .registerModule(module);
+  }
 
-    //@Bean
-    //public TaskScheduler taskScheduler() {
-    //    return new ConcurrentTaskScheduler(); //single threaded by default
-    //}
+  //@Bean
+  //public TaskScheduler taskScheduler() {
+  //    return new ConcurrentTaskScheduler(); //single threaded by default
+  //}
 
 }

@@ -3,11 +3,10 @@ package org.manuel.mysportfolio.model.dtos.user;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import javax.validation.constraints.NotNull;
 import org.manuel.mysportfolio.model.dtos.team.TeamDto;
 import org.manuel.mysportfolio.model.dtos.teamtousers.UserInTeamDto;
 import org.manuel.mysportfolio.validation.NewEntity;
-
-import javax.validation.constraints.NotNull;
 
 @JsonDeserialize(builder = UserTeamDto.UserTeamDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -16,14 +15,14 @@ import javax.validation.constraints.NotNull;
 @lombok.Builder(toBuilder = true)
 public class UserTeamDto {
 
-    @NotNull(groups = {NewEntity.class})
-    private final TeamDto team;
+  @NotNull(groups = {NewEntity.class})
+  private final TeamDto team;
 
-    private final UserInTeamDto userInTeam;
+  private final UserInTeamDto userInTeam;
 
-    @JsonPOJOBuilder(withPrefix = "")
-    public static final class UserTeamDtoBuilder {
+  @JsonPOJOBuilder(withPrefix = "")
+  public static final class UserTeamDtoBuilder {
 
-    }
+  }
 
 }

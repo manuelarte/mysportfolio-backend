@@ -8,7 +8,11 @@ import org.manuel.mysportfolio.transformers.PerformanceDtoToPerformanceTransform
 import org.manuel.mysportfolio.transformers.PerformanceToPerformanceDtoTransformer;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/matches/{matchId}/performances")
@@ -16,22 +20,23 @@ import org.springframework.web.bind.annotation.*;
 @lombok.extern.slf4j.Slf4j
 public class PlayersPerformanceCommandController {
 
-    private final PerformanceDtoToPerformanceTransformer performanceDtoToPerformanceTransformer;
-    private final PerformanceToPerformanceDtoTransformer performanceToPerformanceDtoTransformer;
-    private final PlayersPerformanceCommandService playersPerformanceCommandService;
-    private final UserIdProvider userIdProvider;
+  private final PerformanceDtoToPerformanceTransformer performanceDtoToPerformanceTransformer;
+  private final PerformanceToPerformanceDtoTransformer performanceToPerformanceDtoTransformer;
+  private final PlayersPerformanceCommandService playersPerformanceCommandService;
+  private final UserIdProvider userIdProvider;
 
-    @PatchMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PerformanceDto> updatePerformance(
-            @PathVariable final ObjectId matchId,
-            @RequestBody final PerformanceDto performanceDto) {
-        final var updated = playersPerformanceCommandService.updatePerformance(matchId, getUserId(), performanceDtoToPerformanceTransformer.apply(performanceDto));
-        log.info("Players performance for player {} patched for Match id {}", getUserId(), matchId);
-        return ResponseEntity.ok(performanceToPerformanceDtoTransformer.apply(updated));
-    }
+  @PatchMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<PerformanceDto> updatePerformance(
+      @PathVariable final ObjectId matchId,
+      @RequestBody final PerformanceDto performanceDto) {
+    final var updated = playersPerformanceCommandService.updatePerformance(matchId, getUserId(),
+        performanceDtoToPerformanceTransformer.apply(performanceDto));
+    log.info("Players performance for player {} patched for Match id {}", getUserId(), matchId);
+    return ResponseEntity.ok(performanceToPerformanceDtoTransformer.apply(updated));
+  }
 
-    private String getUserId() {
-        return userIdProvider.getUserId();
-    }
+  private String getUserId() {
+    return userIdProvider.getUserId();
+  }
 
 }

@@ -1,13 +1,12 @@
 package org.manuel.mysportfolio.services.command.impl;
 
+import javax.validation.constraints.NotNull;
 import org.manuel.mysportfolio.model.entities.team.Team;
 import org.manuel.mysportfolio.publishers.TeamCreatedEventPublisher;
 import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.manuel.mysportfolio.services.command.TeamCommandService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-
-import javax.validation.constraints.NotNull;
 
 @Service
 @lombok.AllArgsConstructor
