@@ -3,6 +3,7 @@ plugins {
     id 'java'
     id "nebula.facet" version "6.0.3"
     id 'com.google.cloud.tools.jib' version '1.8.0'
+    id 'checkstyle'
 }
 
 apply plugin: 'io.spring.dependency-management'
