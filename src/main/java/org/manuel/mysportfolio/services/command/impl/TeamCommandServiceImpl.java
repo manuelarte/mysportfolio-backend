@@ -12,20 +12,20 @@ import org.springframework.util.Assert;
 @lombok.AllArgsConstructor
 class TeamCommandServiceImpl implements TeamCommandService {
 
-    private final TeamCreatedEventPublisher teamCreatedEventPublisher;
-    private final TeamRepository teamRepository;
+  private final TeamCreatedEventPublisher teamCreatedEventPublisher;
+  private final TeamRepository teamRepository;
 
-    @Override
-    public Team save(@NotNull final Team team) {
-        Assert.notNull(team, "Team can't be null");
-        final var saved = teamRepository.save(team);
-        teamCreatedEventPublisher.publishEvent(saved);
-        return saved;
-    }
+  @Override
+  public Team save(@NotNull final Team team) {
+    Assert.notNull(team, "Team can't be null");
+    final var saved = teamRepository.save(team);
+    teamCreatedEventPublisher.publishEvent(saved);
+    return saved;
+  }
 
-    @Override
-    public Team update(@NotNull final Team team) {
-        Assert.notNull(team.getId(), "Can't update a new team");
-        return teamRepository.save(team);
-    }
+  @Override
+  public Team update(@NotNull final Team team) {
+    Assert.notNull(team.getId(), "Can't update a new team");
+    return teamRepository.save(team);
+  }
 }
