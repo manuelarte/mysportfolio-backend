@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.time.DayOfWeek;
 import java.time.Instant;
+import java.time.YearMonth;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
@@ -36,6 +38,10 @@ public class CompetitionDto {
 
   private final DayOfWeek defaultMatchDay;
 
+  private YearMonth from;
+
+  private YearMonth to;
+
   @Size(max = 200)
   private final String description;
 
@@ -44,6 +50,11 @@ public class CompetitionDto {
 
   @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
   private final Instant createdDate;
+
+  @AssertTrue
+  private boolean fromBeforeTo() {
+    return from.compareTo(to) <= 0;
+  }
 
   @JsonPOJOBuilder(withPrefix = "")
   public static final class CompetitionDtoBuilder {

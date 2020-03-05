@@ -18,6 +18,8 @@ public class CompetitionToCompetitionDtoTransformer implements
         .description(competition.getDescription())
         .sport(competition.getSport())
         .defaultMatchDay(competition.getDefaultMatchDay())
+        .from(competition.getFrom())
+        .to(competition.getTo())
         .createdBy(competition.getCreatedBy().orElse(null))
         .createdDate(competition.getCreatedDate().orElse(null))
         .build();

@@ -52,7 +52,8 @@ public class CompetitionQueryControllerTest {
   @Test
   public void testGetCompetitions() throws Exception {
     final var competitionSaved = competitionRepository.save(
-        new Competition(null, null, "KNVB 4th Klass", FOOTBALL, MONDAY, null));
+        new Competition(null, null, "KNVB 4th Klass", FOOTBALL, MONDAY,
+            null, null, null));
 
     mvc.perform(get("/api/v1/competitions").contentType(APPLICATION_JSON))
         .andExpect(status().isOk())
