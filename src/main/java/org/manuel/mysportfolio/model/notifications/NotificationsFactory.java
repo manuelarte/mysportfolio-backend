@@ -21,7 +21,7 @@ public class NotificationsFactory {
             .setBody(notificationBody)
             .build())
         .setToken(registrationToken)
-        .putData("type", NOTIFICATION_TYPE.COMPETITION_DAY.toString())
+        .putData("type", NotificationType.COMPETITION_DAY.toString())
         .putData("competitionId", competition.getId().toString())
         .putData("sport", competition.getSport().toString())
         .setAndroidConfig(AndroidConfig.builder()
@@ -31,7 +31,7 @@ public class NotificationsFactory {
 
   }
 
-  public enum NOTIFICATION_TYPE {
+  public enum NotificationType {
     COMPETITION_DAY
   }
 }

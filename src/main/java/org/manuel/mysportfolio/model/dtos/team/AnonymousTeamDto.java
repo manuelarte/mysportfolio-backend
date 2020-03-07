@@ -11,7 +11,7 @@ import org.manuel.mysportfolio.model.entities.team.TeamImage;
 import org.manuel.mysportfolio.model.entities.team.TeamKit;
 
 /**
- * Dto to be used if the home/away team is an anonymous team when user inputs a match
+ * Dto to be used if the home/away team is an anonymous team when user inputs a match.
  */
 @JsonDeserialize(builder = AnonymousTeamDto.AnonymousTeamDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)

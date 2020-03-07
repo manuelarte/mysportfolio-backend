@@ -20,6 +20,8 @@ public class CompetitionDtoToCompetitionTransformer implements
     competition.setName(competitionDto.getName());
     competition.setDescription(competitionDto.getDescription());
     competition.setSport(competitionDto.getSport());
+    competition.setFrom(competitionDto.getFrom());
+    competition.setTo(competitionDto.getTo());
     competition.setDefaultMatchDay(competitionDto.getDefaultMatchDay());
 
     return competition;

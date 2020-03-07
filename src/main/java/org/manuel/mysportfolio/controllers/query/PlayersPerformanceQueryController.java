@@ -1,6 +1,5 @@
 package org.manuel.mysportfolio.controllers.query;
 
-import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.match.PerformanceDto;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/matches/{matchId}/performances")
-@AllArgsConstructor
+@lombok.AllArgsConstructor
 public class PlayersPerformanceQueryController {
 
   private final PerformanceToPerformanceDtoTransformer performanceToPerformanceDtoTransformer;

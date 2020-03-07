@@ -47,8 +47,7 @@ public class FirebaseBearerTokenAuthenticationConverterFilter implements
       @Value("${FIREBASE_ADMIN_SDK}") final String json,
       final AppUserRepository appUserRepository) throws IOException {
 
-    final var serviceAccount = new ByteArrayInputStream(
-        json.getBytes()); //this.getClass().getClassLoader().getResourceAsStream("./mysportfolio-test-firebase-adminsdk-e6qol-ea622e03c3.json");
+    final var serviceAccount = new ByteArrayInputStream(json.getBytes());
     final var options = new FirebaseOptions.Builder()
         .setCredentials(GoogleCredentials.fromStream(serviceAccount))
         .setDatabaseUrl("https://mysportfolio-test.firebaseio.com")

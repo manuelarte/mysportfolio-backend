@@ -9,9 +9,9 @@ import org.springframework.data.util.Pair;
 @lombok.Builder(toBuilder = true)
 public class QueryCriteria {
 
-  private final SearchCriterion first;
+  private final SearchCriterion<?, ?> first;
   @lombok.Singular("addAnotherCriteria")
-  private final List<Pair<QueryOption, SearchCriterion>> rest;
+  private final List<Pair<QueryOption, ? extends SearchCriterion<?, ?>>> rest;
 
   public enum QueryOption {AND, OR}
 

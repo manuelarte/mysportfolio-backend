@@ -58,7 +58,8 @@ public class TeamCommandController {
   public ResponseEntity<TeamDto> partialUpdateTeam(@PathVariable final String teamId,
       @Validated({Default.class, PartialUpdateEntity.class}) @RequestBody final TeamDto teamDto) {
     final var updated = partialTeamDtoToTeamTransformer.apply(teamId, teamDto);
-    return ResponseEntity.ok(teamToTeamDtoTransformer.apply(teamCommandService.update(updated)));
+    return ResponseEntity
+        .ok(teamToTeamDtoTransformer.apply(teamCommandService.update(updated)));
 
 
   }

@@ -15,11 +15,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 public interface AppUserQueryService {
 
   // TODO add rights
-  @PostAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SYSTEM') or returnObject.orElse(null)?.externalId == authentication.principal.attributes['sub']")
+  @PostAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SYSTEM') "
+      + "or returnObject.orElse(null)?.externalId == authentication.principal.attributes['sub']")
   Optional<AppUser> findOne(ObjectId id);
 
   // TODO add rights
-  @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SYSTEM') or #externalId == authentication.principal.attributes['sub']")
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SYSTEM') "
+      + "or #externalId == authentication.principal.attributes['sub']")
   Optional<AppUser> findByExternalId(String externalId);
 
   @RolesAllowed({"ROLE_ADMIN", "ROLE_SYSTEM"})

@@ -3,7 +3,6 @@ package org.manuel.mysportfolio.services.query.impl;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
-import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.entities.match.Match;
@@ -17,7 +16,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@lombok.AllArgsConstructor
 class MatchQueryServiceImpl implements MatchQueryService {
 
   private final MatchRepository matchRepository;
@@ -48,8 +47,8 @@ class MatchQueryServiceImpl implements MatchQueryService {
 
   @Override
   public Collection<Match<?, ?>> findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(
-      String userId,
-      LocalDate from, LocalDate to, Sport sport) {
+      final String userId,
+      final LocalDate from, final LocalDate to, final Sport sport) {
     return matchRepository
         .findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(userId, from, to, sport);
   }

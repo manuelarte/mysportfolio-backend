@@ -2,7 +2,6 @@ package org.manuel.mysportfolio.controllers.command.user;
 
 import java.time.Year;
 import javax.validation.constraints.PastOrPresent;
-import lombok.AllArgsConstructor;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileSportInfoDto;
 import org.manuel.mysportfolio.model.entities.player.PlayerProfileSportInfo;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/users/{userId}/player")
-@AllArgsConstructor
+@lombok.AllArgsConstructor
 public class UserPlayerProfileCommandController {
 
   private final AppUserQueryService appUserQueryService;

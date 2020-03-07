@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.manuel.mysportfolio.config.operators.QueryOperator;
 import org.manuel.mysportfolio.model.QueryCriteria;
+import org.manuel.mysportfolio.model.QueryCriteria.QueryOption;
 import org.manuel.mysportfolio.model.SearchCriterion;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.util.Pair;
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Component;
 @lombok.AllArgsConstructor
 public class StringToQueryCriteriaConverter implements Converter<String, QueryCriteria> {
 
-  private final List<QueryOperator> queryOperators;
+  private final List<QueryOperator<String, ?>> queryOperators;
 
   @Override
   public QueryCriteria convert(final String source) {
@@ -30,7 +29,8 @@ public class StringToQueryCriteriaConverter implements Converter<String, QueryCr
     }
 
     final var first = test1.get(0).searchCriterion;
-    var rest = test1.subList(1, test1.size()).stream()
+    final List<Pair<QueryOption, ? extends SearchCriterion<?, ?>>> rest = test1
+        .subList(1, test1.size()).stream()
         .map(dH -> Pair.of(dH.queryOption, dH.searchCriterion)).collect(Collectors.toList());
     return new QueryCriteria(first, rest);
   }
@@ -49,7 +49,7 @@ public class StringToQueryCriteriaConverter implements Converter<String, QueryCr
     return queryOperators.stream().anyMatch(q -> q.getOperator().charAt(0) == c);
   }
 
-  private Optional<QueryOperator> getOperator(final String string) {
+  private Optional<QueryOperator<String, ?>> getOperator(final String string) {
     return queryOperators.stream()
         .filter(q -> q.getOperator().equals(string.substring(0, q.getOperator().length())))
         .findFirst();
@@ -65,7 +65,7 @@ public class StringToQueryCriteriaConverter implements Converter<String, QueryCr
     QueryOperator operator = null;
     Object value = null;
 
-    DataHelper dataHelper = new DataHelper();
+    final DataHelper dataHelper = new DataHelper();
     int index = 0;
     if (isSeparator(string.charAt(index))) {
       dataHelper.queryOption = getQueryOption(string.charAt(index));
@@ -100,11 +100,11 @@ public class StringToQueryCriteriaConverter implements Converter<String, QueryCr
     return dataHelper;
   }
 
-  @AllArgsConstructor
-  @NoArgsConstructor
+  @lombok.AllArgsConstructor
+  @lombok.NoArgsConstructor
   private static class DataHelper {
 
-    public SearchCriterion searchCriterion;
+    public SearchCriterion<?, ?> searchCriterion;
     public QueryCriteria.QueryOption queryOption;
     public String rest;
   }

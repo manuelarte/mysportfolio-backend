@@ -4,7 +4,6 @@ import java.time.Year;
 import java.time.ZoneOffset;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.team.Team;
 import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
@@ -16,7 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@lombok.AllArgsConstructor
 class TeamQueryServiceImpl implements TeamQueryService {
 
   private final TeamRepository teamRepository;

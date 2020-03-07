@@ -5,7 +5,6 @@ import java.time.Year;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
-import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.Competition;
 import org.manuel.mysportfolio.repositories.CompetitionRepository;
@@ -15,7 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@lombok.AllArgsConstructor
 class CompetitionQueryServiceImpl implements CompetitionQueryService {
 
   private final CompetitionRepository competitionRepository;

@@ -51,16 +51,6 @@ public class TeamToUsersCommandController {
         .body(teamToUsersToTeamToUsersDtoTransformer.apply(saved));
   }
 
-    /*
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<TeamDto> updateTeamToUsers(@PathVariable final String teamId,
-                                              @Validated({Default.class}) @RequestBody final TeamDto teamDto) {
-        Assert.isTrue(teamId.equals(teamDto.getId()), "Ids don't match");
-        final var saved = teamCommandService.update(teamDtoToExistingTeamTransformer.apply(teamId, teamDto));
-        return ResponseEntity.ok(teamToTeamDtoTransformer.apply(saved));
-    }
-     */
-
   @PutMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<UserInTeamDto> updateUserInTeam(@PathVariable final ObjectId teamId,
       @PathVariable final String userId,

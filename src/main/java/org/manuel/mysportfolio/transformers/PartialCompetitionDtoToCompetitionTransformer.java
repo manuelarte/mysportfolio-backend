@@ -28,6 +28,8 @@ public class PartialCompetitionDtoToCompetitionTransformer implements
         Optional.ofNullable(competitionDto.getSport()).ifPresent(competition::setSport);
         Optional.ofNullable(competitionDto.getDefaultMatchDay())
             .ifPresent(competition::setDefaultMatchDay);
+        Optional.ofNullable(competitionDto.getFrom()).ifPresent(competition::setFrom);
+        Optional.ofNullable(competitionDto.getTo()).ifPresent(competition::setTo);
         return competition;
     }
 }

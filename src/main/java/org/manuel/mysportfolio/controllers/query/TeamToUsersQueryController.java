@@ -1,6 +1,5 @@
 package org.manuel.mysportfolio.controllers.query;
 
-import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.teamtousers.TeamToUsersDto;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/teams/{teamId}/users")
-@AllArgsConstructor
+@lombok.AllArgsConstructor
 public class TeamToUsersQueryController {
 
   private final TeamToUsersQueryService teamToUsersQueryService;

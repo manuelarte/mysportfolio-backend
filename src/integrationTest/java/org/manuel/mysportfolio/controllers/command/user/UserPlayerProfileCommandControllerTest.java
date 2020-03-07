@@ -13,7 +13,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.manuel.mysportfolio.ITConfiguration;
+import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileFootballInfoDto;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileSportInfoDto;
 import org.manuel.mysportfolio.model.entities.player.FootballPosition;
@@ -32,7 +32,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.util.NestedServletException;
 
 @SpringBootTest
-@Import(ITConfiguration.class)
+@Import(ItConfiguration.class)
 @ExtendWith({SpringExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class UserPlayerProfileCommandControllerTest {
@@ -57,7 +57,7 @@ public class UserPlayerProfileCommandControllerTest {
         .apply(springSecurity())
         .build();
     appUserRepository.save(new AppUser(null, null, "test", "test@mymatchfolio.com",
-        ITConfiguration.IT_USER_ID, AppMembership.FREE,
+        ItConfiguration.IT_USER_ID, AppMembership.FREE,
         false, null, new AppSettings(false), null, null, null, null));
 
   }
@@ -70,7 +70,7 @@ public class UserPlayerProfileCommandControllerTest {
 
   @Test
   public void updatePlayerProfileSportInfoForNotExistingPlayerTest() throws Exception {
-    final var userId = ITConfiguration.IT_USER_ID;
+    final var userId = ItConfiguration.IT_USER_ID;
     final var playerSportInfo = PlayerProfileSportInfoDto.builder()
         .footballInfo(PlayerProfileFootballInfoDto.builder()
             .preferredPosition(FootballPosition.CENTRE_FORWARD)
@@ -86,7 +86,7 @@ public class UserPlayerProfileCommandControllerTest {
 
   @Test
   public void updatePlayerProfileSportInfoForTheFuture() {
-    final var userId = ITConfiguration.IT_USER_ID;
+    final var userId = ItConfiguration.IT_USER_ID;
     final var playerSportInfo = PlayerProfileSportInfoDto.builder()
         .footballInfo(PlayerProfileFootballInfoDto.builder()
             .preferredPosition(FootballPosition.CENTRE_FORWARD)

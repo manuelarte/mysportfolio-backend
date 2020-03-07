@@ -10,10 +10,4 @@ public class SearchCriterion<IN, OUT> {
   private final QueryOperator<IN, OUT> operation;
   private final OUT value;
 
-    /*
-    public Criteria createCriteria() {
-        return Criteria.where(key).gt(instant);
-    }
-     */
-
 }

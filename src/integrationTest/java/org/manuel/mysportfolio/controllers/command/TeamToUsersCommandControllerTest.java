@@ -19,7 +19,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.manuel.mysportfolio.ITConfiguration;
+import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.model.dtos.teamtousers.TeamToUsersDto;
 import org.manuel.mysportfolio.model.dtos.teamtousers.UserInTeamDto;
 import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
@@ -34,7 +34,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
-@Import(ITConfiguration.class)
+@Import(ItConfiguration.class)
 @ExtendWith({SpringExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class TeamToUsersCommandControllerTest {

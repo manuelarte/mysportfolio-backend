@@ -21,9 +21,9 @@ public class AuthenticationAspect {
 
   @After("execution(* org.manuel.mysportfolio.config.FirebaseBearerTokenAuthenticationConverterFilter.doFilter(..))")
   public void afterAuthenticationSet() {
-    if (SecurityContextHolder.getContext().getAuthentication() == null ||
-        !(SecurityContextHolder.getContext()
-            .getAuthentication() instanceof OAuth2AuthenticationToken)) {
+    if (SecurityContextHolder.getContext().getAuthentication() == null
+        || !(SecurityContextHolder.getContext()
+        .getAuthentication() instanceof OAuth2AuthenticationToken)) {
       return;
     }
     final var oAuth2AuthenticationToken = (OAuth2AuthenticationToken) SecurityContextHolder

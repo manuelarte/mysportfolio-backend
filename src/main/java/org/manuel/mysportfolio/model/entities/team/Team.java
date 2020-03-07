@@ -8,7 +8,6 @@ import org.manuel.mysportfolio.model.entities.BaseEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "teams")
-@lombok.EqualsAndHashCode(callSuper = true)
 @lombok.Data
 @lombok.NoArgsConstructor
 public class Team extends BaseEntity implements TeamInfo {

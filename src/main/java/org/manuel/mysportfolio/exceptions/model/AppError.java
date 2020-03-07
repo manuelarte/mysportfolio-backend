@@ -22,7 +22,8 @@ public class AppError {
   public static AppError fromDefaultAttributeMap(final String apiVersion,
       final Map<String, Object> defaultErrorAttributes,
       final String sendReportBaseUri) {
-    // original attribute values are documented in org.springframework.boot.web.servlet.error.DefaultErrorAttributes
+    // original attribute values are documented in
+    // org.springframework.boot.web.servlet.error.DefaultErrorAttributes
     return new AppError(
         apiVersion,
         ((Integer) defaultErrorAttributes.get("status")).toString(),

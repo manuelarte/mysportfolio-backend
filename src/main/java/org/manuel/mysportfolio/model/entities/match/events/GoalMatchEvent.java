@@ -37,7 +37,7 @@ public class GoalMatchEvent implements TeamMatchEvent {
   private BodyPart bodyPart;
 
   /**
-   * Rate of the goal depending on the player
+   * Rate of the goal depending on the player.
    */
   private Map<@NotNull String,
       @Digits(integer = 1, fraction = 1)
@@ -54,8 +54,8 @@ public class GoalMatchEvent implements TeamMatchEvent {
   @SuppressWarnings("unused")
   private boolean validGoalCoordinates() {
     if (goalCoordinates != null) {
-      return goalCoordinates.getX() <= 0.5 && goalCoordinates.getX() >= -0.5 &&
-          goalCoordinates.getY() <= 0.5 && goalCoordinates.getY() >= -0.5;
+      return goalCoordinates.getX() <= 0.5 && goalCoordinates.getX() >= -0.5
+          && goalCoordinates.getY() <= 0.5 && goalCoordinates.getY() >= -0.5;
     }
     return true;
   }

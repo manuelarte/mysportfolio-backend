@@ -16,23 +16,23 @@ import org.springframework.stereotype.Component;
 public class TeamAddUserNotificationToTeamAddUserNotificationDtoTransformer implements
     Function<TeamAddUserNotification, TeamAddUserNotificationDto> {
 
-    private final TeamQueryService teamQueryService;
-    private final TeamToTeamDtoTransformer teamToTeamDtoTransformer;
+  private final TeamQueryService teamQueryService;
+  private final TeamToTeamDtoTransformer teamToTeamDtoTransformer;
 
-    @Override
-    public TeamAddUserNotificationDto apply(final TeamAddUserNotification teamAddUserNotification) {
-        final var team = teamQueryService.findOne(teamAddUserNotification.getTeamId())
-            .orElseThrow(() -> new EntityNotFoundException(Team.class,
-                teamAddUserNotification.getTeamId().toString()));
-        return TeamAddUserNotificationDto.builder()
-            .id(Optional.ofNullable(teamAddUserNotification.getId()).map(ObjectId::toString)
-                .orElse(null))
-            .version(teamAddUserNotification.getVersion())
-            .from(teamAddUserNotification.getFrom())
-            .to(teamAddUserNotification.getTo())
-            .team(teamToTeamDtoTransformer.apply(team))
-            .status(teamAddUserNotification.getStatus())
-            .build();
-    }
+  @Override
+  public TeamAddUserNotificationDto apply(final TeamAddUserNotification teamAddUserNotification) {
+    final var team = teamQueryService.findOne(teamAddUserNotification.getTeamId())
+        .orElseThrow(() -> new EntityNotFoundException(Team.class,
+            teamAddUserNotification.getTeamId().toString()));
+    return TeamAddUserNotificationDto.builder()
+        .id(Optional.ofNullable(teamAddUserNotification.getId()).map(ObjectId::toString)
+            .orElse(null))
+        .version(teamAddUserNotification.getVersion())
+        .from(teamAddUserNotification.getFrom())
+        .to(teamAddUserNotification.getTo())
+        .team(teamToTeamDtoTransformer.apply(team))
+        .status(teamAddUserNotification.getStatus())
+        .build();
+  }
 
 }

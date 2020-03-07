@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.manuel.mysportfolio.ITConfiguration;
+import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.entities.TeamOption;
@@ -163,16 +163,16 @@ public class MatchRepositoryTest {
   @DisplayName("test get season statistics")
   public void testGetMatchesForOneYear() {
     final var expected = matchRepository
-        .save(createMatch(ITConfiguration.IT_USER_ID, Instant.now()));
+        .save(createMatch(ItConfiguration.IT_USER_ID, Instant.now()));
 
-    final var notExpectedPreviousYear = matchRepository.save(createMatch(ITConfiguration.IT_USER_ID,
+    final var notExpectedPreviousYear = matchRepository.save(createMatch(ItConfiguration.IT_USER_ID,
         ZonedDateTime.now().minusYears(1).toInstant()));
 
-    final var notExpectedAnotherSport = createMatch(ITConfiguration.IT_USER_ID, Instant.now());
+    final var notExpectedAnotherSport = createMatch(ItConfiguration.IT_USER_ID, Instant.now());
     notExpectedAnotherSport.setSport(Sport.FUTSAL);
     matchRepository.save(notExpectedAnotherSport);
 
-    final var notExpectedIsAnotherUser = createMatch(ITConfiguration.IT_USER_ID, Instant.now());
+    final var notExpectedIsAnotherUser = createMatch(ItConfiguration.IT_USER_ID, Instant.now());
     notExpectedIsAnotherUser
         .setPlayedFor(Collections.singletonMap("otherUser", TeamOption.HOME_TEAM));
     matchRepository.save(notExpectedIsAnotherUser);
@@ -180,7 +180,7 @@ public class MatchRepositoryTest {
     final var from = LocalDate.now().with(TemporalAdjusters.firstDayOfYear());
     final var to = LocalDate.now().with(TemporalAdjusters.lastDayOfYear());
     final var actual = matchRepository
-        .findAllByPlayedContainsAndSportIsAndStartDateIsBetween(ITConfiguration.IT_USER_ID,
+        .findAllByPlayedContainsAndSportIsAndStartDateIsBetween(ItConfiguration.IT_USER_ID,
             Sport.FOOTBALL, from, to);
     assertEquals(1, actual.size());
     assertEquals(expected.getId(), actual.get(0).getId());
