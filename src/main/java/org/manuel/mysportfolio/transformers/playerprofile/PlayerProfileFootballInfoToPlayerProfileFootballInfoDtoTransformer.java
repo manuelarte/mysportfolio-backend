@@ -12,7 +12,8 @@ public class PlayerProfileFootballInfoToPlayerProfileFootballInfoDtoTransformer 
     BiFunction<PlayerProfileSportSeasonSummaryDto, PlayerProfileFootballInfo, PlayerProfileFootballInfoDto> {
 
   @Override
-  public PlayerProfileFootballInfoDto apply(final PlayerProfileSportSeasonSummaryDto summary, final PlayerProfileFootballInfo input) {
+  public PlayerProfileFootballInfoDto apply(final PlayerProfileSportSeasonSummaryDto summary,
+      final PlayerProfileFootballInfo input) {
     return PlayerProfileFootballInfoDto.builder()
         .summary(summary)
         .preferredPosition(input.getPreferredPosition())

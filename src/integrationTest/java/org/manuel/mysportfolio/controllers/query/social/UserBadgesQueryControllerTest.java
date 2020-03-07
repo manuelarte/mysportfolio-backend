@@ -29,50 +29,54 @@ import org.springframework.web.context.WebApplicationContext;
 @ExtendWith({SpringExtension.class})
 public class UserBadgesQueryControllerTest {
 
-    @Inject
-    private UserBadgesRepository userBadgesRepository;
+  @Inject
+  private UserBadgesRepository userBadgesRepository;
 
-    @Inject
-    private WebApplicationContext context;
+  @Inject
+  private WebApplicationContext context;
 
-    private MockMvc mvc;
+  private MockMvc mvc;
 
-    @BeforeEach
-    public void setup() {
-        mvc = MockMvcBuilders.webAppContextSetup(context)
-                .apply(springSecurity())
-                .build();
-    }
+  @BeforeEach
+  public void setup() {
+    mvc = MockMvcBuilders.webAppContextSetup(context)
+        .apply(springSecurity())
+        .build();
+  }
 
-    @AfterEach
-    public void tearDown() {
-        userBadgesRepository.deleteAll();
-    }
+  @AfterEach
+  public void tearDown() {
+    userBadgesRepository.deleteAll();
+  }
 
-    @Test
-    public void testGetMyBadgesDefaultLocale() throws Exception {
-        final String userId = "123456789";
-        userBadgesRepository.save(new UserBadges(null, null,
-            userId, Set.of(Badge.COMPETITION_FOOTBALL_FIRST_ADDED, Badge.FOOTBALL_FIRST_ASSIST)));
+  @Test
+  public void testGetMyBadgesDefaultLocale() throws Exception {
+    final String userId = "123456789";
+    userBadgesRepository.save(new UserBadges(null, null,
+        userId, Set.of(Badge.COMPETITION_FOOTBALL_FIRST_ADDED, Badge.FOOTBALL_FIRST_ASSIST)));
 
-        mvc.perform(
-            get("/api/v1/social/users/{userId}/badges", userId).contentType(APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$[?(@.badge=='COMPETITION_FOOTBALL_FIRST_ADDED')].displayName", Matchers.contains("competition added")))
-            .andExpect(jsonPath("$[?(@.badge=='FOOTBALL_FIRST_ASSIST')].displayName", Matchers.contains("first assist")));
-    }
+    mvc.perform(
+        get("/api/v1/social/users/{userId}/badges", userId).contentType(APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[?(@.badge=='COMPETITION_FOOTBALL_FIRST_ADDED')].displayName",
+            Matchers.contains("competition added")))
+        .andExpect(jsonPath("$[?(@.badge=='FOOTBALL_FIRST_ASSIST')].displayName",
+            Matchers.contains("first assist")));
+  }
 
-    @Test
-    public void testGetMyBadgesEsLocale() throws Exception {
-        final String userId = "123456789";
-        userBadgesRepository.save(new UserBadges(null, null,
-            userId, Set.of(Badge.COMPETITION_FOOTBALL_FIRST_ADDED, Badge.FOOTBALL_FIRST_ASSIST)));
+  @Test
+  public void testGetMyBadgesEsLocale() throws Exception {
+    final String userId = "123456789";
+    userBadgesRepository.save(new UserBadges(null, null,
+        userId, Set.of(Badge.COMPETITION_FOOTBALL_FIRST_ADDED, Badge.FOOTBALL_FIRST_ASSIST)));
 
-        mvc.perform(
-            get("/api/v1/social/users/{userId}/badges?locale=es", userId).contentType(APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$[?(@.badge=='COMPETITION_FOOTBALL_FIRST_ADDED')].displayName", Matchers.contains("competición añadida")))
-            .andExpect(jsonPath("$[?(@.badge=='FOOTBALL_FIRST_ASSIST')].displayName", Matchers.contains("primera asistencia")));
-    }
+    mvc.perform(
+        get("/api/v1/social/users/{userId}/badges?locale=es", userId).contentType(APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[?(@.badge=='COMPETITION_FOOTBALL_FIRST_ADDED')].displayName",
+            Matchers.contains("competición añadida")))
+        .andExpect(jsonPath("$[?(@.badge=='FOOTBALL_FIRST_ASSIST')].displayName",
+            Matchers.contains("primera asistencia")));
+  }
 
 }

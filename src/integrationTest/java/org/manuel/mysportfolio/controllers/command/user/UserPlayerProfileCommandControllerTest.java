@@ -73,15 +73,15 @@ public class UserPlayerProfileCommandControllerTest {
     final var userId = ITConfiguration.IT_USER_ID;
     final var playerSportInfo = PlayerProfileSportInfoDto.builder()
         .footballInfo(PlayerProfileFootballInfoDto.builder()
-          .preferredPosition(FootballPosition.CENTRE_FORWARD)
-          .build())
+            .preferredPosition(FootballPosition.CENTRE_FORWARD)
+            .build())
         .build();
 
     mvc.perform(put("/api/v1/users/{userId}/player/{year}", userId, Year.now())
         .contentType(APPLICATION_JSON)
         .accept(APPLICATION_JSON)
         .content(objectMapper.writeValueAsString(playerSportInfo)))
-    .andExpect(status().isOk());
+        .andExpect(status().isOk());
   }
 
   @Test
@@ -93,8 +93,10 @@ public class UserPlayerProfileCommandControllerTest {
             .build())
         .build();
 
-    assertThrows(NestedServletException.class, () -> mvc.perform(put("/api/v1/users/{userId}/player/{year}", userId, Year.now().plusYears(1)).contentType(APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(playerSportInfo))));
+    assertThrows(NestedServletException.class, () -> mvc.perform(
+        put("/api/v1/users/{userId}/player/{year}", userId, Year.now().plusYears(1))
+            .contentType(APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(playerSportInfo))));
   }
 
 }

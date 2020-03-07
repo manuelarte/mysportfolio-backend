@@ -6,7 +6,8 @@ import org.manuel.mysportfolio.model.entities.match.Performance;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PerformanceDtoToPerformanceTransformer implements Function<PerformanceDto, Performance> {
+public class PerformanceDtoToPerformanceTransformer implements
+    Function<PerformanceDto, Performance> {
 
     @Override
     public Performance apply(PerformanceDto performanceDto) {

@@ -6,11 +6,13 @@ import org.manuel.mysportfolio.model.entities.match.Performance;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PerformanceToPerformanceDtoTransformer implements Function<Performance, PerformanceDto> {
+public class PerformanceToPerformanceDtoTransformer implements
+    Function<Performance, PerformanceDto> {
 
     @Override
     public PerformanceDto apply(final Performance performance) {
-        return performance == null ? null : new PerformanceDto(performance.getRate(), performance.getNotes());
+        return performance == null ? null
+            : new PerformanceDto(performance.getRate(), performance.getNotes());
     }
 
 }

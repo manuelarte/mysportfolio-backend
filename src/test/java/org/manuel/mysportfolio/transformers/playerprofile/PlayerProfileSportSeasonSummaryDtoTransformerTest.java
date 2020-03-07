@@ -31,8 +31,11 @@ class PlayerProfileSportSeasonSummaryDtoTransformerTest {
     final var userId = "userId";
     final var year = Year.now();
     final var matchQueryService = mock(MatchQueryService.class);
-    when(matchQueryService.findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(eq(userId), any(), any(), eq(Sport.FOOTBALL)))
-      .thenReturn(Collections.singletonList(createMatch(userId, Instant.now(), Sport.FOOTBALL, Collections.emptyList())));
+    when(matchQueryService
+        .findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(eq(userId), any(), any(),
+            eq(Sport.FOOTBALL)))
+        .thenReturn(Collections.singletonList(
+            createMatch(userId, Instant.now(), Sport.FOOTBALL, Collections.emptyList())));
     final var expected = PlayerProfileSportSeasonSummaryDto.builder()
         .numberOfMatchesPlayed(1)
         .numberOfGoals(0)
@@ -40,7 +43,8 @@ class PlayerProfileSportSeasonSummaryDtoTransformerTest {
         .numberOfAssists(0)
         .build();
 
-    final var transformer = new PlayerProfileSportSeasonSummaryDtoTransformer(userId, year, matchQueryService);
+    final var transformer = new PlayerProfileSportSeasonSummaryDtoTransformer(userId, year,
+        matchQueryService);
     final var actual = transformer.apply(Sport.FOOTBALL);
     assertEquals(actual, expected);
   }
@@ -52,8 +56,11 @@ class PlayerProfileSportSeasonSummaryDtoTransformerTest {
     final var year = Year.now();
     final List<Double> goalsRate = Collections.singletonList(3.5d);
     final var matchQueryService = mock(MatchQueryService.class);
-    when(matchQueryService.findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(eq(userId), any(), any(), eq(Sport.FOOTBALL)))
-        .thenReturn(Collections.singletonList(createMatch(userId, Instant.now(), Sport.FOOTBALL, goalsRate)));
+    when(matchQueryService
+        .findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(eq(userId), any(), any(),
+            eq(Sport.FOOTBALL)))
+        .thenReturn(Collections
+            .singletonList(createMatch(userId, Instant.now(), Sport.FOOTBALL, goalsRate)));
     final var expected = PlayerProfileSportSeasonSummaryDto.builder()
         .numberOfMatchesPlayed(1)
         .numberOfGoals(goalsRate.size())
@@ -61,7 +68,8 @@ class PlayerProfileSportSeasonSummaryDtoTransformerTest {
         .numberOfAssists(0)
         .build();
 
-    final var transformer = new PlayerProfileSportSeasonSummaryDtoTransformer(userId, year, matchQueryService);
+    final var transformer = new PlayerProfileSportSeasonSummaryDtoTransformer(userId, year,
+        matchQueryService);
     final var actual = transformer.apply(Sport.FOOTBALL);
     assertEquals(actual, expected);
   }
@@ -73,8 +81,11 @@ class PlayerProfileSportSeasonSummaryDtoTransformerTest {
     final var year = Year.now();
     final List<Double> goalsRate = List.of(3.5d, 0.5d);
     final var matchQueryService = mock(MatchQueryService.class);
-    when(matchQueryService.findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(eq(userId), any(), any(), eq(Sport.FOOTBALL)))
-        .thenReturn(Collections.singletonList(createMatch(userId, Instant.now(), Sport.FOOTBALL, goalsRate)));
+    when(matchQueryService
+        .findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(eq(userId), any(), any(),
+            eq(Sport.FOOTBALL)))
+        .thenReturn(Collections
+            .singletonList(createMatch(userId, Instant.now(), Sport.FOOTBALL, goalsRate)));
     final var expected = PlayerProfileSportSeasonSummaryDto.builder()
         .numberOfMatchesPlayed(1)
         .numberOfGoals(goalsRate.size())
@@ -82,12 +93,14 @@ class PlayerProfileSportSeasonSummaryDtoTransformerTest {
         .numberOfAssists(0)
         .build();
 
-    final var transformer = new PlayerProfileSportSeasonSummaryDtoTransformer(userId, year, matchQueryService);
+    final var transformer = new PlayerProfileSportSeasonSummaryDtoTransformer(userId, year,
+        matchQueryService);
     final var actual = transformer.apply(Sport.FOOTBALL);
     assertEquals(actual, expected);
   }
 
-  private Match<TeamType, TeamType> createMatch(final String userId, final Instant startDate, final Sport sport, List<Double> goalsRate) {
+  private Match<TeamType, TeamType> createMatch(final String userId, final Instant startDate,
+      final Sport sport, List<Double> goalsRate) {
     final var match = new Match<>();
     match.setStartDate(startDate);
     match.setSport(sport);
