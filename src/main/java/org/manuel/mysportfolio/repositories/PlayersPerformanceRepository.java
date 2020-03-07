@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PlayersPerformanceRepository extends CrudRepository<PlayersPerformance, ObjectId> {
 
-    Optional<PlayersPerformance> findByMatchId(ObjectId matchId);
+  Optional<PlayersPerformance> findByMatchId(ObjectId matchId);
 
 }

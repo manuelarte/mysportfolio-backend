@@ -15,7 +15,8 @@ public class PlayerProfileCommandServiceImpl implements PlayerProfileCommandServ
   private final PlayerProfileRepository playerProfileRepository;
 
   @Override
-  public PlayerProfileSportInfo updateForYear(final String externalId, final Year year, final PlayerProfileSportInfo playerProfileSportInfo) {
+  public PlayerProfileSportInfo updateForYear(final String externalId, final Year year,
+      final PlayerProfileSportInfo playerProfileSportInfo) {
     final var player = playerProfileQueryService.getByExternalId(externalId);
     player.getInfo().put(year, playerProfileSportInfo);
     playerProfileRepository.save(player);

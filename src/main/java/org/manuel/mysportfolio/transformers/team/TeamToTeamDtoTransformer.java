@@ -8,15 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class TeamToTeamDtoTransformer implements Function<Team, TeamDto> {
 
-    @Override
-    public TeamDto apply(final Team team) {
-        return TeamDto.builder()
-                .id(team.getId().toString())
-                .version(team.getVersion())
-                .name(team.getName())
-                .teamKit(team.getTeamKit())
-                .teamImage(team.getTeamImage())
-                .createdBy(team.getCreatedBy().orElse(null))
-                .build();
-    }
+  @Override
+  public TeamDto apply(final Team team) {
+    return TeamDto.builder()
+        .id(team.getId().toString())
+        .version(team.getVersion())
+        .name(team.getName())
+        .teamKit(team.getTeamKit())
+        .teamImage(team.getTeamImage())
+        .createdBy(team.getCreatedBy().orElse(null))
+        .build();
+  }
 }

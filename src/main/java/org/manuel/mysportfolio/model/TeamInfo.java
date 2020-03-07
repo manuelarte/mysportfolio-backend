@@ -4,7 +4,7 @@ import org.manuel.mysportfolio.model.entities.team.TeamImage;
 
 public interface TeamInfo {
 
-    String getName();
+  String getName();
 
-    TeamImage getTeamImage();
+  TeamImage getTeamImage();
 }

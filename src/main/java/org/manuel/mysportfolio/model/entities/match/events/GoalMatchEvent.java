@@ -3,9 +3,7 @@ package org.manuel.mysportfolio.model.entities.match.events;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 import javax.validation.constraints.AssertFalse;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Digits;
@@ -23,52 +21,52 @@ import org.springframework.data.geo.Point;
 @lombok.NoArgsConstructor
 public class GoalMatchEvent implements TeamMatchEvent {
 
-    @Id
-    @JsonSerialize(using = ToStringSerializer.class)
-    private ObjectId id;
+  @Id
+  @JsonSerialize(using = ToStringSerializer.class)
+  private ObjectId id;
 
-    @NotNull
-    private TeamOption team;
+  @NotNull
+  private TeamOption team;
 
-    private String playerId;
+  private String playerId;
 
-    private Integer minute;
+  private Integer minute;
 
-    private Point goalCoordinates;
+  private Point goalCoordinates;
 
-    private BodyPart bodyPart;
+  private BodyPart bodyPart;
 
-    /**
-     * Rate of the goal depending on the player
-     */
-    private Map<@NotNull String,
-        @Digits(integer = 1, fraction = 1)
-        @Min(0)
-        @Max(5)
-        @NotNull BigDecimal> rates;
+  /**
+   * Rate of the goal depending on the player
+   */
+  private Map<@NotNull String,
+      @Digits(integer = 1, fraction = 1)
+      @Min(0)
+      @Max(5)
+      @NotNull BigDecimal> rates;
 
-    @Size(max = 200)
-    private String description;
+  @Size(max = 200)
+  private String description;
 
-    private AssistDetails assist;
+  private AssistDetails assist;
 
   @AssertTrue(message = "The goal coordinates aren't valid")
   @SuppressWarnings("unused")
-    private boolean validGoalCoordinates() {
-        if (goalCoordinates != null) {
-            return goalCoordinates.getX() <= 0.5 && goalCoordinates.getX() >= -0.5 &&
-                    goalCoordinates.getY() <= 0.5 && goalCoordinates.getY() >= -0.5;
-        }
-        return true;
+  private boolean validGoalCoordinates() {
+    if (goalCoordinates != null) {
+      return goalCoordinates.getX() <= 0.5 && goalCoordinates.getX() >= -0.5 &&
+          goalCoordinates.getY() <= 0.5 && goalCoordinates.getY() >= -0.5;
     }
+    return true;
+  }
 
   @AssertFalse(message = "The scorer and assister can't be the same person")
   @SuppressWarnings("unused")
-    private boolean assistAndGoalTheSamePerson() {
-        if (assist != null && playerId != null) {
-            return playerId.equals(assist);
-        }
-        return false;
+  private boolean assistAndGoalTheSamePerson() {
+    if (assist != null && playerId != null) {
+      return playerId.equals(assist);
     }
+    return false;
+  }
 
 }

@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = RegisteredTeamDto.class, name = "registered"),
-        @JsonSubTypes.Type(value = AnonymousTeamDto.class, name = "anonymous")})
+    @JsonSubTypes.Type(value = RegisteredTeamDto.class, name = "registered"),
+    @JsonSubTypes.Type(value = AnonymousTeamDto.class, name = "anonymous")})
 public interface TeamTypeDto {
 
 }

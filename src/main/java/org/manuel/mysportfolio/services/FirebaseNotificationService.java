@@ -11,17 +11,17 @@ import org.springframework.stereotype.Service;
 @Profile("prod")
 public class FirebaseNotificationService implements NotificationService {
 
-    private final FirebaseMessaging firebaseMessaging;
+  private final FirebaseMessaging firebaseMessaging;
 
-    public FirebaseNotificationService() {
-        firebaseMessaging = FirebaseMessaging.getInstance();
-    }
+  public FirebaseNotificationService() {
+    firebaseMessaging = FirebaseMessaging.getInstance();
+  }
 
-    public String send(final Message message) throws NotificationException {
-        try {
-            return firebaseMessaging.send(message);
-        } catch (final FirebaseMessagingException e) {
-            throw new NotificationException(e);
-        }
+  public String send(final Message message) throws NotificationException {
+    try {
+      return firebaseMessaging.send(message);
+    } catch (final FirebaseMessagingException e) {
+      throw new NotificationException(e);
     }
+  }
 }

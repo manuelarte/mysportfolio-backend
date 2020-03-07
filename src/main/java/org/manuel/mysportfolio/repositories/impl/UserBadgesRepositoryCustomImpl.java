@@ -13,13 +13,13 @@ import org.springframework.stereotype.Component;
 @lombok.AllArgsConstructor
 class UserBadgesRepositoryCustomImpl implements UserBadgesRepositoryCustom {
 
-    private final MongoTemplate mongoTemplate;
+  private final MongoTemplate mongoTemplate;
 
-    @Override
-    public void addBadges(final String userId, final Set<Badge> badges) {
-        final var query = Query.query(Criteria.where("userId").is(userId));
-        final var update = new Update();
-        badges.forEach(it -> update.addToSet("badges", it));
-        mongoTemplate.upsert(query, update, UserBadges.class);
-    }
+  @Override
+  public void addBadges(final String userId, final Set<Badge> badges) {
+    final var query = Query.query(Criteria.where("userId").is(userId));
+    final var update = new Update();
+    badges.forEach(it -> update.addToSet("badges", it));
+    mongoTemplate.upsert(query, update, UserBadges.class);
+  }
 }

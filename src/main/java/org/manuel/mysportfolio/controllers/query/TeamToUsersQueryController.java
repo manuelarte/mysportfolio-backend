@@ -18,14 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class TeamToUsersQueryController {
 
-    private final TeamToUsersQueryService teamToUsersQueryService;
-    private final TeamToUsersToTeamToUsersDtoTransformer teamToUsersToTeamToUsersDtoTransformer;
+  private final TeamToUsersQueryService teamToUsersQueryService;
+  private final TeamToUsersToTeamToUsersDtoTransformer teamToUsersToTeamToUsersDtoTransformer;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TeamToUsersDto> findTeamsToUsersForTeam(@PathVariable final ObjectId teamId) {
-        final var teamToUsers = teamToUsersQueryService.findByTeamId(teamId).orElseThrow(() -> new EntityNotFoundException(
-                String.format("TeamToUsers entity not found for team id: %s", teamId.toString())));
-        return ResponseEntity.ok(teamToUsersToTeamToUsersDtoTransformer.apply(teamToUsers));
-    }
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<TeamToUsersDto> findTeamsToUsersForTeam(
+      @PathVariable final ObjectId teamId) {
+    final var teamToUsers = teamToUsersQueryService.findByTeamId(teamId)
+        .orElseThrow(() -> new EntityNotFoundException(
+            String.format("TeamToUsers entity not found for team id: %s", teamId.toString())));
+    return ResponseEntity.ok(teamToUsersToTeamToUsersDtoTransformer.apply(teamToUsers));
+  }
 
 }

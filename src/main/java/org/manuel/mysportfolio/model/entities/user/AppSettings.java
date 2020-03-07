@@ -5,5 +5,5 @@ package org.manuel.mysportfolio.model.entities.user;
 @lombok.Data
 public class AppSettings {
 
-    private Boolean receiveCompetitionsNotifications;
+  private Boolean receiveCompetitionsNotifications;
 }

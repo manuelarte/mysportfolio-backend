@@ -18,10 +18,12 @@ public class PlayerProfileSportInfoDtoToPlayerSportInfoTransformer implements
   public PlayerProfileSportInfo apply(final PlayerProfileSportInfoDto playerProfileSportInfo) {
     final var output = new PlayerProfileSportInfo();
     Optional.ofNullable(playerProfileSportInfo.getFootballInfo()).ifPresent(it ->
-        output.setFootballInfo(playerProfileFootballInfoDtoToPlayerProfileFootbalInfoTransformer.apply(it))
+        output.setFootballInfo(
+            playerProfileFootballInfoDtoToPlayerProfileFootbalInfoTransformer.apply(it))
     );
     Optional.ofNullable(playerProfileSportInfo.getFutsalInfo()).ifPresent(it ->
-        output.setFutsalInfo(playerProfileFutsalInfoDtoToPlayerProfileFutsalInfoTransformer.apply(it))
+        output
+            .setFutsalInfo(playerProfileFutsalInfoDtoToPlayerProfileFutsalInfoTransformer.apply(it))
     );
     return output;
   }

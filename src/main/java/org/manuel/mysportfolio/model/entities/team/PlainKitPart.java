@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 @lombok.NoArgsConstructor
 public class PlainKitPart implements KitPart {
 
-    @NotNull
-    private int colour;
+  @NotNull
+  private int colour;
 
 }

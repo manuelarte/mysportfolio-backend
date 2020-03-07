@@ -15,28 +15,29 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @lombok.AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final BearerTokenAuthenticationConverterFilter bearerTokenAuthenticationConverterFilter;
+  private final BearerTokenAuthenticationConverterFilter bearerTokenAuthenticationConverterFilter;
 
-    @Override
-    protected void configure(final HttpSecurity http) throws Exception {
-        http
-                .addFilterBefore(bearerTokenAuthenticationConverterFilter, UsernamePasswordAuthenticationFilter.class)
-                .csrf().disable()
-                .authorizeRequests()
-                    .antMatchers("/swagger-ui.html").permitAll()
-                    .antMatchers("/actuator/**").permitAll()
-                    .anyRequest().authenticated();
+  @Override
+  protected void configure(final HttpSecurity http) throws Exception {
+    http
+        .addFilterBefore(bearerTokenAuthenticationConverterFilter,
+            UsernamePasswordAuthenticationFilter.class)
+        .csrf().disable()
+        .authorizeRequests()
+        .antMatchers("/swagger-ui.html").permitAll()
+        .antMatchers("/actuator/**").permitAll()
+        .anyRequest().authenticated();
 
-    }
+  }
 
-    @Override
-    public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/v2/api-docs",
-                "/configuration/ui",
-                "/swagger-resources/**",
-                "/configuration/security",
-                "/swagger-ui.html",
-                "/webjars/**");
-    }
+  @Override
+  public void configure(WebSecurity web) {
+    web.ignoring().antMatchers("/v2/api-docs",
+        "/configuration/ui",
+        "/swagger-resources/**",
+        "/configuration/security",
+        "/swagger-ui.html",
+        "/webjars/**");
+  }
 
 }

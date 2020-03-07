@@ -27,7 +27,8 @@ public class UserPlayerProfileQueryController {
   public ResponseEntity<PlayerProfileDto> getPlayer(@RequestParam final String userId) {
     appUserQueryService.findByExternalId(userId)
         .orElseThrow(() -> new EntityNotFoundException(AppUser.class, userId));
-    return ResponseEntity.ok(playerProfileToPlayerProfileDtoTransformer.apply(playerProfileQueryService.getByExternalId(userId)));
+    return ResponseEntity.ok(playerProfileToPlayerProfileDtoTransformer
+        .apply(playerProfileQueryService.getByExternalId(userId)));
   }
 
 }

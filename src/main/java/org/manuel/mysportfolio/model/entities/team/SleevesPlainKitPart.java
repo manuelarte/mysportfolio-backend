@@ -1,7 +1,5 @@
 package org.manuel.mysportfolio.model.entities.team;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @lombok.Data
@@ -9,10 +7,10 @@ import javax.validation.constraints.NotNull;
 @lombok.NoArgsConstructor
 public class SleevesPlainKitPart implements KitPart {
 
-    @NotNull
-    private int baseColour;
+  @NotNull
+  private int baseColour;
 
-    @NotNull
-    private int sleevesColour;
+  @NotNull
+  private int sleevesColour;
 
 }

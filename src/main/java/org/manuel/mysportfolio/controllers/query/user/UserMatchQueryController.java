@@ -28,36 +28,40 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class UserMatchQueryController {
 
-    private final AppUserQueryService appUserQueryService;
-    private final MatchQueryService matchQueryService;
-    private final PlayersPerformanceQueryService playersPerformanceQueryService;
-    private final MatchToMatchDtoTransformer matchToMatchDtoTransformer;
-    private final PerformanceToPerformanceDtoTransformer performanceToPerformanceDtoTransformer;
-    private final UserIdProvider userIdProvider;
+  private final AppUserQueryService appUserQueryService;
+  private final MatchQueryService matchQueryService;
+  private final PlayersPerformanceQueryService playersPerformanceQueryService;
+  private final MatchToMatchDtoTransformer matchToMatchDtoTransformer;
+  private final PerformanceToPerformanceDtoTransformer performanceToPerformanceDtoTransformer;
+  private final UserIdProvider userIdProvider;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Page<UserMatchDto>> findAllMyUserMatches(
-            @PathVariable final String userId,
-            @PageableDefault final Pageable pageable) {
-        final AppUser appUser = getUser(userId);
-        final Page<Match<TeamType, TeamType>> matches = matchQueryService.findAllCreatedBy(pageable, appUser.getExternalId());
-        return ResponseEntity.ok(matches.map(m -> new UserMatchDto(matchToMatchDtoTransformer.apply(m), getPerformance(m, appUser))));
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Page<UserMatchDto>> findAllMyUserMatches(
+      @PathVariable final String userId,
+      @PageableDefault final Pageable pageable) {
+    final AppUser appUser = getUser(userId);
+    final Page<Match<TeamType, TeamType>> matches = matchQueryService
+        .findAllCreatedBy(pageable, appUser.getExternalId());
+    return ResponseEntity.ok(matches.map(
+        m -> new UserMatchDto(matchToMatchDtoTransformer.apply(m), getPerformance(m, appUser))));
+  }
+
+  private PerformanceDto getPerformance(final Match match, final AppUser appUser) {
+    return playersPerformanceQueryService
+        .findByMatchIdAndPlayerId(match.getId(), appUser.getExternalId())
+        .map(performanceToPerformanceDtoTransformer)
+        .orElse(null);
+  }
+
+
+  private AppUser getUser(final String userId) {
+    final AppUser user;
+    if ("me".equals(userId)) {
+      user = appUserQueryService.findByExternalId(userIdProvider.getUserId()).get();
+    } else {
+      user = appUserQueryService.findOne(new ObjectId(userId)).get();
     }
-
-    private PerformanceDto getPerformance(final Match match, final AppUser appUser) {
-        return playersPerformanceQueryService.findByMatchIdAndPlayerId(match.getId(), appUser.getExternalId()).map(performanceToPerformanceDtoTransformer)
-                .orElse(null);
-    }
-
-
-    private AppUser getUser(final String userId) {
-        final AppUser user;
-        if ("me".equals(userId)) {
-            user = appUserQueryService.findByExternalId(userIdProvider.getUserId()).get();
-        } else {
-            user = appUserQueryService.findOne(new ObjectId(userId)).get();
-        }
-        return user;
-    }
+    return user;
+  }
 
 }

@@ -19,25 +19,27 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 class TeamQueryServiceImpl implements TeamQueryService {
 
-    private final TeamRepository teamRepository;
-    private final TeamToUsersQueryService teamToUsersQueryService;
+  private final TeamRepository teamRepository;
+  private final TeamToUsersQueryService teamToUsersQueryService;
 
-    @Override
-    public Page<Team> findAllForUser(final Pageable pageable, final String userId) {
-        final var byUsersExists = teamToUsersQueryService.findByUsersExists(userId);
-        return teamRepository.findAllByIdIsIn(pageable, byUsersExists.stream().map(TeamToUsers::getTeamId).collect(Collectors.toSet()));
-    }
+  @Override
+  public Page<Team> findAllForUser(final Pageable pageable, final String userId) {
+    final var byUsersExists = teamToUsersQueryService.findByUsersExists(userId);
+    return teamRepository.findAllByIdIsIn(pageable,
+        byUsersExists.stream().map(TeamToUsers::getTeamId).collect(Collectors.toSet()));
+  }
 
-    @Override
-    public Optional<Team> findOne(final ObjectId id) {
-        return teamRepository.findById(id);
-    }
+  @Override
+  public Optional<Team> findOne(final ObjectId id) {
+    return teamRepository.findById(id);
+  }
 
-    @Override
-    public int countAllByCreatedByInYear(final String createdBy, final Year year) {
-        final var lowerLimit = year.atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC);
-        final var upperLimit = year.plusYears(1).atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC);
-        return teamRepository.countAllByCreatedByAndCreatedDateIsBetween(createdBy, lowerLimit, upperLimit);
-    }
+  @Override
+  public int countAllByCreatedByInYear(final String createdBy, final Year year) {
+    final var lowerLimit = year.atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC);
+    final var upperLimit = year.plusYears(1).atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC);
+    return teamRepository
+        .countAllByCreatedByAndCreatedDateIsBetween(createdBy, lowerLimit, upperLimit);
+  }
 
 }

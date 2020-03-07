@@ -38,85 +38,86 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType> implements
     SportDependent, Auditable<String, ObjectId, Instant> {
 
-    @Id
-    private ObjectId id;
+  @Id
+  private ObjectId id;
 
-    private ObjectId competitionId;
+  private ObjectId competitionId;
 
-    @Version
-    private Long version;
+  @Version
+  private Long version;
 
-    @NotNull
-    private Sport sport;
+  @NotNull
+  private Sport sport;
 
-    private SportType type;
+  private SportType type;
 
-    private HomeTeamType homeTeam;
+  private HomeTeamType homeTeam;
 
-    private AwayTeamType awayTeam;
+  private AwayTeamType awayTeam;
 
-    @NotNull
-    private Map<String, TeamOption> playedFor;
+  @NotNull
+  private Map<String, TeamOption> playedFor;
 
-    private Place address;
+  private Place address;
 
-    @NotNull
-    @PastOrPresent
-    private Instant startDate;
-    private Instant endDate;
+  @NotNull
+  @PastOrPresent
+  private Instant startDate;
+  private Instant endDate;
 
-    private List<MatchEvent> events = new ArrayList<>();
+  private List<MatchEvent> events = new ArrayList<>();
 
-    @Size(max = 300)
-    private String description;
+  @Size(max = 300)
+  private String description;
 
-    @Size(max = 5)
-    private Set<
-        @Size(max = 20)
-        @NotEmpty
-            String> chips = new HashSet<>();
+  @Size(max = 5)
+  private Set<
+      @Size(max = 20)
+      @NotEmpty
+          String> chips = new HashSet<>();
 
-    @CreatedBy
-    private String createdBy;
+  @CreatedBy
+  private String createdBy;
 
-    @CreatedDate
-    private Instant createdDate;
+  @CreatedDate
+  private Instant createdDate;
 
-    @LastModifiedBy
-    private String lastModifiedBy;
+  @LastModifiedBy
+  private String lastModifiedBy;
 
-    @LastModifiedDate
-    private Instant lastModifiedDate;
+  @LastModifiedDate
+  private Instant lastModifiedDate;
 
-    public Optional<String> getCreatedBy() {
-        return Optional.ofNullable(createdBy);
-    }
+  public Optional<String> getCreatedBy() {
+    return Optional.ofNullable(createdBy);
+  }
 
-    public Optional<Instant> getCreatedDate() {
-        return Optional.ofNullable(createdDate);
-    }
+  public Optional<Instant> getCreatedDate() {
+    return Optional.ofNullable(createdDate);
+  }
 
-    public Optional<String> getLastModifiedBy() {
-        return Optional.ofNullable(lastModifiedBy);
-    }
+  public Optional<String> getLastModifiedBy() {
+    return Optional.ofNullable(lastModifiedBy);
+  }
 
-    public Optional<Instant> getLastModifiedDate() {
-        return Optional.ofNullable(lastModifiedDate);
-    }
+  public Optional<Instant> getLastModifiedDate() {
+    return Optional.ofNullable(lastModifiedDate);
+  }
 
-    @AssertTrue
-    private boolean isOneTeamExist() {
-        return Objects.nonNull(homeTeam) || Objects.nonNull(awayTeam);
-    }
+  @AssertTrue
+  private boolean isOneTeamExist() {
+    return Objects.nonNull(homeTeam) || Objects.nonNull(awayTeam);
+  }
 
-    @Override
-    public boolean isNew() {
-        return id == null;
-    }
+  @Override
+  public boolean isNew() {
+    return id == null;
+  }
 
-    public int getGoals(final TeamOption teamOption) {
-        return (int) Optional.ofNullable(events).orElse(Collections.emptyList()).stream().filter(it -> it instanceof GoalMatchEvent)
-            .filter(it -> ((GoalMatchEvent) it).getTeam() == teamOption).count();
-    }
+  public int getGoals(final TeamOption teamOption) {
+    return (int) Optional.ofNullable(events).orElse(Collections.emptyList()).stream()
+        .filter(it -> it instanceof GoalMatchEvent)
+        .filter(it -> ((GoalMatchEvent) it).getTeam() == teamOption).count();
+  }
 
 }

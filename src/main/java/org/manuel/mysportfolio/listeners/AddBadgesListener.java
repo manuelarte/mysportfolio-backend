@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
 @lombok.AllArgsConstructor
 public class AddBadgesListener implements ApplicationListener<SportEvent<?>> {
 
-	private final UserBadgesCommandService userBadgesCommandService;
-	private final UserIdProvider userIdProvider;
+  private final UserBadgesCommandService userBadgesCommandService;
+  private final UserIdProvider userIdProvider;
 
-	@Override
-	public void onApplicationEvent(@Nonnull final SportEvent<?> event) {
-		final var userId = userIdProvider.getUserId();
-		userBadgesCommandService.addBadges(userId, event);
-	}
+  @Override
+  public void onApplicationEvent(@Nonnull final SportEvent<?> event) {
+    final var userId = userIdProvider.getUserId();
+    userBadgesCommandService.addBadges(userId, event);
+  }
 
 }

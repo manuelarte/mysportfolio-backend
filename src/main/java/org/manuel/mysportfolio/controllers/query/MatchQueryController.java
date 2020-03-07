@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.controllers.query;
 
+import java.util.Optional;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
@@ -17,9 +18,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/matches")
@@ -27,35 +30,38 @@ import java.util.Optional;
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class MatchQueryController {
 
-    private final MatchQueryService matchQueryService;
-    private final MatchToMatchDtoTransformer matchToMatchDtoTransformer;
-    private final UserIdProvider userIdProvider;
+  private final MatchQueryService matchQueryService;
+  private final MatchToMatchDtoTransformer matchToMatchDtoTransformer;
+  private final UserIdProvider userIdProvider;
 
-    private final QueryCriteriaToMongoQueryTransformer queryCriteriaToMongoQueryTransformer;
+  private final QueryCriteriaToMongoQueryTransformer queryCriteriaToMongoQueryTransformer;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Page<MatchDto<TeamTypeDto, TeamTypeDto>>> findByPage(
-            @PageableDefault(sort = "startDate", direction = Sort.Direction.DESC) final Pageable pageable,
-            @RequestParam(required = false) Optional<QueryCriteria> q) {
-        final Page<Match<TeamType, TeamType>> page;
-        if (q.isPresent()) {
-            page = matchQueryService.findQueryAllCreatedBy(queryCriteriaToMongoQueryTransformer.apply(q.get(), Match.class), pageable, getUserId());
-        } else {
-            page = matchQueryService.findAllCreatedBy(pageable, getUserId());
-        }
-        return ResponseEntity.ok(page.map(matchToMatchDtoTransformer));
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Page<MatchDto<TeamTypeDto, TeamTypeDto>>> findByPage(
+      @PageableDefault(sort = "startDate", direction = Sort.Direction.DESC) final Pageable pageable,
+      @RequestParam(required = false) Optional<QueryCriteria> q) {
+    final Page<Match<TeamType, TeamType>> page;
+    if (q.isPresent()) {
+      page = matchQueryService
+          .findQueryAllCreatedBy(queryCriteriaToMongoQueryTransformer.apply(q.get(), Match.class),
+              pageable, getUserId());
+    } else {
+      page = matchQueryService.findAllCreatedBy(pageable, getUserId());
     }
+    return ResponseEntity.ok(page.map(matchToMatchDtoTransformer));
+  }
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MatchDto<TeamTypeDto, TeamTypeDto>> findOne(@PathVariable final ObjectId id) {
-        // TODO, fix that if the user can't see the match
-        final var match = matchQueryService.findOne(id).orElseThrow(() ->
-                new EntityNotFoundException(Match.class, id.toString()));
-        return ResponseEntity.ok(matchToMatchDtoTransformer.apply(match));
-    }
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<MatchDto<TeamTypeDto, TeamTypeDto>> findOne(
+      @PathVariable final ObjectId id) {
+    // TODO, fix that if the user can't see the match
+    final var match = matchQueryService.findOne(id).orElseThrow(() ->
+        new EntityNotFoundException(Match.class, id.toString()));
+    return ResponseEntity.ok(matchToMatchDtoTransformer.apply(match));
+  }
 
-    private String getUserId() {
-        return userIdProvider.getUserId();
-    }
+  private String getUserId() {
+    return userIdProvider.getUserId();
+  }
 
 }

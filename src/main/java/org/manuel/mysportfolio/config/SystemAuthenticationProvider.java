@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class SystemAuthenticationProvider implements AuthenticationProvider {
 
-    @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        return new SystemAuthentication();
-    }
+  @Override
+  public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    return new SystemAuthentication();
+  }
 
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return authentication.equals(SystemAuthentication.class);
-    }
+  @Override
+  public boolean supports(Class<?> authentication) {
+    return authentication.equals(SystemAuthentication.class);
+  }
 
 }

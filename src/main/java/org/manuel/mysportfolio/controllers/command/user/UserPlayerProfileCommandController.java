@@ -28,8 +28,10 @@ public class UserPlayerProfileCommandController {
   private final PlayerProfileSportInfoDtoToPlayerSportInfoTransformer transformer;
 
   @PutMapping(value = "{year}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<PlayerProfileSportInfo> updatePlayerSportInfo(@PathVariable final String userId,
-      @PastOrPresent @PathVariable final Year year, @RequestBody final PlayerProfileSportInfoDto playerProfileSportInfo) {
+  public ResponseEntity<PlayerProfileSportInfo> updatePlayerSportInfo(
+      @PathVariable final String userId,
+      @PastOrPresent @PathVariable final Year year,
+      @RequestBody final PlayerProfileSportInfoDto playerProfileSportInfo) {
     appUserQueryService.findByExternalId(userId)
         .orElseThrow(() -> new EntityNotFoundException(AppUser.class, userId));
     return ResponseEntity.ok(playerProfileCommandService.updateForYear(userId, year,

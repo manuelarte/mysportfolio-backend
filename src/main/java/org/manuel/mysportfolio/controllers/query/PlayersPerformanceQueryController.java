@@ -18,17 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class PlayersPerformanceQueryController {
 
-    private final PerformanceToPerformanceDtoTransformer performanceToPerformanceDtoTransformer;
-    private final PlayersPerformanceQueryService playersPerformanceQueryService;
+  private final PerformanceToPerformanceDtoTransformer performanceToPerformanceDtoTransformer;
+  private final PlayersPerformanceQueryService playersPerformanceQueryService;
 
-    @GetMapping(value = "/{playerId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PerformanceDto> getPerformanceOf(
-            @PathVariable final ObjectId matchId,
-            @PathVariable final String playerId) {
-        final var retrieved = playersPerformanceQueryService.findByMatchIdAndPlayerId(matchId, playerId)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        String.format("Player %s performance not found in match %s", playerId, matchId.toString())));
-        return ResponseEntity.ok(performanceToPerformanceDtoTransformer.apply(retrieved));
-    }
+  @GetMapping(value = "/{playerId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<PerformanceDto> getPerformanceOf(
+      @PathVariable final ObjectId matchId,
+      @PathVariable final String playerId) {
+    final var retrieved = playersPerformanceQueryService.findByMatchIdAndPlayerId(matchId, playerId)
+        .orElseThrow(() -> new EntityNotFoundException(
+            String.format("Player %s performance not found in match %s", playerId,
+                matchId.toString())));
+    return ResponseEntity.ok(performanceToPerformanceDtoTransformer.apply(retrieved));
+  }
 
 }
