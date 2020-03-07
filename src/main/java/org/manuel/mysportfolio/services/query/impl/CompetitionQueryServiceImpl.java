@@ -1,6 +1,8 @@
 package org.manuel.mysportfolio.services.query.impl;
 
 import java.time.DayOfWeek;
+import java.time.Year;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 import org.bson.types.ObjectId;
@@ -28,8 +30,11 @@ class CompetitionQueryServiceImpl implements CompetitionQueryService {
   }
 
   @Override
-  public int countAllByCreatedBy(final String createdBy) {
-    return competitionRepository.countAllByCreatedBy(createdBy);
+  public int countAllByCreatedByInYear(final String createdBy, final Year year) {
+    final var lowerLimit = year.atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC);
+    final var upperLimit = year.plusYears(1).atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC);
+    return competitionRepository
+        .countAllByCreatedByAndCreatedDateIsBetween(createdBy, lowerLimit, upperLimit);
   }
 
   @Override

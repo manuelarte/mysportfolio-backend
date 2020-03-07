@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "teams")
 @lombok.Data
-@lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
 public class Team extends BaseEntity implements TeamInfo {
 
@@ -20,6 +19,13 @@ public class Team extends BaseEntity implements TeamInfo {
   private TeamImage teamImage;
 
   @NotNull
-  private TeamKit teamKit;
+  private TeamKit<KitPart, KitPart> teamKit;
+
+  public Team(final String name, final TeamImage teamImage, final TeamKit teamKit) {
+    super(null, null, null, null, null, null);
+    this.name = name;
+    this.teamImage = teamImage;
+    this.teamKit = teamKit;
+  }
 
 }

@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
+import javax.inject.Inject;
 import org.bson.types.ObjectId;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
@@ -19,7 +20,6 @@ import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
 import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.manuel.mysportfolio.repositories.TeamToUsersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -32,10 +32,10 @@ import org.springframework.web.context.WebApplicationContext;
 @ExtendWith({SpringExtension.class})
 public class TeamToUsersQueryControllerTest {
 
-  @Autowired
+  @Inject
   private TeamToUsersRepository teamToUsersRepository;
 
-  @Autowired
+  @Inject
   private WebApplicationContext context;
 
   private MockMvc mvc;

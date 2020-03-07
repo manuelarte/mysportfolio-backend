@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.repositories;
 
+import java.time.Instant;
 import java.util.Set;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.team.Team;
@@ -13,6 +14,7 @@ public interface TeamRepository extends PagingAndSortingRepository<Team, ObjectI
 
   Page<Team> findAllByIdIsIn(Pageable pageable, Set<ObjectId> ids);
 
-  int countAllByCreatedBy(String createdBy);
+  int countAllByCreatedByAndCreatedDateIsBetween(String createdBy, Instant lowerLimit,
+      Instant upperThan);
 
 }

@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Collections;
+import javax.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +21,6 @@ import org.manuel.mysportfolio.model.entities.match.Performance;
 import org.manuel.mysportfolio.model.entities.match.PlayersPerformance;
 import org.manuel.mysportfolio.repositories.MatchRepository;
 import org.manuel.mysportfolio.repositories.PlayersPerformanceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
@@ -35,13 +35,13 @@ import org.springframework.web.context.WebApplicationContext;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class PlayersPerformanceQueryControllerTest {
 
-  @Autowired
+  @Inject
   private MatchRepository matchRepository;
 
-  @Autowired
+  @Inject
   private PlayersPerformanceRepository playersPerformanceRepository;
 
-  @Autowired
+  @Inject
   private WebApplicationContext context;
 
   private MockMvc mvc;

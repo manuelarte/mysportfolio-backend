@@ -1,5 +1,7 @@
 package org.manuel.mysportfolio.services.query.impl;
 
+import java.time.Year;
+import java.time.ZoneOffset;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
@@ -32,8 +34,11 @@ class TeamQueryServiceImpl implements TeamQueryService {
   }
 
   @Override
-  public int countAllByCreatedBy(final String createdBy) {
-    return teamRepository.countAllByCreatedBy(createdBy);
+  public int countAllByCreatedByInYear(final String createdBy, final Year year) {
+    final var lowerLimit = year.atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC);
+    final var upperLimit = year.plusYears(1).atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC);
+    return teamRepository
+        .countAllByCreatedByAndCreatedDateIsBetween(createdBy, lowerLimit, upperLimit);
   }
 
 }

@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.services.query;
 
+import java.time.Year;
 import java.util.Optional;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.team.Team;
@@ -16,6 +17,6 @@ public interface TeamQueryService {
   Optional<Team> findOne(ObjectId id);
 
   @PreAuthorize("hasRole('ROLE_ADMIN') or #createdBy == authentication.principal.attributes['sub']")
-  int countAllByCreatedBy(String createdBy);
+  int countAllByCreatedByInYear(String createdBy, Year year);
 
 }

@@ -16,19 +16,20 @@ public class PartialCompetitionDtoToCompetitionTransformer implements
 
   private final CompetitionQueryService competitionQueryService;
 
-  @Override
-  public Competition apply(final String competitionId, final CompetitionDto competitionDto) {
-    final var original = competitionQueryService.findOne(new ObjectId(competitionId))
-        .orElseThrow(() -> new EntityNotFoundException(
-            String.format("Competition with id %s not found and can't be patch", competitionId)));
-    final var competition = original;
-    Optional.ofNullable(competitionDto.getName()).ifPresent(competition::setName);
-    Optional.ofNullable(competitionDto.getDescription()).ifPresent(competition::setDescription);
-    Optional.ofNullable(competitionDto.getSport()).ifPresent(competition::setSport);
-    Optional.ofNullable(competitionDto.getDefaultMatchDay())
-        .ifPresent(competition::setDefaultMatchDay);
-    Optional.ofNullable(competitionDto.getFrom()).ifPresent(competition::setFrom);
-    Optional.ofNullable(competitionDto.getTo()).ifPresent(competition::setTo);
-    return competition;
-  }
+    @Override
+    public Competition apply(final String competitionId, final CompetitionDto competitionDto) {
+        final var original = competitionQueryService.findOne(new ObjectId(competitionId))
+            .orElseThrow(() -> new EntityNotFoundException(
+                String
+                    .format("Competition with id %s not found and can't be patch", competitionId)));
+        final var competition = original;
+        Optional.ofNullable(competitionDto.getName()).ifPresent(competition::setName);
+        Optional.ofNullable(competitionDto.getDescription()).ifPresent(competition::setDescription);
+        Optional.ofNullable(competitionDto.getSport()).ifPresent(competition::setSport);
+        Optional.ofNullable(competitionDto.getDefaultMatchDay())
+            .ifPresent(competition::setDefaultMatchDay);
+        Optional.ofNullable(competitionDto.getFrom()).ifPresent(competition::setFrom);
+        Optional.ofNullable(competitionDto.getTo()).ifPresent(competition::setTo);
+        return competition;
+    }
 }

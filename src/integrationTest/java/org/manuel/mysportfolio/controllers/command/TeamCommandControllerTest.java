@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.inject.Inject;
 import org.bson.types.ObjectId;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
@@ -20,7 +21,6 @@ import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.dtos.team.TeamDto;
 import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.manuel.mysportfolio.repositories.TeamToUsersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
@@ -35,16 +35,16 @@ import org.springframework.web.context.WebApplicationContext;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class TeamCommandControllerTest {
 
-  @Autowired
+  @Inject
   private ObjectMapper objectMapper;
 
-  @Autowired
+  @Inject
   private TeamRepository teamRepository;
 
-  @Autowired
+  @Inject
   private TeamToUsersRepository teamToUsersRepository;
 
-  @Autowired
+  @Inject
   private WebApplicationContext context;
 
   private MockMvc mvc;

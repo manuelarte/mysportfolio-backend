@@ -3,6 +3,7 @@ package org.manuel.mysportfolio.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import java.time.Clock;
 import org.manuel.mysportfolio.config.serializer.PointDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,11 @@ import org.springframework.data.geo.Point;
 
 @Configuration
 public class AppConfig {
+
+  @Bean
+  public Clock clock() {
+    return Clock.systemUTC();
+  }
 
   @Bean
   public ObjectMapper objectMapper() {

@@ -1,6 +1,7 @@
 package org.manuel.mysportfolio.services.query;
 
 import java.time.DayOfWeek;
+import java.time.Year;
 import java.util.List;
 import java.util.Optional;
 import org.bson.types.ObjectId;
@@ -19,7 +20,7 @@ public interface CompetitionQueryService {
   Optional<Competition> findOne(ObjectId id);
 
   @PreAuthorize("hasRole('ROLE_ADMIN') or #createdBy == authentication.principal.attributes['sub']")
-  int countAllByCreatedBy(String createdBy);
+  int countAllByCreatedByInYear(String createdBy, Year year);
 
   @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SYSTEM')")
   List<Competition> findAllPlaying(DayOfWeek dayOfWeek);
