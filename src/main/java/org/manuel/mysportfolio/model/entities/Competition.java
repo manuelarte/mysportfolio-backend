@@ -50,7 +50,13 @@ public class Competition extends BaseEntity implements SportDependent {
 
   @AssertTrue
   private boolean fromBeforeTo() {
-    return from.compareTo(to) <= 0;
+    boolean condition;
+    if (from != null && to != null) {
+      condition = from.compareTo(to) <= 0;
+    } else {
+      condition = true;
+    }
+    return condition;
   }
 
   @Override
