@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @lombok.EqualsAndHashCode
-public class NotEqualQueryOperator implements QueryOperator {
+public class NotEqualQueryOperator implements QueryOperator<String, Object> {
 
   @Override
   public String getOperator() {
@@ -19,7 +19,7 @@ public class NotEqualQueryOperator implements QueryOperator {
   }
 
   @Override
-  public Object getValue(Object value) {
+  public Object getValue(final String value) {
     return value;
   }
 
