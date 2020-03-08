@@ -5,10 +5,10 @@ import org.manuel.mysportfolio.model.entities.user.AppUser;
 
 public interface AppUserCommandService {
 
-    AppUser save(AppUser appUser);
+  AppUser save(AppUser appUser);
 
-    void acceptUserNotification(ObjectId notificationId);
+  void acceptUserNotification(ObjectId notificationId);
 
-    void rejectUserNotification(ObjectId notificationId);
+  void rejectUserNotification(ObjectId notificationId);
 
 }

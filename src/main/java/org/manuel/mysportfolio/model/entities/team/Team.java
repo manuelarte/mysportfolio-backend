@@ -1,70 +1,32 @@
 package org.manuel.mysportfolio.model.entities.team;
 
-import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.TeamInfo;
-import org.springframework.data.annotation.*;
-import org.springframework.data.domain.Auditable;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.Instant;
-import java.util.Optional;
+import org.manuel.mysportfolio.model.TeamInfo;
+import org.manuel.mysportfolio.model.entities.BaseEntity;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "teams")
 @lombok.Data
-@lombok.AllArgsConstructor
+@lombok.EqualsAndHashCode(callSuper = true)
 @lombok.NoArgsConstructor
-@lombok.Builder(toBuilder = true)
-public class Team implements TeamInfo, Auditable<String, ObjectId, Instant> {
+public class Team extends BaseEntity implements TeamInfo {
 
-    @Id
-    private ObjectId id;
+  @NotEmpty
+  @Size(max = 30)
+  private String name;
 
-    @Version
-    private Long version;
+  private TeamImage teamImage;
 
-    @NotEmpty
-    @Size(max = 30)
-    private String name;
+  @NotNull
+  private TeamKit<KitPart, KitPart> teamKit;
 
-    private TeamImage teamImage;
-
-    @NotNull
-    private TeamKit teamKit;
-
-    @CreatedBy
-    private String createdBy;
-
-    @CreatedDate
-    private Instant createdDate;
-
-    @LastModifiedBy
-    private String lastModifiedBy;
-
-    @LastModifiedDate
-    private Instant lastModifiedDate;
-
-    public Optional<String> getCreatedBy() {
-        return Optional.ofNullable(createdBy);
-    }
-
-    public Optional<Instant> getCreatedDate() {
-        return Optional.ofNullable(createdDate);
-    }
-
-    public Optional<String> getLastModifiedBy() {
-        return Optional.ofNullable(lastModifiedBy);
-    }
-
-    public Optional<Instant> getLastModifiedDate() {
-        return Optional.ofNullable(lastModifiedDate);
-    }
-
-    @Override
-    public boolean isNew() {
-        return id == null;
-    }
+  public Team(final String name, final TeamImage teamImage, final TeamKit teamKit) {
+    super(null, null, null, null, null, null);
+    this.name = name;
+    this.teamImage = teamImage;
+    this.teamKit = teamKit;
+  }
 
 }

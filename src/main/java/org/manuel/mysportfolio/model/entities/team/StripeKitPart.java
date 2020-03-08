@@ -9,22 +9,19 @@ import javax.validation.constraints.NotNull;
 @lombok.NoArgsConstructor
 public class StripeKitPart implements KitPart {
 
-    public enum StripeOrientation {
-        VERTICAL, HORIZONTAL
-    }
+  @NotNull
+  private int baseColour;
+  @NotNull
+  @Min(3)
+  @Max(7)
+  private int numberOfStripes;
+  @NotNull
+  private int stripeColour;
+  @NotNull
+  private StripeOrientation orientation;
 
-    @NotNull
-    private int baseColour;
-
-    @NotNull
-    @Min(3)
-    @Max(7)
-    private int numberOfStripes;
-
-    @NotNull
-    private int stripeColour;
-
-    @NotNull
-    private StripeOrientation orientation;
+  public enum StripeOrientation {
+    VERTICAL, HORIZONTAL
+  }
 
 }

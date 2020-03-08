@@ -2,10 +2,10 @@ package org.manuel.mysportfolio.model.entities.match.events;
 
 import org.manuel.mysportfolio.model.entities.TeamOption;
 
-public interface TeamMatchEvent extends MatchEvent{
+public interface TeamMatchEvent extends MatchEvent {
 
-    TeamOption getTeam();
+  TeamOption getTeam();
 
-    void setTeam(TeamOption team);
+  void setTeam(TeamOption team);
 
 }

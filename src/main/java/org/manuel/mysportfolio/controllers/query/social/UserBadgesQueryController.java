@@ -2,7 +2,6 @@ package org.manuel.mysportfolio.controllers.query.social;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.manuel.mysportfolio.model.dtos.AppBadgeDto;
 import org.manuel.mysportfolio.services.query.UserBadgesQueryService;
 import org.manuel.mysportfolio.transformers.BadgeToAppBadgeTransformer;
@@ -18,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 @lombok.AllArgsConstructor
 public class UserBadgesQueryController {
 
-	private final UserBadgesQueryService userBadgesQueryService;
-	private final BadgeToAppBadgeTransformer badgeToAppBadgeTransformer;
+  private final UserBadgesQueryService userBadgesQueryService;
+  private final BadgeToAppBadgeTransformer badgeToAppBadgeTransformer;
 
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Set<AppBadgeDto>> findAllBadges(@PathVariable final String userId) {
-		return ResponseEntity.ok(userBadgesQueryService.findByUser(userId).getBadges().stream()
-			.map(badgeToAppBadgeTransformer).collect(Collectors.toSet()));
-	}
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Set<AppBadgeDto>> findAllBadges(@PathVariable final String userId) {
+    return ResponseEntity.ok(userBadgesQueryService.findByUser(userId).getBadges().stream()
+        .map(badgeToAppBadgeTransformer).collect(Collectors.toSet()));
+  }
 
 }

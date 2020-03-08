@@ -1,27 +1,26 @@
 package org.manuel.mysportfolio.config.operators;
 
+import java.util.function.Function;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
-
-import java.util.function.Function;
 
 @Component
 @lombok.EqualsAndHashCode
 public class NotEqualQueryOperator implements QueryOperator {
 
-    @Override
-    public String getOperator() {
-        return "!:";
-    }
+  @Override
+  public String getOperator() {
+    return "!:";
+  }
 
-    @Override
-    public Function<Criteria, Criteria> addOperation(Object value) {
-        return c -> c.not().is(value);
-    }
+  @Override
+  public Function<Criteria, Criteria> addOperation(Object value) {
+    return c -> c.not().is(value);
+  }
 
-    @Override
-    public Object getValue(Object value) {
-        return value;
-    }
+  @Override
+  public Object getValue(Object value) {
+    return value;
+  }
 
 }

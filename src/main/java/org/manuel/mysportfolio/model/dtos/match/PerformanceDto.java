@@ -15,17 +15,17 @@ import javax.validation.constraints.Size;
 @lombok.Builder(toBuilder = true)
 public class PerformanceDto {
 
-    @Digits(integer=2, fraction=2)
-    @Size(max = 10)
-    @NotNull
-    private final BigDecimal rate;
+  @Digits(integer = 2, fraction = 2)
+  @Size(max = 10)
+  @NotNull
+  private final BigDecimal rate;
 
-    @Size(max = 200)
-    private final String notes;
+  @Size(max = 200)
+  private final String notes;
 
-    @JsonPOJOBuilder(withPrefix = "")
-    public static final class PerformanceDtoBuilder {
+  @JsonPOJOBuilder(withPrefix = "")
+  public static final class PerformanceDtoBuilder {
 
-    }
+  }
 
 }

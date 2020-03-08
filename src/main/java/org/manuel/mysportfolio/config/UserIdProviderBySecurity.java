@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserIdProviderBySecurity implements UserIdProvider {
 
-    @Override
-    public String getUserId() {
-        return ((OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                .getAttributes().get("sub").toString();
-    }
+  @Override
+  public String getUserId() {
+    return ((OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+        .getAttributes().get("sub").toString();
+  }
 }

@@ -6,12 +6,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 @Configuration
-public class ITConfiguration {
+public class ItConfiguration {
 
-    @Bean
-    @Primary
-    public UserIdProvider userIdProvider() {
-        return () -> "123456789";
-    }
+  public static final String IT_USER_ID = "123456789";
+
+  @Bean
+  @Primary
+  public UserIdProvider userIdProvider() {
+    return () -> IT_USER_ID;
+  }
 
 }

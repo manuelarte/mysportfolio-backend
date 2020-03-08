@@ -7,9 +7,9 @@ import javax.validation.constraints.NotNull;
 @lombok.NoArgsConstructor
 public class AssistDetails {
 
-    @NotNull
-    private String who;
+  @NotNull
+  private String who;
 
-    private BodyPart bodyPart;
+  private BodyPart bodyPart;
 
 }

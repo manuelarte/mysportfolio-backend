@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = TeamAddUserNotificationDto.class, name = "team-add-user")
+    @JsonSubTypes.Type(value = TeamAddUserNotificationDto.class, name = "team-add-user")
 })
 public interface UserNotificationDto {
 
-    String getId();
+  String getId();
 
-    Long getVersion();
+  Long getVersion();
 
 }

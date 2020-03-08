@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Profile("!prod")
 public class MockNotificationService implements NotificationService {
 
-    public String send(final Message message) throws NotificationException {
-        return "message sent";
-    }
+  public String send(final Message message) throws NotificationException {
+    return "message sent";
+  }
 }

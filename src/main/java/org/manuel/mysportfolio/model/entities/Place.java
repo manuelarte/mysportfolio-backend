@@ -10,24 +10,27 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @lombok.Builder(toBuilder = true)
 public class Place {
 
-    private String formattedAddress;
-    private LatitudeAndLongitude latLng;
+  private String formattedAddress;
+  private LatitudeAndLongitude latLng;
+
+  @JsonPOJOBuilder(withPrefix = "")
+  public static final class PlaceBuilder {
+
+  }
+
+  @JsonDeserialize(builder = LatitudeAndLongitude.LatitudeAndLongitudeBuilder.class)
+  @lombok.AllArgsConstructor
+  @lombok.NoArgsConstructor
+  @lombok.Data
+  @lombok.Builder(toBuilder = true)
+  public static class LatitudeAndLongitude {
+
+    private double latitude;
+    private double longitude;
 
     @JsonPOJOBuilder(withPrefix = "")
-    public static final class PlaceBuilder {
-    }
+    public static final class LatitudeAndLongitudeBuilder {
 
-    @JsonDeserialize(builder = LatitudeAndLongitude.LatitudeAndLongitudeBuilder.class)
-    @lombok.AllArgsConstructor
-    @lombok.NoArgsConstructor
-    @lombok.Data
-    @lombok.Builder(toBuilder = true)
-    public static class LatitudeAndLongitude {
-        private double latitude;
-        private double longitude;
-
-        @JsonPOJOBuilder(withPrefix = "")
-        public static final class LatitudeAndLongitudeBuilder {
-        }
     }
+  }
 }

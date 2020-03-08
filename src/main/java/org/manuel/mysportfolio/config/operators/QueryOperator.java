@@ -1,15 +1,14 @@
 package org.manuel.mysportfolio.config.operators;
 
-import org.springframework.data.mongodb.core.query.Criteria;
-
 import java.util.function.Function;
+import org.springframework.data.mongodb.core.query.Criteria;
 
 public interface QueryOperator<IN, OUT> {
 
-    String getOperator();
+  String getOperator();
 
-    Function<Criteria, Criteria> addOperation(OUT value);
+  Function<Criteria, Criteria> addOperation(OUT value);
 
-    OUT getValue(IN value);
+  OUT getValue(IN value);
 
 }

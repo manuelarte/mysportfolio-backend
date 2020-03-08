@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 @lombok.extern.slf4j.Slf4j
 public class TeamCreatedEventPublisher {
 
-    private ApplicationEventPublisher applicationEventPublisher;
+  private ApplicationEventPublisher applicationEventPublisher;
 
-    public void publishEvent(final Team createdTeam) {
-        log.info("Publishing team created event for team {}.", createdTeam.getId().toString());
-        final var teamCreatedEvent = new TeamCreatedEvent(createdTeam);
-        applicationEventPublisher.publishEvent(teamCreatedEvent);
-    }
+  public void publishEvent(final Team createdTeam) {
+    log.info("Publishing team created event for team {}.", createdTeam.getId().toString());
+    final var teamCreatedEvent = new TeamCreatedEvent(createdTeam);
+    applicationEventPublisher.publishEvent(teamCreatedEvent);
+  }
 
 }

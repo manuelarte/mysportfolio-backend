@@ -3,12 +3,13 @@ plugins {
     id 'java'
     id "nebula.facet" version "6.0.3"
     id 'com.google.cloud.tools.jib' version '1.8.0'
+    id 'checkstyle'
 }
 
 apply plugin: 'io.spring.dependency-management'
 
 group = 'org.manuel'
-version = '0.2.10'
+version = '0.2.11'
 sourceCompatibility = '11'
 
 facets {
@@ -37,6 +38,7 @@ ext['junit-jupiter.version'] = '5.6.0-M1'
 
 dependencies {
 
+    implementation 'javax.inject:javax.inject:1'
     implementation 'javax.validation:validation-api:2.0.1.Final'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'

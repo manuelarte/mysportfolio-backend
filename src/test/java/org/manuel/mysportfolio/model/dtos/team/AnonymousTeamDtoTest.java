@@ -7,11 +7,11 @@ import org.manuel.mysportfolio.config.AppConfig;
 
 public class AnonymousTeamDtoTest {
 
-    private static final ObjectMapper OBJECT_MAPPER = new AppConfig().objectMapper();
+  private static final ObjectMapper OBJECT_MAPPER = new AppConfig().objectMapper();
 
-    @Test
-    public void testEqualsAndHashCode() {
-        EqualsVerifier.forClass(AnonymousTeamDto.class);
-    }
+  @Test
+  public void testEqualsAndHashCode() {
+    EqualsVerifier.forClass(AnonymousTeamDto.class);
+  }
 
 }

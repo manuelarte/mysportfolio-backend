@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.PastOrPresent;
@@ -30,60 +31,65 @@ import org.manuel.mysportfolio.validation.UpdateEntity;
 @lombok.Builder(toBuilder = true)
 public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> {
 
-    @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
-    @NotNull(groups = UpdateEntity.class)
-    private final String id;
+  @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
+  @NotNull(groups = UpdateEntity.class)
+  private final String id;
 
-    @Null(groups = NewEntity.class)
-    @NotNull(groups = { UpdateEntity.class, PartialUpdateEntity.class })
-    private final Long version;
+  @Null(groups = NewEntity.class)
+  @NotNull(groups = {UpdateEntity.class, PartialUpdateEntity.class})
+  private final Long version;
 
-    @Size(max = 24)
-    private final String competitionId;
+  @Size(max = 24)
+  private final String competitionId;
 
-    @NotNull
-    private final Sport sport;
+  @NotNull
+  private final Sport sport;
 
-    private final SportType type;
+  private final SportType type;
 
-    @NotNull
-    private final Map<String, TeamOption> playedFor;
+  @NotNull
+  private final Map<String, TeamOption> playedFor;
 
-    private final HomeTeam homeTeam;
+  private final HomeTeam homeTeam;
 
-    private final AwayTeam awayTeam;
+  private final AwayTeam awayTeam;
 
-    private final List<MatchEventDto> events;
+  private final List<MatchEventDto> events;
 
-    private final Place address;
+  private final Place address;
 
-    @PastOrPresent
-    @NotNull
-    private final Instant startDate;
-    private final Instant endDate;
+  @PastOrPresent
+  @NotNull
+  private final Instant startDate;
+  private final Instant endDate;
 
-    private final String description;
+  @Size(max = 300)
+  private final String description;
 
-    @Size(max = 5)
-    @lombok.Singular
-    private final Set<@Size(max = 20) String> chips;
+  @Size(max = 5)
+  @lombok.Singular
+  private final Set<
+      @Size(max = 20)
+      @NotEmpty
+          String> chips;
 
-    @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
-    private final String createdBy;
+  @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
+  private final String createdBy;
 
-    public static <HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> MatchDtoBuilder builder() {
-        return new MatchDtoBuilder<HomeTeam, AwayTeam>();
-    }
+  public static <HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> MatchDtoBuilder builder() {
+    return new MatchDtoBuilder<HomeTeam, AwayTeam>();
+  }
 
-    @JsonPOJOBuilder(withPrefix = "")
-    public static final class MatchDtoBuilder<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> {
-    }
+  @AssertTrue
+  @JsonIgnore
+  @SuppressWarnings("unused")
+  private boolean isOneTeamExist() {
+    return Objects.nonNull(homeTeam) || Objects.nonNull(awayTeam);
+  }
 
-    @AssertTrue
-    @JsonIgnore
-    @SuppressWarnings("unused")
-    private boolean isOneTeamExist() {
-        return Objects.nonNull(homeTeam) || Objects.nonNull(awayTeam);
-    }
+  @JsonPOJOBuilder(withPrefix = "")
+  public static final class MatchDtoBuilder<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> {
+
+  }
 
 }

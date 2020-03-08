@@ -1,7 +1,7 @@
 package org.manuel.mysportfolio.controllers.command;
 
 class AdminCommandController {
-    // TODO
+  // TODO
 
-    // upgrade app-membership endpoint
+  // upgrade app-membership endpoint
 }

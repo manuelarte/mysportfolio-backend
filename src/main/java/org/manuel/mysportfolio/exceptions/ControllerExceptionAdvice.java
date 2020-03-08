@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class ControllerExceptionAdvice  {
+public class ControllerExceptionAdvice {
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    protected ResponseEntity<AppError> handleNotFound(final EntityNotFoundException ex,
-                                                      final HttpServletRequest request) {
-        final String bodyOfResponse = ex.getMessage();
+  @ExceptionHandler(EntityNotFoundException.class)
+  protected ResponseEntity<AppError> handleNotFound(final EntityNotFoundException ex,
+      final HttpServletRequest request) {
+    final String bodyOfResponse = ex.getMessage();
 
-        final AppError appError = new AppError("v1",  "404", bodyOfResponse, ex.getDomain(),
+    final AppError appError = new AppError("v1", "404", bodyOfResponse, ex.getDomain(),
         "Entity not found", bodyOfResponse, "errorReportUri");
 
-        return new ResponseEntity<>(appError, HttpStatus.NOT_FOUND);
-    }
+    return new ResponseEntity<>(appError, HttpStatus.NOT_FOUND);
+  }
 
 }
