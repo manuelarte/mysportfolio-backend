@@ -15,7 +15,7 @@ import org.manuel.mysportfolio.validation.PartialUpdateEntity;
 import org.manuel.mysportfolio.validation.UpdateEntity;
 
 /**
- * Dto to use when the user is registering a new team or when the team info is displayed
+ * Dto to use when the user is registering a new team or when the team info is displayed.
  */
 @JsonDeserialize(builder = TeamDto.TeamDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)

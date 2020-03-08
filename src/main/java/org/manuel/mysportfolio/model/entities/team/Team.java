@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "teams")
 @lombok.Data
+@lombok.EqualsAndHashCode(callSuper = true)
 @lombok.NoArgsConstructor
 public class Team extends BaseEntity implements TeamInfo {
 

@@ -18,7 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @DataMongoTest
 public class TeamRepositoryTest {
 
-  private final static String USER_ID = "1234567";
+  private static final String USER_ID = "1234567";
 
   @Inject
   private TeamRepository teamRepository;

@@ -52,7 +52,7 @@ public class PermissionsService {
 
   /**
    * - The user can only update its own user in team only when the user is already there - Admin can
-   * edit users in team
+   * edit users in team.
    *
    * @return Whether it's allowed to save user in team
    */

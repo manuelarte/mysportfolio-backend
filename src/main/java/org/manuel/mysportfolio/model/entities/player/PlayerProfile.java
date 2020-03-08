@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
 @lombok.Builder(toBuilder = true)
+@lombok.EqualsAndHashCode(callSuper = true)
 @lombok.Data
 public class PlayerProfile extends BaseEntity {
 

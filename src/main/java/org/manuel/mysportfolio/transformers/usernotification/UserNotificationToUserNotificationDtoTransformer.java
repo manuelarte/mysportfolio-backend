@@ -13,13 +13,13 @@ public class UserNotificationToUserNotificationDtoTransformer implements
 
   private final TeamAddUserNotificationToTeamAddUserNotificationDtoTransformer teamAddUserNotificationToTeamAddUserNotificationDtoTransformer;
 
-    @Override
-    public UserNotificationDto apply(final UserNotification userNotification) {
-        if (userNotification instanceof TeamAddUserNotification) {
-            return teamAddUserNotificationToTeamAddUserNotificationDtoTransformer
-                .apply((TeamAddUserNotification) userNotification);
-        }
-        return null;
+  @Override
+  public UserNotificationDto apply(final UserNotification userNotification) {
+    if (userNotification instanceof TeamAddUserNotification) {
+      return teamAddUserNotificationToTeamAddUserNotificationDtoTransformer
+          .apply((TeamAddUserNotification) userNotification);
     }
+    return null;
+  }
 
 }

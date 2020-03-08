@@ -40,6 +40,8 @@ public class QueryCriteriaToMongoQueryTransformer implements
         case OR:
           criteria.orOperator(inArray);
           break;
+        default:
+          throw new RuntimeException(qO + " operator not found");
       }
     });
 
