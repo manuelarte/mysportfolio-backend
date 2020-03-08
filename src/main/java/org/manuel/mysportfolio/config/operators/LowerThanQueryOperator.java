@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @EqualsAndHashCode
-public class LowerThanQueryOperator implements QueryOperator {
+public class LowerThanQueryOperator implements QueryOperator<String, Object> {
 
   @Override
   public String getOperator() {
@@ -20,7 +20,7 @@ public class LowerThanQueryOperator implements QueryOperator {
   }
 
   @Override
-  public Object getValue(Object value) {
+  public Object getValue(final String value) {
     return value;
   }
 
