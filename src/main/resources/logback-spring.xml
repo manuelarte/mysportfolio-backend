@@ -1,7 +1,10 @@
 <configuration>
 
-  <appender class="ch.qos.logback.core.ConsoleAppender"
-    name="STDOUT">
+  <include resource="org/springframework/cloud/gcp/autoconfigure/logging/logback-appender.xml"/>
+  <include
+    resource="org/springframework/cloud/gcp/autoconfigure/logging/logback-json-appender.xml"/>
+
+  <appender class="ch.qos.logback.core.ConsoleAppender" name="STDOUT">
     <layout class="ch.qos.logback.classic.PatternLayout">
       <Pattern>
         %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
@@ -11,5 +14,7 @@
 
   <root level="info">
     <appender-ref ref="STDOUT"/>
+    <appender-ref ref="STACKDRIVER"/>
+    <appender-ref ref="CONSOLE_JSON"/>
   </root>
 </configuration>
