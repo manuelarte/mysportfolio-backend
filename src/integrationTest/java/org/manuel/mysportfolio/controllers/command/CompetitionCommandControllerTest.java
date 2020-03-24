@@ -4,10 +4,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.YearMonth;
 import javax.inject.Inject;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
@@ -18,6 +20,7 @@ import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.dtos.CompetitionDto;
 import org.manuel.mysportfolio.repositories.CompetitionRepository;
+import org.manuel.mysportfolio.transformers.CompetitionToCompetitionDtoTransformer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
@@ -37,6 +40,9 @@ public class CompetitionCommandControllerTest {
 
   @Inject
   private CompetitionRepository competitionRepository;
+
+  @Inject
+  private CompetitionToCompetitionDtoTransformer competitionToCompetitionDtoTransformer;
 
   @Inject
   private WebApplicationContext context;
@@ -98,6 +104,37 @@ public class CompetitionCommandControllerTest {
         .andExpect(jsonPath("$.sport").value(originalCompetition.getSport().toString()))
         .andExpect(jsonPath("$.defaultMatchDay")
             .value(originalCompetition.getDefaultMatchDay().toString()));
+  }
+
+  @Test
+  public void testUpdateCompetitionValidChange() throws Exception {
+    final var originalCompetition = competitionRepository.save(TestUtils.createMockCompetition());
+    final YearMonth from = YearMonth.now();
+    final var competitionDto = competitionToCompetitionDtoTransformer.apply(originalCompetition)
+        .toBuilder()
+        .from(from)
+        .createdBy(null)
+        .createdDate(null)
+        .build();
+
+    mvc.perform(put("/api/v1/competitions/{competitionId}", originalCompetition.getId())
+        .contentType(APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(competitionDto)))
+        .andExpect(status().is2xxSuccessful())
+        .andExpect(jsonPath("$.from").value(from.toString()));
+  }
+
+  @Test
+  public void testUpdateCompetitionCreatedByChanged() throws Exception {
+    final var originalCompetition = competitionRepository.save(TestUtils.createMockCompetition());
+    final var competitionDto = competitionToCompetitionDtoTransformer.apply(originalCompetition)
+        .toBuilder()
+        .createdBy("NOT VALID");
+
+    mvc.perform(put("/api/v1/competitions/{competitionId}", originalCompetition.getId())
+        .contentType(APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(competitionDto)))
+        .andExpect(status().is4xxClientError());
   }
 
 }
