@@ -6,11 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Adding PUT in Competition controller
+
 ## [0.2.12] - 2020-03-08
 
 ### Added
 - Adding CHANGELOG.
-- Adding PUT in Competition controller
 
 ### Changed
 - Fixing bug of query criteria
