@@ -27,7 +27,6 @@ public class MatchDtoToMatchTransformer implements Function<MatchDto, Match> {
         Optional.ofNullable(matchDto.getCompetitionId()).map(ObjectId::new).orElse(null));
     match.setVersion(matchDto.getVersion());
     match.setSport(matchDto.getSport());
-    match.setType(matchDto.getType());
 
     match.setAddress(matchDto.getAddress());
     match.setStartDate(matchDto.getStartDate());

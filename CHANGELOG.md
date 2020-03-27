@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Adding PUT in Competition controller
+- Adding more sports, FOOTBALL_7, FOOTBALL_6
+
+### Removed
+
+- Removing sport type
 
 ## [0.2.12] - 2020-03-08
 

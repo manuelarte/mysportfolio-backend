@@ -13,7 +13,6 @@ import java.util.stream.IntStream;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
-import org.manuel.mysportfolio.model.SportType;
 import org.manuel.mysportfolio.model.dtos.CompetitionDto;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.match.MatchEventDto;
@@ -109,7 +108,6 @@ public class TestUtils {
       final String createdBy) {
     final var match = new Match();
     match.setSport(Sport.FOOTBALL);
-    match.setType(SportType.ELEVEN_A_SIDE);
     match.setHomeTeam(homeTeam);
     match.setAwayTeam(awayTeam);
     match.setStartDate(Instant.now());
@@ -142,7 +140,6 @@ public class TestUtils {
         .mapToObj(i -> createMockGoal(TeamOption.AWAY_TEAM)).collect(Collectors.toList()));
     return MatchDto.builder()
         .sport(Sport.FOOTBALL)
-        .type(SportType.ELEVEN_A_SIDE)
         .playedFor(playedFor)
         .homeTeam(homeTeam)
         .awayTeam(awayTeam)

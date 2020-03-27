@@ -32,7 +32,6 @@ public class MatchToMatchDtoTransformer implements
             Optional.ofNullable(match.getCompetitionId()).map(ObjectId::toString).orElse(null))
         .version(match.getVersion())
         .sport(match.getSport())
-        .type(match.getType())
         .playedFor(match.getPlayedFor())
         .homeTeam(teamTypeToTeamInMatchDtoTransformer.apply(match.getHomeTeam()))
         .awayTeam(teamTypeToTeamInMatchDtoTransformer.apply(match.getAwayTeam()))

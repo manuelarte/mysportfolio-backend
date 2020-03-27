@@ -15,7 +15,6 @@ import javax.validation.constraints.Null;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import org.manuel.mysportfolio.model.Sport;
-import org.manuel.mysportfolio.model.SportType;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.entities.Place;
 import org.manuel.mysportfolio.model.entities.TeamOption;
@@ -39,8 +38,6 @@ public class MatchUpdateDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamT
 
   @NotNull
   private final Sport sport;
-
-  private final SportType type;
 
   @NotNull
   private final Map<String, TeamOption> playedFor;
