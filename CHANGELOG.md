@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Fixing bug of query criteria
+- CircleCI Workflow of master to upload image 
 
 ## [0.2.11] - 2020-03-07
 
