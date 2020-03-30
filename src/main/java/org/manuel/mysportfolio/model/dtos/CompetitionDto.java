@@ -17,39 +17,42 @@ import org.manuel.mysportfolio.validation.UpdateEntity;
 
 @JsonDeserialize(builder = CompetitionDto.CompetitionDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@lombok.AllArgsConstructor
 @lombok.Value
-@lombok.Builder(toBuilder = true)
-public class CompetitionDto {
+public class CompetitionDto extends BaseDto {
 
-  @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
-  private final String id;
-
-  @Null(groups = NewEntity.class)
-  @NotNull(groups = {UpdateEntity.class, PartialUpdateEntity.class})
-  private final Long version;
-
-  @NotNull(groups = NewEntity.class)
+  @NotNull(groups = {NewEntity.class, UpdateEntity.class})
   @Size(max = 30)
   private final String name;
 
-  @NotNull(groups = NewEntity.class)
+  @NotNull(groups = {NewEntity.class, UpdateEntity.class})
   private final Sport sport;
 
   private final DayOfWeek defaultMatchDay;
 
-  private YearMonth from;
+  private final YearMonth from;
 
-  private YearMonth to;
+  private final YearMonth to;
 
   @Size(max = 200)
   private final String description;
 
-  @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
-  private final String createdBy;
-
-  @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
+  @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
   private final Instant createdDate;
+
+  @lombok.Builder(toBuilder = true)
+  public CompetitionDto(final String id, final Long version, final String name, final Sport sport,
+      final DayOfWeek defaultMatchDay, final YearMonth from, final YearMonth to,
+      final String description,
+      final Instant createdDate, final String createdBy) {
+    super(id, version, createdBy);
+    this.name = name;
+    this.sport = sport;
+    this.defaultMatchDay = defaultMatchDay;
+    this.from = from;
+    this.to = to;
+    this.description = description;
+    this.createdDate = createdDate;
+  }
 
   @AssertTrue
   private boolean fromBeforeTo() {

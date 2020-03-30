@@ -1,19 +1,23 @@
 package org.manuel.mysportfolio.controllers.command;
 
+import io.jsonwebtoken.lang.Assert;
 import javax.validation.groups.Default;
 import org.manuel.mysportfolio.model.dtos.CompetitionDto;
 import org.manuel.mysportfolio.services.command.CompetitionCommandService;
 import org.manuel.mysportfolio.transformers.CompetitionDtoToCompetitionTransformer;
 import org.manuel.mysportfolio.transformers.CompetitionToCompetitionDtoTransformer;
-import org.manuel.mysportfolio.transformers.PartialCompetitionDtoToCompetitionTransformer;
+import org.manuel.mysportfolio.transformers.competition.CompetitionDtoToExistingCompetitionTransformer;
+import org.manuel.mysportfolio.transformers.competition.PartialCompetitionDtoToCompetitionTransformer;
 import org.manuel.mysportfolio.validation.NewEntity;
 import org.manuel.mysportfolio.validation.PartialUpdateEntity;
+import org.manuel.mysportfolio.validation.UpdateEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +31,7 @@ public class CompetitionCommandController {
 
   private final CompetitionCommandService competitionCommandService;
   private final CompetitionDtoToCompetitionTransformer competitionDtoToCompetitionTransformer;
+  private final CompetitionDtoToExistingCompetitionTransformer competitionDtoToExistingCompetitionTransformer;
   private final CompetitionToCompetitionDtoTransformer competitionToCompetitionDtoTransformer;
   private final PartialCompetitionDtoToCompetitionTransformer partialCompetitionDtoToCompetitionTransformer;
 
@@ -41,6 +46,17 @@ public class CompetitionCommandController {
     log.info("Competition with id {}, created by {} saved", saved.getId(), saved.getCreatedBy());
     return ResponseEntity.created(location)
         .body(competitionToCompetitionDtoTransformer.apply(saved));
+
+  }
+
+  @PutMapping(value = "/{competitionId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public ResponseEntity<CompetitionDto> updateCompetition(
+      @PathVariable final String competitionId, @Validated({Default.class,
+      UpdateEntity.class}) @RequestBody final CompetitionDto competitionDto) {
+    Assert.isTrue(competitionId.equals(competitionDto.getId()), "Ids don't match");
+    final var updated = competitionCommandService
+        .save(competitionDtoToExistingCompetitionTransformer.apply(competitionId, competitionDto));
+    return ResponseEntity.ok(competitionToCompetitionDtoTransformer.apply(updated));
 
   }
 

@@ -40,7 +40,6 @@ public class MatchUpdateDtoToMatchTransformer implements
     updatedMatch.setCompetitionId(
         Optional.ofNullable(matchUpdateDto.getCompetitionId()).map(ObjectId::new).orElse(null));
     updatedMatch.setSport(matchUpdateDto.getSport());
-    updatedMatch.setType(matchUpdateDto.getType());
 
     updatedMatch.setAddress(matchUpdateDto.getAddress());
     updatedMatch.setStartDate(matchUpdateDto.getStartDate());

@@ -17,7 +17,6 @@ import javax.validation.constraints.Size;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportDependent;
-import org.manuel.mysportfolio.model.SportType;
 import org.manuel.mysportfolio.model.entities.Place;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
@@ -48,8 +47,6 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
 
   @NotNull
   private Sport sport;
-
-  private SportType type;
 
   private HomeTeamType homeTeam;
 

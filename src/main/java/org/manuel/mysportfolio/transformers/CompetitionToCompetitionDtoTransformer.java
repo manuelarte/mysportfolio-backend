@@ -10,7 +10,7 @@ public class CompetitionToCompetitionDtoTransformer implements
     Function<Competition, CompetitionDto> {
 
   @Override
-  public CompetitionDto apply(Competition competition) {
+  public CompetitionDto apply(final Competition competition) {
     return CompetitionDto.builder()
         .id(competition.getId().toString())
         .version(competition.getVersion())

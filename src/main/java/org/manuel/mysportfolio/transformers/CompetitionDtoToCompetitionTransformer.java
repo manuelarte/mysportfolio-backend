@@ -12,7 +12,7 @@ public class CompetitionDtoToCompetitionTransformer implements
     Function<CompetitionDto, Competition> {
 
   @Override
-  public Competition apply(CompetitionDto competitionDto) {
+  public Competition apply(final CompetitionDto competitionDto) {
     final var competition = new Competition();
     Optional.ofNullable(competitionDto.getId())
         .ifPresent(id -> competition.setId(new ObjectId(id)));
