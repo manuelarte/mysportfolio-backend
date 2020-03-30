@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adding PUT in Competition controller
 - Adding more sports, FOOTBALL_7, FOOTBALL_6
 
+### Changed
+
+- CircleCI Workflow of master to upload image
+
 ### Removed
 
 - Removing sport type
@@ -21,8 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adding CHANGELOG.
 
 ### Changed
-- Fixing bug of query criteria
-- CircleCI Workflow of master to upload image 
+- Fixing bug of query criteria 
 
 ## [0.2.11] - 2020-03-07
 
