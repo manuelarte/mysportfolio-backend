@@ -2,7 +2,7 @@ version: 2.1 # use CircleCI 2.1
 orbs:
   gcp-cli: circleci/gcp-cli@1.8.3
   gcp-gke: circleci/gcp-gke@0.1.0
-  gcr: circleci/gcp-gcr@0.0.2
+  gcr: circleci/gcp-gcr@0.6.1
 jobs: # a collection of steps
   build:
     # Remove if parallelism is not desired

@@ -2,7 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.2.2.RELEASE'
     id 'java'
     id "nebula.facet" version "6.0.3"
-    id 'com.google.cloud.tools.jib' version '1.8.0'
+    id 'com.google.cloud.tools.jib' version '2.1.0'
     id 'checkstyle'
 }
 
