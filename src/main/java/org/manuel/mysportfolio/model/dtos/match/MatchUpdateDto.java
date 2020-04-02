@@ -13,7 +13,6 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.PastOrPresent;
-import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.entities.Place;
 import org.manuel.mysportfolio.model.entities.TeamOption;
@@ -35,9 +34,6 @@ public class MatchUpdateDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamT
 
   @NotNull(groups = {NewEntity.class, UpdateEntity.class})
   private final MatchType type;
-
-  @NotNull
-  private final Sport sport;
 
   @NotNull
   private final Map<String, TeamOption> playedFor;
