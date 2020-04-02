@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changed
+
+### Removed
+
+## [0.2.14] - 2020-04-04
+
+### Added
+
 - Version is handled now in an external file, to avoid merge conflicts
 
 ### Changed
