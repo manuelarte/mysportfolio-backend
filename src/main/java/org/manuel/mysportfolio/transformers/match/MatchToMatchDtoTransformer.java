@@ -4,7 +4,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.match.MatchEventDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
@@ -28,10 +27,8 @@ public class MatchToMatchDtoTransformer implements
         .map(matchEventToMatchEventDtoTransformer);
     return match == null ? null : MatchDto.builder()
         .id(match.getId().toString())
-        .competitionId(
-            Optional.ofNullable(match.getCompetitionId()).map(ObjectId::toString).orElse(null))
         .version(match.getVersion())
-        .sport(match.getSport())
+        .type(Optional.ofNullable(match.getType()).orElse(null))
         .playedFor(match.getPlayedFor())
         .homeTeam(teamTypeToTeamInMatchDtoTransformer.apply(match.getHomeTeam()))
         .awayTeam(teamTypeToTeamInMatchDtoTransformer.apply(match.getAwayTeam()))

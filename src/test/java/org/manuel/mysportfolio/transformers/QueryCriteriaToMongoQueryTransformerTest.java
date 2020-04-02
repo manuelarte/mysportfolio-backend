@@ -3,9 +3,7 @@ package org.manuel.mysportfolio.transformers;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.manuel.mysportfolio.config.operators.EqualQueryOperator;
 import org.manuel.mysportfolio.config.operators.GreaterThanQueryOperator;
-import org.manuel.mysportfolio.config.operators.InQueryOperator;
 import org.manuel.mysportfolio.config.operators.LowerThanQueryOperator;
 import org.manuel.mysportfolio.model.QueryCriteria;
 import org.manuel.mysportfolio.model.SearchCriterion;
@@ -40,12 +38,8 @@ class QueryCriteriaToMongoQueryTransformerTest {
     final var second = new SearchCriterion<>("startDate",
         new LowerThanQueryOperator(), "2019-11-04");
 
-    final var third = new SearchCriterion<>("sport",
-        new EqualQueryOperator(), "FOOTBALL");
-
     final QueryCriteria queryCriteria = new QueryCriteria(first,
-        List.of(Pair.of(QueryCriteria.QueryOption.AND, second),
-            Pair.of(QueryCriteria.QueryOption.AND, third)));
+        List.of(Pair.of(QueryCriteria.QueryOption.AND, second)));
 
     final var query = QUERY_CRITERIA_TO_MONGO_QUERY_TRANSFORMER.apply(queryCriteria, Match.class);
   }
@@ -58,12 +52,8 @@ class QueryCriteriaToMongoQueryTransformerTest {
     final var second = new SearchCriterion<>("startDate",
         new LowerThanQueryOperator(), "2019-11-04");
 
-    final var third = new SearchCriterion<>("sport",
-        new EqualQueryOperator(), "FOOTBALL");
-
     final QueryCriteria queryCriteria = new QueryCriteria(first,
-        List.of(Pair.of(QueryCriteria.QueryOption.OR, second),
-            Pair.of(QueryCriteria.QueryOption.AND, third)));
+        List.of(Pair.of(QueryCriteria.QueryOption.OR, second)));
 
     final var query = QUERY_CRITERIA_TO_MONGO_QUERY_TRANSFORMER.apply(queryCriteria, Match.class);
   }
@@ -76,12 +66,8 @@ class QueryCriteriaToMongoQueryTransformerTest {
     final var second = new SearchCriterion<>("startDate",
         new LowerThanQueryOperator(), "2019-11-04");
 
-    final var third = new SearchCriterion<>("sport",
-        new InQueryOperator(), List.of("FOOTBALL"));
-
     final QueryCriteria queryCriteria = new QueryCriteria(first,
-        List.of(Pair.of(QueryCriteria.QueryOption.AND, second),
-            Pair.of(QueryCriteria.QueryOption.AND, third)));
+        List.of(Pair.of(QueryCriteria.QueryOption.AND, second)));
 
     final var query = QUERY_CRITERIA_TO_MONGO_QUERY_TRANSFORMER.apply(queryCriteria, Match.class);
   }

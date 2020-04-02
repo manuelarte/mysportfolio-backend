@@ -16,6 +16,7 @@ import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 import org.manuel.mysportfolio.model.entities.match.Match;
+import org.manuel.mysportfolio.model.entities.match.type.FriendlyMatchType;
 import org.manuel.mysportfolio.repositories.MatchRepository;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -48,13 +49,13 @@ class MatchCommandServiceTest {
     final var expected = new Match<AnonymousTeam, AnonymousTeam>();
     expected.setHomeTeam(TestUtils.createMockAnonymousTeam());
     expected.setAwayTeam(TestUtils.createMockAnonymousTeam());
-    expected.setSport(Sport.FOOTBALL);
+    expected.setType(new FriendlyMatchType(Sport.FOOTBALL));
     expected.setStartDate(Instant.now());
     expected.setCreatedBy("123456789");
     expected.setPlayedFor(Collections.singletonMap("123456789", TeamOption.HOME_TEAM));
 
     final var notExpected = new Match<AnonymousTeam, AnonymousTeam>();
-    notExpected.setSport(Sport.FUTSAL);
+    notExpected.setType(new FriendlyMatchType(Sport.FUTSAL));
     notExpected.setHomeTeam(TestUtils.createMockAnonymousTeam());
     notExpected.setAwayTeam(TestUtils.createMockAnonymousTeam());
     notExpected.setStartDate(Instant.now().minus(80, ChronoUnit.DAYS));
@@ -64,7 +65,7 @@ class MatchCommandServiceTest {
     matchRepository.save(notExpected);
 
     final Query query = new Query();
-    final var criteria = Criteria.where("sport").is(Sport.FOOTBALL);
+    final var criteria = Criteria.where("type.sport").is(Sport.FOOTBALL);
     query.addCriteria(criteria);
 
     try {
@@ -85,7 +86,7 @@ class MatchCommandServiceTest {
 
   }
 
-  private void assertMatch(final Match expected, final Match actual) {
+  private void assertMatch(final Match<?, ?> expected, final Match<?, ?> actual) {
     assertEquals(expected.getId(), actual.getId());
     assertEquals(expected.getStartDate().toEpochMilli(), actual.getStartDate().toEpochMilli());
   }

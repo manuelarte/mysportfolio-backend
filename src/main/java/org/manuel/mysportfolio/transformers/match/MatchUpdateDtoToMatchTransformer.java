@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.dtos.match.MatchUpdateDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.entities.match.Match;
@@ -37,9 +36,7 @@ public class MatchUpdateDtoToMatchTransformer implements
 
     // Fields that can be modified
     updatedMatch.setVersion(matchUpdateDto.getVersion());
-    updatedMatch.setCompetitionId(
-        Optional.ofNullable(matchUpdateDto.getCompetitionId()).map(ObjectId::new).orElse(null));
-    updatedMatch.setSport(matchUpdateDto.getSport());
+    updatedMatch.setType(Optional.ofNullable(matchUpdateDto.getType()).orElse(null));
 
     updatedMatch.setAddress(matchUpdateDto.getAddress());
     updatedMatch.setStartDate(matchUpdateDto.getStartDate());

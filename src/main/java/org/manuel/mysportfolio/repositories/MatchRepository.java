@@ -1,9 +1,7 @@
 package org.manuel.mysportfolio.repositories;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.springframework.data.domain.Page;
@@ -19,8 +17,5 @@ public interface MatchRepository
   Page<Match<TeamType, TeamType>> findAllByCreatedByIs(Pageable pageable, String createdBy);
 
   int countAllByCreatedDateBetweenAndCreatedBy(LocalDate from, LocalDate to, String createdBy);
-
-  Collection<Match<?, ?>> findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(String userId,
-      LocalDate from, LocalDate to, Sport sport);
 
 }

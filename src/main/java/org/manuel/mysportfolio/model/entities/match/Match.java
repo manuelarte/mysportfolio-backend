@@ -15,12 +15,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.Sport;
-import org.manuel.mysportfolio.model.SportDependent;
 import org.manuel.mysportfolio.model.entities.Place;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
 import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
+import org.manuel.mysportfolio.model.entities.match.type.MatchType;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -35,18 +34,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
 public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType> implements
-    SportDependent, Auditable<String, ObjectId, Instant> {
+    Auditable<String, ObjectId, Instant> {
 
   @Id
   private ObjectId id;
 
-  private ObjectId competitionId;
+  @NotNull
+  private MatchType type;
 
   @Version
   private Long version;
-
-  @NotNull
-  private Sport sport;
 
   private HomeTeamType homeTeam;
 
