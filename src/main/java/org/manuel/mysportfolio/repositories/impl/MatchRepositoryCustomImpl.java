@@ -3,7 +3,9 @@ package org.manuel.mysportfolio.repositories.impl;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
+import org.manuel.mysportfolio.model.entities.Competition;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.manuel.mysportfolio.repositories.MatchRepositoryCustom;
@@ -32,12 +34,27 @@ class MatchRepositoryCustomImpl implements MatchRepositoryCustom {
   }
 
   @Override
-  public List<Match> findAllByPlayedContainsAndSportIsAndStartDateIsBetween(final String externalId,
-      final Sport sport, final LocalDate from, final LocalDate to) {
+  public List<Match> findAllByTypeSportOrTypeCompetitionInAndStartDateIsBetween(
+      final String externalId, final Sport sport,
+      final LocalDate from, final LocalDate to) {
     final var usersMatches = Criteria.where("playedFor." + externalId).exists(true);
-    final var ofSport = Criteria.where("sport").is(sport);
     final var betweenDates = Criteria.where("startDate").gte(from).lte(to);
-    final var query = new Query(usersMatches.andOperator(ofSport, betweenDates));
+    final var ofSport = Criteria.where("type.sport").is(sport.name());
+
+    final var allCompetitions = mongoTemplate
+        .findDistinct(new Query(Criteria.where("playedFor." + externalId).exists(true)
+                .andOperator(Criteria.where("startDate").gte(from).lte(to),
+                    Criteria.where("type.competitionId").exists(true))), "type.competitionId",
+            Match.class,
+            ObjectId.class);
+    final var sportCompetitions = mongoTemplate
+        .findDistinct(new Query(Criteria.where("id").in(allCompetitions)
+                .andOperator(Criteria.where("sport").is(sport.name()))),
+            "id", Competition.class, ObjectId.class);
+
+    final var sportCompetitionIds = Criteria.where("type.competitionId").in(sportCompetitions);
+    final var query = new Query(
+        usersMatches.andOperator(betweenDates).orOperator(ofSport, sportCompetitionIds));
     return mongoTemplate.find(query, Match.class);
   }
 

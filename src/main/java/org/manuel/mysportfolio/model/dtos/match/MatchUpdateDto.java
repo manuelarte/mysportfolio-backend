@@ -13,11 +13,11 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Size;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.entities.Place;
 import org.manuel.mysportfolio.model.entities.TeamOption;
+import org.manuel.mysportfolio.model.entities.match.type.MatchType;
 import org.manuel.mysportfolio.validation.NewEntity;
 import org.manuel.mysportfolio.validation.PartialUpdateEntity;
 import org.manuel.mysportfolio.validation.UpdateEntity;
@@ -33,8 +33,8 @@ public class MatchUpdateDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamT
   @NotNull(groups = {UpdateEntity.class, PartialUpdateEntity.class})
   private final Long version;
 
-  @Size(max = 24)
-  private final String competitionId;
+  @NotNull(groups = {NewEntity.class, UpdateEntity.class})
+  private final MatchType type;
 
   @NotNull
   private final Sport sport;

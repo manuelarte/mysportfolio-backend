@@ -26,6 +26,7 @@ import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
+import org.manuel.mysportfolio.model.entities.match.type.FriendlyMatchType;
 import org.manuel.mysportfolio.model.entities.team.PlainKitPart;
 import org.manuel.mysportfolio.model.entities.team.Team;
 import org.manuel.mysportfolio.model.entities.team.TeamKit;
@@ -107,7 +108,7 @@ public class TestUtils {
   public static Match createMockMatch(final TeamType homeTeam, final TeamType awayTeam,
       final String createdBy) {
     final var match = new Match();
-    match.setSport(Sport.FOOTBALL);
+    match.setType(new FriendlyMatchType(Sport.FOOTBALL));
     match.setHomeTeam(homeTeam);
     match.setAwayTeam(awayTeam);
     match.setStartDate(Instant.now());
@@ -139,7 +140,7 @@ public class TestUtils {
     goals.addAll(IntStream.range(0, awayTeamGoalsNumber)
         .mapToObj(i -> createMockGoal(TeamOption.AWAY_TEAM)).collect(Collectors.toList()));
     return MatchDto.builder()
-        .sport(Sport.FOOTBALL)
+        .type(new FriendlyMatchType(Sport.FOOTBALL))
         .playedFor(playedFor)
         .homeTeam(homeTeam)
         .awayTeam(awayTeam)

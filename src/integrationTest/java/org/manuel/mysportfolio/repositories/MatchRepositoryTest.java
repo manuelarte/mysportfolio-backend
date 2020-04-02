@@ -1,6 +1,7 @@
 package org.manuel.mysportfolio.repositories;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.Instant;
@@ -11,6 +12,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
 import org.junit.jupiter.api.DisplayName;
@@ -19,11 +21,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.Sport;
+import org.manuel.mysportfolio.model.entities.Competition;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
+import org.manuel.mysportfolio.model.entities.match.type.CompetitionMatchType;
+import org.manuel.mysportfolio.model.entities.match.type.FriendlyMatchType;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Pageable;
@@ -38,8 +43,11 @@ public class MatchRepositoryTest {
   @Inject
   private MatchRepository matchRepository;
 
-  @DisplayName("save match with two anonymous teams")
+  @Inject
+  private CompetitionRepository competitionRepository;
+
   @Test
+  @DisplayName("save match with two anonymous teams")
   public void testSaveMatchWithAnonymousTeams() {
     final var match = new Match<AnonymousTeam, AnonymousTeam>();
     match.setHomeTeam(TestUtils.createMockAnonymousTeam());
@@ -48,8 +56,8 @@ public class MatchRepositoryTest {
     matchRepository.save(match);
   }
 
-  @DisplayName("save match with one registered team and one anonymous teams")
   @Test
+  @DisplayName("save match with one registered team and one anonymous teams")
   public void testSaveMatchWithOneAnonymousTeam() {
     final var match = new Match<RegisteredTeam, AnonymousTeam>();
     match.setHomeTeam(TestUtils.createMockRegisteredTeam());
@@ -58,8 +66,8 @@ public class MatchRepositoryTest {
     matchRepository.save(match);
   }
 
-  @DisplayName("update match with different lock version")
   @Test
+  @DisplayName("update match with different lock version")
   public void testUpdateMatchWithDifferentVersion() {
     final var match = new Match<RegisteredTeam, AnonymousTeam>();
     match.setHomeTeam(TestUtils.createMockRegisteredTeam());
@@ -70,8 +78,8 @@ public class MatchRepositoryTest {
     assertThrows(OptimisticLockingFailureException.class, () -> matchRepository.save(saved));
   }
 
-  @DisplayName("load matches by created date, one match recorded yesterday")
   @Test
+  @DisplayName("load matches by created date, one match recorded yesterday")
   public void testGetMatchesWithStartDateGreaterThan() {
     final var expected = createMatch("1234", Instant.now());
     final var notExpected = createMatch("1234", Instant.now().minus(80, ChronoUnit.DAYS));
@@ -169,7 +177,7 @@ public class MatchRepositoryTest {
         ZonedDateTime.now().minusYears(1).toInstant()));
 
     final var notExpectedAnotherSport = createMatch(ItConfiguration.IT_USER_ID, Instant.now());
-    notExpectedAnotherSport.setSport(Sport.FUTSAL);
+    notExpectedAnotherSport.setType(new FriendlyMatchType(Sport.FUTSAL));
     matchRepository.save(notExpectedAnotherSport);
 
     final var notExpectedIsAnotherUser = createMatch(ItConfiguration.IT_USER_ID, Instant.now());
@@ -180,33 +188,82 @@ public class MatchRepositoryTest {
     final var from = LocalDate.now().with(TemporalAdjusters.firstDayOfYear());
     final var to = LocalDate.now().with(TemporalAdjusters.lastDayOfYear());
     final var actual = matchRepository
-        .findAllByPlayedContainsAndSportIsAndStartDateIsBetween(ItConfiguration.IT_USER_ID,
+        .findAllByTypeSportOrTypeCompetitionInAndStartDateIsBetween(ItConfiguration.IT_USER_ID,
             Sport.FOOTBALL, from, to);
     assertEquals(1, actual.size());
     assertEquals(expected.getId(), actual.get(0).getId());
   }
 
-  private void assertMatch(final Match expected, final Match actual) {
+  @Test
+  @DisplayName("load friendly matches by sport")
+  public void testLoadMatchesBySport() {
+    final Sport desiredSport = Sport.FOOTBALL;
+    final Sport notDesiredSport = Sport.FUTSAL;
+
+    // create two competitions
+    final var desiredSportCompetition = competitionRepository
+        .save(new Competition("name", desiredSport, null, null, null, null));
+    final var notDesiredSportCompetition = competitionRepository
+        .save(new Competition("name", notDesiredSport, null, null, null, null));
+
+    final var from = LocalDate.now().with(TemporalAdjusters.firstDayOfYear());
+    final var to = LocalDate.now().with(TemporalAdjusters.lastDayOfYear());
+
+    final var match = createMatch("userId", Instant.now(), desiredSport);
+    final var match2 = createMatch("userId", Instant.now(), desiredSport);
+    final var match3 = createMatch("userId", Instant.now(), notDesiredSport);
+    final var match4 = createMatch("userId", Instant.now(), notDesiredSport);
+    final var match5 = createMatch("userId", ZonedDateTime.now().minusYears(2).toInstant(),
+        Instant.now(), desiredSport);
+    final var match6 = createMatch("userId", Instant.now(), desiredSport);
+    match6.setType(new CompetitionMatchType(desiredSportCompetition.getId()));
+    final var match7 = createMatch("userId", Instant.now(), notDesiredSport);
+    match7.setType(new CompetitionMatchType(notDesiredSportCompetition.getId()));
+
+    matchRepository.saveAll(List.of(match, match2, match3, match4, match5, match6, match7));
+
+    final var matches = matchRepository
+        .findAllByTypeSportOrTypeCompetitionInAndStartDateIsBetween("userId",
+            desiredSport, from, to);
+    assertFalse(matches.isEmpty());
+    assertEquals(3, matches.size());
+  }
+
+  private void assertMatch(final Match<?, ?> expected, final Match<?, ?> actual) {
     assertEquals(expected.getId(), actual.getId());
     assertEquals(expected.getStartDate().toEpochMilli(), actual.getStartDate().toEpochMilli());
   }
 
+  private Match<TeamType, TeamType> createMatch(final String createdBy, final Sport sport) {
+    return createMatch(createdBy, Instant.now(), Instant.now(), sport);
+  }
+
   private Match<TeamType, TeamType> createMatch(final String createdBy, final Instant startDate) {
-    return createMatch(createdBy, startDate, startDate);
+    return createMatch(createdBy, startDate, startDate, Sport.FOOTBALL);
   }
 
   private Match<TeamType, TeamType> createMatch(final String createdBy, final Instant startDate,
       final Instant createdDate) {
+    return createMatch(createdBy, startDate, createdDate, Sport.FOOTBALL);
+  }
+
+  private Match<TeamType, TeamType> createMatch(final String createdBy, final Instant startDate,
+      final Sport sport) {
+    return createMatch(createdBy, startDate, startDate, sport);
+  }
+
+  private Match<TeamType, TeamType> createMatch(final String createdBy, final Instant startDate,
+      final Instant createdDate, final Sport sport) {
     final Map<String, TeamOption> playedFor = new HashMap<>();
     playedFor.put(createdBy, TeamOption.HOME_TEAM);
     final var expected = new Match<>();
+    expected.setType(new FriendlyMatchType(sport));
     expected.setHomeTeam(TestUtils.createMockAnonymousTeam());
     expected.setAwayTeam(TestUtils.createMockAnonymousTeam());
     expected.setPlayedFor(playedFor);
     expected.setStartDate(startDate);
     expected.setCreatedBy(createdBy);
     expected.setCreatedDate(createdDate);
-    expected.setSport(Sport.FOOTBALL);
     return expected;
   }
 

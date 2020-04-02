@@ -21,6 +21,7 @@ import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
 import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
+import org.manuel.mysportfolio.model.entities.match.type.FriendlyMatchType;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
 
 class PlayerProfileSportSeasonSummaryDtoTransformerTest {
@@ -103,7 +104,7 @@ class PlayerProfileSportSeasonSummaryDtoTransformerTest {
       final Sport sport, List<Double> goalsRate) {
     final var match = new Match<>();
     match.setStartDate(startDate);
-    match.setSport(sport);
+    match.setType(new FriendlyMatchType(sport));
     match.setPlayedFor(Collections.singletonMap(userId, TeamOption.HOME_TEAM));
     final List<MatchEvent> events = goalsRate.stream().map(i -> {
       final var goalEvent = new GoalMatchEvent();

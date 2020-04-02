@@ -8,6 +8,7 @@ import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.badges.UserBadges;
 import org.manuel.mysportfolio.model.entities.match.Match;
+import org.manuel.mysportfolio.model.entities.match.type.FriendlyMatchType;
 import org.manuel.mysportfolio.model.events.MatchCreatedEvent;
 import org.manuel.mysportfolio.services.command.UserBadgesCommandService;
 import org.springframework.context.ApplicationEvent;
@@ -39,7 +40,7 @@ class AddBadgesListenerTest {
   @Test
   public void testFirstFootballMatch() {
     final Match<?, ?> match = new Match<>();
-    match.setSport(Sport.FOOTBALL);
+    match.setType(new FriendlyMatchType(Sport.FOOTBALL));
     match.setPlayedFor(Collections.singletonMap("123456789", TeamOption.HOME_TEAM));
     final var matchCreatedEvent = new MatchCreatedEvent(match);
     ADD_BADGES_LISTENER.onApplicationEvent(matchCreatedEvent);

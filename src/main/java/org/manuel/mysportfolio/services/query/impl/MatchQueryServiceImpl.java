@@ -3,6 +3,7 @@ package org.manuel.mysportfolio.services.query.impl;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.entities.match.Match;
@@ -50,7 +51,9 @@ class MatchQueryServiceImpl implements MatchQueryService {
       final String userId,
       final LocalDate from, final LocalDate to, final Sport sport) {
     return matchRepository
-        .findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(userId, from, to, sport);
+        .findAllByTypeSportOrTypeCompetitionInAndStartDateIsBetween(userId, sport, from, to)
+        .stream()
+        .map(it -> (Match<?, ?>) it).collect(Collectors.toSet());
   }
 
 }
