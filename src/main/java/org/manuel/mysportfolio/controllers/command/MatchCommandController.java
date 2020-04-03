@@ -4,7 +4,6 @@ import javax.validation.groups.Default;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
-import org.manuel.mysportfolio.model.dtos.match.MatchUpdateDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.services.command.MatchCommandService;
@@ -12,6 +11,7 @@ import org.manuel.mysportfolio.services.query.MatchQueryService;
 import org.manuel.mysportfolio.transformers.match.MatchDtoToMatchTransformer;
 import org.manuel.mysportfolio.transformers.match.MatchToMatchDtoTransformer;
 import org.manuel.mysportfolio.transformers.match.MatchUpdateDtoToMatchTransformer;
+import org.manuel.mysportfolio.validation.Exists;
 import org.manuel.mysportfolio.validation.NewEntity;
 import org.manuel.mysportfolio.validation.UpdateEntity;
 import org.springframework.http.MediaType;
@@ -27,6 +27,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/v1/matches")
+@Validated
 @lombok.AllArgsConstructor
 @lombok.extern.slf4j.Slf4j
 public class MatchCommandController {
@@ -43,7 +44,6 @@ public class MatchCommandController {
       @Validated({Default.class,
           NewEntity.class}) @RequestBody final MatchDto<TeamTypeDto, TeamTypeDto> matchDto) {
     final var saved = matchCommandService.save(matchDtoToMatchTransformer.apply(matchDto));
-
     final var location = ServletUriComponentsBuilder
         .fromCurrentRequest().path("/{id}")
         .buildAndExpand(saved.getId()).toUri();
@@ -53,9 +53,9 @@ public class MatchCommandController {
 
   @PutMapping(value = "/{matchId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<MatchDto<TeamTypeDto, TeamTypeDto>> updateMatch(
-      @PathVariable final ObjectId matchId,
+      @PathVariable @Exists final ObjectId matchId,
       @Validated({Default.class,
-          UpdateEntity.class}) @RequestBody final MatchUpdateDto<TeamTypeDto, TeamTypeDto> matchDto) {
+          UpdateEntity.class}) @RequestBody final MatchDto<TeamTypeDto, TeamTypeDto> matchDto) {
     final var originalMatch = matchQueryService.findOne(matchId).orElseThrow(() ->
         new EntityNotFoundException(Match.class, matchId.toString()));
     final var updated = matchCommandService

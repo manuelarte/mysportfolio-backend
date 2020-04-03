@@ -30,8 +30,7 @@ import org.manuel.mysportfolio.validation.UpdateEntity;
 @lombok.Builder(toBuilder = true)
 public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> {
 
-  @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
-  @NotNull(groups = UpdateEntity.class)
+  @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
   private final String id;
 
   @Null(groups = NewEntity.class)

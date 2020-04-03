@@ -13,7 +13,8 @@ import org.springframework.data.util.Pair;
 
 class QueryCriteriaToMongoQueryTransformerTest {
 
-  private static final QueryCriteriaToMongoQueryTransformer QUERY_CRITERIA_TO_MONGO_QUERY_TRANSFORMER =
+  private static final QueryCriteriaToMongoQueryTransformer
+      QUERY_CRITERIA_TO_MONGO_QUERY_TRANSFORMER =
       new QueryCriteriaToMongoQueryTransformer(new TypeConversionService());
 
   @Test

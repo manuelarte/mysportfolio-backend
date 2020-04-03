@@ -6,6 +6,7 @@ import org.manuel.mysportfolio.model.dtos.match.PerformanceDto;
 import org.manuel.mysportfolio.services.command.PlayersPerformanceCommandService;
 import org.manuel.mysportfolio.transformers.PerformanceDtoToPerformanceTransformer;
 import org.manuel.mysportfolio.transformers.PerformanceToPerformanceDtoTransformer;
+import org.manuel.mysportfolio.validation.Exists;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -27,7 +28,7 @@ public class PlayersPerformanceCommandController {
 
   @PatchMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<PerformanceDto> updatePerformance(
-      @PathVariable final ObjectId matchId,
+      @PathVariable @Exists final ObjectId matchId,
       @RequestBody final PerformanceDto performanceDto) {
     final var updated = playersPerformanceCommandService.updatePerformance(matchId, getUserId(),
         performanceDtoToPerformanceTransformer.apply(performanceDto));

@@ -22,8 +22,6 @@ public interface MatchQueryService {
   Page<Match<TeamType, TeamType>> findAllCreatedBy(Pageable pageable, String createdBy);
 
   @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    // @PreAuthorize() check if I can query, by checking the query,
-    // I can check that the start date is set, not created by, etc
   Page<Match<TeamType, TeamType>> findQueryAllCreatedBy(Query query, Pageable pageable,
       String createdBy);
 

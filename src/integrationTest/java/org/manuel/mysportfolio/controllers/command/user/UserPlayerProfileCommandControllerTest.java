@@ -52,6 +52,7 @@ public class UserPlayerProfileCommandControllerTest {
   private MockMvc mvc;
 
   @BeforeEach
+  @SuppressWarnings("checkstyle:javadoctype")
   public void setup() {
     mvc = MockMvcBuilders.webAppContextSetup(context)
         .apply(springSecurity())

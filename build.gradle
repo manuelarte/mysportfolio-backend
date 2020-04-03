@@ -1,13 +1,12 @@
 plugins {
-    id 'org.springframework.boot' version '2.2.2.RELEASE'
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
     id "nebula.facet" version "6.0.3"
     id 'com.google.cloud.tools.jib' version '2.1.0'
     id 'com.palantir.git-version' version '0.12.3'
     id 'checkstyle'
 }
-
-apply plugin: 'io.spring.dependency-management'
 
 ext.versionFile = file('version.properties')
 ext.gitDetails = versionDetails()
@@ -85,9 +84,8 @@ dependencies {
     implementation 'com.google.api-client:google-api-client-jackson2:1.30.7'
     implementation 'io.springfox:springfox-swagger2:2.9.2'
     implementation 'io.springfox:springfox-swagger-ui:2.9.2'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    compileOnly 'org.projectlombok:lombok:1.18.10'
-    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
     implementation 'com.google.firebase:firebase-admin:6.12.0'
 

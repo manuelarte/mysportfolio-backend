@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.manuel.mysportfolio.model.dtos.match.MatchUpdateDto;
+import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
@@ -16,7 +16,8 @@ import org.springframework.stereotype.Component;
 @Component
 @lombok.AllArgsConstructor
 public class MatchUpdateDtoToMatchTransformer implements
-    BiFunction<Match<? extends TeamType, ? extends TeamType>, MatchUpdateDto<? extends TeamTypeDto, ? extends TeamTypeDto>, Match<TeamType, TeamType>> {
+    BiFunction<Match<? extends TeamType, ? extends TeamType>,
+        MatchDto<? extends TeamTypeDto, ? extends TeamTypeDto>, Match<TeamType, TeamType>> {
 
   private final TeamInMatchDtoToTeamTypeTransformer teamInMatchDtoToTeamTypeTransformer;
   private final MatchEventDtoToMatchEventTransformer matchEventDtoToMatchEventTransformer;
@@ -24,7 +25,7 @@ public class MatchUpdateDtoToMatchTransformer implements
   @Override
   public Match<TeamType, TeamType> apply(
       final Match<? extends TeamType, ? extends TeamType> originalMatch,
-      final MatchUpdateDto<? extends TeamTypeDto, ? extends TeamTypeDto> matchUpdateDto) {
+      final MatchDto<? extends TeamTypeDto, ? extends TeamTypeDto> matchUpdateDto) {
     final var updatedMatch = new Match<>();
 
     // Fields that should never change

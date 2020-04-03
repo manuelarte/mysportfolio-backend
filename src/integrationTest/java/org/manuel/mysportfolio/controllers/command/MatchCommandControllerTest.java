@@ -3,6 +3,7 @@ package org.manuel.mysportfolio.controllers.command;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,9 +23,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.TestUtils;
+import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.repositories.MatchRepository;
 import org.manuel.mysportfolio.repositories.TeamRepository;
+import org.manuel.mysportfolio.transformers.match.MatchToMatchDtoTransformer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.core.Authentication;
@@ -46,19 +49,19 @@ public class MatchCommandControllerTest {
 
   @Inject
   private ObjectMapper objectMapper;
-
   @Inject
   private TeamRepository teamRepository;
-
+  @Inject
+  private MatchToMatchDtoTransformer matchToMatchDtoTransformer;
   @Inject
   private MatchRepository matchRepository;
-
   @Inject
   private WebApplicationContext context;
 
   private MockMvc mvc;
 
   @BeforeEach
+  @SuppressWarnings("checkstyle:javadoctype")
   public void setup() {
     mvc = MockMvcBuilders.webAppContextSetup(context)
         .apply(springSecurity())
@@ -110,6 +113,30 @@ public class MatchCommandControllerTest {
         .andExpect(jsonPath("$.homeTeam.name").value(matchDto.getHomeTeam().getName()))
         .andExpect(jsonPath("$.awayTeam.type").value("anonymous"))
         .andExpect(jsonPath("$.awayTeam.name").value(matchDto.getAwayTeam().getName()))
+        .andExpect(jsonPath("$.events[*].id", Matchers.notNullValue()));
+  }
+
+  @Test
+  public void testUpdateMatchWithTwoAnonymousTeams() throws Exception {
+    final var match = matchRepository.save(
+        TestUtils.createMockMatch(TestUtils.createMockAnonymousTeam(),
+            TestUtils.createMockAnonymousTeam(), "123456789"));
+    final String description = "new description";
+    final MatchDto updateDto = matchToMatchDtoTransformer.apply(match).toBuilder()
+        .id(null).createdBy(null)
+        .description(description)
+        .build();
+
+    mvc.perform(put("/api/v1/matches/{id}", match.getId()).contentType(APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(updateDto)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id", Matchers.notNullValue()))
+        .andExpect(jsonPath("$.type.type").value("friendly"))
+        .andExpect(jsonPath("$.homeTeam.type").value("anonymous"))
+        .andExpect(jsonPath("$.homeTeam.name").value(match.getHomeTeam().getName()))
+        .andExpect(jsonPath("$.awayTeam.type").value("anonymous"))
+        .andExpect(jsonPath("$.awayTeam.name").value(match.getAwayTeam().getName()))
+        .andExpect(jsonPath("$.description").value(description))
         .andExpect(jsonPath("$.events[*].id", Matchers.notNullValue()));
   }
 
