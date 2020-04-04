@@ -18,6 +18,7 @@ import org.manuel.mysportfolio.validation.UpdateEntity;
 @JsonDeserialize(builder = CompetitionDto.CompetitionDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @lombok.Value
+@lombok.EqualsAndHashCode(callSuper = true)
 public class CompetitionDto extends BaseDto {
 
   @NotNull(groups = {NewEntity.class, UpdateEntity.class})

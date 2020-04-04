@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "competitions")
 @lombok.Data
 @lombok.NoArgsConstructor
+@lombok.EqualsAndHashCode(callSuper = true)
 public class Competition extends BaseEntity implements SportDependent {
 
   @NotNull

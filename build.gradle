@@ -35,7 +35,7 @@ ProjectVersion readVersion() {
 
 group = 'org.manuel'
 version = readVersion()
-sourceCompatibility = '11'
+sourceCompatibility = '13'
 
 facets {
     integrationTest {
