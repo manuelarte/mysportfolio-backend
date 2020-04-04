@@ -36,7 +36,8 @@ public class UserTeamCommandController {
   private final UserInTeamDtoToUserInTeamTransformer userInTeamDtoToUserInTeamTransformer;
   private final UserIdProvider userIdProvider;
 
-  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserTeamDto> saveUserTeam(
       @Validated({Default.class, NewEntity.class}) @RequestBody final UserTeamDto userTeamDto) {
     final var teamSaved = teamCommandService

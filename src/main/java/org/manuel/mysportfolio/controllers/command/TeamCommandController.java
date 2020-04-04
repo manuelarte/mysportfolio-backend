@@ -34,7 +34,8 @@ public class TeamCommandController {
   private final TeamDtoToExistingTeamTransformer teamDtoToExistingTeamTransformer;
   private final PartialTeamDtoToTeamTransformer partialTeamDtoToTeamTransformer;
 
-  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<TeamDto> saveTeam(
       @Validated({Default.class, NewEntity.class}) @RequestBody final TeamDto teamDto) {
     final var saved = teamCommandService.save(teamDtoToTeamTransformer.apply(teamDto));
@@ -45,7 +46,8 @@ public class TeamCommandController {
     return ResponseEntity.created(location).body(teamToTeamDtoTransformer.apply(saved));
   }
 
-  @PutMapping(value = "/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @PutMapping(value = "/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<TeamDto> updateTeam(@PathVariable final String teamId,
       @Validated({Default.class}) @RequestBody final TeamDto teamDto) {
     Assert.isTrue(teamId.equals(teamDto.getId()), "Ids don't match");
@@ -54,14 +56,13 @@ public class TeamCommandController {
     return ResponseEntity.ok(teamToTeamDtoTransformer.apply(saved));
   }
 
-  @PatchMapping(value = "/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @PatchMapping(value = "/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<TeamDto> partialUpdateTeam(@PathVariable final String teamId,
       @Validated({Default.class, PartialUpdateEntity.class}) @RequestBody final TeamDto teamDto) {
     final var updated = partialTeamDtoToTeamTransformer.apply(teamId, teamDto);
     return ResponseEntity
         .ok(teamToTeamDtoTransformer.apply(teamCommandService.update(updated)));
-
-
   }
 
 }

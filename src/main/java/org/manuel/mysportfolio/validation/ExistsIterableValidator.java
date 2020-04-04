@@ -23,7 +23,7 @@ public class ExistsIterableValidator implements
 
   @Override
   public boolean isValid(final Iterable<ObjectId> ids, final ConstraintValidatorContext cxt) {
-    return (ids == null || ids.iterator().hasNext() == false)
+    return (ids == null || !ids.iterator().hasNext())
         || mongoTemplate.exists(new Query(Criteria.where("_id").in(ids)), entity);
   }
 

@@ -28,7 +28,7 @@ import org.manuel.mysportfolio.validation.UpdateEntity;
 @lombok.AllArgsConstructor
 @lombok.Value
 @lombok.Builder(toBuilder = true)
-public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> {
+public class MatchDto<H extends TeamTypeDto, A extends TeamTypeDto> {
 
   @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
   private final String id;
@@ -43,9 +43,9 @@ public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto
   @NotNull
   private final Map<String, TeamOption> playedFor;
 
-  private final HomeTeam homeTeam;
+  private final H homeTeam;
 
-  private final AwayTeam awayTeam;
+  private final A awayTeam;
 
   private final List<MatchEventDto> events;
 
@@ -69,8 +69,8 @@ public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto
   @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
   private final String createdBy;
 
-  public static <HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> MatchDtoBuilder builder() {
-    return new MatchDtoBuilder<HomeTeam, AwayTeam>();
+  public static <H extends TeamTypeDto, A extends TeamTypeDto> MatchDtoBuilder builder() {
+    return new MatchDtoBuilder<H, A>();
   }
 
   @AssertTrue
@@ -81,7 +81,7 @@ public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto
   }
 
   @JsonPOJOBuilder(withPrefix = "")
-  public static final class MatchDtoBuilder<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> {
+  public static final class MatchDtoBuilder<H extends TeamTypeDto, A extends TeamTypeDto> {
 
   }
 

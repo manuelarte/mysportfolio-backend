@@ -35,7 +35,7 @@ public class CompetitionCommandController {
   private final CompetitionToCompetitionDtoTransformer competitionToCompetitionDtoTransformer;
   private final PartialCompetitionDtoToCompetitionTransformer partialCompetitionDtoToCompetitionTransformer;
 
-  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<CompetitionDto> saveCompetition(@Validated({Default.class,
       NewEntity.class}) @RequestBody final CompetitionDto competitionDto) {
     final var saved = competitionCommandService
@@ -49,7 +49,8 @@ public class CompetitionCommandController {
 
   }
 
-  @PutMapping(value = "/{competitionId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @PutMapping(value = "/{competitionId}", produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<CompetitionDto> updateCompetition(
       @PathVariable final String competitionId, @Validated({Default.class,
       UpdateEntity.class}) @RequestBody final CompetitionDto competitionDto) {
@@ -60,7 +61,8 @@ public class CompetitionCommandController {
 
   }
 
-  @PatchMapping(value = "/{competitionId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @PatchMapping(value = "/{competitionId}", produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<CompetitionDto> partialUpdateCompetition(
       @PathVariable final String competitionId,
       @Validated({Default.class,
@@ -69,8 +71,6 @@ public class CompetitionCommandController {
         .apply(competitionId, competitionDto);
     return ResponseEntity.ok(competitionToCompetitionDtoTransformer
         .apply(competitionCommandService.update(updated)));
-
-
   }
 
 }

@@ -33,13 +33,12 @@ public class PlayerProfileSportSeasonSummaryDtoTransformer implements
         .findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(externalId, from, to, sport);
     final var userGoals = getGoalMatchEventOfUser(externalId, matches);
     final var assistCount = getNumberOfAssists(externalId, matches);
-    final var summary = PlayerProfileSportSeasonSummaryDto.builder()
+    return PlayerProfileSportSeasonSummaryDto.builder()
         .numberOfMatchesPlayed(matches.size())
         .numberOfGoals(userGoals.size())
         .averageGoalRate(getAverageGoalRate(userGoals))
         .numberOfAssists((int) assistCount)
         .build();
-    return summary;
   }
 
   private Set<GoalMatchEvent> getGoalMatchEventOfUser(final String externalId,
@@ -54,8 +53,8 @@ public class PlayerProfileSportSeasonSummaryDtoTransformer implements
   private BigDecimal getAverageGoalRate(final Set<GoalMatchEvent> goals) {
     OptionalDouble average = goals.stream()
         .filter(it -> it.getRates() != null && !it.getRates().isEmpty())
-        .map(it -> getAverageGoalRate(it)).mapToDouble(it -> it.doubleValue()).average();
-    return average.isPresent() ? new BigDecimal(average.getAsDouble())
+        .map(this::getAverageGoalRate).mapToDouble(it -> it.doubleValue()).average();
+    return average.isPresent() ? BigDecimal.valueOf(average.getAsDouble())
         .setScale(1, RoundingMode.HALF_EVEN) : null;
   }
 

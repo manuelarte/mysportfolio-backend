@@ -24,11 +24,10 @@ public class PartialCompetitionDtoToCompetitionTransformer implements
     Assert.notNull(competitionId, "The competition id in a partial update can't be null");
     Assert.notNull(updatedFieldsCompetitionDto,
         "The updated pojo for competition in a partial update can't be null");
-    final var originalCompetition = competitionQueryService.findOne(new ObjectId(competitionId))
+    final var mixed = competitionQueryService.findOne(new ObjectId(competitionId))
         .orElseThrow(() -> new EntityNotFoundException(String
             .format("Competition with id %s not found and can't be patch",
                 updatedFieldsCompetitionDto.getId())));
-    final var mixed = originalCompetition;
     Optional.ofNullable(updatedFieldsCompetitionDto.getName()).ifPresent(mixed::setName);
     Optional.ofNullable(updatedFieldsCompetitionDto.getDescription())
         .ifPresent(mixed::setDescription);

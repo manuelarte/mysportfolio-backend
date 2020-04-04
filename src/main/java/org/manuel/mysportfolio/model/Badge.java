@@ -69,11 +69,11 @@ public enum Badge {
   FUTSAL_FIRST_FIVE_STARS_GOAL(100,
       "https://drive.google.com/uc?id=1MOszlS9h3sz6m2cFkHfKobrywaEfOyaS",
       instanceOf(MatchCreatedEvent.class,
-          Badge.<Match<?, ?>>ofSport(Sport.FUTSAL).and(isUserGoalAndRateIs(new BigDecimal(5))))),
+          Badge.ofSport(Sport.FUTSAL).and(isUserGoalAndRateIs(new BigDecimal(5))))),
 
   FUTSAL_FIRST_ASSIST(20, "https://drive.google.com/uc?id=1F8nd0BGGUn3xnWoRQwfR_UK5AhIrjLqY",
       instanceOf(MatchCreatedEvent.class,
-          Badge.<Match<?, ?>>ofSport(Sport.FUTSAL).and(isAssist(1)))),
+          Badge.ofSport(Sport.FUTSAL).and(isAssist(1)))),
 
   FUTSAL_TEN_STAR_PERFORMANCE(100,
       "https://drive.google.com/uc?id=1FOtOgCrRQ1tNplx8H194uvrsBLolnDdn",

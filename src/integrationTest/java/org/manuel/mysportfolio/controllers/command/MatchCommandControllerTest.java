@@ -122,7 +122,7 @@ public class MatchCommandControllerTest {
         TestUtils.createMockMatch(TestUtils.createMockAnonymousTeam(),
             TestUtils.createMockAnonymousTeam(), "123456789"));
     final String description = "new description";
-    final MatchDto updateDto = matchToMatchDtoTransformer.apply(match).toBuilder()
+    final MatchDto<?, ?> updateDto = matchToMatchDtoTransformer.apply(match).toBuilder()
         .id(null).createdBy(null)
         .description(description)
         .build();

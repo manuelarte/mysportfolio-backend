@@ -37,7 +37,8 @@ public class TeamToUsersCommandController {
   private final UserInTeamToUserInTeamDtoTransformer userInTeamToUserInTeamDtoTransformer;
 
   // This should not be used, because it should be created every time a new team is created
-  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<TeamToUsersDto> saveTeamToUsers(
       @PathVariable final ObjectId teamId,
       @Validated({Default.class,
@@ -51,7 +52,8 @@ public class TeamToUsersCommandController {
         .body(teamToUsersToTeamToUsersDtoTransformer.apply(saved));
   }
 
-  @PutMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @PutMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserInTeamDto> updateUserInTeam(@PathVariable final ObjectId teamId,
       @PathVariable final String userId,
       @Validated({Default.class,
