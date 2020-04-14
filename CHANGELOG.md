@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Upgrading to Java 13.
+- Changing Query Parameter for library
 
 ### Removed
 
@@ -22,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Changed competition and sport for matchtype
+- Changed competition and sport for match type
 
 ### Removed
 

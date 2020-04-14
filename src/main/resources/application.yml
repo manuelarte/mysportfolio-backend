@@ -1,5 +1,6 @@
-info.app.name: mysportfolio
-info.app.description: MySportfolio backend app
+info.app:
+  name: mysportfolio
+  description: MySportfolio backend
 
 spring:
   data:

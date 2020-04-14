@@ -22,7 +22,7 @@ public interface MatchQueryService {
   Page<Match<TeamType, TeamType>> findAllCreatedBy(Pageable pageable, String createdBy);
 
   @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-  Page<Match<TeamType, TeamType>> findQueryAllCreatedBy(Query query, Pageable pageable,
+  Page<Match<TeamType, TeamType>> findAllBy(Query query, Pageable pageable,
       String createdBy);
 
   @PreAuthorize("hasRole('ROLE_ADMIN') or #createdBy == authentication.principal.attributes['sub']")

@@ -77,7 +77,7 @@ class MatchCommandServiceTest {
           "sub");
       SecurityContextHolder.getContext().setAuthentication(authentication);
       final var allByQuery = matchQueryService
-          .findQueryAllCreatedBy(query, Pageable.unpaged(), "123456789");
+          .findAllBy(query, Pageable.unpaged(), "123456789");
       assertEquals(1, allByQuery.getTotalElements());
       assertMatch(expected, allByQuery.getContent().get(0));
     } finally {
