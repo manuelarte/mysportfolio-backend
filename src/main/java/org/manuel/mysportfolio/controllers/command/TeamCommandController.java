@@ -1,5 +1,7 @@
 package org.manuel.mysportfolio.controllers.command;
 
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.New;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.PartialUpdate;
 import io.jsonwebtoken.lang.Assert;
 import javax.validation.groups.Default;
 import org.manuel.mysportfolio.model.dtos.team.TeamDto;
@@ -8,8 +10,6 @@ import org.manuel.mysportfolio.transformers.team.PartialTeamDtoToTeamTransformer
 import org.manuel.mysportfolio.transformers.team.TeamDtoToExistingTeamTransformer;
 import org.manuel.mysportfolio.transformers.team.TeamDtoToTeamTransformer;
 import org.manuel.mysportfolio.transformers.team.TeamToTeamDtoTransformer;
-import org.manuel.mysportfolio.validation.NewEntity;
-import org.manuel.mysportfolio.validation.PartialUpdateEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -37,7 +37,7 @@ public class TeamCommandController {
   @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
       consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<TeamDto> saveTeam(
-      @Validated({Default.class, NewEntity.class}) @RequestBody final TeamDto teamDto) {
+      @Validated({Default.class, New.class}) @RequestBody final TeamDto teamDto) {
     final var saved = teamCommandService.save(teamDtoToTeamTransformer.apply(teamDto));
     final var location = ServletUriComponentsBuilder
         .fromCurrentRequest().path("/{id}")
@@ -59,7 +59,7 @@ public class TeamCommandController {
   @PatchMapping(value = "/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE,
       consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<TeamDto> partialUpdateTeam(@PathVariable final String teamId,
-      @Validated({Default.class, PartialUpdateEntity.class}) @RequestBody final TeamDto teamDto) {
+      @Validated({Default.class, PartialUpdate.class}) @RequestBody final TeamDto teamDto) {
     final var updated = partialTeamDtoToTeamTransformer.apply(teamId, teamDto);
     return ResponseEntity
         .ok(teamToTeamDtoTransformer.apply(teamCommandService.update(updated)));

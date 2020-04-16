@@ -1,5 +1,7 @@
 package org.manuel.mysportfolio.controllers.command;
 
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.New;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Update;
 import javax.validation.groups.Default;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.dtos.teamtousers.TeamToUsersDto;
@@ -9,8 +11,6 @@ import org.manuel.mysportfolio.transformers.teamtousers.TeamToUsersDtoToTeamToUs
 import org.manuel.mysportfolio.transformers.teamtousers.TeamToUsersToTeamToUsersDtoTransformer;
 import org.manuel.mysportfolio.transformers.teamtousers.UserInTeamDtoToUserInTeamTransformer;
 import org.manuel.mysportfolio.transformers.teamtousers.UserInTeamToUserInTeamDtoTransformer;
-import org.manuel.mysportfolio.validation.NewEntity;
-import org.manuel.mysportfolio.validation.UpdateEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,7 +42,7 @@ public class TeamToUsersCommandController {
   public ResponseEntity<TeamToUsersDto> saveTeamToUsers(
       @PathVariable final ObjectId teamId,
       @Validated({Default.class,
-          NewEntity.class}) @RequestBody final TeamToUsersDto teamToUsersDto) {
+          New.class}) @RequestBody final TeamToUsersDto teamToUsersDto) {
     final var saved = teamToUsersCommandService
         .save(teamToUsersDtoToTeamToUsersTransformer.apply(teamId, teamToUsersDto));
     final var location = ServletUriComponentsBuilder
@@ -57,7 +57,7 @@ public class TeamToUsersCommandController {
   public ResponseEntity<UserInTeamDto> updateUserInTeam(@PathVariable final ObjectId teamId,
       @PathVariable final String userId,
       @Validated({Default.class,
-          UpdateEntity.class}) @RequestBody final UserInTeamDto userInTeamDto) {
+          Update.class}) @RequestBody final UserInTeamDto userInTeamDto) {
     final var entity = userInTeamDtoToUserInTeamTransformer.apply(userInTeamDto);
     return ResponseEntity.ok(userInTeamToUserInTeamDtoTransformer
         .apply(teamToUsersCommandService.updateUserInTeam(teamId, userId, entity)));

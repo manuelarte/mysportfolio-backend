@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
@@ -21,11 +20,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest
 @Import(ItConfiguration.class)
-@ExtendWith({SpringExtension.class})
 class TeamToUsersQueryServiceTest {
 
   @Inject

@@ -1,11 +1,12 @@
 package org.manuel.mysportfolio.controllers.query;
 
+import io.github.manuelarte.spring.manuelartevalidation.constraints.Exists;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.match.PerformanceDto;
+import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.services.query.PlayersPerformanceQueryService;
 import org.manuel.mysportfolio.transformers.PerformanceToPerformanceDtoTransformer;
-import org.manuel.mysportfolio.validation.Exists;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,7 @@ public class PlayersPerformanceQueryController {
 
   @GetMapping(value = "/{playerId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<PerformanceDto> getPerformanceOf(
-      @PathVariable @Exists final ObjectId matchId,
+      @PathVariable @Exists(Match.class) final ObjectId matchId,
       @PathVariable final String playerId) {
     final var retrieved = playersPerformanceQueryService.findByMatchIdAndPlayerId(matchId, playerId)
         .orElseThrow(() -> new EntityNotFoundException(

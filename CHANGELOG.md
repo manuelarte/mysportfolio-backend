@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Upgrading to Java 13.
 - Changing Query Parameter for library
+- Changing to manuelarte-validation
 
 ### Removed
 

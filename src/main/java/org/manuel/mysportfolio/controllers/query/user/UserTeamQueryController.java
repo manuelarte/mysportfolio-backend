@@ -55,7 +55,7 @@ public class UserTeamQueryController {
       final AppUser appUser) {
     return userInTeamToUserInTeamDtoTransformer
         .apply(byTeamIdIn.stream().filter(e -> e.getTeamId().equals(teamId)).findFirst()
-            .map(tI -> tI.getUsers().get(appUser.getExternalId()))
+            .map(it -> it.getUsers().get(appUser.getExternalId()))
             .orElse(null));
   }
 

@@ -1,5 +1,7 @@
 package org.manuel.mysportfolio.controllers.command;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -15,12 +17,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.bson.types.ObjectId;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
@@ -36,14 +39,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.util.NestedServletException;
 
 @SpringBootTest
 @Import(ItConfiguration.class)
-@ExtendWith({SpringExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class MatchCommandControllerTest {
 
@@ -138,6 +140,23 @@ public class MatchCommandControllerTest {
         .andExpect(jsonPath("$.awayTeam.name").value(match.getAwayTeam().getName()))
         .andExpect(jsonPath("$.description").value(description))
         .andExpect(jsonPath("$.events[*].id", Matchers.notNullValue()));
+  }
+
+  @Test
+  public void testUpdateNotExistingMatch() {
+    final var match = matchRepository.save(TestUtils.createMockMatch(TestUtils.createMockAnonymousTeam(),
+            TestUtils.createMockAnonymousTeam(), "123456789"));
+    final String description = "new description";
+    final MatchDto<?, ?> updateDto = matchToMatchDtoTransformer.apply(match).toBuilder()
+        .id(null).createdBy(null)
+        .description(description)
+        .build();
+
+    final var e = assertThrows(NestedServletException.class,
+        () -> mvc.perform(put("/api/v1/matches/{id}", new ObjectId()).contentType(APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(updateDto)))
+        .andExpect(status().isBadRequest()));
+    assertEquals(ConstraintViolationException.class, e.getCause().getClass());
   }
 
   @Test

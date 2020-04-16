@@ -3,6 +3,9 @@ package org.manuel.mysportfolio.model.dtos;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.New;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.PartialUpdate;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Update;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.YearMonth;
@@ -11,9 +14,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import org.manuel.mysportfolio.model.Sport;
-import org.manuel.mysportfolio.validation.NewEntity;
-import org.manuel.mysportfolio.validation.PartialUpdateEntity;
-import org.manuel.mysportfolio.validation.UpdateEntity;
 
 @JsonDeserialize(builder = CompetitionDto.CompetitionDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -21,11 +21,11 @@ import org.manuel.mysportfolio.validation.UpdateEntity;
 @lombok.EqualsAndHashCode(callSuper = true)
 public class CompetitionDto extends BaseDto {
 
-  @NotNull(groups = {NewEntity.class, UpdateEntity.class})
+  @NotNull(groups = {New.class, Update.class})
   @Size(max = 30)
   private final String name;
 
-  @NotNull(groups = {NewEntity.class, UpdateEntity.class})
+  @NotNull(groups = {New.class, Update.class})
   private final Sport sport;
 
   private final DayOfWeek defaultMatchDay;
@@ -37,7 +37,7 @@ public class CompetitionDto extends BaseDto {
   @Size(max = 200)
   private final String description;
 
-  @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
+  @Null(groups = {New.class, Update.class, PartialUpdate.class})
   private final Instant createdDate;
 
   @lombok.Builder(toBuilder = true)

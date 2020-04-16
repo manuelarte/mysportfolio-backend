@@ -3,14 +3,14 @@ package org.manuel.mysportfolio.model.dtos.teamtousers;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.New;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.PartialUpdate;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Update;
 import java.util.Map;
 import java.util.Set;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import org.manuel.mysportfolio.validation.NewEntity;
-import org.manuel.mysportfolio.validation.PartialUpdateEntity;
-import org.manuel.mysportfolio.validation.UpdateEntity;
 
 @JsonDeserialize(builder = TeamToUsersDto.TeamToUsersDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -19,19 +19,19 @@ import org.manuel.mysportfolio.validation.UpdateEntity;
 @lombok.Builder(toBuilder = true)
 public class TeamToUsersDto {
 
-  @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
-  @NotNull(groups = UpdateEntity.class)
+  @Null(groups = {New.class, PartialUpdate.class})
+  @NotNull(groups = Update.class)
   private final String id;
 
-  @Null(groups = NewEntity.class)
-  @NotNull(groups = {UpdateEntity.class, PartialUpdateEntity.class})
+  @Null(groups = New.class)
+  @NotNull(groups = {Update.class, PartialUpdate.class})
   private final Long version;
 
-  @NotEmpty(groups = {NewEntity.class, UpdateEntity.class})
+  @NotEmpty(groups = {New.class, Update.class})
   @lombok.Singular
   private Map<String, UserInTeamDto> users;
 
-  @NotEmpty(groups = {NewEntity.class, UpdateEntity.class})
+  @NotEmpty(groups = {New.class, Update.class})
   @lombok.Singular
   private Set<String> admins;
 
