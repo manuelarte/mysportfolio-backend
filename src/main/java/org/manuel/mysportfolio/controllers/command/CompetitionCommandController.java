@@ -5,12 +5,12 @@ import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Parti
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Update;
 import io.jsonwebtoken.lang.Assert;
 import javax.validation.groups.Default;
+import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.dtos.CompetitionDto;
 import org.manuel.mysportfolio.services.command.CompetitionCommandService;
 import org.manuel.mysportfolio.transformers.CompetitionDtoToCompetitionTransformer;
 import org.manuel.mysportfolio.transformers.CompetitionToCompetitionDtoTransformer;
 import org.manuel.mysportfolio.transformers.competition.CompetitionDtoToExistingCompetitionTransformer;
-import org.manuel.mysportfolio.transformers.competition.PartialCompetitionDtoToCompetitionTransformer;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -33,7 +33,6 @@ public class CompetitionCommandController {
   private final CompetitionDtoToCompetitionTransformer competitionDtoToCompetitionTransformer;
   private final CompetitionDtoToExistingCompetitionTransformer competitionDtoToExistingCompetitionTransformer;
   private final CompetitionToCompetitionDtoTransformer competitionToCompetitionDtoTransformer;
-  private final PartialCompetitionDtoToCompetitionTransformer partialCompetitionDtoToCompetitionTransformer;
 
   @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<CompetitionDto> saveCompetition(@Validated({Default.class,
@@ -67,10 +66,9 @@ public class CompetitionCommandController {
       @PathVariable final String competitionId,
       @Validated({Default.class,
           PartialUpdate.class}) @RequestBody final CompetitionDto competitionDto) {
-    final var updated = partialCompetitionDtoToCompetitionTransformer
-        .apply(competitionId, competitionDto);
     return ResponseEntity.ok(competitionToCompetitionDtoTransformer
-        .apply(competitionCommandService.update(updated)));
+        .apply(competitionCommandService.partialUpdate(new ObjectId(competitionId),
+            competitionDtoToCompetitionTransformer.apply(competitionDto))));
   }
 
 }

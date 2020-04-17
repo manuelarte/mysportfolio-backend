@@ -1,6 +1,7 @@
 package org.manuel.mysportfolio.services.command.impl;
 
 import javax.validation.constraints.NotNull;
+import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.team.Team;
 import org.manuel.mysportfolio.publishers.TeamCreatedEventPublisher;
 import org.manuel.mysportfolio.repositories.TeamRepository;
@@ -27,5 +28,11 @@ class TeamCommandServiceImpl implements TeamCommandService {
   public Team update(@NotNull final Team team) {
     Assert.notNull(team.getId(), "Can't update a new team");
     return teamRepository.save(team);
+  }
+
+  @Override
+  public Team partialUpdate(final ObjectId id, final Team partialTeam) {
+    Assert.isNull(partialTeam.getId(), "The id in a partial update has to be null");
+    return teamRepository.partialSave(id, partialTeam);
   }
 }

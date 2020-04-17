@@ -16,11 +16,11 @@ public class CompetitionDtoToExistingCompetitionTransformer implements
   private final CompetitionQueryService competitionQueryService;
 
   @Override
-  public Competition apply(final String teamId, final CompetitionDto competitionDto) {
-    final var originalCompetition = competitionQueryService.findOne(new ObjectId(teamId))
+  public Competition apply(final String competitionId, final CompetitionDto competitionDto) {
+    final var originalCompetition = competitionQueryService.findOne(new ObjectId(competitionId))
         .orElseThrow(
             () -> new EntityNotFoundException(
-                String.format("Competition with id %s not found", teamId)));
+                String.format("Competition with id %s not found", competitionId)));
 
     final var competition = new Competition();
     competition.setId(originalCompetition.getId());

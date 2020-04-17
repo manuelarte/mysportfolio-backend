@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.services.command;
 
+import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.Competition;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,5 +13,7 @@ public interface CompetitionCommandService {
   // TODO Post authorize isn't working. It commits the change even that 403 is returned
   @PostAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER') and returnObject.createdBy.get() == authentication.principal.attributes['sub']")
   Competition update(Competition competition);
+
+  Competition partialUpdate(ObjectId id, Competition partialCompetition);
 
 }

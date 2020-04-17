@@ -1,6 +1,7 @@
 package org.manuel.mysportfolio.services.command.impl;
 
 import javax.validation.constraints.NotNull;
+import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.Competition;
 import org.manuel.mysportfolio.publishers.CompetitionCreatedEventPublisher;
 import org.manuel.mysportfolio.repositories.CompetitionRepository;
@@ -28,4 +29,9 @@ class CompetitionCommandServiceImpl implements CompetitionCommandService {
     return competitionRepository.save(competition);
   }
 
+  @Override
+  public Competition partialUpdate(final ObjectId id, final Competition partialCompetition) {
+    Assert.isNull(partialCompetition.getId(), "The id in a partial update has to be null");
+    return competitionRepository.partialSave(id, partialCompetition);
+  }
 }

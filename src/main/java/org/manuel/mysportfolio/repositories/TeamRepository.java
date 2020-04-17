@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.repositories;
 
+import io.github.manuelarte.spring.manuelartevalidation.repositories.CrpudRepository;
 import java.time.Instant;
 import java.util.Set;
 import org.bson.types.ObjectId;
@@ -10,7 +11,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TeamRepository extends PagingAndSortingRepository<Team, ObjectId> {
+public interface TeamRepository extends PagingAndSortingRepository<Team, ObjectId>,
+    CrpudRepository<Team, ObjectId> {
 
   Page<Team> findAllByIdIsIn(Pageable pageable, Set<ObjectId> ids);
 
