@@ -1,7 +1,7 @@
 package org.manuel.mysportfolio.config.queryparam;
 
+import io.github.manuelarte.spring.queryparameter.config.QueryParameterConfig;
 import io.github.manuelarte.spring.queryparameter.model.TypeTransformerRegistry;
-import io.github.manuelarte.spring.queryparameter.mongo.config.QueryParameterConfig;
 import org.manuel.mysportfolio.model.entities.match.Match;
 import org.springframework.context.annotation.Configuration;
 

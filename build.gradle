@@ -40,12 +40,8 @@ configurations {
 repositories {
     mavenCentral()
     maven { url 'https://repo.spring.io/milestone' }
-    maven { url 'https://repo.spring.io/snapshot' }
     maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
 }
-
-// https://stackoverflow.com/questions/54598484/gradle-5-junit-bom-and-spring-boot-incorrect-versions
-ext['junit-jupiter.version'] = '5.6.2'
 
 dependencies {
 

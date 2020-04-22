@@ -75,6 +75,20 @@ public class CompetitionCommandControllerTest {
   }
 
   @Test
+  public void testSaveCompetitionFromToInvalid() throws Exception {
+    final var competitionDto = TestUtils.createMockCompetitionDto().toBuilder()
+        .from(YearMonth.now())
+        .to(YearMonth.now().minusYears(1))
+        .build();
+
+    mvc.perform(post("/api/v1/competitions/").contentType(APPLICATION_JSON)
+        .accept(APPLICATION_JSON)
+        .contentType(APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(competitionDto)))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
   public void testSaveCompetitionNoNameGiven() throws Exception {
     final var competitionDtoWithoutName = TestUtils.createMockCompetitionDto().toBuilder()
         .name(null).build();
