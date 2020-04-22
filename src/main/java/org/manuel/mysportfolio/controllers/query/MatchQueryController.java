@@ -1,6 +1,6 @@
 package org.manuel.mysportfolio.controllers.query;
 
-import io.github.manuelarte.spring.queryparameter.mongo.QueryParameter;
+import io.github.manuelarte.spring.queryparameter.QueryParameter;
 import java.util.Optional;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
@@ -36,7 +36,7 @@ public class MatchQueryController {
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Page<MatchDto<TeamTypeDto, TeamTypeDto>>> findByPage(
       @PageableDefault(sort = "startDate", direction = Sort.Direction.DESC) final Pageable pageable,
-      @QueryParameter(document = Match.class) final Optional<Query> query) {
+      @QueryParameter(entity = Match.class) final Optional<Query> query) {
     final Page<Match<TeamType, TeamType>> page;
     if (query.isPresent()) {
       page = matchQueryService.findAllBy(query.get(), pageable, getUserId());

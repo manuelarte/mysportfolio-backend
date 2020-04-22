@@ -66,9 +66,9 @@ dependencies {
     implementation 'com.google.api-client:google-api-client-jackson2:1.30.7'
     implementation 'io.springfox:springfox-swagger2:2.9.2'
     implementation 'io.springfox:springfox-swagger-ui:2.9.2'
-    implementation 'io.github.manuelarte.spring:manuelarte-validation:0.0.1'
-    implementation 'io.github.manuelarte.spring:query-parameter-model:0.0.1'
-    implementation 'io.github.manuelarte.spring:query-parameter-mongo:0.0.1-SNAPSHOT'
+    implementation 'io.github.manuelarte.spring:manuelarte-validation:0.0.2-SNAPSHOT'
+    implementation 'io.github.manuelarte.spring:query-parameter-model:0.0.2-SNAPSHOT'
+    implementation 'io.github.manuelarte.spring:query-parameter-mongo:0.0.2-SNAPSHOT'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
