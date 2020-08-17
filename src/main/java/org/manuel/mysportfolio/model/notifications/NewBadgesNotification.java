@@ -21,6 +21,7 @@ public class NewBadgesNotification implements UserNotification {
     public enum Entity {
       MATCH, COMPETITION, TEAM, PLAYER_PERFORMANCE
     }
+
     private final Entity entity;
     private final String id;
   }

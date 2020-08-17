@@ -11,6 +11,8 @@ import org.manuel.mysportfolio.repositories.CompetitionRepository;
 import org.manuel.mysportfolio.services.query.CompetitionQueryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,6 +29,12 @@ class CompetitionQueryServiceImpl implements CompetitionQueryService {
   @Override
   public Page<Competition> findAllCreatedBy(final Pageable pageable, final String createdBy) {
     return competitionRepository.findAllByCreatedByIs(pageable, createdBy);
+  }
+
+  @Override
+  public Page<Competition> findAllByQueryAndCreatedBy(final Pageable pageable, final String createdBy, final Query query) {
+    query.addCriteria(Criteria.where("createdBy").is(createdBy));
+    return competitionRepository.findAllByQuery(pageable, query);
   }
 
   @Override

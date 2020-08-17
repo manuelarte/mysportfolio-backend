@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CompetitionRepository extends PagingAndSortingRepository<Competition, ObjectId>,
-    CrpudRepository<Competition, ObjectId> {
+    CrpudRepository<Competition, ObjectId>, CompetitionRepositoryCustom {
 
   Page<Competition> findAllByCreatedByIs(Pageable pageable, String createdBy);
 

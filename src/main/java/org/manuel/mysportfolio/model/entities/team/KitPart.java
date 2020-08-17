@@ -7,7 +7,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = PlainKitPart.class, name = "plain"),
     @JsonSubTypes.Type(value = StripeKitPart.class, name = "stripes"),
-    @JsonSubTypes.Type(value = SleevesPlainKitPart.class, name = "sleeves-plain")})
+    @JsonSubTypes.Type(value = SleevesPlainKitPart.class, name = "sleeves-plain"),
+    @JsonSubTypes.Type(value = VShapeKitPart.class, name = "v-shape")})
 public interface KitPart {
 
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class QueryParamMatchSportTypeTransformer implements TypeTransformer<String, Sport> {
 
   @Override
-  public Sport transformValue(final Class<?> aClass, final String key, final String value) {
+  public Sport transformValue(final Class<?> clazz, final String key, final String value) {
     return Sport.valueOf(value);
   }
 }

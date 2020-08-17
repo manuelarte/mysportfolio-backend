@@ -19,8 +19,8 @@ class AppUserRepositoryTest {
   @Inject
   private AppUserRepository appUserRepository;
 
-  @DisplayName("Test not duplicated external id allowed")
   @Test
+  @DisplayName("Test not duplicated external id allowed")
   public void testNotDuplicatedExternalId() {
     final var saved = appUserRepository.save(
         new AppUser(null, null, "test", "test@mymatchfolio.com", "externalId", AppMembership.FREE,
