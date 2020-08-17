@@ -5,12 +5,12 @@ import javax.validation.constraints.NotNull;
 @lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
 @lombok.Data
-public class TeamKit<Shirt extends KitPart, Pants extends KitPart> {
+public class TeamKit<S extends KitPart, P extends KitPart> {
 
   @NotNull
-  private Shirt shirt;
+  private S shirt;
 
   @NotNull
-  private Pants pants;
+  private P pants;
 
 }

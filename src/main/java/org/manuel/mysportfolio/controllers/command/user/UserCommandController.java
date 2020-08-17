@@ -29,7 +29,8 @@ public class UserCommandController {
   private final AppUserCommandService appUserCommandService;
   private final UserIdProvider userIdProvider;
 
-  @PostMapping(value = "registration-token", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @PostMapping(value = "registration-token", produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Void> updateRegistrationToken(
       @Valid @RequestBody final RegistrationTokenDto data) {
     final String userId = getUserId();

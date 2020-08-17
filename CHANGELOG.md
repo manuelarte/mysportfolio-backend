@@ -8,11 +8,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added new badges push notification
+- Updating Spring Boot
+- Adding matchDate to competitions query
+- Adding v-shape kit
+
+### Changed
+
+- Upgrading to Java 13.
+- Changing Query Parameter for library
+- Changing to manuelarte-validation
+
+### Removed
+
+## [0.2.14] - 2020-04-04
+
+### Added
+
 - Version is handled now in an external file, to avoid merge conflicts
 
 ### Changed
 
-- Changed competition and sport for matchtype
+- Changed competition and sport for match type
 
 ### Removed
 

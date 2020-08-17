@@ -3,14 +3,14 @@ package org.manuel.mysportfolio.model.dtos.playerprofile;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.New;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.PartialUpdate;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Update;
 import java.util.Set;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import org.manuel.mysportfolio.model.entities.player.FootballPosition;
 import org.manuel.mysportfolio.model.entities.player.FootballSkills;
-import org.manuel.mysportfolio.validation.NewEntity;
-import org.manuel.mysportfolio.validation.PartialUpdateEntity;
-import org.manuel.mysportfolio.validation.UpdateEntity;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonDeserialize(builder = PlayerProfileFootballInfoDto.PlayerProfileFootballInfoDtoBuilder.class)
@@ -19,7 +19,7 @@ import org.manuel.mysportfolio.validation.UpdateEntity;
 @lombok.Builder(toBuilder = true)
 public class PlayerProfileFootballInfoDto {
 
-  @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
+  @Null(groups = {New.class, Update.class, PartialUpdate.class})
   private final PlayerProfileSportSeasonSummaryDto summary;
 
   private final FootballPosition preferredPosition;

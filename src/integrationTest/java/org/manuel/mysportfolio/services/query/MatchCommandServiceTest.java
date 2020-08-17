@@ -9,7 +9,6 @@ import java.util.Set;
 import javax.inject.Inject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.Sport;
@@ -30,11 +29,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest
 @Import(ItConfiguration.class)
-@ExtendWith({SpringExtension.class})
 class MatchCommandServiceTest {
 
   @Inject
@@ -77,7 +74,7 @@ class MatchCommandServiceTest {
           "sub");
       SecurityContextHolder.getContext().setAuthentication(authentication);
       final var allByQuery = matchQueryService
-          .findQueryAllCreatedBy(query, Pageable.unpaged(), "123456789");
+          .findAllBy(query, Pageable.unpaged(), "123456789");
       assertEquals(1, allByQuery.getTotalElements());
       assertMatch(expected, allByQuery.getContent().get(0));
     } finally {

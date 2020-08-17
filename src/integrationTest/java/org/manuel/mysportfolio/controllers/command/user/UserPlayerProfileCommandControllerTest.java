@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileFootballInfoDto;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileSportInfoDto;
@@ -25,7 +24,6 @@ import org.manuel.mysportfolio.repositories.PlayerProfileRepository;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -33,7 +31,6 @@ import org.springframework.web.util.NestedServletException;
 
 @SpringBootTest
 @Import(ItConfiguration.class)
-@ExtendWith({SpringExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class UserPlayerProfileCommandControllerTest {
 
@@ -52,6 +49,7 @@ public class UserPlayerProfileCommandControllerTest {
   private MockMvc mvc;
 
   @BeforeEach
+  @SuppressWarnings("checkstyle:javadoctype")
   public void setup() {
     mvc = MockMvcBuilders.webAppContextSetup(context)
         .apply(springSecurity())

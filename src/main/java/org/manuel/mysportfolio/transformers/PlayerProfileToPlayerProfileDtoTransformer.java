@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.transformers;
 
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -19,7 +20,7 @@ public class PlayerProfileToPlayerProfileDtoTransformer implements
   @Override
   public PlayerProfileDto apply(final PlayerProfile playerProfile) {
     final var info = playerProfile.getInfo().entrySet().stream()
-        .collect(Collectors.toMap(it -> it.getKey(),
+        .collect(Collectors.toMap(Entry::getKey,
             it -> transformer.apply(playerProfile.getExternalId(), it.getKey(), it.getValue())));
     return PlayerProfileDto.builder()
         .id(Optional.ofNullable(playerProfile.getId()).map(ObjectId::toString).orElse(null))

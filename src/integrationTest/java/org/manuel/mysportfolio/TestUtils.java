@@ -41,6 +41,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 public class TestUtils {
 
+  @SuppressWarnings("checkstyle:javadoctype")
   public static TeamDto createMockTeamDto() {
     return TeamDto.builder()
         .name(RandomStringUtils.randomAlphabetic(5))
@@ -49,6 +50,7 @@ public class TestUtils {
         .build();
   }
 
+  @SuppressWarnings("checkstyle:javadoctype")
   public static CompetitionDto createMockCompetitionDto() {
     return CompetitionDto.builder()
         .name(RandomStringUtils.randomAlphabetic(5))
@@ -58,6 +60,7 @@ public class TestUtils {
         .build();
   }
 
+  @SuppressWarnings("checkstyle:javadoctype")
   public static Team createMockTeam() {
     final var team = new Team();
     team.setName(RandomStringUtils.randomAlphabetic(5));
@@ -65,6 +68,7 @@ public class TestUtils {
     return team;
   }
 
+  @SuppressWarnings("checkstyle:javadoctype")
   public static TeamToUsers createMockTeamToUsers(final Team team) {
     return new TeamToUsers(null, null, team.getId(),
         Collections.singletonMap(team.getCreatedBy().get(),
@@ -72,6 +76,7 @@ public class TestUtils {
         Collections.singleton(team.getCreatedBy().get()));
   }
 
+  @SuppressWarnings("checkstyle:javadoctype")
   public static Competition createMockCompetition() {
     final var competition = new Competition();
     competition.setName(RandomStringUtils.randomAlphabetic(5));
@@ -81,33 +86,38 @@ public class TestUtils {
     return competition;
   }
 
+  @SuppressWarnings("checkstyle:javadoctype")
   public static AnonymousTeam createMockAnonymousTeam() {
     final var anonymousTeam = new AnonymousTeam();
     anonymousTeam.setName(RandomStringUtils.randomAlphabetic(5));
     return anonymousTeam;
   }
 
+  @SuppressWarnings("checkstyle:javadoctype")
   public static AnonymousTeamDto createMockAnonymousTeamDto() {
     return AnonymousTeamDto.builder()
         .name(RandomStringUtils.randomAlphabetic(5))
         .build();
   }
 
+  @SuppressWarnings("checkstyle:javadoctype")
   public static RegisteredTeam createMockRegisteredTeam() {
     final var registeredTeam = new RegisteredTeam();
     registeredTeam.setTeamId(new ObjectId());
     return registeredTeam;
   }
 
+  @SuppressWarnings("checkstyle:javadoctype")
   public static RegisteredTeamDto createMockRegisteredTeamDto(ObjectId teamId) {
     return RegisteredTeamDto.builder()
         .teamId(teamId.toString())
         .build();
   }
 
-  public static Match createMockMatch(final TeamType homeTeam, final TeamType awayTeam,
-      final String createdBy) {
-    final var match = new Match();
+  @SuppressWarnings("checkstyle:javadoctype")
+  public static <H extends TeamType, A extends TeamType> Match<H, A> createMockMatch(
+      final H homeTeam, final A awayTeam, final String createdBy) {
+    final var match = new Match<H, A>();
     match.setType(new FriendlyMatchType(Sport.FOOTBALL));
     match.setHomeTeam(homeTeam);
     match.setAwayTeam(awayTeam);
@@ -117,6 +127,7 @@ public class TestUtils {
     return match;
   }
 
+  @SuppressWarnings("checkstyle:javadoctype")
   public static MatchEventDto createMockGoal(final TeamOption goalTeam) {
     final var matchEventDto = new MatchEventDto();
     matchEventDto.set("type", "goal");
@@ -124,17 +135,19 @@ public class TestUtils {
     return matchEventDto;
   }
 
-  public static <HT extends TeamTypeDto, AT extends TeamTypeDto> MatchDto<HT, AT> createMockMatchDto(
-      final HT homeTeam, final AT awayTeam, final int homeTeamGoalsNumber,
+  @SuppressWarnings("checkstyle:JavadocMethod")
+  public static <H extends TeamTypeDto, A extends TeamTypeDto> MatchDto<H, A> createMockMatchDto(
+      final H homeTeam, final A awayTeam, final int homeTeamGoalsNumber,
       final int awayTeamGoalsNumber, final Map<String, TeamOption> playedFor) {
     return createMockMatchDto(homeTeam, awayTeam, homeTeamGoalsNumber, awayTeamGoalsNumber,
         playedFor, new String[]{});
   }
 
-  public static <HT extends TeamTypeDto, AT extends TeamTypeDto> MatchDto<HT, AT> createMockMatchDto(
-      final HT homeTeam,
-      final AT awayTeam, final int homeTeamGoalsNumber, final int awayTeamGoalsNumber,
-      final Map<String, TeamOption> playedFor, final String... chips) {
+  @SuppressWarnings("checkstyle:javadoctype")
+  public static <H extends TeamTypeDto, A extends TeamTypeDto> MatchDto<H, A> createMockMatchDto(
+      final H homeTeam, final A awayTeam, final int homeTeamGoalsNumber,
+      final int awayTeamGoalsNumber, final Map<String, TeamOption> playedFor,
+      final String... chips) {
     final var goals = IntStream.range(0, homeTeamGoalsNumber)
         .mapToObj(i -> createMockGoal(TeamOption.HOME_TEAM)).collect(Collectors.toList());
     goals.addAll(IntStream.range(0, awayTeamGoalsNumber)
@@ -150,6 +163,7 @@ public class TestUtils {
         .build();
   }
 
+  @SuppressWarnings("checkstyle:javadoctype")
   public static Authentication createAuthentication(final String userId) {
     final Set<GrantedAuthority> authorities = Collections
         .singleton(new SimpleGrantedAuthority("ROLE_USER"));

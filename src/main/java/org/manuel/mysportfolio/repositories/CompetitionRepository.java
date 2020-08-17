@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.repositories;
 
+import io.github.manuelarte.spring.manuelartevalidation.repositories.CrpudRepository;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.util.List;
@@ -11,7 +12,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CompetitionRepository extends PagingAndSortingRepository<Competition, ObjectId> {
+public interface CompetitionRepository extends PagingAndSortingRepository<Competition, ObjectId>,
+    CrpudRepository<Competition, ObjectId>, CompetitionRepositoryCustom {
 
   Page<Competition> findAllByCreatedByIs(Pageable pageable, String createdBy);
 

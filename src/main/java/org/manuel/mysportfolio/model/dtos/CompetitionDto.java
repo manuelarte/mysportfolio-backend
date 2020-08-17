@@ -1,42 +1,50 @@
 package org.manuel.mysportfolio.model.dtos;
 
+import static io.github.manuelarte.spring.manuelartevalidation.constraints.FromAndToDate.FromToType.FROM_LOWER_THAN_OR_EQUAL_TO_TO;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.FromAndToDate;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.fromto.FromDate;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.fromto.ToDate;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.New;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.PartialUpdate;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Update;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.YearMonth;
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import org.manuel.mysportfolio.model.Sport;
-import org.manuel.mysportfolio.validation.NewEntity;
-import org.manuel.mysportfolio.validation.PartialUpdateEntity;
-import org.manuel.mysportfolio.validation.UpdateEntity;
 
 @JsonDeserialize(builder = CompetitionDto.CompetitionDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@FromAndToDate(FROM_LOWER_THAN_OR_EQUAL_TO_TO)
 @lombok.Value
+@lombok.EqualsAndHashCode(callSuper = true)
 public class CompetitionDto extends BaseDto {
 
-  @NotNull(groups = {NewEntity.class, UpdateEntity.class})
+  @NotNull(groups = {New.class, Update.class})
   @Size(max = 30)
   private final String name;
 
-  @NotNull(groups = {NewEntity.class, UpdateEntity.class})
+  @NotNull(groups = {New.class, Update.class})
   private final Sport sport;
 
   private final DayOfWeek defaultMatchDay;
 
+  @FromDate
   private final YearMonth from;
 
+  @ToDate
   private final YearMonth to;
 
   @Size(max = 200)
   private final String description;
 
-  @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
+  @Null(groups = {New.class, Update.class, PartialUpdate.class})
   private final Instant createdDate;
 
   @lombok.Builder(toBuilder = true)
@@ -52,17 +60,6 @@ public class CompetitionDto extends BaseDto {
     this.to = to;
     this.description = description;
     this.createdDate = createdDate;
-  }
-
-  @AssertTrue
-  private boolean fromBeforeTo() {
-    boolean condition;
-    if (from != null && to != null) {
-      condition = from.compareTo(to) <= 0;
-    } else {
-      condition = true;
-    }
-    return condition;
   }
 
   @JsonPOJOBuilder(withPrefix = "")

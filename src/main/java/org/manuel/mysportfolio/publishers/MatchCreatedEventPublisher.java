@@ -12,7 +12,7 @@ public class MatchCreatedEventPublisher {
 
   private ApplicationEventPublisher applicationEventPublisher;
 
-  public void publishEvent(final Match createdMatch) {
+  public void publishEvent(final Match<?, ?> createdMatch) {
     log.info("Publishing match created event for match {}.", createdMatch.getId().toString());
     final MatchCreatedEvent teamCreatedEvent = new MatchCreatedEvent(createdMatch);
     applicationEventPublisher.publishEvent(teamCreatedEvent);

@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.controllers.command.user;
 
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.New;
 import javax.validation.groups.Default;
 import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.model.dtos.user.UserTeamDto;
@@ -11,7 +12,6 @@ import org.manuel.mysportfolio.transformers.team.TeamDtoToTeamTransformer;
 import org.manuel.mysportfolio.transformers.team.TeamToTeamDtoTransformer;
 import org.manuel.mysportfolio.transformers.teamtousers.UserInTeamDtoToUserInTeamTransformer;
 import org.manuel.mysportfolio.transformers.teamtousers.UserInTeamToUserInTeamDtoTransformer;
-import org.manuel.mysportfolio.validation.NewEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -36,9 +36,10 @@ public class UserTeamCommandController {
   private final UserInTeamDtoToUserInTeamTransformer userInTeamDtoToUserInTeamTransformer;
   private final UserIdProvider userIdProvider;
 
-  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserTeamDto> saveUserTeam(
-      @Validated({Default.class, NewEntity.class}) @RequestBody final UserTeamDto userTeamDto) {
+      @Validated({Default.class, New.class}) @RequestBody final UserTeamDto userTeamDto) {
     final var teamSaved = teamCommandService
         .save(teamDtoToTeamTransformer.apply(userTeamDto.getTeam()));
     final UserInTeam userInTeamSaved;

@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "user-notifications")
 @lombok.NoArgsConstructor
 @lombok.Data
+@lombok.EqualsAndHashCode(callSuper = true)
 public abstract class UserNotification extends BaseEntity {
 
   @NotNull

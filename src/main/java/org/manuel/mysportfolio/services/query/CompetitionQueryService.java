@@ -8,6 +8,7 @@ import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.Competition;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -15,6 +16,8 @@ public interface CompetitionQueryService {
 
   //@PostAuthorize("hasRole('ROLE_ADMIN') or returnObject.orElse(null)?.createdBy == authentication.principal.attributes['sub']")
   Page<Competition> findAllCreatedBy(Pageable pageable, String createdBy);
+
+  Page<Competition> findAllByQueryAndCreatedBy(Pageable pageable, String createdBy, Query query);
 
   @PostAuthorize("hasRole('ROLE_ADMIN') or returnObject.orElse(null)?.createdBy.get() == authentication.principal.attributes['sub']")
   Optional<Competition> findOne(ObjectId id);

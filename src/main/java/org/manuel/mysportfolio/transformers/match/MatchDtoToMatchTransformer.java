@@ -7,21 +7,24 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
+import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.entities.match.Match;
+import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
 import org.manuel.mysportfolio.transformers.match.events.MatchEventDtoToMatchEventTransformer;
 import org.springframework.stereotype.Component;
 
 @Component
 @lombok.AllArgsConstructor
-public class MatchDtoToMatchTransformer implements Function<MatchDto, Match> {
+public class MatchDtoToMatchTransformer implements
+    Function<MatchDto<TeamTypeDto, TeamTypeDto>, Match<TeamType, TeamType>> {
 
   private final TeamInMatchDtoToTeamTypeTransformer teamInMatchDtoToTeamTypeTransformer;
   private final MatchEventDtoToMatchEventTransformer matchEventDtoToMatchEventTransformer;
 
   @Override
-  public Match apply(final MatchDto matchDto) {
-    final var match = new Match();
+  public Match<TeamType, TeamType> apply(final MatchDto<TeamTypeDto, TeamTypeDto> matchDto) {
+    final var match = new Match<>();
     match.setId(Optional.ofNullable(matchDto.getId()).map(ObjectId::new).orElse(null));
     match.setType(
         Optional.ofNullable(matchDto.getType()).orElse(null));

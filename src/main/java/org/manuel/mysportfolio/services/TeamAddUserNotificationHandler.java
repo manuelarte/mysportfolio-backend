@@ -19,8 +19,8 @@ public class TeamAddUserNotificationHandler {
   private final TeamToUsersCommandService teamToUsersCommandService;
 
   public void handleAccept(final TeamAddUserNotification teamAddUserNotification) {
-    if (!teamToUsersQueryService.findByTeamId(teamAddUserNotification.getTeamId())
-        .filter(it -> it.getUsers().containsKey(teamAddUserNotification.getTo())).isPresent()) {
+    if (teamToUsersQueryService.findByTeamId(teamAddUserNotification.getTeamId())
+        .filter(it -> it.getUsers().containsKey(teamAddUserNotification.getTo())).isEmpty()) {
       doWithSystemAuthentication(() -> teamToUsersCommandService
           .updateUserInTeam(teamAddUserNotification.getTeamId(), teamAddUserNotification.getTo(),
               new UserInTeam(LocalDate.now(), null, UserInTeam.UserInTeamRole.PLAYER)));

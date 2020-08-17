@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 import org.bson.types.ObjectId;
 
 @lombok.Data
+@lombok.EqualsAndHashCode(callSuper = true)
 public class TeamAddUserNotification extends UserNotification {
 
   @NotNull

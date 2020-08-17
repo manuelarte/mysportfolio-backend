@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.New;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.PartialUpdate;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Update;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -19,34 +22,30 @@ import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.entities.Place;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.type.MatchType;
-import org.manuel.mysportfolio.validation.NewEntity;
-import org.manuel.mysportfolio.validation.PartialUpdateEntity;
-import org.manuel.mysportfolio.validation.UpdateEntity;
 
 @JsonDeserialize(builder = MatchDto.MatchDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @lombok.AllArgsConstructor
 @lombok.Value
 @lombok.Builder(toBuilder = true)
-public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> {
+public class MatchDto<H extends TeamTypeDto, A extends TeamTypeDto> {
 
-  @Null(groups = {NewEntity.class, PartialUpdateEntity.class})
-  @NotNull(groups = UpdateEntity.class)
+  @Null(groups = {New.class, Update.class, PartialUpdate.class})
   private final String id;
 
-  @Null(groups = NewEntity.class)
-  @NotNull(groups = {UpdateEntity.class, PartialUpdateEntity.class})
+  @Null(groups = New.class)
+  @NotNull(groups = {Update.class, PartialUpdate.class})
   private final Long version;
 
-  @NotNull(groups = {NewEntity.class, UpdateEntity.class})
+  @NotNull(groups = {New.class, Update.class})
   private final MatchType type;
 
   @NotNull
   private final Map<String, TeamOption> playedFor;
 
-  private final HomeTeam homeTeam;
+  private final H homeTeam;
 
-  private final AwayTeam awayTeam;
+  private final A awayTeam;
 
   private final List<MatchEventDto> events;
 
@@ -67,11 +66,11 @@ public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto
       @NotEmpty
           String> chips;
 
-  @Null(groups = {NewEntity.class, UpdateEntity.class, PartialUpdateEntity.class})
+  @Null(groups = {New.class, Update.class, PartialUpdate.class})
   private final String createdBy;
 
-  public static <HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> MatchDtoBuilder builder() {
-    return new MatchDtoBuilder<HomeTeam, AwayTeam>();
+  public static <H extends TeamTypeDto, A extends TeamTypeDto> MatchDtoBuilder builder() {
+    return new MatchDtoBuilder<H, A>();
   }
 
   @AssertTrue
@@ -82,7 +81,7 @@ public class MatchDto<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto
   }
 
   @JsonPOJOBuilder(withPrefix = "")
-  public static final class MatchDtoBuilder<HomeTeam extends TeamTypeDto, AwayTeam extends TeamTypeDto> {
+  public static final class MatchDtoBuilder<H extends TeamTypeDto, A extends TeamTypeDto> {
 
   }
 

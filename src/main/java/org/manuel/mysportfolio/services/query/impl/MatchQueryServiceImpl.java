@@ -34,7 +34,7 @@ class MatchQueryServiceImpl implements MatchQueryService {
   }
 
   @Override
-  public Page<Match<TeamType, TeamType>> findQueryAllCreatedBy(final Query query,
+  public Page<Match<TeamType, TeamType>> findAllBy(final Query query,
       final Pageable pageable, final String createdBy) {
     query.addCriteria(Criteria.where("createdBy").is(createdBy));
     return matchRepository.findQueryAllCreatedBy(query, pageable);

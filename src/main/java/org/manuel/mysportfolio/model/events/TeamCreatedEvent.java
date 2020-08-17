@@ -1,8 +1,10 @@
 package org.manuel.mysportfolio.model.events;
 
 import org.manuel.mysportfolio.model.entities.team.Team;
+import org.manuel.mysportfolio.model.notifications.NewBadgesNotification.Reason;
+import org.manuel.mysportfolio.model.notifications.NewBadgesNotification.Reason.Entity;
 
-public class TeamCreatedEvent extends SportEvent<Team> {
+public class TeamCreatedEvent extends MySportfolioEvent<Team> {
 
   /**
    * Create a new TeamCreatedEvent.
@@ -12,4 +14,10 @@ public class TeamCreatedEvent extends SportEvent<Team> {
   public TeamCreatedEvent(final Team source) {
     super(source);
   }
+
+  @Override
+  public Reason getNewBadgesNotificationReason() {
+    return new Reason(Entity.TEAM, ((Team)source).getId().toString());
+  }
+
 }

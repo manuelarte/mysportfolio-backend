@@ -1,7 +1,9 @@
-info.app.name: mysportfolio
-info.app.description: MySportfolio backend app
+info.app:
+  name: mysportfolio
+  description: MySportfolio backend
 
 spring:
   data:
     mongodb:
       uri: ${MONGODB_URI:mongodb://localhost:27017/mysportfolio}
+      auto-index-creation: true

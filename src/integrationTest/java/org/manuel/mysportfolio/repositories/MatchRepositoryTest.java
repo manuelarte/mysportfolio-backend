@@ -17,7 +17,6 @@ import java.util.Map;
 import javax.inject.Inject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.Sport;
@@ -29,15 +28,15 @@ import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
 import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.manuel.mysportfolio.model.entities.match.type.CompetitionMatchType;
 import org.manuel.mysportfolio.model.entities.match.type.FriendlyMatchType;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
 @DataMongoTest
+@AutoConfigurationPackage
 public class MatchRepositoryTest {
 
   @Inject

@@ -1,8 +1,10 @@
 package org.manuel.mysportfolio.controllers.command;
 
+import io.github.manuelarte.spring.manuelartevalidation.constraints.Exists;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.model.dtos.match.PerformanceDto;
+import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.services.command.PlayersPerformanceCommandService;
 import org.manuel.mysportfolio.transformers.PerformanceDtoToPerformanceTransformer;
 import org.manuel.mysportfolio.transformers.PerformanceToPerformanceDtoTransformer;
@@ -27,7 +29,7 @@ public class PlayersPerformanceCommandController {
 
   @PatchMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<PerformanceDto> updatePerformance(
-      @PathVariable final ObjectId matchId,
+      @PathVariable @Exists(Match.class) final ObjectId matchId,
       @RequestBody final PerformanceDto performanceDto) {
     final var updated = playersPerformanceCommandService.updatePerformance(matchId, getUserId(),
         performanceDtoToPerformanceTransformer.apply(performanceDto));
