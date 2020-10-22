@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added endpoint to retrieve some user's information
+- Added HalfTime match event
+
 ### Changed
 
 ### Removed
