@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added endpoint to retrieve some user's information
+- Added HalfTime match event
+
+### Changed
+
+### Removed
+
+## [0.2.15] - 2020-08-17
+
+### Added
+
 - Added new badges push notification
 - Updating Spring Boot
 - Adding matchDate to competitions query

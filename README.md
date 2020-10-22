@@ -53,7 +53,7 @@ See also the list of [contributors](https://github.com/manuelarte/mysportfolio/c
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-# Deploy in minikube
+## Deploy in minikube
 
 - 0 Build the image
 > docker build -t mysportfolio:${version} .

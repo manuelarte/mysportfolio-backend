@@ -20,7 +20,7 @@ public interface AppUserQueryService {
   Optional<AppUser> findOne(ObjectId id);
 
   // TODO add rights
-  @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SYSTEM') "
+  @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_SYSTEM') "
       + "or #externalId == authentication.principal.attributes['sub']")
   Optional<AppUser> findByExternalId(String externalId);
 
