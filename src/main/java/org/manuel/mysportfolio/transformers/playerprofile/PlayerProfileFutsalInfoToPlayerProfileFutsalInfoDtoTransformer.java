@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.transformers.playerprofile;
 
+import java.util.Optional;
 import java.util.function.BiFunction;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileFutsalInfoDto;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileSportSeasonSummaryDto;
@@ -16,9 +17,9 @@ public class PlayerProfileFutsalInfoToPlayerProfileFutsalInfoDtoTransformer impl
       final PlayerProfileFutsalInfo input) {
     return PlayerProfileFutsalInfoDto.builder()
         .summary(summary)
-        .preferredPosition(input.getPreferredPosition())
-        .alternativePositions(input.getAlternativePositions())
-        .skills(input.getSkills())
+        .preferredPosition(Optional.ofNullable(input).map(PlayerProfileFutsalInfo::getPreferredPosition).orElse(null))
+        .alternativePositions(Optional.ofNullable(input).map(PlayerProfileFutsalInfo::getAlternativePositions).orElse(null))
+        .skills(Optional.ofNullable(input).map(PlayerProfileFutsalInfo::getSkills).orElse(null))
         .build();
   }
 }

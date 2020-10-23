@@ -1,6 +1,7 @@
 package org.manuel.mysportfolio.transformers.playerprofile;
 
 import java.time.Year;
+import java.util.Optional;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileSportInfoDto;
 import org.manuel.mysportfolio.model.entities.player.PlayerProfileSportInfo;
@@ -23,9 +24,10 @@ public class PlayerProfileSportInfoToPlayerProfileSportInfoDtoTransformer {
     final var futsalSummary = summaryTransformer.apply(Sport.FUTSAL);
     return PlayerProfileSportInfoDto.builder()
         .footballInfo(playerProfileFootballInfoToPlayerProfileFootballInfoDtoTransformer
-            .apply(footballSummary, playerProfileSportInfo.getFootballInfo()))
+            .apply(footballSummary,
+                Optional.ofNullable(playerProfileSportInfo).map(PlayerProfileSportInfo::getFootballInfo).orElse(null)))
         .futsalInfo(playerProfileFutsalInfoToPlayerProfileFutsalInfoDtoTransformer
-            .apply(futsalSummary, playerProfileSportInfo.getFutsalInfo()))
+            .apply(futsalSummary, Optional.ofNullable(playerProfileSportInfo).map(PlayerProfileSportInfo::getFutsalInfo).orElse(null)))
         .build();
   }
 

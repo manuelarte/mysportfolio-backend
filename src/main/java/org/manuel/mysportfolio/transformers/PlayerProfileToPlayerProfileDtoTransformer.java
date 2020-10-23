@@ -1,5 +1,8 @@
 package org.manuel.mysportfolio.transformers;
 
+import java.time.Year;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.function.Function;
@@ -7,6 +10,7 @@ import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileDto;
 import org.manuel.mysportfolio.model.entities.player.PlayerProfile;
+import org.manuel.mysportfolio.model.entities.player.PlayerProfileSportInfo;
 import org.manuel.mysportfolio.transformers.playerprofile.PlayerProfileSportInfoToPlayerProfileSportInfoDtoTransformer;
 import org.springframework.stereotype.Component;
 
@@ -19,12 +23,20 @@ public class PlayerProfileToPlayerProfileDtoTransformer implements
 
   @Override
   public PlayerProfileDto apply(final PlayerProfile playerProfile) {
-    final var info = playerProfile.getInfo().entrySet().stream()
+    final Map<Year, PlayerProfileSportInfo> info;
+    if (playerProfile.getInfo() != null && !playerProfile.getInfo().isEmpty()) {
+      info = playerProfile.getInfo();
+    } else {
+      info = new HashMap<>();
+      info.put(Year.now(), null);
+    }
+    final var mappedInfo = info.entrySet().stream()
         .collect(Collectors.toMap(Entry::getKey,
             it -> transformer.apply(playerProfile.getExternalId(), it.getKey(), it.getValue())));
+
     return PlayerProfileDto.builder()
         .id(Optional.ofNullable(playerProfile.getId()).map(ObjectId::toString).orElse(null))
-        .info(info)
+        .info(mappedInfo)
         .build();
   }
 }
