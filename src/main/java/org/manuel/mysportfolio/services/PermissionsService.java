@@ -3,10 +3,12 @@ package org.manuel.mysportfolio.services;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.Year;
+import java.time.ZoneId;
 import java.util.function.Predicate;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.entities.user.AppMembership;
+import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.repositories.MatchRepository;
 import org.manuel.mysportfolio.repositories.TeamToUsersRepository;
 import org.manuel.mysportfolio.services.query.CompetitionQueryService;
@@ -23,6 +25,7 @@ public class PermissionsService {
   private final CompetitionQueryService competitionQueryService;
   private final TeamToUsersRepository teamToUsersRepository;
   private final MatchRepository matchRepository;
+  private final AppUserRepository appUserRepository;
   private final Clock clock;
 
   public boolean canSaveTeam() {
@@ -65,6 +68,12 @@ public class PermissionsService {
     final var alreadyExistingPlayer = byTeamId.getUsers().containsKey(userId);
     final var modifyingItsOwnUser = userId.equals(userToModify);
     return alreadyExistingPlayer && modifyingItsOwnUser;
+  }
+
+  public boolean canSavePlayerProfile(final String externalId, final Year year) {
+    final var minimumYear = Year.from(this.appUserRepository.findByExternalId(externalId).get().getCreatedDate().get()
+        .atZone(ZoneId.systemDefault()));
+    return year.compareTo(minimumYear) > -1;
   }
 
   private Predicate<OAuth2User> saveTeamRestrictions(final Year year) {

@@ -8,6 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Adding CORS
+- Adding default player profile when requesting player profile
+
+### Changed
+
+- Changing user matches query controller to use user external id
+
+### Removed
+
+## [0.2.16] - 2020-10-22
+
+### Added
+
 - Added endpoint to retrieve some user's information
 - Added HalfTime match event
 

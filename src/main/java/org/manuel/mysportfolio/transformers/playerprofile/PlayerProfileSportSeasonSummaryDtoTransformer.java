@@ -31,23 +31,32 @@ public class PlayerProfileSportSeasonSummaryDtoTransformer implements
     final var to = !year.isLeap() ? year.atDay(365) : year.atDay(366);
     final var matches = matchQueryService
         .findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(externalId, from, to, sport);
-    final var userGoals = getGoalMatchEventOfUser(externalId, matches);
+    final var userGoals = getGoalMatchEventOfUser(matches);
     final var assistCount = getNumberOfAssists(externalId, matches);
     return PlayerProfileSportSeasonSummaryDto.builder()
         .numberOfMatchesPlayed(matches.size())
         .numberOfGoals(userGoals.size())
+        .goalRatio(goalRatio(matches))
         .averageGoalRate(getAverageGoalRate(userGoals))
         .numberOfAssists((int) assistCount)
         .build();
   }
 
-  private Set<GoalMatchEvent> getGoalMatchEventOfUser(final String externalId,
-      final Collection<Match<?, ?>> matches) {
+  private Set<GoalMatchEvent> getGoalMatchEventOfUser(final Collection<Match<?, ?>> matches) {
     return matches.stream()
         .flatMap(it -> Optional.ofNullable(it.getEvents()).orElse(Collections.emptyList()).stream())
         .filter(event -> event instanceof GoalMatchEvent).map(event -> (GoalMatchEvent) event)
-        .filter(goalEvent -> externalId.equals(goalEvent.getPlayerId()))
+        .filter(goalEvent -> this.externalId.equals(goalEvent.getPlayerId()))
         .collect(Collectors.toSet());
+  }
+
+  private BigDecimal goalRatio(final Collection<Match<?, ?>> matches) {
+    if (!matches.isEmpty()) {
+      return new BigDecimal(getGoalMatchEventOfUser(matches).size())
+          .divide(new BigDecimal(matches.size()), 2, RoundingMode.HALF_EVEN);
+    } else {
+      return null;
+    }
   }
 
   private BigDecimal getAverageGoalRate(final Set<GoalMatchEvent> goals) {

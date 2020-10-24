@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.URL;
 
+/**
+ * User information coming from Firebase database
+ */
 @JsonDeserialize(builder = UserRecordDto.UserRecordDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @lombok.AllArgsConstructor

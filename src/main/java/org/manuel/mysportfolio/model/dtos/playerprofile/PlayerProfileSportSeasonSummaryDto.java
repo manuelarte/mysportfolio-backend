@@ -23,10 +23,15 @@ public class PlayerProfileSportSeasonSummaryDto {
   private final Integer numberOfGoals;
 
   @Null(groups = {New.class, Update.class, PartialUpdate.class})
+  private final BigDecimal goalRatio;
+
+  @Null(groups = {New.class, Update.class, PartialUpdate.class})
   private final BigDecimal averageGoalRate;
 
   @Null(groups = {New.class, Update.class, PartialUpdate.class})
   private final Integer numberOfAssists;
+
+  // TODO Max performance, average performance, lower performance
 
   @JsonPOJOBuilder(withPrefix = "")
   public static final class PlayerProfileSportSeasonSummaryDtoBuilder {

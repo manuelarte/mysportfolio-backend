@@ -41,6 +41,7 @@ class PlayerProfileSportSeasonSummaryDtoTransformerTest {
         .numberOfMatchesPlayed(1)
         .numberOfGoals(0)
         .averageGoalRate(null)
+        .goalRatio(BigDecimal.ZERO.setScale(2))
         .numberOfAssists(0)
         .build();
 
@@ -66,6 +67,7 @@ class PlayerProfileSportSeasonSummaryDtoTransformerTest {
         .numberOfMatchesPlayed(1)
         .numberOfGoals(goalsRate.size())
         .averageGoalRate(new BigDecimal("3.5"))
+        .goalRatio(BigDecimal.ONE.setScale(2))
         .numberOfAssists(0)
         .build();
 
@@ -91,6 +93,7 @@ class PlayerProfileSportSeasonSummaryDtoTransformerTest {
         .numberOfMatchesPlayed(1)
         .numberOfGoals(goalsRate.size())
         .averageGoalRate(new BigDecimal("2.0"))
+        .goalRatio(new BigDecimal("2").setScale(2))
         .numberOfAssists(0)
         .build();
 

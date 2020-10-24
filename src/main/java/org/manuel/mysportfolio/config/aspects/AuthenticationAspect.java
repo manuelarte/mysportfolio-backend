@@ -48,7 +48,6 @@ public class AuthenticationAspect {
     if (appUser.isNew()) {
       appUserCommandService.save(appUser);
     }
-
   }
 
 }

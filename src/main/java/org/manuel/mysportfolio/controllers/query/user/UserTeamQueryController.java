@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/users/{userId}/teams")
+@RequestMapping("/api/v1/users/{externalUserId}/teams")
 @lombok.AllArgsConstructor
 public class UserTeamQueryController {
 
@@ -40,9 +40,9 @@ public class UserTeamQueryController {
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Page<UserTeamDto>> findAllMyTeams(
-      @PathVariable final String userId,
+      @PathVariable final String externalUserId,
       @PageableDefault final Pageable pageable) {
-    final var appUser = Util.getUser(appUserQueryService, userIdProvider, userId);
+    final var appUser = Util.getUser(appUserQueryService, userIdProvider, externalUserId);
     final var teams = teamQueryService.findAllForUser(pageable, appUser.getExternalId());
     final var byTeamIdIn = teamToUsersQueryService
         .findByTeamIdIn(teams.stream().map(Team::getId).collect(Collectors.toList()));
@@ -61,9 +61,9 @@ public class UserTeamQueryController {
 
   @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserTeamDto> findOne(
-      @PathVariable String userId,
+      @PathVariable String externalUserId,
       @PathVariable final ObjectId id) {
-    final var appUser = Util.getUser(appUserQueryService, userIdProvider, userId);
+    final var appUser = Util.getUser(appUserQueryService, userIdProvider, externalUserId);
     final var team = teamQueryService.findOne(id).orElseThrow(() ->
         new EntityNotFoundException(Team.class, id.toString()));
     final var userInTeam = teamToUsersQueryService.findByTeamId(id)
