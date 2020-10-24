@@ -2,9 +2,6 @@ info.app:
   name: mysportfolio
   description: MySportfolio backend
 
-server:
-  port: 8090
-
 spring:
   data:
     mongodb:
