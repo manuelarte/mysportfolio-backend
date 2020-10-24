@@ -22,8 +22,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http
         .addFilterBefore(bearerTokenAuthenticationConverterFilter,
             UsernamePasswordAuthenticationFilter.class)
+        .cors().and()
         .csrf().disable()
-        .cors().disable()
         .authorizeRequests()
         .antMatchers("/swagger-ui.html").permitAll()
         .antMatchers("/actuator/**").permitAll()
