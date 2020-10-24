@@ -4,13 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [0.2.24] - 2020-10-24
 
 ### Added
 
 ### Changed
 
+- Updated some dependencies
+
 ### Removed
+
+- Removed annotation @EnableWebMvc because it was giving problems when serializing dates
 
 ## [0.2.23] - 2020-10-24
 
