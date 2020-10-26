@@ -11,12 +11,14 @@ import org.manuel.mysportfolio.services.query.AppUserQueryService;
 import org.manuel.mysportfolio.services.query.FirebaseQueryService;
 import org.manuel.mysportfolio.transformers.usernotification.UserNotificationToUserNotificationDtoTransformer;
 import org.manuel.mysportfolio.transformers.users.UserRecordToUserRecordDtoTransformer;
+import org.manuel.mysportfolio.validations.UserExists;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/users/")
+@Validated
 @lombok.AllArgsConstructor
 public class UserQueryController {
 
@@ -43,7 +46,7 @@ public class UserQueryController {
   }
 
   @GetMapping(value = "/{appUserExternalId}/userRecord", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<UserRecordDto> getUserRecord(@PathVariable final String appUserExternalId) throws FirebaseAuthException {
+  public ResponseEntity<UserRecordDto> getUserRecord(@PathVariable @UserExists final String appUserExternalId) throws FirebaseAuthException {
     final UserRecord userRecord = firebaseQueryService.findByFirebaseId(appUserExternalId);
     return ResponseEntity.ok(userRecordToUserRecordDtoTransformer.apply(userRecord));
   }

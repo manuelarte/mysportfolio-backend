@@ -19,6 +19,7 @@ class TeamCommandServiceImpl implements TeamCommandService {
   @Override
   public Team save(@NotNull final Team team) {
     Assert.notNull(team, "Team can't be null");
+    Assert.isNull(team.getId(), "Team must be new");
     final var saved = teamRepository.save(team);
     teamCreatedEventPublisher.publishEvent(saved);
     return saved;

@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
+import org.manuel.mysportfolio.constants.Constants;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.entities.Place;
 import org.manuel.mysportfolio.model.entities.TeamOption;
@@ -56,7 +57,7 @@ public class MatchDto<H extends TeamTypeDto, A extends TeamTypeDto> {
   private final Instant startDate;
   private final Instant endDate;
 
-  @Size(max = 300)
+  @Size(max = Constants.MATCH_DESCRIPTION_MAX_CHARACTERS)
   private final String description;
 
   @Size(max = 5)

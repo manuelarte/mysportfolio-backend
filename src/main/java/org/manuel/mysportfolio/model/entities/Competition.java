@@ -9,6 +9,7 @@ import java.time.YearMonth;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.bson.types.ObjectId;
+import org.manuel.mysportfolio.constants.Constants;
 import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.SportDependent;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,6 +22,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Competition extends BaseEntity implements SportDependent {
 
   @NotNull
+  @Size(max = Constants.COMPETITION_NAME_MAX_CHARACTERS)
   private String name;
 
   @NotNull

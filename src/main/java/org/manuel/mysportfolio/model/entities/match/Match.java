@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import org.bson.types.ObjectId;
+import org.manuel.mysportfolio.constants.Constants;
 import org.manuel.mysportfolio.model.entities.Place;
 import org.manuel.mysportfolio.model.entities.TeamOption;
 import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
@@ -61,7 +62,7 @@ public class Match<HomeTeamType extends TeamType, AwayTeamType extends TeamType>
 
   private List<MatchEvent> events = new ArrayList<>();
 
-  @Size(max = 300)
+  @Size(max = Constants.MATCH_DESCRIPTION_MAX_CHARACTERS)
   private String description;
 
   @Size(max = 5)

@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Team extends BaseEntity implements TeamInfo {
 
   @NotEmpty
-  @Size(max = 30)
+  @Size(max = 40)
   private String name;
 
   private TeamImage teamImage;

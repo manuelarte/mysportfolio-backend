@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import org.manuel.mysportfolio.constants.Constants;
 import org.manuel.mysportfolio.model.entities.team.KitPart;
 import org.manuel.mysportfolio.model.entities.team.TeamImage;
 import org.manuel.mysportfolio.model.entities.team.TeamKit;
@@ -22,7 +23,7 @@ import org.manuel.mysportfolio.model.entities.team.TeamKit;
 public class AnonymousTeamDto implements TeamTypeDto {
 
   @NotEmpty
-  @Size(max = 30)
+  @Size(max = Constants.TEAM_NAME_MAX_CHARACTERS)
   private final String name;
 
   private final TeamKit<KitPart, KitPart> teamKit;

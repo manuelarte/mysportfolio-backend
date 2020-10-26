@@ -14,6 +14,7 @@ import org.manuel.mysportfolio.services.query.MatchQueryService;
 import org.manuel.mysportfolio.services.query.PlayersPerformanceQueryService;
 import org.manuel.mysportfolio.transformers.PerformanceToPerformanceDtoTransformer;
 import org.manuel.mysportfolio.transformers.match.MatchToMatchDtoTransformer;
+import org.manuel.mysportfolio.validations.UserExists;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,6 +22,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/users/{externalUserId}/matches")
+@Validated
 @lombok.AllArgsConstructor
 public class UserMatchQueryController {
 
@@ -40,7 +43,7 @@ public class UserMatchQueryController {
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Page<UserMatchDto>> findAllMyUserMatches(
-      @PathVariable final String externalUserId,
+      @PathVariable @UserExists final String externalUserId,
       @PageableDefault(sort = "startDate", direction = Sort.Direction.DESC) final Pageable pageable,
       @QueryParameter(entity = Match.class) final Optional<Query> query) {
     final var appUser = Util.getUser(appUserQueryService, userIdProvider, externalUserId);

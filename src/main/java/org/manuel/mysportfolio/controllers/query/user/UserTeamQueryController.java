@@ -16,11 +16,13 @@ import org.manuel.mysportfolio.services.query.TeamQueryService;
 import org.manuel.mysportfolio.services.query.TeamToUsersQueryService;
 import org.manuel.mysportfolio.transformers.team.TeamToTeamDtoTransformer;
 import org.manuel.mysportfolio.transformers.teamtousers.UserInTeamToUserInTeamDtoTransformer;
+import org.manuel.mysportfolio.validations.UserExists;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/users/{externalUserId}/teams")
+@Validated
 @lombok.AllArgsConstructor
 public class UserTeamQueryController {
 
@@ -40,7 +43,7 @@ public class UserTeamQueryController {
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Page<UserTeamDto>> findAllMyTeams(
-      @PathVariable final String externalUserId,
+      @PathVariable @UserExists final String externalUserId,
       @PageableDefault final Pageable pageable) {
     final var appUser = Util.getUser(appUserQueryService, userIdProvider, externalUserId);
     final var teams = teamQueryService.findAllForUser(pageable, appUser.getExternalId());

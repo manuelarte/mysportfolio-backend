@@ -32,6 +32,7 @@ import org.manuel.mysportfolio.model.entities.team.Team;
 import org.manuel.mysportfolio.model.entities.team.TeamKit;
 import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
 import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
+import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam.UserInTeamRole;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -66,6 +67,14 @@ public class TestUtils {
     team.setName(RandomStringUtils.randomAlphabetic(5));
     team.setTeamKit(new TeamKit(new PlainKitPart(123), new PlainKitPart(321)));
     return team;
+  }
+
+  @SuppressWarnings("checkstyle:javadoctype")
+  public static UserInTeam createMockUserInTeam() {
+    final var userInTeam = new UserInTeam();
+    userInTeam.setFrom(LocalDate.now());
+    userInTeam.setRoles(Collections.singleton(UserInTeamRole.PLAYER));
+    return userInTeam;
   }
 
   @SuppressWarnings("checkstyle:javadoctype")

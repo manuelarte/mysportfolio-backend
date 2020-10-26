@@ -11,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
+import org.manuel.mysportfolio.constants.Constants;
 import org.manuel.mysportfolio.model.TeamInfo;
 import org.manuel.mysportfolio.model.entities.team.KitPart;
 import org.manuel.mysportfolio.model.entities.team.TeamImage;
@@ -36,7 +37,7 @@ public class TeamDto implements TeamInfo {
   private final Long version;
 
   @NotEmpty(groups = {New.class, Update.class})
-  @Size(max = 30)
+  @Size(max = Constants.TEAM_NAME_MAX_CHARACTERS)
   private final String name;
 
   private final TeamImage teamImage;

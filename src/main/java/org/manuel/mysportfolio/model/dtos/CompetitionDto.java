@@ -17,6 +17,7 @@ import java.time.YearMonth;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
+import org.manuel.mysportfolio.constants.Constants;
 import org.manuel.mysportfolio.model.Sport;
 
 @JsonDeserialize(builder = CompetitionDto.CompetitionDtoBuilder.class)
@@ -27,7 +28,7 @@ import org.manuel.mysportfolio.model.Sport;
 public class CompetitionDto extends BaseDto {
 
   @NotNull(groups = {New.class, Update.class})
-  @Size(max = 30)
+  @Size(max = Constants.COMPETITION_NAME_MAX_CHARACTERS)
   private final String name;
 
   @NotNull(groups = {New.class, Update.class})

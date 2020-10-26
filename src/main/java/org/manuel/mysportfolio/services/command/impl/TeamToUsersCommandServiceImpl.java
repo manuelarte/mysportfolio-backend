@@ -30,6 +30,7 @@ class TeamToUsersCommandServiceImpl implements TeamToUsersCommandService {
 
   @Override
   public TeamToUsers update(final TeamToUsers teamToUsers) {
+    Assert.notNull(teamToUsers, "Can't update a null entity");
     Assert.notNull(teamToUsers.getId(), "Can't update a new team to users entity");
     return teamToUsersRepository.save(teamToUsers);
   }

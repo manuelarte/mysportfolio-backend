@@ -38,8 +38,8 @@ public class PlayerProfileAspect {
       final var creationDateYear = Year.from(user.getCreatedDate().get().atZone(ZoneId.systemDefault()));
       final var nowYear = Year.now(clock);
       long between = ChronoUnit.YEARS.between(creationDateYear, nowYear);
-      Stream<Year> yearStream = LongStream.range(0, between+1).mapToObj(creationDateYear::plusYears);
-      final Map<Year, PlayerProfileSportInfo> info = yearStream.collect(HashMap::new, (m,v)->m.put(v, null), HashMap::putAll);
+      final Stream<Year> yearStream = LongStream.range(0, between + 1).mapToObj(creationDateYear::plusYears);
+      final Map<Year, PlayerProfileSportInfo> info = yearStream.collect(HashMap::new, (m,v) -> m.put(v, null), HashMap::putAll);
       playerProfile.setInfo(info);
       this.playerProfileRepository.save(playerProfile);
     }
