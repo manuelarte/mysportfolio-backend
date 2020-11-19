@@ -5,10 +5,13 @@ import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
 import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.manuel.mysportfolio.repositories.TeamToUsersCustomRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,9 +21,17 @@ class TeamToUsersCustomRepositoryImpl implements TeamToUsersCustomRepository {
   private final MongoTemplate mongoTemplate;
 
   @Override
-  public List<TeamToUsers> findByUsersExists(final String userId) {
-    final var criteria = Criteria.where("users." + userId).exists(true);
+  public List<TeamToUsers> findByUsersExists(final String externalUserId) {
+    final var criteria = Criteria.where("users." + externalUserId).exists(true);
     return mongoTemplate.find(new Query(criteria), TeamToUsers.class);
+  }
+
+  @Override
+  public Page<TeamToUsers> findAllByUsersExists(final Pageable pageable, final String externalUserId) {
+    final var criteria = Criteria.where("users." + externalUserId).exists(true);
+    final var query = new Query(criteria);
+    final var list = mongoTemplate.find(query, TeamToUsers.class);
+    return PageableExecutionUtils.getPage(list, pageable, () -> mongoTemplate.count(query, TeamToUsers.class));
   }
 
   @Override

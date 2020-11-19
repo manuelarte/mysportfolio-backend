@@ -15,4 +15,5 @@ public class QueryParamMatchSportTypeTransformer implements TypeTransformer<Stri
   public Sport transformValue(final Class<?> clazz, final String key, final String value) {
     return Sport.valueOf(value);
   }
+
 }

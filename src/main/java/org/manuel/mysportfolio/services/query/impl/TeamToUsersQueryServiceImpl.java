@@ -7,6 +7,8 @@ import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
 import org.manuel.mysportfolio.repositories.TeamToUsersRepository;
 import org.manuel.mysportfolio.services.query.TeamToUsersQueryService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,8 +28,13 @@ class TeamToUsersQueryServiceImpl implements TeamToUsersQueryService {
   }
 
   @Override
-  public List<TeamToUsers> findByUsersExists(final String userId) {
-    return teamToUsersRepository.findByUsersExists(userId);
+  public List<TeamToUsers> findByUsersExists(final String externalUserId) {
+    return teamToUsersRepository.findByUsersExists(externalUserId);
+  }
+
+  @Override
+  public Page<TeamToUsers> findAllByUserExists(final Pageable pageable, final String externalUserId) {
+    return teamToUsersRepository.findAllByUsersExists(pageable, externalUserId);
   }
 
 }

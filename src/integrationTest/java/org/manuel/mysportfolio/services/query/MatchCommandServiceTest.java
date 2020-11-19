@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
-import java.util.Set;
 import javax.inject.Inject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,13 +21,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @SpringBootTest
 @Import(ItConfiguration.class)
@@ -65,22 +57,11 @@ class MatchCommandServiceTest {
     final var criteria = Criteria.where("type.sport").is(Sport.FOOTBALL);
     query.addCriteria(criteria);
 
-    try {
-      final Set<GrantedAuthority> authorities = Collections
-          .singleton(new SimpleGrantedAuthority("ROLE_USER"));
-      final OAuth2User principal = new DefaultOAuth2User(authorities,
-          Collections.singletonMap("sub", "123456789"), "sub");
-      final Authentication authentication = new OAuth2AuthenticationToken(principal, authorities,
-          "sub");
-      SecurityContextHolder.getContext().setAuthentication(authentication);
-      final var allByQuery = matchQueryService
-          .findAllBy(query, Pageable.unpaged(), "123456789");
-      assertEquals(1, allByQuery.getTotalElements());
-      assertMatch(expected, allByQuery.getContent().get(0));
-    } finally {
-      SecurityContextHolder.clearContext();
-    }
-
+    final var allByQuery = TestUtils.doWithUserAuthentication(
+        () -> matchQueryService.findAllBy(query, Pageable.unpaged(), "123456789")
+    );
+    assertEquals(1, allByQuery.getTotalElements());
+    assertMatch(expected, allByQuery.getContent().get(0));
   }
 
   private void assertMatch(final Match<?, ?> expected, final Match<?, ?> actual) {

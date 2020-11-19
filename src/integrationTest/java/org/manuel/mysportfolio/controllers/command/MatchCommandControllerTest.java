@@ -11,8 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -33,11 +31,7 @@ import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.manuel.mysportfolio.transformers.match.MatchToMatchDtoTransformer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -79,7 +73,7 @@ public class MatchCommandControllerTest {
   @Test
   public void testSaveMatchWithOneTeamRegistered() throws Exception {
     try {
-      SecurityContextHolder.getContext().setAuthentication(createAuthentication());
+      SecurityContextHolder.getContext().setAuthentication(TestUtils.createAuthentication(ItConfiguration.IT_USER_ID));
       final var teamSaved = teamRepository.save(TestUtils.createMockTeam());
       final var matchDto = TestUtils
           .createMockMatchDto(TestUtils.createMockRegisteredTeamDto(teamSaved.getId()),
@@ -183,23 +177,6 @@ public class MatchCommandControllerTest {
     mvc.perform(post("/api/v1/matches").contentType(APPLICATION_JSON)
         .content(objectMapper.writeValueAsString(matchDto)))
         .andExpect(status().is4xxClientError());
-  }
-
-  private Authentication createAuthentication() {
-    final var authorities =
-        Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
-    final var attributes = new HashMap<String, Object>();
-    attributes.put("sub", 123456789);
-    attributes.put("email_verified", true);
-    attributes.put("iss", "https://accounts.google.com");
-    attributes.put("given_name", "Test");
-    attributes.put("family_name", "Not Production");
-    attributes.put("name", "Test Not Production");
-    attributes.put("email", "test@test.com");
-    attributes.put("picture",
-        "https://lh3.googleusercontent.com/a-/AAuE7mBk0hY2RSA_JMUDFNo2wT54GjycNKMGgtLfw5X1LpQ=s96-c");
-    final var principal = new DefaultOAuth2User(new HashSet<>(authorities), attributes, "name");
-    return new OAuth2AuthenticationToken(principal, authorities, "clientRegistrationId");
   }
 
 }

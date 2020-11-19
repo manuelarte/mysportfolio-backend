@@ -6,8 +6,10 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -33,9 +35,11 @@ import org.manuel.mysportfolio.model.entities.team.TeamKit;
 import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
 import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam.UserInTeamRole;
+import org.manuel.mysportfolio.model.entities.user.AppMembership;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -47,7 +51,7 @@ public class TestUtils {
     return TeamDto.builder()
         .name(RandomStringUtils.randomAlphabetic(5))
         .teamImage(null)
-        .teamKit(new TeamKit(new PlainKitPart(123), new PlainKitPart(321)))
+        .teamKit(new TeamKit<>(new PlainKitPart(123), new PlainKitPart(321)))
         .build();
   }
 
@@ -65,7 +69,7 @@ public class TestUtils {
   public static Team createMockTeam() {
     final var team = new Team();
     team.setName(RandomStringUtils.randomAlphabetic(5));
-    team.setTeamKit(new TeamKit(new PlainKitPart(123), new PlainKitPart(321)));
+    team.setTeamKit(new TeamKit<>(new PlainKitPart(123), new PlainKitPart(321)));
     return team;
   }
 
@@ -173,11 +177,33 @@ public class TestUtils {
   }
 
   @SuppressWarnings("checkstyle:javadoctype")
-  public static Authentication createAuthentication(final String userId) {
+  public static Authentication createAuthentication(final String externalUserId) {
     final Set<GrantedAuthority> authorities = Collections
         .singleton(new SimpleGrantedAuthority("ROLE_USER"));
-    final OAuth2User principal = new DefaultOAuth2User(authorities,
-        Collections.singletonMap("sub", userId), "sub");
-    return new OAuth2AuthenticationToken(principal, authorities, "sub");
+    final Map<String, Object> attributes = new HashMap<>();
+    attributes.put("sub", externalUserId);
+    attributes.put("email_verified", true);
+    attributes.put("iss", "https://accounts.google.com");
+    attributes.put("given_name", "Test");
+    attributes.put("family_name", "Not Production");
+    attributes.put("name", "Test Not Production");
+    attributes.put("email", "test@test.com");
+    attributes.put("app-membership", AppMembership.FREE);
+    attributes.put("picture",
+        "https://lh3.googleusercontent.com/a-/AAuE7mBk0hY2RSA_JMUDFNo2wT54GjycNKMGgtLfw5X1LpQ=s96-c");
+    final OAuth2User principal = new DefaultOAuth2User(authorities, attributes, "sub");
+    return new OAuth2AuthenticationToken(principal, authorities,
+        "sub");
+  }
+
+  public static <T> T doWithUserAuthentication(final Supplier<T> function) {
+    final var previousAuthentication = SecurityContextHolder.getContext().getAuthentication();
+    try {
+      SecurityContextHolder.getContext().setAuthentication(createAuthentication(ItConfiguration.IT_USER_ID));
+      return function.get();
+    } finally {
+      SecurityContextHolder.clearContext();
+      SecurityContextHolder.getContext().setAuthentication(previousAuthentication);
+    }
   }
 }

@@ -28,7 +28,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/swagger-ui.html").permitAll()
         .antMatchers("/actuator/**").permitAll()
         .anyRequest().authenticated();
-
   }
 
   @Override

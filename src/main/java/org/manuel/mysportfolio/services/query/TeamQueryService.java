@@ -2,6 +2,7 @@ package org.manuel.mysportfolio.services.query;
 
 import java.time.Year;
 import java.util.Optional;
+import java.util.Set;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.entities.team.Team;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,9 @@ public interface TeamQueryService {
 
   @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
   Optional<Team> findOne(ObjectId id);
+
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+  Page<Team> findAllByIdsIn(Pageable pageable, Set<ObjectId> ids);
 
   @PreAuthorize("hasRole('ROLE_ADMIN') or #createdBy == authentication.principal.attributes['sub']")
   int countAllByCreatedByInYear(String createdBy, Year year);

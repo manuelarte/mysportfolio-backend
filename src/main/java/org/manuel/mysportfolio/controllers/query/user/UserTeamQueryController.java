@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.controllers.query.user;
 
+import io.github.manuelarte.spring.queryparameter.QueryParameter;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
@@ -10,6 +11,7 @@ import org.manuel.mysportfolio.model.dtos.teamtousers.UserInTeamDto;
 import org.manuel.mysportfolio.model.dtos.user.UserTeamDto;
 import org.manuel.mysportfolio.model.entities.team.Team;
 import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
+import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.services.query.AppUserQueryService;
 import org.manuel.mysportfolio.services.query.TeamQueryService;
@@ -19,6 +21,7 @@ import org.manuel.mysportfolio.transformers.teamtousers.UserInTeamToUserInTeamDt
 import org.manuel.mysportfolio.validations.UserExists;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -44,13 +47,13 @@ public class UserTeamQueryController {
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Page<UserTeamDto>> findAllMyTeams(
       @PathVariable @UserExists final String externalUserId,
-      @PageableDefault final Pageable pageable) {
+      @PageableDefault final Pageable pageable,
+      @QueryParameter(entity = UserInTeam.class, allowedKeys = "to") final Query q) {
     final var appUser = Util.getUser(appUserQueryService, userIdProvider, externalUserId);
-    final var teams = teamQueryService.findAllForUser(pageable, appUser.getExternalId());
-    final var byTeamIdIn = teamToUsersQueryService
-        .findByTeamIdIn(teams.stream().map(Team::getId).collect(Collectors.toList()));
+    final var teamsToUser = teamToUsersQueryService.findAllByUserExists(pageable, externalUserId);
+    final var teams = teamQueryService.findAllByIdsIn(pageable, teamsToUser.stream().map(TeamToUsers::getTeamId).collect(Collectors.toSet()));
     final var response = teams.map(t -> new UserTeamDto(teamToTeamDtoTransformer.apply(t),
-        getUserInTeamDto(t.getId(), byTeamIdIn, appUser)));
+        getUserInTeamDto(t.getId(), teamsToUser.getContent(), appUser)));
     return ResponseEntity.ok(response);
   }
 
