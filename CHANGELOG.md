@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Increasing the max number of characters for team name, competition name and description and match description
+- Using mysportfolio-model library
 
 ### Removed
 
