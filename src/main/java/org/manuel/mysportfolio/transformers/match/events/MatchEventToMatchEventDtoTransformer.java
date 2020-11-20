@@ -49,6 +49,7 @@ public class MatchEventToMatchEventDtoTransformer implements Function<MatchEvent
       toReturn = SubstitutionMatchEventDto.builder()
           .id(Optional.ofNullable(casted.getId()).map(Object::toString).orElse(null))
           .minute(casted.getMinute())
+          .team(casted.getTeam())
           .in(casted.getIn())
           .out(casted.getOut())
           .description(casted.getDescription())
