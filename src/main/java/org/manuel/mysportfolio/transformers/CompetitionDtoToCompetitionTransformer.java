@@ -1,10 +1,10 @@
 package org.manuel.mysportfolio.transformers;
 
+import io.github.manuelarte.mysportfolio.model.documents.Competition;
 import java.util.Optional;
 import java.util.function.Function;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.dtos.CompetitionDto;
-import org.manuel.mysportfolio.model.entities.Competition;
 import org.springframework.stereotype.Component;
 
 @Component

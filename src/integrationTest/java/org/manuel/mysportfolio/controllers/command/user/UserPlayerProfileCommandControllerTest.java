@@ -1,35 +1,36 @@
 package org.manuel.mysportfolio.controllers.command.user;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.manuelarte.mysportfolio.model.documents.player.FootballPosition;
 import java.time.Year;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileFootballInfoDto;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileSportInfoDto;
-import org.manuel.mysportfolio.model.entities.player.FootballPosition;
 import org.manuel.mysportfolio.model.entities.user.AppMembership;
 import org.manuel.mysportfolio.model.entities.user.AppSettings;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.repositories.PlayerProfileRepository;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.util.NestedServletException;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 @Import(ItConfiguration.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class UserPlayerProfileCommandControllerTest {
@@ -44,20 +45,14 @@ public class UserPlayerProfileCommandControllerTest {
   private PlayerProfileRepository playerProfileRepository;
 
   @Inject
-  private WebApplicationContext context;
-
   private MockMvc mvc;
 
   @BeforeEach
   @SuppressWarnings("checkstyle:javadoctype")
   public void setup() {
-    mvc = MockMvcBuilders.webAppContextSetup(context)
-        .apply(springSecurity())
-        .build();
-    appUserRepository.save(new AppUser(null, null, "test", "test@mymatchfolio.com",
-        ItConfiguration.IT_USER_ID, AppMembership.FREE,
-        false, null, new AppSettings(false), null, null, null, null));
-
+    appUserRepository.save(new AppUser("test", "test@mymatchfolio.com",
+        ItConfiguration.IT_USER_ID, AppMembership.FREE, false, null,
+        new AppSettings(false)));
   }
 
   @AfterEach
@@ -95,6 +90,22 @@ public class UserPlayerProfileCommandControllerTest {
         put("/api/v1/users/{userId}/player/{year}", userId, Year.now().plusYears(1))
             .contentType(APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(playerSportInfo))));
+  }
+
+  @Test
+  public void updatePlayerProfileForNonExistingUser() {
+    final var userId = ItConfiguration.IT_USER_ID + "nono";
+    final var playerSportInfo = PlayerProfileSportInfoDto.builder()
+        .footballInfo(PlayerProfileFootballInfoDto.builder()
+            .preferredPosition(FootballPosition.CENTRE_FORWARD)
+            .build())
+        .build();
+
+    final var thrown = assertThrows(NestedServletException.class, () -> mvc.perform(
+        put("/api/v1/users/{userId}/player/{year}", userId, Year.now().minusYears(1))
+            .contentType(APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(playerSportInfo))));
+    assertTrue(thrown.getCause() instanceof ConstraintViolationException);
   }
 
 }

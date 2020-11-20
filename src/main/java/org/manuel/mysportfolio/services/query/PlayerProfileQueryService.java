@@ -1,6 +1,6 @@
 package org.manuel.mysportfolio.services.query;
 
-import org.manuel.mysportfolio.model.entities.player.PlayerProfile;
+import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfile;
 
 public interface PlayerProfileQueryService {
 

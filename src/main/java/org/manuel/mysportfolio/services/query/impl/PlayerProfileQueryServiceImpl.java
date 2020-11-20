@@ -1,8 +1,8 @@
 package org.manuel.mysportfolio.services.query.impl;
 
+import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfile;
 import io.jsonwebtoken.lang.Assert;
 import javax.validation.constraints.NotNull;
-import org.manuel.mysportfolio.model.entities.player.PlayerProfile;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.repositories.PlayerProfileRepository;
 import org.manuel.mysportfolio.services.query.PlayerProfileQueryService;

@@ -1,17 +1,20 @@
 package org.manuel.mysportfolio.model;
 
+import io.github.manuelarte.mysportfolio.model.MatchDependent;
+import io.github.manuelarte.mysportfolio.model.Sport;
+import io.github.manuelarte.mysportfolio.model.SportDependent;
+import io.github.manuelarte.mysportfolio.model.TeamOption;
+import io.github.manuelarte.mysportfolio.model.documents.match.Match;
+import io.github.manuelarte.mysportfolio.model.documents.match.Performance;
+import io.github.manuelarte.mysportfolio.model.documents.match.PlayersPerformance;
+import io.github.manuelarte.mysportfolio.model.documents.match.events.AssistDetails;
+import io.github.manuelarte.mysportfolio.model.documents.match.events.GoalMatchEvent;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.stream.Stream;
 import org.manuel.mysportfolio.badges.BadgeUtilHandler;
-import org.manuel.mysportfolio.model.entities.TeamOption;
-import org.manuel.mysportfolio.model.entities.match.Match;
-import org.manuel.mysportfolio.model.entities.match.Performance;
-import org.manuel.mysportfolio.model.entities.match.PlayersPerformance;
-import org.manuel.mysportfolio.model.entities.match.events.AssistDetails;
-import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
 import org.manuel.mysportfolio.model.events.CompetitionCreatedEvent;
 import org.manuel.mysportfolio.model.events.MatchCreatedEvent;
 import org.manuel.mysportfolio.model.events.PlayersPerformanceUpdatedEvent;

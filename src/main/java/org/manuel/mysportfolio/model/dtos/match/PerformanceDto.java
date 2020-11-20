@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.math.BigDecimal;
+import javax.annotation.concurrent.Immutable;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @JsonDeserialize(builder = PerformanceDto.PerformanceDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Immutable
 @lombok.AllArgsConstructor
 @lombok.Value
 @lombok.Builder(toBuilder = true)

@@ -3,14 +3,14 @@ package org.manuel.mysportfolio.model.dtos.playerprofile;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import io.github.manuelarte.mysportfolio.model.documents.player.FootballSkills;
+import io.github.manuelarte.mysportfolio.model.documents.player.FutsalPosition;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.New;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.PartialUpdate;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Update;
 import java.util.Set;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
-import org.manuel.mysportfolio.model.entities.player.FootballSkills;
-import org.manuel.mysportfolio.model.entities.player.FutsalPosition;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonDeserialize(builder = PlayerProfileFutsalInfoDto.PlayerProfileFutsalInfoDtoBuilder.class)

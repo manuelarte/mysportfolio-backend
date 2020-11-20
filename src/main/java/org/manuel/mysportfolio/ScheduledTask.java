@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio;
 
+import io.github.manuelarte.mysportfolio.model.documents.Competition;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
@@ -11,7 +12,6 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import org.manuel.mysportfolio.config.SystemAuthentication;
 import org.manuel.mysportfolio.exceptions.NotificationException;
-import org.manuel.mysportfolio.model.entities.Competition;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.model.notifications.NotificationsFactory;
 import org.manuel.mysportfolio.services.FirebaseNotificationService;

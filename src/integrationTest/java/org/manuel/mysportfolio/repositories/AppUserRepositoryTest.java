@@ -23,12 +23,12 @@ class AppUserRepositoryTest {
   @DisplayName("Test not duplicated external id allowed")
   public void testNotDuplicatedExternalId() {
     final var saved = appUserRepository.save(
-        new AppUser(null, null, "test", "test@mymatchfolio.com", "externalId", AppMembership.FREE,
-            false, null, new AppSettings(false), null, null, null, null));
+        new AppUser("test", "test@mymatchfolio.com", "externalId", AppMembership.FREE,
+            false, null, new AppSettings(false)));
 
-    final var newAppUser = new AppUser(null, null, "test1", "test1@mymatchfolio.com",
+    final var newAppUser = new AppUser("test1", "test1@mymatchfolio.com",
         saved.getExternalId(), AppMembership.FREE,
-        false, null, new AppSettings(false), null, null, null, null);
+        false, null, new AppSettings(false));
     assertThrows(DuplicateKeyException.class, () -> appUserRepository.save(newAppUser));
   }
 }

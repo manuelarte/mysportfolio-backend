@@ -1,13 +1,13 @@
 package org.manuel.mysportfolio.badges;
 
+import io.github.manuelarte.mysportfolio.model.Sport;
+import io.github.manuelarte.mysportfolio.model.documents.match.Match;
+import io.github.manuelarte.mysportfolio.model.documents.match.type.CompetitionMatchType;
+import io.github.manuelarte.mysportfolio.model.documents.match.type.FriendlyMatchType;
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import org.manuel.mysportfolio.config.UserIdProvider;
-import org.manuel.mysportfolio.model.Sport;
-import org.manuel.mysportfolio.model.entities.match.Match;
-import org.manuel.mysportfolio.model.entities.match.type.CompetitionMatchType;
-import org.manuel.mysportfolio.model.entities.match.type.FriendlyMatchType;
 import org.manuel.mysportfolio.repositories.CompetitionRepository;
 import org.springframework.data.repository.Repository;
 import org.springframework.stereotype.Component;
@@ -19,11 +19,13 @@ public class BadgeUtilHandler {
   private final List<Repository<?, ?>> repositories;
   private final UserIdProvider userIdProvider;
 
-  public @Nonnull String getUserId() {
+  public @Nonnull
+  String getUserId() {
     return userIdProvider.getUserId();
   }
 
-  public @Nonnull <T extends Repository<?, ?>> Optional<T> getRepository(Class<T> clazz) {
+  public @Nonnull
+  <T extends Repository<?, ?>> Optional<T> getRepository(Class<T> clazz) {
     return (Optional<T>) repositories.stream().filter(clazz::isInstance).findAny();
   }
 

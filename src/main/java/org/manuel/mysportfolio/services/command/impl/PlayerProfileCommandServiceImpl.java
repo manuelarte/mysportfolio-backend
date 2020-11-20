@@ -1,7 +1,7 @@
 package org.manuel.mysportfolio.services.command.impl;
 
+import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfileSportInfo;
 import java.time.Year;
-import org.manuel.mysportfolio.model.entities.player.PlayerProfileSportInfo;
 import org.manuel.mysportfolio.repositories.PlayerProfileRepository;
 import org.manuel.mysportfolio.services.command.PlayerProfileCommandService;
 import org.manuel.mysportfolio.services.query.PlayerProfileQueryService;

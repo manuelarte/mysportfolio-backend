@@ -1,9 +1,9 @@
 package org.manuel.mysportfolio.services;
 
+import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam;
 import java.time.LocalDate;
 import java.util.function.Supplier;
 import org.manuel.mysportfolio.config.SystemAuthentication;
-import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.manuel.mysportfolio.model.entities.usernotification.TeamAddUserNotification;
 import org.manuel.mysportfolio.services.command.TeamToUsersCommandService;
 import org.manuel.mysportfolio.services.query.TeamToUsersQueryService;

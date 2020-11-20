@@ -1,10 +1,10 @@
 package org.manuel.mysportfolio.model.entities.badges;
 
+import io.github.manuelarte.mysportfolio.model.documents.BaseDocument;
 import java.util.Set;
 import javax.validation.constraints.NotNull;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.Badge;
-import org.manuel.mysportfolio.model.entities.BaseEntity;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @lombok.Data
 @lombok.EqualsAndHashCode(callSuper = true)
 @lombok.Builder(toBuilder = true)
-public class UserBadges extends BaseEntity {
+public class UserBadges extends BaseDocument {
 
   @NotNull
   @Indexed(unique = true)

@@ -1,10 +1,11 @@
 package org.manuel.mysportfolio.controllers.command.user;
 
+import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.New;
+import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Update;
 import javax.validation.groups.Default;
 import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.model.dtos.user.UserTeamDto;
-import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.manuel.mysportfolio.services.command.TeamCommandService;
 import org.manuel.mysportfolio.services.command.TeamToUsersCommandService;
 import org.manuel.mysportfolio.services.query.TeamToUsersQueryService;
@@ -16,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,7 +45,6 @@ public class UserTeamCommandController {
     final var teamSaved = teamCommandService
         .save(teamDtoToTeamTransformer.apply(userTeamDto.getTeam()));
     final UserInTeam userInTeamSaved;
-    // this should be part of an hypothetical service
     if (userTeamDto.getUserInTeam() != null) {
       userInTeamSaved = teamToUsersCommandService.updateUserInTeam(teamSaved.getId(), getUserId(),
           userInTeamDtoToUserInTeamTransformer.apply(userTeamDto.getUserInTeam()));
@@ -58,6 +59,24 @@ public class UserTeamCommandController {
     return ResponseEntity.created(location)
         .body(new UserTeamDto(teamToTeamDtoTransformer.apply(teamSaved),
             userInTeamToUserInTeamDtoTransformer.apply(userInTeamSaved)));
+  }
+
+  @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<UserTeamDto> updateUserTeam(
+      @Validated({Default.class, Update.class}) @RequestBody final UserTeamDto userTeamDto) {
+    final var teamUpdated = teamCommandService
+        .update(teamDtoToTeamTransformer.apply(userTeamDto.getTeam()));
+    final UserInTeam userInTeamSaved;
+    if (userTeamDto.getUserInTeam() != null) {
+      userInTeamSaved = teamToUsersCommandService.updateUserInTeam(teamUpdated.getId(), getUserId(),
+          userInTeamDtoToUserInTeamTransformer.apply(userTeamDto.getUserInTeam()));
+    } else {
+      userInTeamSaved = teamToUsersQueryService.findByTeamId(teamUpdated.getId()).get().getUsers()
+          .get(getUserId());
+    }
+    return ResponseEntity.ok(new UserTeamDto(teamToTeamDtoTransformer.apply(teamUpdated),
+        userInTeamToUserInTeamDtoTransformer.apply(userInTeamSaved)));
   }
 
   private String getUserId() {

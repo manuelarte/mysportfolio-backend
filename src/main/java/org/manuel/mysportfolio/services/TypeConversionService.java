@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.services;
 
+import io.github.manuelarte.mysportfolio.model.Sport;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -7,7 +8,6 @@ import java.time.ZoneOffset;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-import org.manuel.mysportfolio.model.Sport;
 import org.springframework.stereotype.Service;
 import pl.jsolve.typeconverter.Converter;
 import pl.jsolve.typeconverter.TypeConverter;

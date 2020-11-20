@@ -1,10 +1,10 @@
 package org.manuel.mysportfolio.transformers.playerprofile;
 
+import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfileFutsalInfo;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileFutsalInfoDto;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileSportSeasonSummaryDto;
-import org.manuel.mysportfolio.model.entities.player.PlayerProfileFutsalInfo;
 import org.springframework.stereotype.Component;
 
 @Component

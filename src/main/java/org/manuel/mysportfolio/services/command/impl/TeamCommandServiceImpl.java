@@ -1,8 +1,8 @@
 package org.manuel.mysportfolio.services.command.impl;
 
+import io.github.manuelarte.mysportfolio.model.documents.team.Team;
 import javax.validation.constraints.NotNull;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.entities.team.Team;
 import org.manuel.mysportfolio.publishers.TeamCreatedEventPublisher;
 import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.manuel.mysportfolio.services.command.TeamCommandService;
@@ -19,6 +19,7 @@ class TeamCommandServiceImpl implements TeamCommandService {
   @Override
   public Team save(@NotNull final Team team) {
     Assert.notNull(team, "Team can't be null");
+    Assert.isNull(team.getId(), "Team must be new");
     final var saved = teamRepository.save(team);
     teamCreatedEventPublisher.publishEvent(saved);
     return saved;

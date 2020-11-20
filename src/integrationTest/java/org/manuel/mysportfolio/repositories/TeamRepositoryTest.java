@@ -2,6 +2,7 @@ package org.manuel.mysportfolio.repositories;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import io.github.manuelarte.mysportfolio.model.documents.team.Team;
 import java.time.Instant;
 import java.time.Year;
 import java.time.ZoneOffset;
@@ -9,7 +10,6 @@ import javax.inject.Inject;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.manuel.mysportfolio.model.entities.team.Team;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;

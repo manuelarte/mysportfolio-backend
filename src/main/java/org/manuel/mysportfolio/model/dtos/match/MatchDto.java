@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import io.github.manuelarte.mysportfolio.model.Constants;
+import io.github.manuelarte.mysportfolio.model.TeamOption;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.New;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.PartialUpdate;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Update;
@@ -12,19 +14,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import javax.annotation.concurrent.Immutable;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
+import org.manuel.mysportfolio.model.dtos.PlaceDto;
+import org.manuel.mysportfolio.model.dtos.match.events.MatchEventDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
-import org.manuel.mysportfolio.model.entities.Place;
-import org.manuel.mysportfolio.model.entities.TeamOption;
-import org.manuel.mysportfolio.model.entities.match.type.MatchType;
 
 @JsonDeserialize(builder = MatchDto.MatchDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Immutable
 @lombok.AllArgsConstructor
 @lombok.Value
 @lombok.Builder(toBuilder = true)
@@ -38,7 +41,7 @@ public class MatchDto<H extends TeamTypeDto, A extends TeamTypeDto> {
   private final Long version;
 
   @NotNull(groups = {New.class, Update.class})
-  private final MatchType type;
+  private final MatchTypeDto type;
 
   @NotNull
   private final Map<String, TeamOption> playedFor;
@@ -49,14 +52,14 @@ public class MatchDto<H extends TeamTypeDto, A extends TeamTypeDto> {
 
   private final List<MatchEventDto> events;
 
-  private final Place address;
+  private final PlaceDto address;
 
   @PastOrPresent
   @NotNull
   private final Instant startDate;
   private final Instant endDate;
 
-  @Size(max = 300)
+  @Size(max = Constants.MATCH_DESCRIPTION_MAX_CHARACTERS)
   private final String description;
 
   @Size(max = 5)

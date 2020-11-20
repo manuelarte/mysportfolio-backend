@@ -1,7 +1,7 @@
 package org.manuel.mysportfolio.repositories.impl;
 
+import io.github.manuelarte.mysportfolio.model.documents.Competition;
 import java.util.List;
-import org.manuel.mysportfolio.model.entities.Competition;
 import org.manuel.mysportfolio.repositories.CompetitionRepositoryCustom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

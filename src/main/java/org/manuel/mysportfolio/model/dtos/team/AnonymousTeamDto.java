@@ -4,11 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import io.github.manuelarte.mysportfolio.model.Constants;
+import io.github.manuelarte.mysportfolio.model.documents.team.TeamImage;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import org.manuel.mysportfolio.model.entities.team.KitPart;
-import org.manuel.mysportfolio.model.entities.team.TeamImage;
-import org.manuel.mysportfolio.model.entities.team.TeamKit;
 
 /**
  * Dto to be used if the home/away team is an anonymous team when user inputs a match.
@@ -22,10 +21,10 @@ import org.manuel.mysportfolio.model.entities.team.TeamKit;
 public class AnonymousTeamDto implements TeamTypeDto {
 
   @NotEmpty
-  @Size(max = 30)
+  @Size(max = Constants.TEAM_NAME_MAX_CHARACTERS)
   private final String name;
 
-  private final TeamKit<KitPart, KitPart> teamKit;
+  private final TeamKitDto<KitPartDto, KitPartDto> teamKit;
 
   private final TeamImage teamImage;
 

@@ -1,12 +1,13 @@
 package org.manuel.mysportfolio.services.query.impl;
 
+import io.github.manuelarte.mysportfolio.model.documents.team.Team;
+import io.github.manuelarte.mysportfolio.model.documents.teamtouser.TeamToUsers;
 import java.time.Year;
 import java.time.ZoneOffset;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.entities.team.Team;
-import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
 import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.manuel.mysportfolio.services.query.TeamQueryService;
 import org.manuel.mysportfolio.services.query.TeamToUsersQueryService;
@@ -24,13 +25,18 @@ class TeamQueryServiceImpl implements TeamQueryService {
   @Override
   public Page<Team> findAllForUser(final Pageable pageable, final String userId) {
     final var byUsersExists = teamToUsersQueryService.findByUsersExists(userId);
-    return teamRepository.findAllByIdIsIn(pageable,
+    return this.findAllByIdsIn(pageable,
         byUsersExists.stream().map(TeamToUsers::getTeamId).collect(Collectors.toSet()));
   }
 
   @Override
   public Optional<Team> findOne(final ObjectId id) {
     return teamRepository.findById(id);
+  }
+
+  @Override
+  public Page<Team> findAllByIdsIn(final Pageable pageable, Set<ObjectId> ids) {
+    return teamRepository.findAllByIdIsIn(pageable, ids);
   }
 
   @Override

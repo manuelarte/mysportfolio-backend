@@ -1,15 +1,16 @@
 package org.manuel.mysportfolio.transformers.match;
 
+import io.github.manuelarte.mysportfolio.model.documents.match.Match;
+import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
+import io.github.manuelarte.mysportfolio.model.documents.match.events.MatchEvent;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.manuel.mysportfolio.model.dtos.PlaceDto;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
-import org.manuel.mysportfolio.model.entities.match.Match;
-import org.manuel.mysportfolio.model.entities.match.TeamType;
-import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
 import org.manuel.mysportfolio.transformers.match.events.MatchEventDtoToMatchEventTransformer;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,7 @@ public class MatchUpdateDtoToMatchTransformer implements
         MatchDto<? extends TeamTypeDto, ? extends TeamTypeDto>, Match<TeamType, TeamType>> {
 
   private final TeamInMatchDtoToTeamTypeTransformer teamInMatchDtoToTeamTypeTransformer;
+  private final MatchTypeDtoToMatchTypeTransformer matchTypeDtoToMatchTypeTransformer;
   private final MatchEventDtoToMatchEventTransformer matchEventDtoToMatchEventTransformer;
 
   @Override
@@ -37,9 +39,9 @@ public class MatchUpdateDtoToMatchTransformer implements
 
     // Fields that can be modified
     updatedMatch.setVersion(matchUpdateDto.getVersion());
-    updatedMatch.setType(Optional.ofNullable(matchUpdateDto.getType()).orElse(null));
+    updatedMatch.setType(matchTypeDtoToMatchTypeTransformer.apply(matchUpdateDto.getType()));
 
-    updatedMatch.setAddress(matchUpdateDto.getAddress());
+    updatedMatch.setAddress(Optional.ofNullable(matchUpdateDto.getAddress()).map(PlaceDto::toPlace).orElse(null));
     updatedMatch.setStartDate(matchUpdateDto.getStartDate());
     updatedMatch.setEndDate(matchUpdateDto.getEndDate());
 

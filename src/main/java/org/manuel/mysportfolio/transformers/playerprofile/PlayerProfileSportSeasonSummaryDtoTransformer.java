@@ -1,5 +1,9 @@
 package org.manuel.mysportfolio.transformers.playerprofile;
 
+import io.github.manuelarte.mysportfolio.model.Sport;
+import io.github.manuelarte.mysportfolio.model.documents.match.Match;
+import io.github.manuelarte.mysportfolio.model.documents.match.events.AssistDetails;
+import io.github.manuelarte.mysportfolio.model.documents.match.events.GoalMatchEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Year;
@@ -10,11 +14,7 @@ import java.util.OptionalDouble;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileSportSeasonSummaryDto;
-import org.manuel.mysportfolio.model.entities.match.Match;
-import org.manuel.mysportfolio.model.entities.match.events.AssistDetails;
-import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
 
 @lombok.AllArgsConstructor
@@ -62,7 +62,7 @@ public class PlayerProfileSportSeasonSummaryDtoTransformer implements
   private BigDecimal getAverageGoalRate(final Set<GoalMatchEvent> goals) {
     OptionalDouble average = goals.stream()
         .filter(it -> it.getRates() != null && !it.getRates().isEmpty())
-        .map(this::getAverageGoalRate).mapToDouble(it -> it.doubleValue()).average();
+        .map(this::getAverageGoalRate).mapToDouble(BigDecimal::doubleValue).average();
     return average.isPresent() ? BigDecimal.valueOf(average.getAsDouble())
         .setScale(1, RoundingMode.HALF_EVEN) : null;
   }

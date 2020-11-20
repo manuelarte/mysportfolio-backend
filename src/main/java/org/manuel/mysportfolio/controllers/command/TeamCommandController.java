@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.controllers.command;
 
+import io.github.manuelarte.mysportfolio.model.documents.team.Team;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.Exists;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.New;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.PartialUpdate;
@@ -7,7 +8,6 @@ import io.jsonwebtoken.lang.Assert;
 import javax.validation.groups.Default;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.dtos.team.TeamDto;
-import org.manuel.mysportfolio.model.entities.team.Team;
 import org.manuel.mysportfolio.services.command.TeamCommandService;
 import org.manuel.mysportfolio.transformers.team.TeamDtoToExistingTeamTransformer;
 import org.manuel.mysportfolio.transformers.team.TeamDtoToTeamTransformer;

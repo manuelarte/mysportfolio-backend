@@ -1,11 +1,11 @@
 package org.manuel.mysportfolio.transformers.usernotification;
 
+import io.github.manuelarte.mysportfolio.model.documents.team.Team;
 import java.util.Optional;
 import java.util.function.Function;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.usernotification.TeamAddUserNotificationDto;
-import org.manuel.mysportfolio.model.entities.team.Team;
 import org.manuel.mysportfolio.model.entities.usernotification.TeamAddUserNotification;
 import org.manuel.mysportfolio.services.query.TeamQueryService;
 import org.manuel.mysportfolio.transformers.team.TeamToTeamDtoTransformer;
