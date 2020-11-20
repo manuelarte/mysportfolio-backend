@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam.UserInTeamRole;
 import java.time.LocalDate;
 import javax.inject.Inject;
 import org.bson.types.ObjectId;
@@ -15,7 +16,6 @@ import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.TestUtils;
 import org.manuel.mysportfolio.model.dtos.teamtousers.UserInTeamDto;
 import org.manuel.mysportfolio.model.dtos.user.UserTeamDto;
-import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam.UserInTeamRole;
 import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.manuel.mysportfolio.repositories.TeamToUsersRepository;
 import org.manuel.mysportfolio.transformers.teamtousers.UserInTeamDtoToUserInTeamTransformer;

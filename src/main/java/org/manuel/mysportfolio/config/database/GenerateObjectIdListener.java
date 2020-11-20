@@ -1,12 +1,12 @@
 package org.manuel.mysportfolio.config.database;
 
+import io.github.manuelarte.mysportfolio.model.documents.match.Match;
+import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
+import io.github.manuelarte.mysportfolio.model.documents.match.events.MatchEvent;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.entities.match.Match;
-import org.manuel.mysportfolio.model.entities.match.TeamType;
-import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.stereotype.Component;

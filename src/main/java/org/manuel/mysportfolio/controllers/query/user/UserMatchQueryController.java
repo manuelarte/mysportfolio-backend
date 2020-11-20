@@ -1,13 +1,13 @@
 package org.manuel.mysportfolio.controllers.query.user;
 
+import io.github.manuelarte.mysportfolio.model.documents.match.Match;
+import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
 import io.github.manuelarte.spring.queryparameter.QueryParameter;
 import java.util.Optional;
 import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.controllers.Util;
 import org.manuel.mysportfolio.model.dtos.match.PerformanceDto;
 import org.manuel.mysportfolio.model.dtos.user.UserMatchDto;
-import org.manuel.mysportfolio.model.entities.match.Match;
-import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.services.query.AppUserQueryService;
 import org.manuel.mysportfolio.services.query.MatchQueryService;

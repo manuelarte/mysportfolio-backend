@@ -1,13 +1,13 @@
 package org.manuel.mysportfolio.services.query.impl;
 
+import io.github.manuelarte.mysportfolio.model.documents.team.Team;
+import io.github.manuelarte.mysportfolio.model.documents.teamtouser.TeamToUsers;
 import java.time.Year;
 import java.time.ZoneOffset;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.entities.team.Team;
-import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
 import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.manuel.mysportfolio.services.query.TeamQueryService;
 import org.manuel.mysportfolio.services.query.TeamToUsersQueryService;

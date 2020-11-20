@@ -1,8 +1,8 @@
 package org.manuel.mysportfolio.services.command;
 
+import io.github.manuelarte.mysportfolio.model.documents.teamtouser.TeamToUsers;
+import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
-import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.manuel.mysportfolio.model.events.TeamCreatedEvent;
 import org.springframework.security.access.prepost.PreAuthorize;
 

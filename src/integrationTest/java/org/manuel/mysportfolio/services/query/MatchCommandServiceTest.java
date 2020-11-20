@@ -2,6 +2,11 @@ package org.manuel.mysportfolio.services.query;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import io.github.manuelarte.mysportfolio.model.Sport;
+import io.github.manuelarte.mysportfolio.model.TeamOption;
+import io.github.manuelarte.mysportfolio.model.documents.match.AnonymousTeam;
+import io.github.manuelarte.mysportfolio.model.documents.match.Match;
+import io.github.manuelarte.mysportfolio.model.documents.match.type.FriendlyMatchType;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
@@ -10,11 +15,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.TestUtils;
-import org.manuel.mysportfolio.model.Sport;
-import org.manuel.mysportfolio.model.entities.TeamOption;
-import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
-import org.manuel.mysportfolio.model.entities.match.Match;
-import org.manuel.mysportfolio.model.entities.match.type.FriendlyMatchType;
 import org.manuel.mysportfolio.repositories.MatchRepository;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;

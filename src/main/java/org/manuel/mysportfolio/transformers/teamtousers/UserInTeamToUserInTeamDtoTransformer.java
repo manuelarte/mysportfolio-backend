@@ -1,8 +1,8 @@
 package org.manuel.mysportfolio.transformers.teamtousers;
 
+import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam;
 import java.util.function.Function;
 import org.manuel.mysportfolio.model.dtos.teamtousers.UserInTeamDto;
-import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,8 +1,8 @@
 package org.manuel.mysportfolio.transformers.match;
 
+import io.github.manuelarte.mysportfolio.model.documents.match.RegisteredTeam;
 import java.util.function.Function;
 import org.manuel.mysportfolio.model.dtos.team.RegisteredTeamDto;
-import org.manuel.mysportfolio.model.entities.match.RegisteredTeam;
 import org.springframework.stereotype.Component;
 
 @Component

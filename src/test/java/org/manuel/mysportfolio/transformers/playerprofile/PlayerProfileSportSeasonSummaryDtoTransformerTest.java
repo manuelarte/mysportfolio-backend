@@ -6,6 +6,13 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import io.github.manuelarte.mysportfolio.model.Sport;
+import io.github.manuelarte.mysportfolio.model.TeamOption;
+import io.github.manuelarte.mysportfolio.model.documents.match.Match;
+import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
+import io.github.manuelarte.mysportfolio.model.documents.match.events.GoalMatchEvent;
+import io.github.manuelarte.mysportfolio.model.documents.match.events.MatchEvent;
+import io.github.manuelarte.mysportfolio.model.documents.match.type.FriendlyMatchType;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.Year;
@@ -14,14 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileSportSeasonSummaryDto;
-import org.manuel.mysportfolio.model.entities.TeamOption;
-import org.manuel.mysportfolio.model.entities.match.Match;
-import org.manuel.mysportfolio.model.entities.match.TeamType;
-import org.manuel.mysportfolio.model.entities.match.events.GoalMatchEvent;
-import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
-import org.manuel.mysportfolio.model.entities.match.type.FriendlyMatchType;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
 
 class PlayerProfileSportSeasonSummaryDtoTransformerTest {

@@ -1,12 +1,16 @@
 package org.manuel.mysportfolio.transformers.team;
 
+import io.github.manuelarte.mysportfolio.model.documents.team.Team;
 import java.util.function.Function;
 import org.manuel.mysportfolio.model.dtos.team.TeamDto;
-import org.manuel.mysportfolio.model.entities.team.Team;
 import org.springframework.stereotype.Component;
 
 @Component
+@lombok.RequiredArgsConstructor
 public class TeamToTeamDtoTransformer implements Function<Team, TeamDto> {
+
+  private final TeamImageToTeamImageDtoTransformer teamImageToTeamImageDtoTransformer;
+  private final TeamKitToTeamKitDtoTransformer teamKitToTeamKitDtoTransformer;
 
   @Override
   public TeamDto apply(final Team team) {
@@ -14,8 +18,8 @@ public class TeamToTeamDtoTransformer implements Function<Team, TeamDto> {
         .id(team.getId().toString())
         .version(team.getVersion())
         .name(team.getName())
-        .teamKit(team.getTeamKit())
-        .teamImage(team.getTeamImage())
+        .teamKit(teamKitToTeamKitDtoTransformer.apply(team.getTeamKit()))
+        .teamImage(teamImageToTeamImageDtoTransformer.apply(team.getTeamImage()))
         .createdBy(team.getCreatedBy().orElse(null))
         .build();
   }

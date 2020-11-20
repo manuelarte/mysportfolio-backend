@@ -40,9 +40,12 @@ configurations {
 repositories {
     mavenCentral()
     maven { url 'https://repo.spring.io/milestone' }
+    maven { url  "https://dl.bintray.com/manueldoncelmartos/mysportfolio" }
+
 }
 
 dependencies {
+    implementation 'io.github.manuelarte.mysportfolio:mysportfolio-model:0.0.1.RC1'
 
     implementation 'javax.inject:javax.inject:1'
     implementation 'javax.validation:validation-api:2.0.1.Final'

@@ -1,8 +1,8 @@
 package org.manuel.mysportfolio.repositories;
 
+import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfile;
 import java.util.Optional;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.entities.player.PlayerProfile;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

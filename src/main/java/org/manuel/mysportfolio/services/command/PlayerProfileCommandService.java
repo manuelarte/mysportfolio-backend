@@ -1,7 +1,7 @@
 package org.manuel.mysportfolio.services.command;
 
+import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfileSportInfo;
 import java.time.Year;
-import org.manuel.mysportfolio.model.entities.player.PlayerProfileSportInfo;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 public interface PlayerProfileCommandService {

@@ -1,8 +1,8 @@
 package org.manuel.mysportfolio.services.command.impl;
 
+import io.github.manuelarte.mysportfolio.model.documents.Competition;
 import javax.validation.constraints.NotNull;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.entities.Competition;
 import org.manuel.mysportfolio.publishers.CompetitionCreatedEventPublisher;
 import org.manuel.mysportfolio.repositories.CompetitionRepository;
 import org.manuel.mysportfolio.services.command.CompetitionCommandService;

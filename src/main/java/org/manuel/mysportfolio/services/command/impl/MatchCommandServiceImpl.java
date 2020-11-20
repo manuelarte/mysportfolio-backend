@@ -1,7 +1,7 @@
 package org.manuel.mysportfolio.services.command.impl;
 
-import org.manuel.mysportfolio.model.entities.match.Match;
-import org.manuel.mysportfolio.model.entities.match.TeamType;
+import io.github.manuelarte.mysportfolio.model.documents.match.Match;
+import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
 import org.manuel.mysportfolio.publishers.MatchCreatedEventPublisher;
 import org.manuel.mysportfolio.repositories.MatchRepository;
 import org.manuel.mysportfolio.services.command.MatchCommandService;

@@ -1,16 +1,17 @@
 package org.manuel.mysportfolio.transformers.match;
 
+import io.github.manuelarte.mysportfolio.model.documents.match.Match;
+import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
+import io.github.manuelarte.mysportfolio.model.documents.match.events.MatchEvent;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.bson.types.ObjectId;
+import org.manuel.mysportfolio.model.dtos.PlaceDto;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
-import org.manuel.mysportfolio.model.entities.match.Match;
-import org.manuel.mysportfolio.model.entities.match.TeamType;
-import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
 import org.manuel.mysportfolio.transformers.match.events.MatchEventDtoToMatchEventTransformer;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,7 @@ public class MatchDtoToMatchTransformer implements
     Function<MatchDto<TeamTypeDto, TeamTypeDto>, Match<TeamType, TeamType>> {
 
   private final TeamInMatchDtoToTeamTypeTransformer teamInMatchDtoToTeamTypeTransformer;
+  private final MatchTypeDtoToMatchTypeTransformer matchTypeDtoToMatchTypeTransformer;
   private final MatchEventDtoToMatchEventTransformer matchEventDtoToMatchEventTransformer;
 
   @Override
@@ -27,10 +29,10 @@ public class MatchDtoToMatchTransformer implements
     final var match = new Match<>();
     match.setId(Optional.ofNullable(matchDto.getId()).map(ObjectId::new).orElse(null));
     match.setType(
-        Optional.ofNullable(matchDto.getType()).orElse(null));
+        matchTypeDtoToMatchTypeTransformer.apply(matchDto.getType()));
     match.setVersion(matchDto.getVersion());
 
-    match.setAddress(matchDto.getAddress());
+    match.setAddress(Optional.ofNullable(matchDto.getAddress()).map(PlaceDto::toPlace).orElse(null));
     match.setStartDate(matchDto.getStartDate());
     match.setEndDate(matchDto.getEndDate());
 

@@ -1,6 +1,6 @@
 package org.manuel.mysportfolio.repositories;
 
-import org.manuel.mysportfolio.model.entities.Competition;
+import io.github.manuelarte.mysportfolio.model.documents.Competition;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Query;

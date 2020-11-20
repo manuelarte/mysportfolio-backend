@@ -1,9 +1,9 @@
 package org.manuel.mysportfolio.services.command.impl;
 
+import io.github.manuelarte.mysportfolio.model.documents.match.Performance;
+import io.github.manuelarte.mysportfolio.model.documents.match.PlayersPerformance;
 import java.util.HashMap;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.entities.match.Performance;
-import org.manuel.mysportfolio.model.entities.match.PlayersPerformance;
 import org.manuel.mysportfolio.publishers.PlayersPerformanceUpdatedEventPublisher;
 import org.manuel.mysportfolio.repositories.PlayersPerformanceRepository;
 import org.manuel.mysportfolio.services.command.PlayersPerformanceCommandService;

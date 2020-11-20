@@ -1,9 +1,9 @@
 package org.manuel.mysportfolio.controllers.command.user;
 
+import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfileSportInfo;
 import java.time.Year;
 import javax.validation.constraints.PastOrPresent;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileSportInfoDto;
-import org.manuel.mysportfolio.model.entities.player.PlayerProfileSportInfo;
 import org.manuel.mysportfolio.services.command.PlayerProfileCommandService;
 import org.manuel.mysportfolio.transformers.playerprofile.PlayerProfileSportInfoDtoToPlayerSportInfoTransformer;
 import org.manuel.mysportfolio.validations.UserExists;

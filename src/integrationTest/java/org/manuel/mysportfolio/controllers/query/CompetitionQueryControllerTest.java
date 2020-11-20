@@ -1,14 +1,15 @@
 package org.manuel.mysportfolio.controllers.query;
 
+import static io.github.manuelarte.mysportfolio.model.Sport.FOOTBALL;
 import static java.time.DayOfWeek.MONDAY;
 import static java.time.DayOfWeek.SATURDAY;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.manuel.mysportfolio.model.Sport.FOOTBALL;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import io.github.manuelarte.mysportfolio.model.documents.Competition;
 import java.time.YearMonth;
 import javax.inject.Inject;
 import org.hamcrest.Matchers;
@@ -16,7 +17,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.ItConfiguration;
-import org.manuel.mysportfolio.model.entities.Competition;
 import org.manuel.mysportfolio.repositories.CompetitionRepository;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;

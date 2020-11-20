@@ -1,10 +1,10 @@
 package org.manuel.mysportfolio.transformers.playerprofile;
 
+import io.github.manuelarte.mysportfolio.model.Sport;
+import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfileSportInfo;
 import java.time.Year;
 import java.util.Optional;
-import org.manuel.mysportfolio.model.Sport;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileSportInfoDto;
-import org.manuel.mysportfolio.model.entities.player.PlayerProfileSportInfo;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
 import org.springframework.stereotype.Component;
 

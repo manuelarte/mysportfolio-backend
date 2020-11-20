@@ -1,7 +1,7 @@
 package org.manuel.mysportfolio.services.command;
 
+import io.github.manuelarte.mysportfolio.model.documents.Competition;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.entities.Competition;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 

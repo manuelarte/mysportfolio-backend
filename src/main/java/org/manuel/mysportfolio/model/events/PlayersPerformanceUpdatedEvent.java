@@ -1,6 +1,6 @@
 package org.manuel.mysportfolio.model.events;
 
-import org.manuel.mysportfolio.model.entities.match.PlayersPerformance;
+import io.github.manuelarte.mysportfolio.model.documents.match.PlayersPerformance;
 import org.manuel.mysportfolio.model.notifications.NewBadgesNotification.Reason;
 import org.manuel.mysportfolio.model.notifications.NewBadgesNotification.Reason.Entity;
 

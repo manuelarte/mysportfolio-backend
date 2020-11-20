@@ -1,10 +1,10 @@
 package org.manuel.mysportfolio.services.query;
 
+import io.github.manuelarte.mysportfolio.model.documents.team.Team;
 import java.time.Year;
 import java.util.Optional;
 import java.util.Set;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.entities.team.Team;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;

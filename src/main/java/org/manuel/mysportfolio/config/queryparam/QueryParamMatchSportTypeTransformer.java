@@ -1,7 +1,7 @@
 package org.manuel.mysportfolio.config.queryparam;
 
+import io.github.manuelarte.mysportfolio.model.Sport;
 import io.github.manuelarte.spring.queryparameter.transformers.TypeTransformer;
-import org.manuel.mysportfolio.model.Sport;
 import org.springframework.stereotype.Component;
 
 /**

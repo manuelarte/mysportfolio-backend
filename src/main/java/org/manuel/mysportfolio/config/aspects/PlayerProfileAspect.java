@@ -1,5 +1,7 @@
 package org.manuel.mysportfolio.config.aspects;
 
+import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfile;
+import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfileSportInfo;
 import java.time.Clock;
 import java.time.Year;
 import java.time.ZoneId;
@@ -11,8 +13,6 @@ import java.util.stream.Stream;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
-import org.manuel.mysportfolio.model.entities.player.PlayerProfile;
-import org.manuel.mysportfolio.model.entities.player.PlayerProfileSportInfo;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.repositories.PlayerProfileRepository;
 import org.manuel.mysportfolio.services.query.AppUserQueryService;

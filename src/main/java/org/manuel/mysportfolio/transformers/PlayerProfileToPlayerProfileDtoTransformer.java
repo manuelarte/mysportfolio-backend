@@ -1,13 +1,13 @@
 package org.manuel.mysportfolio.transformers;
 
 
+import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfile;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileDto;
-import org.manuel.mysportfolio.model.entities.player.PlayerProfile;
 import org.manuel.mysportfolio.transformers.playerprofile.PlayerProfileSportInfoToPlayerProfileSportInfoDtoTransformer;
 import org.springframework.stereotype.Component;
 

@@ -1,22 +1,18 @@
 package org.manuel.mysportfolio.transformers.match.events;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.manuelarte.mysportfolio.model.documents.match.events.MatchEvent;
 import java.util.function.Function;
-import lombok.SneakyThrows;
-import org.manuel.mysportfolio.model.dtos.match.MatchEventDto;
-import org.manuel.mysportfolio.model.entities.match.events.MatchEvent;
+import org.manuel.mysportfolio.model.dtos.match.events.MatchEventDto;
 import org.springframework.stereotype.Component;
 
 @Component
 @lombok.AllArgsConstructor
 public class MatchEventDtoToMatchEventTransformer implements Function<MatchEventDto, MatchEvent> {
 
-  private final ObjectMapper objectMapper;
-
   @Override
-  @SneakyThrows
+  @lombok.SneakyThrows
   public MatchEvent apply(final MatchEventDto matchEventDto) {
-    return objectMapper.readValue(objectMapper.writeValueAsString(matchEventDto), MatchEvent.class);
+    return matchEventDto != null ? matchEventDto.toMatchEvent() : null;
   }
 
 }

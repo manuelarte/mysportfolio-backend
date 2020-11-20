@@ -1,13 +1,13 @@
 package org.manuel.mysportfolio.services.query.impl;
 
+import io.github.manuelarte.mysportfolio.model.Sport;
+import io.github.manuelarte.mysportfolio.model.documents.match.Match;
+import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.Sport;
-import org.manuel.mysportfolio.model.entities.match.Match;
-import org.manuel.mysportfolio.model.entities.match.TeamType;
 import org.manuel.mysportfolio.repositories.MatchRepository;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
 import org.springframework.data.domain.Page;

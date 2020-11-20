@@ -1,9 +1,9 @@
 package org.manuel.mysportfolio.repositories;
 
+import io.github.manuelarte.mysportfolio.model.documents.teamtouser.TeamToUsers;
+import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam;
 import java.util.List;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
-import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;

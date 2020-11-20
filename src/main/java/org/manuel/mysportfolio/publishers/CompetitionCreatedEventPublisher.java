@@ -1,6 +1,6 @@
 package org.manuel.mysportfolio.publishers;
 
-import org.manuel.mysportfolio.model.entities.Competition;
+import io.github.manuelarte.mysportfolio.model.documents.Competition;
 import org.manuel.mysportfolio.model.events.CompetitionCreatedEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @lombok.extern.slf4j.Slf4j
 public class CompetitionCreatedEventPublisher {
 
-  private ApplicationEventPublisher applicationEventPublisher;
+  private final ApplicationEventPublisher applicationEventPublisher;
 
   public void publishEvent(final Competition createdCompetition) {
     log.info("Publishing competition created event for competition {}.",

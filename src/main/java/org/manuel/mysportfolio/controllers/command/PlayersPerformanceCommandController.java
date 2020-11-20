@@ -1,10 +1,10 @@
 package org.manuel.mysportfolio.controllers.command;
 
+import io.github.manuelarte.mysportfolio.model.documents.match.Match;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.Exists;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.model.dtos.match.PerformanceDto;
-import org.manuel.mysportfolio.model.entities.match.Match;
 import org.manuel.mysportfolio.services.command.PlayersPerformanceCommandService;
 import org.manuel.mysportfolio.transformers.PerformanceDtoToPerformanceTransformer;
 import org.manuel.mysportfolio.transformers.PerformanceToPerformanceDtoTransformer;

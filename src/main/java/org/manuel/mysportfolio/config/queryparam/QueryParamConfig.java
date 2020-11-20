@@ -1,9 +1,9 @@
 package org.manuel.mysportfolio.config.queryparam;
 
+import io.github.manuelarte.mysportfolio.model.documents.match.Match;
+import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam;
 import io.github.manuelarte.spring.queryparameter.config.QueryParameterConfig;
 import io.github.manuelarte.spring.queryparameter.model.TypeTransformerRegistry;
-import org.manuel.mysportfolio.model.entities.match.Match;
-import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration

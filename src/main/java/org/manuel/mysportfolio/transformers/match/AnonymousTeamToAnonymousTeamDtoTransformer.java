@@ -1,8 +1,9 @@
 package org.manuel.mysportfolio.transformers.match;
 
+import io.github.manuelarte.mysportfolio.model.documents.match.AnonymousTeam;
 import java.util.function.Function;
 import org.manuel.mysportfolio.model.dtos.team.AnonymousTeamDto;
-import org.manuel.mysportfolio.model.entities.match.AnonymousTeam;
+import org.manuel.mysportfolio.transformers.team.TeamKitToTeamKitDtoTransformer;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -10,11 +11,13 @@ import org.springframework.stereotype.Component;
 public class AnonymousTeamToAnonymousTeamDtoTransformer implements
     Function<AnonymousTeam, AnonymousTeamDto> {
 
+  private final TeamKitToTeamKitDtoTransformer teamKitToTeamKitDtoTransformer;
+
   @Override
   public AnonymousTeamDto apply(final AnonymousTeam anonymousTeam) {
     return anonymousTeam == null ? null : AnonymousTeamDto.builder()
         .name(anonymousTeam.getName())
-        .teamKit(anonymousTeam.getTeamKit())
+        .teamKit(teamKitToTeamKitDtoTransformer.apply(anonymousTeam.getTeamKit()))
         .teamImage(anonymousTeam.getTeamImage())
         .build();
   }

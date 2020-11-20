@@ -2,6 +2,8 @@ package org.manuel.mysportfolio.repositories;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import io.github.manuelarte.mysportfolio.model.documents.teamtouser.TeamToUsers;
+import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
@@ -9,8 +11,6 @@ import javax.inject.Inject;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.manuel.mysportfolio.model.entities.teamtouser.TeamToUsers;
-import org.manuel.mysportfolio.model.entities.teamtouser.UserInTeam;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 

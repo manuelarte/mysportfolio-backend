@@ -1,6 +1,6 @@
 package org.manuel.mysportfolio.publishers;
 
-import org.manuel.mysportfolio.model.entities.team.Team;
+import io.github.manuelarte.mysportfolio.model.documents.team.Team;
 import org.manuel.mysportfolio.model.events.TeamCreatedEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
