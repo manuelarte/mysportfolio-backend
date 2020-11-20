@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changed
+
+### Removed
+
+## [0.2.25] - 2020-11-20
+
+### Added
+
 - Adding @UserExists annotation
 - Adding PUT endpoint in UserTeams
 - Adding apperror response when validation exceptions
