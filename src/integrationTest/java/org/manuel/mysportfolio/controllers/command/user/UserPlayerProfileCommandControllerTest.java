@@ -22,7 +22,6 @@ import org.manuel.mysportfolio.model.entities.user.AppSettings;
 import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.repositories.PlayerProfileRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -45,16 +44,15 @@ public class UserPlayerProfileCommandControllerTest {
   @Inject
   private PlayerProfileRepository playerProfileRepository;
 
-  @Autowired
+  @Inject
   private MockMvc mvc;
 
   @BeforeEach
   @SuppressWarnings("checkstyle:javadoctype")
   public void setup() {
-    appUserRepository.save(new AppUser(null, null, "test", "test@mymatchfolio.com",
-        ItConfiguration.IT_USER_ID, AppMembership.FREE,
-        false, null, new AppSettings(false), null, null, null, null));
-
+    appUserRepository.save(new AppUser("test", "test@mymatchfolio.com",
+        ItConfiguration.IT_USER_ID, AppMembership.FREE, false, null,
+        new AppSettings(false)));
   }
 
   @AfterEach

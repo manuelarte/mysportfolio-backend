@@ -43,9 +43,9 @@ class UserTeamQueryControllerTest {
   @BeforeEach
   @SuppressWarnings("checkstyle:javadoctype")
   public void setup() {
-    appUserRepository.save(new AppUser(null, null, "test", "test@mymatchfolio.com",
+    appUserRepository.save(new AppUser("test", "test@mymatchfolio.com",
         ItConfiguration.IT_USER_ID, AppMembership.FREE,
-        false, null, new AppSettings(false), null, null, null, null));
+        false, null, new AppSettings(false)));
 
   }
 

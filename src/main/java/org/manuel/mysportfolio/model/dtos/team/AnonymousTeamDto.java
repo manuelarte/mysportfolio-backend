@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import io.github.manuelarte.mysportfolio.model.Constants;
 import io.github.manuelarte.mysportfolio.model.documents.team.TeamImage;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import org.manuel.mysportfolio.constants.Constants;
 
 /**
  * Dto to be used if the home/away team is an anonymous team when user inputs a match.

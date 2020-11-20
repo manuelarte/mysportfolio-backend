@@ -50,7 +50,7 @@ public class UserTeamQueryController {
       @PageableDefault final Pageable pageable,
       @QueryParameter(entity = UserInTeam.class, allowedKeys = "to") final Query q) {
     final var appUser = Util.getUser(appUserQueryService, userIdProvider, externalUserId);
-    final var teamsToUser = teamToUsersQueryService.findAllByUserExists(pageable, externalUserId);
+    final var teamsToUser = teamToUsersQueryService.findAllByUserExists(pageable, appUser.getExternalId());
     final var teams = teamQueryService.findAllByIdsIn(pageable, teamsToUser.stream().map(TeamToUsers::getTeamId).collect(Collectors.toSet()));
     final var response = teams.map(t -> new UserTeamDto(teamToTeamDtoTransformer.apply(t),
         getUserInTeamDto(t.getId(), teamsToUser.getContent(), appUser)));

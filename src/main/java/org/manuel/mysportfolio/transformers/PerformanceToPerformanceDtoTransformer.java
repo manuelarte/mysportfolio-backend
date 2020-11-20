@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 public class PerformanceToPerformanceDtoTransformer implements
     Function<Performance, PerformanceDto> {
 
-    @Override
-    public PerformanceDto apply(final Performance performance) {
-        return Optional.ofNullable(performance)
-            .map(it -> new PerformanceDto(it.getRate(), it.getNotes())).orElse(null);
-    }
+  @Override
+  public PerformanceDto apply(final Performance performance) {
+    return Optional.ofNullable(performance)
+        .map(it -> new PerformanceDto(it.getRate(), it.getNotes())).orElse(null);
+  }
 
 }

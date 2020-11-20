@@ -5,6 +5,7 @@ import static io.github.manuelarte.spring.manuelartevalidation.constraints.FromA
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import io.github.manuelarte.mysportfolio.model.Constants;
 import io.github.manuelarte.mysportfolio.model.Sport;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.FromAndToDate;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.fromto.FromDate;
@@ -18,7 +19,6 @@ import java.time.YearMonth;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
-import org.manuel.mysportfolio.constants.Constants;
 
 @JsonDeserialize(builder = CompetitionDto.CompetitionDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)

@@ -1,6 +1,5 @@
 package org.manuel.mysportfolio.transformers;
 
-
 import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfile;
 import java.util.Map.Entry;
 import java.util.Optional;

@@ -19,16 +19,17 @@ public class BadgeUtilHandler {
   private final List<Repository<?, ?>> repositories;
   private final UserIdProvider userIdProvider;
 
-  public @Nonnull String getUserId() {
+  public @Nonnull
+  String getUserId() {
     return userIdProvider.getUserId();
   }
 
-  public @Nonnull <T extends Repository<?, ?>> Optional<T> getRepository(Class<T> clazz) {
+  public @Nonnull
+  <T extends Repository<?, ?>> Optional<T> getRepository(Class<T> clazz) {
     return (Optional<T>) repositories.stream().filter(clazz::isInstance).findAny();
   }
 
-  public @Nonnull
-  Sport getSport(final Match<?, ?> match) {
+  public @Nonnull Sport getSport(final Match<?, ?> match) {
     final var matchType = match.getType();
     final Sport sport;
     if (matchType instanceof CompetitionMatchType) {

@@ -53,9 +53,9 @@ class UserTeamCommandControllerTest {
         .team(TestUtils.createMockTeamDto())
         .userInTeam(
             UserInTeamDto.builder()
-            .from(LocalDate.now())
-            .role(UserInTeamRole.PLAYER)
-            .build())
+                .from(LocalDate.now())
+                .role(UserInTeamRole.PLAYER)
+                .build())
         .build();
 
     mvc.perform(post("/api/v1/users/me/teams")
@@ -69,20 +69,20 @@ class UserTeamCommandControllerTest {
   @Test
   public void testUpdateUserInTeamInUserTeam() throws Exception {
     final var newUserTeamDto = UserTeamDto.builder()
-      .team(TestUtils.createMockTeamDto())
-      .userInTeam(
-          UserInTeamDto.builder()
-            .from(LocalDate.now())
-            .role(UserInTeamRole.PLAYER)
-            .build())
-      .build();
+        .team(TestUtils.createMockTeamDto())
+        .userInTeam(
+            UserInTeamDto.builder()
+                .from(LocalDate.now())
+                .role(UserInTeamRole.PLAYER)
+                .build())
+        .build();
 
     final var savedUserTeams = objectMapper.readValue(mvc.perform(post("/api/v1/users/me/teams")
-      .contentType(APPLICATION_JSON)
-      .accept(APPLICATION_JSON)
-      .content(objectMapper.writeValueAsString(newUserTeamDto)))
-      .andExpect(status().isCreated())
-      .andReturn().getResponse().getContentAsString(), UserTeamDto.class);
+        .contentType(APPLICATION_JSON)
+        .accept(APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(newUserTeamDto)))
+        .andExpect(status().isCreated())
+        .andReturn().getResponse().getContentAsString(), UserTeamDto.class);
 
     final var updatedUserTeamDto = UserTeamDto.builder()
         .team(savedUserTeams.getTeam().toBuilder().createdBy(null).build())
