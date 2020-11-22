@@ -42,7 +42,7 @@ public class CompetitionQueryController {
       return ResponseEntity.ok(competitionQueryService.findAllByQueryAndCreatedBy(pageable, getUserId(), new Query(criteria))
           .map(competitionToCompetitionDtoTransformer));
     } else {
-      return ResponseEntity.ok(competitionQueryService.findAllCreatedBy(pageable, getUserId())
+      return ResponseEntity.ok(competitionQueryService.findAllCreatedBy(getUserId(), pageable)
           .map(competitionToCompetitionDtoTransformer));
     }
   }

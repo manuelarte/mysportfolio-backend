@@ -6,6 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import io.github.manuelarte.mysportfolio.model.documents.user.AppMembership;
+import io.github.manuelarte.mysportfolio.model.documents.user.AppSettings;
+import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.hamcrest.Matchers;
@@ -13,9 +16,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.TestUtils;
-import org.manuel.mysportfolio.model.entities.user.AppMembership;
-import org.manuel.mysportfolio.model.entities.user.AppSettings;
-import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.services.command.TeamCommandService;
 import org.springframework.beans.factory.annotation.Autowired;

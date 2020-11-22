@@ -1,11 +1,11 @@
 package org.manuel.mysportfolio.services.query;
 
+import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import javax.annotation.security.RolesAllowed;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.model.entities.usernotification.UserNotification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -9,23 +9,22 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import io.github.manuelarte.mysportfolio.model.documents.Competition;
+import io.github.manuelarte.mysportfolio.model.documents.competition.Competition;
 import java.time.YearMonth;
 import javax.inject.Inject;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.repositories.CompetitionRepository;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 @Import(ItConfiguration.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class CompetitionQueryControllerTest {
@@ -34,14 +33,7 @@ public class CompetitionQueryControllerTest {
   private CompetitionRepository competitionRepository;
 
   @Inject
-  private WebApplicationContext context;
-
   private MockMvc mvc;
-
-  @BeforeEach
-  public void setup() {
-    mvc = MockMvcBuilders.webAppContextSetup(context).build();
-  }
 
   @AfterEach
   public void tearDown() {

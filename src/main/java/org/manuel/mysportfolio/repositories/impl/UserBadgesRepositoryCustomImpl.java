@@ -3,6 +3,7 @@ package org.manuel.mysportfolio.repositories.impl;
 import java.util.Set;
 import org.manuel.mysportfolio.model.Badge;
 import org.manuel.mysportfolio.model.entities.badges.UserBadges;
+import org.manuel.mysportfolio.repositories.UserBadgesRepositoryCustom;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;

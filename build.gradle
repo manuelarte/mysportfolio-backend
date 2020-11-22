@@ -45,10 +45,11 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.github.manuelarte.mysportfolio:mysportfolio-model:0.0.1.RC1'
+    implementation 'io.github.manuelarte.mysportfolio:mysportfolio-model:0.0.1.RC2'
 
     implementation 'javax.inject:javax.inject:1'
     implementation 'javax.validation:validation-api:2.0.1.Final'
+    implementation 'org.threeten:threeten-extra:1.5.0'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.cloud:spring-cloud-gcp-starter-logging:1.2.0.RELEASE'

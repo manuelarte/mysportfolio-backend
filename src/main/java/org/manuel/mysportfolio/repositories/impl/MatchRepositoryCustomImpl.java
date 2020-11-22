@@ -1,7 +1,7 @@
 package org.manuel.mysportfolio.repositories.impl;
 
 import io.github.manuelarte.mysportfolio.model.Sport;
-import io.github.manuelarte.mysportfolio.model.documents.Competition;
+import io.github.manuelarte.mysportfolio.model.documents.competition.Competition;
 import io.github.manuelarte.mysportfolio.model.documents.match.Match;
 import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
 import java.time.LocalDate;
@@ -34,7 +34,7 @@ class MatchRepositoryCustomImpl implements MatchRepositoryCustom {
   }
 
   @Override
-  public List<Match> findAllByTypeSportOrTypeCompetitionInAndStartDateIsBetween(
+  public List<Match<TeamType, TeamType>> findAllByTypeSportOrTypeCompetitionInAndStartDateIsBetween(
       final String externalId, final Sport sport,
       final LocalDate from, final LocalDate to) {
     final var usersMatches = Criteria.where("playedFor." + externalId).exists(true);
@@ -55,7 +55,8 @@ class MatchRepositoryCustomImpl implements MatchRepositoryCustom {
     final var sportCompetitionIds = Criteria.where("type.competitionId").in(sportCompetitions);
     final var query = new Query(
         usersMatches.andOperator(betweenDates).orOperator(ofSport, sportCompetitionIds));
-    return mongoTemplate.find(query, Match.class);
+    return mongoTemplate.find(query, Match.class).stream()
+        .map(m -> (Match<TeamType, TeamType>) m).collect(Collectors.toList());
   }
 
 }

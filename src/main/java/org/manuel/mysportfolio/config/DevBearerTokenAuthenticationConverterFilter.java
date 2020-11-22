@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.config;
 
+import io.github.manuelarte.mysportfolio.model.documents.user.AppMembership;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,7 +10,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import org.manuel.mysportfolio.model.entities.user.AppMembership;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -1,17 +1,16 @@
-package org.manuel.mysportfolio.services;
+package org.manuel.mysportfolio.services.permissions;
 
 import java.time.Clock;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.time.Year;
 import java.time.ZoneId;
 import java.util.function.Predicate;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
-import org.manuel.mysportfolio.model.entities.user.AppMembership;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
-import org.manuel.mysportfolio.repositories.MatchRepository;
 import org.manuel.mysportfolio.repositories.TeamToUsersRepository;
 import org.manuel.mysportfolio.services.query.CompetitionQueryService;
+import org.manuel.mysportfolio.services.query.MatchQueryService;
 import org.manuel.mysportfolio.services.query.TeamQueryService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -21,10 +20,10 @@ import org.springframework.stereotype.Service;
 @lombok.AllArgsConstructor
 public class PermissionsService {
 
+  private final MatchQueryService matchQueryService;
   private final TeamQueryService teamQueryService;
   private final CompetitionQueryService competitionQueryService;
   private final TeamToUsersRepository teamToUsersRepository;
-  private final MatchRepository matchRepository;
   private final AppUserRepository appUserRepository;
   private final Clock clock;
 
@@ -78,25 +77,25 @@ public class PermissionsService {
 
   private Predicate<OAuth2User> saveTeamRestrictions(final Year year) {
     return oAuth2User -> {
-      final AppMembership appMembership = (AppMembership) oAuth2User.getAttributes()
-          .get("app-membership");
+      final AppMembershipPermissionService appMembership = AppMembershipPermissionService.valueOf(oAuth2User.getAttributes()
+          .get("app-membership").toString());
       return appMembership.canSaveTeam(teamQueryService, year).test(oAuth2User);
     };
   }
 
   private Predicate<OAuth2User> saveCompetitionRestrictions(final Year year) {
     return oAuth2User -> {
-      final AppMembership appMembership = (AppMembership) oAuth2User.getAttributes()
-          .get("app-membership");
+      final AppMembershipPermissionService appMembership = AppMembershipPermissionService.valueOf(oAuth2User.getAttributes()
+          .get("app-membership").toString());
       return appMembership.canSaveCompetition(competitionQueryService, year).test(oAuth2User);
     };
   }
 
   private Predicate<OAuth2User> saveMatchRestrictions() {
     return oAuth2User -> {
-      final AppMembership appMembership = (AppMembership) oAuth2User.getAttributes()
-          .get("app-membership");
-      return appMembership.canSaveMatch(matchRepository, LocalDate.now(clock)).test(oAuth2User);
+      final AppMembershipPermissionService appMembership = AppMembershipPermissionService.valueOf(oAuth2User.getAttributes()
+          .get("app-membership").toString());
+      return appMembership.canSaveMatch(matchQueryService, Instant.now(clock)).test(oAuth2User);
     };
   }
 

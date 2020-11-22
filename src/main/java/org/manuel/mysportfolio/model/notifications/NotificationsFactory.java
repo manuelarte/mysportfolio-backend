@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.messaging.AndroidConfig;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
-import io.github.manuelarte.mysportfolio.model.documents.Competition;
+import io.github.manuelarte.mysportfolio.model.documents.competition.Competition;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.manuel.mysportfolio.model.Badge;

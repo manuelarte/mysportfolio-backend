@@ -41,7 +41,7 @@ public class MatchQueryController {
     if (query.isPresent()) {
       page = matchQueryService.findAllBy(query.get(), pageable, getUserId());
     } else {
-      page = matchQueryService.findAllCreatedBy(pageable, getUserId());
+      page = matchQueryService.findAllCreatedBy(getUserId(), pageable);
     }
     return ResponseEntity.ok(page.map(matchToMatchDtoTransformer));
   }

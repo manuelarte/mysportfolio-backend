@@ -1,6 +1,6 @@
 package org.manuel.mysportfolio.transformers;
 
-import io.github.manuelarte.mysportfolio.model.documents.Competition;
+import io.github.manuelarte.mysportfolio.model.documents.competition.Competition;
 import java.util.Optional;
 import java.util.function.Function;
 import org.bson.types.ObjectId;

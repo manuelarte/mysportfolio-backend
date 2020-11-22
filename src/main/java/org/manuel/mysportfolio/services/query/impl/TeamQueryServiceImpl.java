@@ -2,8 +2,6 @@ package org.manuel.mysportfolio.services.query.impl;
 
 import io.github.manuelarte.mysportfolio.model.documents.team.Team;
 import io.github.manuelarte.mysportfolio.model.documents.teamtouser.TeamToUsers;
-import java.time.Year;
-import java.time.ZoneOffset;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -14,6 +12,7 @@ import org.manuel.mysportfolio.services.query.TeamToUsersQueryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.threeten.extra.Interval;
 
 @Service
 @lombok.AllArgsConstructor
@@ -35,16 +34,20 @@ class TeamQueryServiceImpl implements TeamQueryService {
   }
 
   @Override
+  public Page<Team> findAllCreatedBy(final String createdBy, final Pageable pageable) {
+    return teamRepository.findAllByCreatedBy(createdBy, pageable);
+  }
+
+  @Override
   public Page<Team> findAllByIdsIn(final Pageable pageable, Set<ObjectId> ids) {
     return teamRepository.findAllByIdIsIn(pageable, ids);
   }
 
   @Override
-  public int countAllByCreatedByInYear(final String createdBy, final Year year) {
-    final var lowerLimit = year.atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC);
-    final var upperLimit = year.plusYears(1).atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC);
-    return teamRepository
-        .countAllByCreatedByAndCreatedDateIsBetween(createdBy, lowerLimit, upperLimit);
+  public int countAllByCreatedByInInterval(final String createdBy, final Interval interval) {
+    final var lowerLimit = interval.getStart();
+    final var upperLimit = interval.getEnd();
+    return teamRepository.countAllByCreatedByAndCreatedDateIsBetween(createdBy, lowerLimit, upperLimit);
   }
 
 }

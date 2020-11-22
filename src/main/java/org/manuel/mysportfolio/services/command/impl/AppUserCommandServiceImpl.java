@@ -1,8 +1,9 @@
 package org.manuel.mysportfolio.services.command.impl;
 
+import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
+import io.jsonwebtoken.lang.Assert;
 import javax.validation.constraints.NotNull;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.model.entities.usernotification.UserNotificationStatus;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.repositories.UserNotificationRepository;
@@ -20,6 +21,7 @@ class AppUserCommandServiceImpl implements AppUserCommandService {
 
   @Override
   public AppUser save(@NotNull final AppUser appUser) {
+    Assert.notNull(appUser, "The user can't be null");
     return appUserRepository.save(appUser);
   }
 

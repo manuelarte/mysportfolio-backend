@@ -1,8 +1,8 @@
 package org.manuel.mysportfolio.transformers.users;
 
+import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
 import java.util.function.Function;
 import org.manuel.mysportfolio.model.dtos.user.AppUserDto;
-import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.springframework.stereotype.Component;
 
 @Component

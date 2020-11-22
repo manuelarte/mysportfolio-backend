@@ -15,7 +15,7 @@ public abstract class MySportfolioEvent<T> extends ApplicationEvent {
     super(source);
   }
 
-  abstract public NewBadgesNotification.Reason getNewBadgesNotificationReason();
+  public abstract NewBadgesNotification.Reason getNewBadgesNotificationReason();
 
 
 }

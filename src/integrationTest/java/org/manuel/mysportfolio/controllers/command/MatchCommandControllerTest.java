@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.manuelarte.mysportfolio.model.TeamOption;
+import io.github.manuelarte.mysportfolio.model.documents.match.AnonymousTeam;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -129,9 +130,9 @@ public class MatchCommandControllerTest {
         .andExpect(jsonPath("$.id", Matchers.notNullValue()))
         .andExpect(jsonPath("$.type.type").value("friendly"))
         .andExpect(jsonPath("$.homeTeam.type").value("anonymous"))
-        .andExpect(jsonPath("$.homeTeam.name").value(match.getHomeTeam().getName()))
+        .andExpect(jsonPath("$.homeTeam.name").value(((AnonymousTeam)match.getHomeTeam()).getName()))
         .andExpect(jsonPath("$.awayTeam.type").value("anonymous"))
-        .andExpect(jsonPath("$.awayTeam.name").value(match.getAwayTeam().getName()))
+        .andExpect(jsonPath("$.awayTeam.name").value(((AnonymousTeam)match.getAwayTeam()).getName()))
         .andExpect(jsonPath("$.description").value(description))
         .andExpect(jsonPath("$.events[*].id", Matchers.notNullValue()));
   }

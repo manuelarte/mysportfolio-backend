@@ -13,8 +13,10 @@ import org.springframework.stereotype.Component;
 public class PlayerProfileSportInfoToPlayerProfileSportInfoDtoTransformer {
 
   private final MatchQueryService matchQueryService;
-  private final PlayerProfileFootballInfoToPlayerProfileFootballInfoDtoTransformer playerProfileFootballInfoToPlayerProfileFootballInfoDtoTransformer;
-  private final PlayerProfileFutsalInfoToPlayerProfileFutsalInfoDtoTransformer playerProfileFutsalInfoToPlayerProfileFutsalInfoDtoTransformer;
+  private final PlayerProfileFootballInfoToPlayerProfileFootballInfoDtoTransformer
+      playerProfileFootballInfoToPlayerProfileFootballInfoDtoTransformer;
+  private final PlayerProfileFutsalInfoToPlayerProfileFutsalInfoDtoTransformer
+      playerProfileFutsalInfoToPlayerProfileFutsalInfoDtoTransformer;
 
   public PlayerProfileSportInfoDto apply(final String externalId, final Year year,
       final PlayerProfileSportInfo playerProfileSportInfo) {
@@ -27,7 +29,8 @@ public class PlayerProfileSportInfoToPlayerProfileSportInfoDtoTransformer {
             .apply(footballSummary,
                 Optional.ofNullable(playerProfileSportInfo).map(PlayerProfileSportInfo::getFootballInfo).orElse(null)))
         .futsalInfo(playerProfileFutsalInfoToPlayerProfileFutsalInfoDtoTransformer
-            .apply(futsalSummary, Optional.ofNullable(playerProfileSportInfo).map(PlayerProfileSportInfo::getFutsalInfo).orElse(null)))
+            .apply(futsalSummary, Optional.ofNullable(playerProfileSportInfo).map(PlayerProfileSportInfo::getFutsalInfo)
+                .orElse(null)))
         .build();
   }
 

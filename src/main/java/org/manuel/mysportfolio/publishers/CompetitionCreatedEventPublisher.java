@@ -1,6 +1,6 @@
 package org.manuel.mysportfolio.publishers;
 
-import io.github.manuelarte.mysportfolio.model.documents.Competition;
+import io.github.manuelarte.mysportfolio.model.documents.competition.Competition;
 import org.manuel.mysportfolio.model.events.CompetitionCreatedEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;

@@ -2,13 +2,13 @@ package org.manuel.mysportfolio.controllers.query.user;
 
 import io.github.manuelarte.mysportfolio.model.documents.match.Match;
 import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
+import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
 import io.github.manuelarte.spring.queryparameter.QueryParameter;
 import java.util.Optional;
 import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.controllers.Util;
 import org.manuel.mysportfolio.model.dtos.match.PerformanceDto;
 import org.manuel.mysportfolio.model.dtos.user.UserMatchDto;
-import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.services.query.AppUserQueryService;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
 import org.manuel.mysportfolio.services.query.PlayersPerformanceQueryService;
@@ -51,7 +51,7 @@ public class UserMatchQueryController {
     if (query.isPresent()) {
       page = matchQueryService.findAllBy(query.get(), pageable, externalUserId);
     } else {
-      page = matchQueryService.findAllCreatedBy(pageable, externalUserId);
+      page = matchQueryService.findAllCreatedBy(externalUserId, pageable);
     }
     return ResponseEntity.ok(page.map(
         m -> new UserMatchDto(matchToMatchDtoTransformer.apply(m), getPerformance(m, appUser))));

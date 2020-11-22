@@ -2,7 +2,7 @@ package org.manuel.mysportfolio;
 
 import io.github.manuelarte.mysportfolio.model.Sport;
 import io.github.manuelarte.mysportfolio.model.TeamOption;
-import io.github.manuelarte.mysportfolio.model.documents.Competition;
+import io.github.manuelarte.mysportfolio.model.documents.competition.Competition;
 import io.github.manuelarte.mysportfolio.model.documents.match.AnonymousTeam;
 import io.github.manuelarte.mysportfolio.model.documents.match.Match;
 import io.github.manuelarte.mysportfolio.model.documents.match.RegisteredTeam;
@@ -14,6 +14,7 @@ import io.github.manuelarte.mysportfolio.model.documents.team.kits.PlainKitPart;
 import io.github.manuelarte.mysportfolio.model.documents.teamtouser.TeamToUsers;
 import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam;
 import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam.UserInTeamRole;
+import io.github.manuelarte.mysportfolio.model.documents.user.AppMembership;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -32,14 +33,12 @@ import org.manuel.mysportfolio.model.dtos.CompetitionDto;
 import org.manuel.mysportfolio.model.dtos.match.FriendlyMatchTypeDto;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.match.events.GoalMatchEventDto;
-import org.manuel.mysportfolio.model.dtos.match.events.MatchEventDto;
 import org.manuel.mysportfolio.model.dtos.team.AnonymousTeamDto;
 import org.manuel.mysportfolio.model.dtos.team.RegisteredTeamDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamKitDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.model.dtos.team.kits.PlainKitPartDto;
-import org.manuel.mysportfolio.model.entities.user.AppMembership;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -145,7 +144,7 @@ public class TestUtils {
   }
 
   @SuppressWarnings("checkstyle:javadoctype")
-  public static MatchEventDto createMockGoal(final TeamOption goalTeam) {
+  public static GoalMatchEventDto createMockGoal(final TeamOption goalTeam) {
     return GoalMatchEventDto.builder().team(goalTeam).build();
   }
 
