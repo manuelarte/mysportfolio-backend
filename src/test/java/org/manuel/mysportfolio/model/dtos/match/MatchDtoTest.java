@@ -51,7 +51,7 @@ class MatchDtoTest {
   @Test
   public void testSerializeMatchWithTwoRegisteredTeams() throws JsonProcessingException {
     final MatchDto<RegisteredTeamDto, RegisteredTeamDto> matchDto =
-        MatchDto.<AnonymousTeamDto, AnonymousTeamDto>builder()
+        MatchDto.<RegisteredTeamDto, RegisteredTeamDto>builder()
             .id(UUID.randomUUID().toString())
             .homeTeam(createMockRegisteredTeamDto())
             .awayTeam(createMockRegisteredTeamDto())

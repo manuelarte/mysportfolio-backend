@@ -75,8 +75,10 @@ class UserTeamQueryControllerTest {
         .accept(APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.content", hasSize(teams.size())))
-        .andExpect(jsonPath("$.content[0].team.id", Matchers.is(Matchers.in(teams.stream().map(t -> t.getId().toString()).collect(Collectors.toList())))))
-        .andExpect(jsonPath("$.content[1].team.id", Matchers.is(Matchers.in(teams.stream().map(t -> t.getId().toString()).collect(Collectors.toList())))));
+        .andExpect(jsonPath("$.content[0].team.id", Matchers.is(Matchers.in(teams.stream().map(t -> t.getId().toString())
+            .collect(Collectors.toList())))))
+        .andExpect(jsonPath("$.content[1].team.id", Matchers.is(Matchers.in(teams.stream().map(t -> t.getId().toString())
+            .collect(Collectors.toList())))));
   }
 
 

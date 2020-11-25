@@ -188,7 +188,7 @@ public class TestUtils {
     attributes.put("family_name", "Not Production");
     attributes.put("name", "Test Not Production");
     attributes.put("email", "test@test.com");
-    attributes.put("app-membership", AppMembership.FREE);
+    attributes.put("app-membership", AppMembership.NOOB);
     attributes.put("picture",
         "https://lh3.googleusercontent.com/a-/AAuE7mBk0hY2RSA_JMUDFNo2wT54GjycNKMGgtLfw5X1LpQ=s96-c");
     final OAuth2User principal = new DefaultOAuth2User(authorities, attributes, "sub");
