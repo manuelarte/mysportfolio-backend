@@ -45,6 +45,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'io.github.manuelarte.mysportfolio:mysportfolio-exceptions:0.0.1'
     implementation 'io.github.manuelarte.mysportfolio:mysportfolio-model:0.0.1.RC2'
 
     implementation 'javax.inject:javax.inject:1'

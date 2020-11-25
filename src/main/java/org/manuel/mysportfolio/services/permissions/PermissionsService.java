@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.services.permissions;
 
+import io.github.manuelarte.mysportfolio.exceptions.EntityNotFoundException;
 import io.github.manuelarte.mysportfolio.model.documents.BaseDocument;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppMembership;
 import java.time.Clock;
@@ -12,7 +13,6 @@ import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.properties.UserRestrictionsConfig;
 import org.manuel.mysportfolio.config.properties.UserRestrictionsConfig.MembershipUserRestriction;
 import org.manuel.mysportfolio.config.properties.UserRestrictionsConfig.UserRestriction;
-import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.repositories.TeamToUsersRepository;
 import org.manuel.mysportfolio.services.query.BaseDocumentQueryService;

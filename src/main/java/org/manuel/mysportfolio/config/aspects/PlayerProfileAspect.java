@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio.config.aspects;
 
+import io.github.manuelarte.mysportfolio.exceptions.EntityNotFoundException;
 import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfile;
 import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfileSportInfo;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
@@ -13,7 +14,6 @@ import java.util.stream.LongStream;
 import java.util.stream.Stream;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.repositories.PlayerProfileRepository;
 import org.manuel.mysportfolio.services.query.AppUserQueryService;
 import org.springframework.stereotype.Component;

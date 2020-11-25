@@ -2,12 +2,12 @@ package org.manuel.mysportfolio.controllers.command.user;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import io.github.manuelarte.mysportfolio.exceptions.EntityNotFoundException;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
-import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.services.command.AppUserCommandService;
 import org.manuel.mysportfolio.services.query.AppUserQueryService;
 import org.springframework.http.MediaType;
