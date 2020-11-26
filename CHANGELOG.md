@@ -11,3 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
+
+## [0.0.1] - 2020-11-26
+
+### Added
+
+- Migration from MySportfolio to MySportfolio-core
+
+### Changed
+
+### Removed
