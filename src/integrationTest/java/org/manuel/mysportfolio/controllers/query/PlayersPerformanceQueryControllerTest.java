@@ -6,8 +6,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import io.github.manuelarte.mysportfolio.model.documents.match.Performance;
-import io.github.manuelarte.mysportfolio.model.documents.match.PlayersPerformance;
+import io.github.manuelarte.mysportfolio.model.documents.playersperformance.Performance;
+import io.github.manuelarte.mysportfolio.model.documents.playersperformance.PlayersPerformance;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Collections;

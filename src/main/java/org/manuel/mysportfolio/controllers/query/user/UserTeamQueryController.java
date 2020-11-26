@@ -1,18 +1,18 @@
 package org.manuel.mysportfolio.controllers.query.user;
 
+import io.github.manuelarte.mysportfolio.exceptions.EntityNotFoundException;
 import io.github.manuelarte.mysportfolio.model.documents.team.Team;
 import io.github.manuelarte.mysportfolio.model.documents.teamtouser.TeamToUsers;
 import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam;
+import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
 import io.github.manuelarte.spring.queryparameter.QueryParameter;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
 import org.manuel.mysportfolio.controllers.Util;
-import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.teamtousers.UserInTeamDto;
 import org.manuel.mysportfolio.model.dtos.user.UserTeamDto;
-import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.services.query.AppUserQueryService;
 import org.manuel.mysportfolio.services.query.TeamQueryService;
 import org.manuel.mysportfolio.services.query.TeamToUsersQueryService;

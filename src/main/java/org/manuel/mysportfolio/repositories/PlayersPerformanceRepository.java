@@ -1,6 +1,6 @@
 package org.manuel.mysportfolio.repositories;
 
-import io.github.manuelarte.mysportfolio.model.documents.match.PlayersPerformance;
+import io.github.manuelarte.mysportfolio.model.documents.playersperformance.PlayersPerformance;
 import java.util.Optional;
 import org.bson.types.ObjectId;
 import org.springframework.data.repository.CrudRepository;

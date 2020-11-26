@@ -1,10 +1,10 @@
 package org.manuel.mysportfolio.config.aspects;
 
+import io.github.manuelarte.mysportfolio.model.documents.user.AppMembership;
+import io.github.manuelarte.mysportfolio.model.documents.user.AppSettings;
+import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
-import org.manuel.mysportfolio.model.entities.user.AppMembership;
-import org.manuel.mysportfolio.model.entities.user.AppSettings;
-import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.services.command.AppUserCommandService;
 import org.manuel.mysportfolio.services.query.AppUserQueryService;
 import org.springframework.security.core.context.SecurityContextHolder;

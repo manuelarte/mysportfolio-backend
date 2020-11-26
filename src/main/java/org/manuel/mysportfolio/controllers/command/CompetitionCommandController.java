@@ -55,7 +55,7 @@ public class CompetitionCommandController {
       Update.class}) @RequestBody final CompetitionDto competitionDto) {
     Assert.isTrue(competitionId.equals(competitionDto.getId()), "Ids don't match");
     final var updated = competitionCommandService
-        .save(competitionDtoToExistingCompetitionTransformer.apply(competitionId, competitionDto));
+        .update(competitionDtoToExistingCompetitionTransformer.apply(competitionId, competitionDto));
     return ResponseEntity.ok(competitionToCompetitionDtoTransformer.apply(updated));
 
   }

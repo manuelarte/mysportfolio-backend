@@ -101,7 +101,8 @@ class UserTeamCommandControllerTest {
         .andExpect(status().isOk());
     assertEquals(1, teamRepository.count());
     assertEquals(userInTeamDtoToUserInTeamTransformer.apply(updatedUserTeamDto.getUserInTeam()),
-        teamToUsersRepository.findByTeamId(new ObjectId(savedUserTeams.getTeam().getId())).get().getUsers().get(ItConfiguration.IT_USER_ID));
+        teamToUsersRepository.findByTeamId(
+            new ObjectId(savedUserTeams.getTeam().getId())).get().getUsers().get(ItConfiguration.IT_USER_ID));
   }
 
 }

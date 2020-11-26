@@ -2,12 +2,12 @@ package org.manuel.mysportfolio.repositories;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import io.github.manuelarte.mysportfolio.model.documents.user.AppMembership;
+import io.github.manuelarte.mysportfolio.model.documents.user.AppSettings;
+import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
 import javax.inject.Inject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.manuel.mysportfolio.model.entities.user.AppMembership;
-import org.manuel.mysportfolio.model.entities.user.AppSettings;
-import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.dao.DuplicateKeyException;

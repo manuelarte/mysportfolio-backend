@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.threeten.extra.Interval;
 
 @Service
 @lombok.AllArgsConstructor
@@ -23,14 +24,13 @@ class MatchQueryServiceImpl implements MatchQueryService {
   private final MatchRepository matchRepository;
 
   @Override
-  public Optional<Match<? extends TeamType, ? extends TeamType>> findOne(final ObjectId id) {
+  public Optional<Match<TeamType, TeamType>> findOne(final ObjectId id) {
     return matchRepository.findById(id);
   }
 
   @Override
-  public Page<Match<TeamType, TeamType>> findAllCreatedBy(final Pageable pageable,
-      final String createdBy) {
-    return matchRepository.findAllByCreatedByIs(pageable, createdBy);
+  public Page<Match<TeamType, TeamType>> findAllCreatedBy(final String createdBy, final Pageable pageable) {
+    return matchRepository.findAllByCreatedBy(createdBy, pageable);
   }
 
   @Override
@@ -41,9 +41,8 @@ class MatchQueryServiceImpl implements MatchQueryService {
   }
 
   @Override
-  public int countAllByCreatedDateBetweenAndCreatedBy(final LocalDate from, final LocalDate to,
-      final String createdBy) {
-    return matchRepository.countAllByCreatedDateBetweenAndCreatedBy(from, to, createdBy);
+  public int countAllByCreatedByInInterval(final String createdBy, final Interval interval) {
+    return matchRepository.countAllByCreatedByAndCreatedDateIsBetween(createdBy, interval.getStart(), interval.getEnd());
   }
 
   @Override

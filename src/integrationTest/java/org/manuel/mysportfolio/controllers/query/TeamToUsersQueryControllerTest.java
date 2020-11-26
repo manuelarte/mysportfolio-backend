@@ -70,9 +70,13 @@ public class TeamToUsersQueryControllerTest {
 
   @Test
   public void testGetTeamToUsersOfNotExistingEntry() throws Exception {
-    mvc.perform(get("/api/v1/teams/{teamId}/users", new ObjectId().toString())
+    final var teamId = new ObjectId().toString();
+    mvc.perform(get("/api/v1/teams/{teamId}/users", teamId)
         .contentType(APPLICATION_JSON))
-        .andExpect(status().is4xxClientError());
+        .andExpect(status().is4xxClientError())
+        .andExpect(jsonPath("$.error.code").value("404"))
+        .andExpect(jsonPath("$.error.message").value("TeamToUsers with id "+ teamId +" not found"))
+        .andExpect(jsonPath("$.error.errors[0].domain").value(TeamToUsers.class.getSimpleName()));
   }
 
 }

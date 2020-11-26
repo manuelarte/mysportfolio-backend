@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.manuelarte.mysportfolio.model.Sport;
 import io.github.manuelarte.mysportfolio.model.TeamOption;
-import io.github.manuelarte.mysportfolio.model.documents.match.AnonymousTeam;
 import io.github.manuelarte.mysportfolio.model.documents.match.Match;
 import io.github.manuelarte.mysportfolio.model.documents.match.type.FriendlyMatchType;
 import java.time.Instant;
@@ -35,7 +34,7 @@ class MatchCommandServiceTest {
   @DisplayName("load match by query for sport")
   @Test
   public void testGetMatchesWithStartDateGreaterThan() {
-    final var expected = new Match<AnonymousTeam, AnonymousTeam>();
+    final var expected = new Match<>();
     expected.setHomeTeam(TestUtils.createMockAnonymousTeam());
     expected.setAwayTeam(TestUtils.createMockAnonymousTeam());
     expected.setType(new FriendlyMatchType(Sport.FOOTBALL));
@@ -43,7 +42,7 @@ class MatchCommandServiceTest {
     expected.setCreatedBy("123456789");
     expected.setPlayedFor(Collections.singletonMap("123456789", TeamOption.HOME_TEAM));
 
-    final var notExpected = new Match<AnonymousTeam, AnonymousTeam>();
+    final var notExpected = new Match<>();
     notExpected.setType(new FriendlyMatchType(Sport.FUTSAL));
     notExpected.setHomeTeam(TestUtils.createMockAnonymousTeam());
     notExpected.setAwayTeam(TestUtils.createMockAnonymousTeam());

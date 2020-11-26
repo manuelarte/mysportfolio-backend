@@ -11,8 +11,10 @@ import org.springframework.stereotype.Component;
 public class PlayerProfileSportInfoDtoToPlayerSportInfoTransformer implements
     Function<PlayerProfileSportInfoDto, PlayerProfileSportInfo> {
 
-  private final PlayerProfileFootballInfoDtoToPlayerProfileFootbalInfoTransformer playerProfileFootballInfoDtoToPlayerProfileFootbalInfoTransformer;
-  private final PlayerProfileFutsalInfoDtoToPlayerProfileFutsalInfoTransformer playerProfileFutsalInfoDtoToPlayerProfileFutsalInfoTransformer;
+  private final PlayerProfileFootballInfoDtoToPlayerProfileFootbalInfoTransformer
+      playerProfileFootballInfoDtoToPlayerProfileFootbalInfoTransformer;
+  private final PlayerProfileFutsalInfoDtoToPlayerProfileFutsalInfoTransformer
+      playerProfileFutsalInfoDtoToPlayerProfileFutsalInfoTransformer;
 
   @Override
   public PlayerProfileSportInfo apply(final PlayerProfileSportInfoDto playerProfileSportInfo) {

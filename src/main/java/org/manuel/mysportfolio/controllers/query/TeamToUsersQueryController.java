@@ -1,7 +1,8 @@
 package org.manuel.mysportfolio.controllers.query;
 
+import io.github.manuelarte.mysportfolio.exceptions.EntityNotFoundException;
+import io.github.manuelarte.mysportfolio.model.documents.teamtouser.TeamToUsers;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.teamtousers.TeamToUsersDto;
 import org.manuel.mysportfolio.services.query.TeamToUsersQueryService;
 import org.manuel.mysportfolio.transformers.teamtousers.TeamToUsersToTeamToUsersDtoTransformer;
@@ -24,8 +25,7 @@ public class TeamToUsersQueryController {
   public ResponseEntity<TeamToUsersDto> findTeamsToUsersForTeam(
       @PathVariable final ObjectId teamId) {
     final var teamToUsers = teamToUsersQueryService.findByTeamId(teamId)
-        .orElseThrow(() -> new EntityNotFoundException(
-            String.format("TeamToUsers entity not found for team id: %s", teamId.toString())));
+        .orElseThrow(() -> new EntityNotFoundException(TeamToUsers.class, teamId.toString()));
     return ResponseEntity.ok(teamToUsersToTeamToUsersDtoTransformer.apply(teamToUsers));
   }
 

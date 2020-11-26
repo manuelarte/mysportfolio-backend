@@ -6,10 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.manuelarte.mysportfolio.model.Sport;
 import io.github.manuelarte.mysportfolio.model.TeamOption;
-import io.github.manuelarte.mysportfolio.model.documents.Competition;
-import io.github.manuelarte.mysportfolio.model.documents.match.AnonymousTeam;
+import io.github.manuelarte.mysportfolio.model.documents.competition.Competition;
 import io.github.manuelarte.mysportfolio.model.documents.match.Match;
-import io.github.manuelarte.mysportfolio.model.documents.match.RegisteredTeam;
 import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
 import io.github.manuelarte.mysportfolio.model.documents.match.type.CompetitionMatchType;
 import io.github.manuelarte.mysportfolio.model.documents.match.type.FriendlyMatchType;
@@ -48,7 +46,7 @@ public class MatchRepositoryTest {
   @Test
   @DisplayName("save match with two anonymous teams")
   public void testSaveMatchWithAnonymousTeams() {
-    final var match = new Match<AnonymousTeam, AnonymousTeam>();
+    final var match = new Match<>();
     match.setHomeTeam(TestUtils.createMockAnonymousTeam());
     match.setAwayTeam(TestUtils.createMockAnonymousTeam());
 
@@ -58,7 +56,7 @@ public class MatchRepositoryTest {
   @Test
   @DisplayName("save match with one registered team and one anonymous teams")
   public void testSaveMatchWithOneAnonymousTeam() {
-    final var match = new Match<RegisteredTeam, AnonymousTeam>();
+    final var match = new Match<>();
     match.setHomeTeam(TestUtils.createMockRegisteredTeam());
     match.setAwayTeam(TestUtils.createMockAnonymousTeam());
 
@@ -68,7 +66,7 @@ public class MatchRepositoryTest {
   @Test
   @DisplayName("update match with different lock version")
   public void testUpdateMatchWithDifferentVersion() {
-    final var match = new Match<RegisteredTeam, AnonymousTeam>();
+    final var match = new Match<>();
     match.setHomeTeam(TestUtils.createMockRegisteredTeam());
     match.setAwayTeam(TestUtils.createMockAnonymousTeam());
 
@@ -115,10 +113,10 @@ public class MatchRepositoryTest {
     matchRepository.save(expected2);
     matchRepository.save(notExpected);
 
-    final LocalDate localDate = LocalDate.now().minus(16, ChronoUnit.DAYS);
+    final var instant = Instant.now().minus(16, ChronoUnit.DAYS);
 
     final var count = matchRepository
-        .countAllByCreatedDateBetweenAndCreatedBy(localDate, LocalDate.now(), "123456");
+        .countAllByCreatedByAndCreatedDateIsBetween("123456", instant, Instant.now());
     assertEquals(2, count);
   }
 

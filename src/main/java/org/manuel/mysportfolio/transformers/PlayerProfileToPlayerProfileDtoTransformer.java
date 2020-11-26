@@ -21,7 +21,8 @@ public class PlayerProfileToPlayerProfileDtoTransformer implements
   public PlayerProfileDto apply(final PlayerProfile playerProfile) {
     final var info = playerProfile.getInfo();
     final var mappedInfo = info.entrySet().stream()
-        .collect(Collectors.toMap(Entry::getKey, it -> transformer.apply(playerProfile.getExternalId(), it.getKey(), it.getValue())));
+        .collect(Collectors.toMap(Entry::getKey, it ->
+            transformer.apply(playerProfile.getExternalId(), it.getKey(), it.getValue())));
 
     return PlayerProfileDto.builder()
         .id(Optional.ofNullable(playerProfile.getId()).map(ObjectId::toString).orElse(null))

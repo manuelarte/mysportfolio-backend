@@ -45,10 +45,12 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.github.manuelarte.mysportfolio:mysportfolio-model:0.0.1.RC1'
+    implementation 'io.github.manuelarte.mysportfolio:mysportfolio-exceptions:0.0.1'
+    implementation 'io.github.manuelarte.mysportfolio:mysportfolio-model:0.0.1.RC2'
 
     implementation 'javax.inject:javax.inject:1'
     implementation 'javax.validation:validation-api:2.0.1.Final'
+    implementation 'org.threeten:threeten-extra:1.5.0'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.cloud:spring-cloud-gcp-starter-logging:1.2.0.RELEASE'
@@ -74,7 +76,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    implementation 'com.google.firebase:firebase-admin:6.12.0'
+    implementation 'com.google.firebase:firebase-admin:7.0.1'
 
     testImplementation 'org.json:json:20200518'
     testImplementation 'org.mockito:mockito-junit-jupiter:3.4.6'
@@ -104,9 +106,26 @@ springBoot {
     buildInfo()
 }
 
+String getDockerTag() {
+    gitDetails = ext.gitDetails
+    if (gitDetails.branchName != "master") {
+        return "${version}-${gitDetails.gitHash}"
+    }
+    return "${version}"
+}
+
+tasks.register("printDockerTag") {
+    doLast {
+        println getDockerTag()
+    }
+}
+
 jib {
     from {
         image = 'openjdk:13'
+    }
+    to {
+        image = "gcr.io/mysportfolio-backend/$name:${getDockerTag()}"
     }
     container {
         creationTime = 'USE_CURRENT_TIMESTAMP'

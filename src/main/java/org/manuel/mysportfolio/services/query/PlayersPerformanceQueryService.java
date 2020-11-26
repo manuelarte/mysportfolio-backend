@@ -1,6 +1,6 @@
 package org.manuel.mysportfolio.services.query;
 
-import io.github.manuelarte.mysportfolio.model.documents.match.Performance;
+import io.github.manuelarte.mysportfolio.model.documents.playersperformance.Performance;
 import java.util.Optional;
 import org.bson.types.ObjectId;
 import org.springframework.security.access.prepost.PostAuthorize;

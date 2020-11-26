@@ -1,12 +1,12 @@
 package org.manuel.mysportfolio.controllers.command;
 
+import io.github.manuelarte.mysportfolio.exceptions.EntityNotFoundException;
 import io.github.manuelarte.mysportfolio.model.documents.match.Match;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.Exists;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.New;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Update;
 import javax.validation.groups.Default;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.services.command.MatchCommandService;

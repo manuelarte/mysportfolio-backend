@@ -1,6 +1,6 @@
 package org.manuel.mysportfolio.publishers;
 
-import io.github.manuelarte.mysportfolio.model.documents.match.PlayersPerformance;
+import io.github.manuelarte.mysportfolio.model.documents.playersperformance.PlayersPerformance;
 import org.manuel.mysportfolio.model.events.PlayersPerformanceUpdatedEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;

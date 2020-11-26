@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
 public class UserNotificationToUserNotificationDtoTransformer implements
     Function<UserNotification, UserNotificationDto> {
 
-  private final TeamAddUserNotificationToTeamAddUserNotificationDtoTransformer teamAddUserNotificationToTeamAddUserNotificationDtoTransformer;
+  private final TeamAddUserNotificationToTeamAddUserNotificationDtoTransformer
+      teamAddUserNotificationToTeamAddUserNotificationDtoTransformer;
 
   @Override
   public UserNotificationDto apply(final UserNotification userNotification) {

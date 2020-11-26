@@ -1,12 +1,12 @@
 package org.manuel.mysportfolio.controllers.query;
 
+import io.github.manuelarte.mysportfolio.exceptions.EntityNotFoundException;
 import io.github.manuelarte.mysportfolio.model.documents.match.Match;
 import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
 import io.github.manuelarte.spring.queryparameter.QueryParameter;
 import java.util.Optional;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
-import org.manuel.mysportfolio.exceptions.EntityNotFoundException;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
@@ -41,7 +41,7 @@ public class MatchQueryController {
     if (query.isPresent()) {
       page = matchQueryService.findAllBy(query.get(), pageable, getUserId());
     } else {
-      page = matchQueryService.findAllCreatedBy(pageable, getUserId());
+      page = matchQueryService.findAllCreatedBy(getUserId(), pageable);
     }
     return ResponseEntity.ok(page.map(matchToMatchDtoTransformer));
   }

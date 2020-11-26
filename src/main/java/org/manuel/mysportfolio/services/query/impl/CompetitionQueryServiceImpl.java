@@ -1,9 +1,7 @@
 package org.manuel.mysportfolio.services.query.impl;
 
-import io.github.manuelarte.mysportfolio.model.documents.Competition;
+import io.github.manuelarte.mysportfolio.model.documents.competition.Competition;
 import java.time.DayOfWeek;
-import java.time.Year;
-import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 import org.bson.types.ObjectId;
@@ -14,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.threeten.extra.Interval;
 
 @Service
 @lombok.AllArgsConstructor
@@ -27,8 +26,8 @@ class CompetitionQueryServiceImpl implements CompetitionQueryService {
   }
 
   @Override
-  public Page<Competition> findAllCreatedBy(final Pageable pageable, final String createdBy) {
-    return competitionRepository.findAllByCreatedByIs(pageable, createdBy);
+  public Page<Competition> findAllCreatedBy(final String createdBy, final Pageable pageable) {
+    return competitionRepository.findAllByCreatedBy(createdBy, pageable);
   }
 
   @Override
@@ -38,9 +37,9 @@ class CompetitionQueryServiceImpl implements CompetitionQueryService {
   }
 
   @Override
-  public int countAllByCreatedByInYear(final String createdBy, final Year year) {
-    final var lowerLimit = year.atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC);
-    final var upperLimit = year.plusYears(1).atDay(1).atStartOfDay().toInstant(ZoneOffset.UTC);
+  public int countAllByCreatedByInInterval(final String createdBy, final Interval interval) {
+    final var lowerLimit = interval.getStart();
+    final var upperLimit = interval.getEnd();
     return competitionRepository
         .countAllByCreatedByAndCreatedDateIsBetween(createdBy, lowerLimit, upperLimit);
   }

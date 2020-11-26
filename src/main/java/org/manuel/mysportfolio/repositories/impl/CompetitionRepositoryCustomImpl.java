@@ -1,6 +1,6 @@
 package org.manuel.mysportfolio.repositories.impl;
 
-import io.github.manuelarte.mysportfolio.model.documents.Competition;
+import io.github.manuelarte.mysportfolio.model.documents.competition.Competition;
 import java.util.List;
 import org.manuel.mysportfolio.repositories.CompetitionRepositoryCustom;
 import org.springframework.data.domain.Page;

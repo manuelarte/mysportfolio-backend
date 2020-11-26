@@ -8,6 +8,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.manuelarte.mysportfolio.model.documents.player.FootballPosition;
+import io.github.manuelarte.mysportfolio.model.documents.user.AppMembership;
+import io.github.manuelarte.mysportfolio.model.documents.user.AppSettings;
+import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
 import java.time.Year;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolationException;
@@ -17,9 +20,6 @@ import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileFootballInfoDto;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileSportInfoDto;
-import org.manuel.mysportfolio.model.entities.user.AppMembership;
-import org.manuel.mysportfolio.model.entities.user.AppSettings;
-import org.manuel.mysportfolio.model.entities.user.AppUser;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.repositories.PlayerProfileRepository;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

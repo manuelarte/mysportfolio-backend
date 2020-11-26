@@ -13,7 +13,7 @@ public interface MatchRepositoryCustom {
 
   Page<Match<TeamType, TeamType>> findQueryAllCreatedBy(Query query, Pageable pageable);
 
-  List<Match> findAllByTypeSportOrTypeCompetitionInAndStartDateIsBetween(
+  List<Match<TeamType, TeamType>> findAllByTypeSportOrTypeCompetitionInAndStartDateIsBetween(
       String externalId, Sport sport, LocalDate from, LocalDate to);
 
 }
