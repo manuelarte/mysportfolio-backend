@@ -68,14 +68,9 @@ jobs: # a collection of steps
       - checkout
       - gcr/gcr-auth
       - run:
-          name: Set project version environment variable and upload docker image
+          name: Upload Docker Image
           command: |
-            # export DOCKER_TAG=`date +%s`
-            # echo DOCKER_TAG=$DOCKER_TAG >> $BASH_ENV
-            export DOCKER_TAG=`./gradlew properties --no-daemon --console=plain -q | grep "^version:" | awk '{printf $2}'`
-            echo DOCKER_TAG=$DOCKER_TAG >> $BASH_ENV
-            source $BASH_ENV
-            ./gradlew jib -Djib.to.image=gcr.io/$GOOGLE_PROJECT_ID/mysportfolio:$DOCKER_TAG
+            ./gradlew jib
 workflows:
   version: 2.1
   workflow:
@@ -90,3 +85,4 @@ workflows:
             branches:
               only:
                 - master
+                - develop

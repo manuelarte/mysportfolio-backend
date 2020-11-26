@@ -106,12 +106,26 @@ springBoot {
     buildInfo()
 }
 
+String getDockerTag() {
+    gitDetails = ext.gitDetails
+    if (gitDetails.branchName != "master") {
+        return "${version}-${gitDetails.gitHash}"
+    }
+    return "${version}"
+}
+
+tasks.register("printDockerTag") {
+    doLast {
+        println getDockerTag()
+    }
+}
+
 jib {
     from {
         image = 'openjdk:13'
     }
     to {
-        image = "gcr.io/mysportfolio-backend/$name:$version"
+        image = "gcr.io/mysportfolio-backend/$name:${getDockerTag()}"
     }
     container {
         creationTime = 'USE_CURRENT_TIMESTAMP'
