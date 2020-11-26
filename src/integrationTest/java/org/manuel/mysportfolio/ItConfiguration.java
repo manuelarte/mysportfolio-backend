@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Primary;
 @Configuration
 public class ItConfiguration {
 
-  public static final String IT_USER_ID = "123456789";
+  public static final String IT_USER_ID = "DefaultUserId";
 
   @Bean
   @Primary

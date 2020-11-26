@@ -39,15 +39,15 @@ class MatchCommandServiceTest {
     expected.setAwayTeam(TestUtils.createMockAnonymousTeam());
     expected.setType(new FriendlyMatchType(Sport.FOOTBALL));
     expected.setStartDate(Instant.now());
-    expected.setCreatedBy("123456789");
-    expected.setPlayedFor(Collections.singletonMap("123456789", TeamOption.HOME_TEAM));
+    expected.setCreatedBy(ItConfiguration.IT_USER_ID);
+    expected.setPlayedFor(Collections.singletonMap(ItConfiguration.IT_USER_ID, TeamOption.HOME_TEAM));
 
     final var notExpected = new Match<>();
     notExpected.setType(new FriendlyMatchType(Sport.FUTSAL));
     notExpected.setHomeTeam(TestUtils.createMockAnonymousTeam());
     notExpected.setAwayTeam(TestUtils.createMockAnonymousTeam());
     notExpected.setStartDate(Instant.now().minus(80, ChronoUnit.DAYS));
-    notExpected.setPlayedFor(Collections.singletonMap("123456789", TeamOption.HOME_TEAM));
+    notExpected.setPlayedFor(Collections.singletonMap(ItConfiguration.IT_USER_ID, TeamOption.HOME_TEAM));
 
     matchRepository.save(expected);
     matchRepository.save(notExpected);
@@ -57,7 +57,7 @@ class MatchCommandServiceTest {
     query.addCriteria(criteria);
 
     final var allByQuery = TestUtils.doWithUserAuthentication(
-        () -> matchQueryService.findAllBy(query, Pageable.unpaged(), "123456789")
+        () -> matchQueryService.findAllBy(query, Pageable.unpaged(), ItConfiguration.IT_USER_ID)
     );
     assertEquals(1, allByQuery.getTotalElements());
     assertMatch(expected, allByQuery.getContent().get(0));

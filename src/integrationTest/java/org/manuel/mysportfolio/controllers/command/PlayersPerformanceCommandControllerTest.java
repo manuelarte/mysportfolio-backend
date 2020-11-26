@@ -58,7 +58,7 @@ public class PlayersPerformanceCommandControllerTest {
 
   @Test
   public void testSavePerformance() throws Exception {
-    final var createdBy = "123456789";
+    final var createdBy = ItConfiguration.IT_USER_ID;
     final var match = matchRepository
         .save(TestUtils.createMockMatch(TestUtils.createMockAnonymousTeam(),
             TestUtils.createMockAnonymousTeam(), createdBy));

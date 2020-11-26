@@ -61,7 +61,7 @@ class TeamToUsersCommandControllerTest {
 
   @Test
   public void testSaveTeamToUsers() throws Exception {
-    final var userId = "123456";
+    final var userId = ItConfiguration.IT_USER_ID;
     final var teamToUsers = TeamToUsersDto.builder()
         .users(Collections.singletonMap(userId,
             UserInTeamDto.builder().from(LocalDate.now().minus(1, ChronoUnit.MONTHS))
@@ -82,7 +82,7 @@ class TeamToUsersCommandControllerTest {
 
   @Test
   public void testSaveTeamToUsersNoAdminGiven() throws Exception {
-    final var userId = "123456";
+    final var userId = ItConfiguration.IT_USER_ID;
     final var teamToUsers = TeamToUsersDto.builder()
         .users(Collections.singletonMap(userId,
             UserInTeamDto.builder().from(LocalDate.now().minus(1, ChronoUnit.MONTHS))
@@ -98,7 +98,7 @@ class TeamToUsersCommandControllerTest {
 
   @Test
   public void testUpdateUserInTeam() throws Exception {
-    final var userId = "123456789";
+    final var userId = ItConfiguration.IT_USER_ID;
     final var userInTeam = new UserInTeam();
     userInTeam.setFrom(LocalDate.now().minus(1, ChronoUnit.MONTHS));
     userInTeam.setRoles(Collections.singleton(UserInTeam.UserInTeamRole.PLAYER));

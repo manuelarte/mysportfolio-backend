@@ -72,7 +72,7 @@ public class TeamCommandControllerTest {
     // test team to users entry is created
     final var byTeamId = teamToUsersRepository.findByTeamId(new ObjectId(saved.getId()));
     assertTrue(byTeamId.isPresent());
-    assertTrue(byTeamId.get().getAdmins().contains("123456789"));
+    assertTrue(byTeamId.get().getAdmins().contains(ItConfiguration.IT_USER_ID));
   }
 
   @Test

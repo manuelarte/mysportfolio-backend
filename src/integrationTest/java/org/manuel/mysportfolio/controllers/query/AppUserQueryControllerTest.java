@@ -53,7 +53,7 @@ public class AppUserQueryControllerTest {
   public void testGetMyNotifications() throws Exception {
     final var teamSaved = teamRepository.save(TestUtils.createMockTeam());
 
-    final String userId = "123456789";
+    final String userId = ItConfiguration.IT_USER_ID;
     final var actual = new TeamAddUserNotification(null, null, "from", userId, teamSaved.getId());
     userNotificationRepository.save(actual);
 
