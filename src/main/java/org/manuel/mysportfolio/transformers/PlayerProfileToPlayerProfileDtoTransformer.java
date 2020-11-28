@@ -2,10 +2,8 @@ package org.manuel.mysportfolio.transformers;
 
 import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfile;
 import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileDto;
 import org.manuel.mysportfolio.transformers.playerprofile.PlayerProfileSportInfoToPlayerProfileSportInfoDtoTransformer;
 import org.springframework.stereotype.Component;
@@ -25,7 +23,7 @@ public class PlayerProfileToPlayerProfileDtoTransformer implements
             transformer.apply(playerProfile.getExternalId(), it.getKey(), it.getValue())));
 
     return PlayerProfileDto.builder()
-        .id(Optional.ofNullable(playerProfile.getId()).map(ObjectId::toString).orElse(null))
+        .id(playerProfile.getId())
         .info(mappedInfo)
         .build();
   }

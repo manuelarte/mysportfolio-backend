@@ -12,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
+import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.dtos.TeamInfoDto;
 
 /**
@@ -27,7 +28,7 @@ public class TeamDto implements TeamInfoDto {
 
   @Null(groups = {New.class, PartialUpdate.class})
   @NotNull(groups = Update.class)
-  private final String id;
+  private final ObjectId id;
 
   @Null(groups = New.class)
   @NotNull(groups = {Update.class, PartialUpdate.class})

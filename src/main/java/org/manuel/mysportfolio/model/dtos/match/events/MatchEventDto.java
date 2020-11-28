@@ -3,6 +3,7 @@ package org.manuel.mysportfolio.model.dtos.match.events;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.github.manuelarte.mysportfolio.model.documents.match.events.MatchEvent;
+import org.bson.types.ObjectId;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", defaultImpl = DefaultMatchEventDto.class)
 @JsonSubTypes({
@@ -12,7 +13,7 @@ import io.github.manuelarte.mysportfolio.model.documents.match.events.MatchEvent
 })
 public interface MatchEventDto<T extends MatchEvent> {
 
-  String getId();
+  ObjectId getId();
 
   T toMatchEvent();
 

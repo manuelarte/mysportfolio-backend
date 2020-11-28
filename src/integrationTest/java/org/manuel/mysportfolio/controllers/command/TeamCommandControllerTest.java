@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.inject.Inject;
-import org.bson.types.ObjectId;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -70,7 +69,7 @@ public class TeamCommandControllerTest {
             .andReturn().getResponse().getContentAsString(), TeamDto.class);
 
     // test team to users entry is created
-    final var byTeamId = teamToUsersRepository.findByTeamId(new ObjectId(saved.getId()));
+    final var byTeamId = teamToUsersRepository.findByTeamId(saved.getId());
     assertTrue(byTeamId.isPresent());
     assertTrue(byTeamId.get().getAdmins().contains(ItConfiguration.IT_USER_ID));
   }

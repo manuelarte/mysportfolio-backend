@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.github.manuelarte.mysportfolio.model.Constants;
 import io.github.manuelarte.mysportfolio.model.TeamOption;
+import io.github.manuelarte.mysportfolio.model.documents.match.events.MatchEvent;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.New;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.PartialUpdate;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Update;
@@ -21,6 +22,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
+import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.dtos.PlaceDto;
 import org.manuel.mysportfolio.model.dtos.match.events.MatchEventDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
@@ -29,12 +31,12 @@ import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Immutable
 @lombok.AllArgsConstructor
-@lombok.Value
+@lombok.Data
 @lombok.Builder(toBuilder = true)
 public class MatchDto<H extends TeamTypeDto, A extends TeamTypeDto> {
 
   @Null(groups = {New.class, Update.class, PartialUpdate.class})
-  private final String id;
+  private final ObjectId id;
 
   @Null(groups = New.class)
   @NotNull(groups = {Update.class, PartialUpdate.class})
@@ -50,7 +52,7 @@ public class MatchDto<H extends TeamTypeDto, A extends TeamTypeDto> {
 
   private final A awayTeam;
 
-  private final List<MatchEventDto> events;
+  private final List<MatchEventDto<MatchEvent>> events;
 
   private final PlaceDto address;
 

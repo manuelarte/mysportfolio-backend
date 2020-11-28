@@ -11,7 +11,7 @@ public class AppUserToAppUserDtoTransformer implements Function<AppUser, AppUser
   @Override
   public AppUserDto apply(final AppUser appUser) {
     return AppUserDto.builder()
-        .id(appUser.getId().toString())
+        .id(appUser.getId())
         .version(appUser.getVersion())
         //.email(appUser.getEmail())
         .externalId(appUser.getExternalId())

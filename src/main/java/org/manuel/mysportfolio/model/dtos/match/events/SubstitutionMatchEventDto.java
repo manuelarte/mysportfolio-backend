@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.github.manuelarte.mysportfolio.model.TeamOption;
 import io.github.manuelarte.mysportfolio.model.documents.match.events.SubstitutionMatchEvent;
-import java.util.Optional;
 import javax.annotation.concurrent.Immutable;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
@@ -22,7 +21,7 @@ import org.springframework.data.annotation.Id;
 public class SubstitutionMatchEventDto implements MatchEventDto<SubstitutionMatchEvent> {
 
   @Id
-  private final String id;
+  private final ObjectId id;
 
   @NotNull
   private final TeamOption team;
@@ -38,7 +37,7 @@ public class SubstitutionMatchEventDto implements MatchEventDto<SubstitutionMatc
 
   @Override
   public SubstitutionMatchEvent toMatchEvent() {
-    return new SubstitutionMatchEvent(Optional.ofNullable(id).map(ObjectId::new).orElse(null), team, minute, in, out, description);
+    return new SubstitutionMatchEvent(id, team, minute, in, out, description);
   }
 
   @AssertTrue

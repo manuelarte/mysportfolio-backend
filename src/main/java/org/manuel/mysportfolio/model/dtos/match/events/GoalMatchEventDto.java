@@ -28,7 +28,7 @@ import org.springframework.data.geo.Point;
 @lombok.Builder(toBuilder = true)
 public class GoalMatchEventDto implements MatchEventDto<GoalMatchEvent> {
 
-  private final String id;
+  private final ObjectId id;
 
   @NotNull
   private final TeamOption team;
@@ -57,7 +57,7 @@ public class GoalMatchEventDto implements MatchEventDto<GoalMatchEvent> {
 
   @Override
   public GoalMatchEvent toMatchEvent() {
-    return new GoalMatchEvent(Optional.ofNullable(id).map(ObjectId::new).orElse(null), team, playerId,
+    return new GoalMatchEvent(id, team, playerId,
         minute, goalCoordinates, bodyPart, rates, description,
         Optional.ofNullable(assist).map(AssistDetailsDto::toAssistDetails).orElse(null));
   }

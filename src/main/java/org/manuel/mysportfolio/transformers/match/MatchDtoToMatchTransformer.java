@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.model.dtos.PlaceDto;
 import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
@@ -27,7 +26,7 @@ public class MatchDtoToMatchTransformer implements
   @Override
   public Match<TeamType, TeamType> apply(final MatchDto<TeamTypeDto, TeamTypeDto> matchDto) {
     final var match = new Match<>();
-    match.setId(Optional.ofNullable(matchDto.getId()).map(ObjectId::new).orElse(null));
+    match.setId(matchDto.getId());
     match.setType(
         matchTypeDtoToMatchTypeTransformer.apply(matchDto.getType()));
     match.setVersion(matchDto.getVersion());

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.github.manuelarte.mysportfolio.model.documents.match.events.HalfTimeMatchEvent;
-import java.util.Optional;
 import javax.annotation.concurrent.Immutable;
 import javax.validation.constraints.Positive;
 import org.bson.types.ObjectId;
@@ -17,14 +16,14 @@ import org.bson.types.ObjectId;
 @lombok.Builder(toBuilder = true)
 public class HalfTimeMatchEventDto implements MatchEventDto<HalfTimeMatchEvent> {
 
-  private final String id;
+  private final ObjectId id;
 
   @Positive
   private final Integer duration;
 
   @Override
   public HalfTimeMatchEvent toMatchEvent() {
-    return new HalfTimeMatchEvent(Optional.ofNullable(id).map(ObjectId::new).orElse(null), duration);
+    return new HalfTimeMatchEvent(id, duration);
   }
 
   @JsonPOJOBuilder(withPrefix = "")

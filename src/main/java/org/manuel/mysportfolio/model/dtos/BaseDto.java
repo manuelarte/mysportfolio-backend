@@ -5,6 +5,7 @@ import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Parti
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Update;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import org.bson.types.ObjectId;
 
 @lombok.AllArgsConstructor
 @lombok.Getter
@@ -12,7 +13,7 @@ public abstract class BaseDto {
 
   @Null(groups = {New.class, PartialUpdate.class})
   @NotNull(groups = Update.class)
-  protected final String id;
+  protected final ObjectId id;
 
   @Null(groups = New.class)
   @NotNull(groups = {Update.class, PartialUpdate.class})

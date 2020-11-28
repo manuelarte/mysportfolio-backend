@@ -26,7 +26,7 @@ class MatchEventDtoTest {
     final var matchEvent = OBJECT_MAPPER.readValue(json.toString(), MatchEventDto.class);
     assertTrue(matchEvent instanceof GoalMatchEventDto);
     final var goalEvent = (GoalMatchEventDto) matchEvent;
-    assertEquals(goalEvent.getId(), json.get("id"));
+    assertEquals(goalEvent.getId().toString(), json.get("id").toString());
     assertEquals(goalEvent.getTeam().toString(), json.get("team"));
     assertEquals(goalEvent.getMinute(), json.get("minute"));
   }
@@ -41,7 +41,7 @@ class MatchEventDtoTest {
     json.put("in", "123456789");
     final var matchEvent = OBJECT_MAPPER.readValue(json.toString(), MatchEventDto.class);
     final var substitutionEvent = (SubstitutionMatchEventDto) matchEvent;
-    assertEquals(substitutionEvent.getId(), json.get("id"));
+    assertEquals(substitutionEvent.getId().toString(), json.get("id").toString());
     assertEquals(substitutionEvent.getTeam().toString(), json.get("team"));
     assertEquals(substitutionEvent.getMinute(), json.get("minute"));
     assertEquals(substitutionEvent.getIn(), json.get("in"));
@@ -58,7 +58,7 @@ class MatchEventDtoTest {
     final var matchEvent = OBJECT_MAPPER.readValue(json.toString(), MatchEventDto.class);
     assertTrue(matchEvent instanceof SubstitutionMatchEventDto);
     final var substitutionMatchEvent = (SubstitutionMatchEventDto) matchEvent;
-    assertEquals(substitutionMatchEvent.getId(), json.get("id"));
+    assertEquals(substitutionMatchEvent.getId().toString(), json.get("id").toString());
     assertEquals(substitutionMatchEvent.getTeam().toString(), json.get("team"));
     assertEquals(substitutionMatchEvent.getMinute(), json.get("minute"));
     assertTrue(json.isNull("in"));
@@ -67,10 +67,10 @@ class MatchEventDtoTest {
 
   @Test
   public void testSerializeGoal() throws JsonProcessingException {
-    final var event = new GoalMatchEventDto(new ObjectId().toString(),
+    final var event = new GoalMatchEventDto(new ObjectId(),
         TeamOption.HOME_TEAM, "12345", 30, null, null, null, "A very nice volley", null);
     final var json = new JSONObject(OBJECT_MAPPER.writeValueAsString(event));
-    assertEquals(json.get("id"), event.getId());
+    assertEquals(json.get("id"), event.getId().toString());
     assertEquals(json.get("type"), "goal");
     assertEquals(json.get("team"), event.getTeam().toString());
     assertEquals(json.get("playerId"), event.getPlayerId());
@@ -79,10 +79,10 @@ class MatchEventDtoTest {
 
   @Test
   public void testSerializeSubstitution() throws JsonProcessingException {
-    final var event = new SubstitutionMatchEventDto(new ObjectId().toString(),
+    final var event = new SubstitutionMatchEventDto(new ObjectId(),
         TeamOption.HOME_TEAM, 75, "12345", null, null);
     final var json = new JSONObject(OBJECT_MAPPER.writeValueAsString(event));
-    assertEquals(json.get("id"), event.getId());
+    assertEquals(json.get("id"), event.getId().toString());
     assertEquals(json.get("type"), "substitution");
     assertEquals(json.get("team"), event.getTeam().toString());
     assertEquals(json.get("minute"), event.getMinute());
@@ -100,7 +100,7 @@ class MatchEventDtoTest {
     final var matchEvent = OBJECT_MAPPER.readValue(json.toString(), MatchEventDto.class);
     assertTrue(matchEvent instanceof DefaultMatchEventDto);
     final var defaultMatchEvent = (DefaultMatchEventDto) matchEvent;
-    assertEquals(defaultMatchEvent.getId(), json.get("id"));
+    assertEquals(defaultMatchEvent.getId().toString(), json.get("id"));
     assertEquals(defaultMatchEvent.get("description"), json.get("description"));
     assertEquals(defaultMatchEvent.get("minute"), json.get("minute"));
   }

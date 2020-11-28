@@ -2,6 +2,7 @@ package org.manuel.mysportfolio.transformers.match;
 
 import io.github.manuelarte.mysportfolio.model.documents.match.Match;
 import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
+import io.github.manuelarte.mysportfolio.model.documents.match.events.MatchEvent;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -25,10 +26,10 @@ public class MatchToMatchDtoTransformer implements
   @Override
   public MatchDto<TeamTypeDto, TeamTypeDto> apply(
       final Match<? extends TeamType, ? extends TeamType> match) {
-    final Stream<MatchEventDto> eventsStream = match.getEvents().stream()
+    final Stream<MatchEventDto<MatchEvent>> eventsStream = match.getEvents().stream()
         .map(matchEventToMatchEventDtoTransformer);
     return match == null ? null : MatchDto.builder()
-        .id(match.getId().toString())
+        .id(match.getId())
         .version(match.getVersion())
         .type(matchTypeToMatchTypeDtoTransformer.apply(match.getType()))
         .playedFor(match.getPlayedFor())

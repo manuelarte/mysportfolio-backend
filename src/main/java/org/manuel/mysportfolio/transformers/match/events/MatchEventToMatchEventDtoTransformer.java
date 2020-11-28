@@ -18,18 +18,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 @lombok.AllArgsConstructor
-public class MatchEventToMatchEventDtoTransformer implements Function<MatchEvent, MatchEventDto> {
+public class MatchEventToMatchEventDtoTransformer implements Function<MatchEvent, MatchEventDto<MatchEvent>> {
 
   private final ObjectMapper objectMapper;
 
   @Override
   @lombok.SneakyThrows
-  public MatchEventDto apply(final MatchEvent matchEvent) {
-    final MatchEventDto<?> toReturn;
+  public MatchEventDto<MatchEvent> apply(final MatchEvent matchEvent) {
+    final MatchEventDto<? extends MatchEvent> toReturn;
     if (matchEvent instanceof GoalMatchEvent) {
       final var casted = (GoalMatchEvent) matchEvent;
       toReturn = GoalMatchEventDto.builder()
-          .id(Optional.ofNullable(casted.getId()).map(Object::toString).orElse(null))
+          .id(casted.getId())
           .team(casted.getTeam())
           .playerId(casted.getPlayerId())
           .minute(casted.getMinute())
@@ -47,7 +47,7 @@ public class MatchEventToMatchEventDtoTransformer implements Function<MatchEvent
     } else if (matchEvent instanceof SubstitutionMatchEvent) {
       final var casted = (SubstitutionMatchEvent) matchEvent;
       toReturn = SubstitutionMatchEventDto.builder()
-          .id(Optional.ofNullable(casted.getId()).map(Object::toString).orElse(null))
+          .id(casted.getId())
           .minute(casted.getMinute())
           .team(casted.getTeam())
           .in(casted.getIn())
@@ -57,19 +57,19 @@ public class MatchEventToMatchEventDtoTransformer implements Function<MatchEvent
     } else if (matchEvent instanceof HalfTimeMatchEvent) {
       final var casted = (HalfTimeMatchEvent) matchEvent;
       toReturn = HalfTimeMatchEventDto.builder()
-          .id(Optional.ofNullable(casted.getId()).map(Object::toString).orElse(null))
+          .id(casted.getId())
           .duration(casted.getDuration())
           .build();
     } else if (matchEvent instanceof DefaultMatchEvent) {
       final var casted = (DefaultMatchEvent) matchEvent;
       final var defaultDto = new DefaultMatchEventDto();
-      defaultDto.setId(Optional.ofNullable(casted.getId()).map(Object::toString).orElse(null));
+      defaultDto.setId(casted.getId());
       defaultDto.setMap(casted.getMap());
       toReturn = defaultDto;
     } else {
       toReturn = null;
     }
-    return toReturn;
+    return (MatchEventDto<MatchEvent>) toReturn;
   }
 
 }

@@ -28,14 +28,14 @@ public class MatchEventQueryController {
   private final MatchEventToMatchEventDtoTransformer matchEventToMatchEventDtoTransformer;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<MatchEventDto>> findAll(@PathVariable final ObjectId matchId) {
+  public ResponseEntity<List<MatchEventDto<MatchEvent>>> findAll(@PathVariable final ObjectId matchId) {
     return ResponseEntity.ok(matchToMatchDtoTransformer.apply(matchQueryService.findOne(matchId)
         .orElseThrow(() -> new EntityNotFoundException(Match.class, matchId.toString())))
         .getEvents());
   }
 
   @GetMapping(value = "/{eventId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<MatchEventDto> findOne(@PathVariable final ObjectId matchId,
+  public ResponseEntity<MatchEventDto<MatchEvent>> findOne(@PathVariable final ObjectId matchId,
       @PathVariable final ObjectId eventId) {
     // TODO
     final var matchEvents = matchQueryService.findOne(matchId).orElseThrow(() ->

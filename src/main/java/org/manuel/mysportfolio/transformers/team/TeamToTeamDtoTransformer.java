@@ -15,7 +15,7 @@ public class TeamToTeamDtoTransformer implements Function<Team, TeamDto> {
   @Override
   public TeamDto apply(final Team team) {
     return TeamDto.builder()
-        .id(team.getId().toString())
+        .id(team.getId())
         .version(team.getVersion())
         .name(team.getName())
         .teamKit(teamKitToTeamKitDtoTransformer.apply(team.getTeamKit()))

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @lombok.AllArgsConstructor
-public class TeamTypeToTeamInMatchDtoTransformer<T> implements Function<TeamType, TeamTypeDto> {
+public class TeamTypeToTeamInMatchDtoTransformer implements Function<TeamType, TeamTypeDto> {
 
   private final RegisteredTeamToRegisteredTeamDtoTransformer registeredTeamToRegisteredTeamDtoTransformer;
   private final AnonymousTeamToAnonymousTeamDtoTransformer anonymousTeamToAnonymousTeamDtoTransformer;

@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @lombok.Builder(toBuilder = true)
 public class AppUserDto {
 
-  private final String id;
+  private final Object id;
 
   private final Long version;
 

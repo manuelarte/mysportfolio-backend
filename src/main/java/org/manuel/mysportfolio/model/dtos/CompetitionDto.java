@@ -19,6 +19,7 @@ import java.time.YearMonth;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
+import org.bson.types.ObjectId;
 
 @JsonDeserialize(builder = CompetitionDto.CompetitionDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -49,7 +50,7 @@ public class CompetitionDto extends BaseDto {
   private final Instant createdDate;
 
   @lombok.Builder(toBuilder = true)
-  public CompetitionDto(final String id, final Long version, final String name, final Sport sport,
+  public CompetitionDto(final ObjectId id, final Long version, final String name, final Sport sport,
       final DayOfWeek defaultMatchDay, final YearMonth from, final YearMonth to,
       final String description,
       final Instant createdDate, final String createdBy) {

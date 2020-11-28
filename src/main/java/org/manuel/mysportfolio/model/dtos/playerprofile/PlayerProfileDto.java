@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
+import org.bson.types.ObjectId;
 
 @JsonDeserialize(builder = PlayerProfileDto.PlayerProfileDtoBuilder.class)
 @lombok.AllArgsConstructor
@@ -15,7 +16,7 @@ import javax.validation.constraints.PastOrPresent;
 public class PlayerProfileDto {
 
   @NotNull
-  private final String id;
+  private final ObjectId id;
 
   private final Map<
       @PastOrPresent

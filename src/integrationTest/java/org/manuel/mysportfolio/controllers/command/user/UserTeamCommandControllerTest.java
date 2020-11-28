@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam.UserInTeamRole;
 import java.time.LocalDate;
 import javax.inject.Inject;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.TestUtils;
@@ -102,7 +101,7 @@ class UserTeamCommandControllerTest {
     assertEquals(1, teamRepository.count());
     assertEquals(userInTeamDtoToUserInTeamTransformer.apply(updatedUserTeamDto.getUserInTeam()),
         teamToUsersRepository.findByTeamId(
-            new ObjectId(savedUserTeams.getTeam().getId())).get().getUsers().get(ItConfiguration.IT_USER_ID));
+            savedUserTeams.getTeam().getId()).get().getUsers().get(ItConfiguration.IT_USER_ID));
   }
 
 }

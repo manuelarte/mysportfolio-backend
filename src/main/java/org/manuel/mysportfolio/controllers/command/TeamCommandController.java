@@ -49,7 +49,7 @@ public class TeamCommandController {
 
   @PutMapping(value = "/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE,
       consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<TeamDto> updateTeam(@PathVariable final String teamId,
+  public ResponseEntity<TeamDto> updateTeam(@PathVariable final ObjectId teamId,
       @Validated({Default.class}) @RequestBody final TeamDto teamDto) {
     Assert.isTrue(teamId.equals(teamDto.getId()), "Ids don't match");
     final var saved = teamCommandService
@@ -60,11 +60,11 @@ public class TeamCommandController {
   @PatchMapping(value = "/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE,
       consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<TeamDto> partialUpdateTeam(
-      @PathVariable @Exists(Team.class) final String teamId,
+      @PathVariable @Exists(Team.class) final ObjectId teamId,
       @Validated({Default.class, PartialUpdate.class}) @RequestBody final TeamDto teamDto) {
     final var partialTeam = teamDtoToTeamTransformer.apply(teamDto);
     return ResponseEntity
-        .ok(teamToTeamDtoTransformer.apply(teamCommandService.partialUpdate(new ObjectId(teamId), partialTeam)));
+        .ok(teamToTeamDtoTransformer.apply(teamCommandService.partialUpdate(teamId, partialTeam)));
   }
 
 }

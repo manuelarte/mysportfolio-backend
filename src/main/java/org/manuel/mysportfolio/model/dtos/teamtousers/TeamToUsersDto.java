@@ -11,6 +11,7 @@ import java.util.Set;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import org.bson.types.ObjectId;
 
 @JsonDeserialize(builder = TeamToUsersDto.TeamToUsersDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -21,7 +22,7 @@ public class TeamToUsersDto {
 
   @Null(groups = {New.class, PartialUpdate.class})
   @NotNull(groups = Update.class)
-  private final String id;
+  private final ObjectId id;
 
   @Null(groups = New.class)
   @NotNull(groups = {Update.class, PartialUpdate.class})

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import javax.validation.constraints.NotNull;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Immutable;
 
 /**
@@ -18,7 +19,7 @@ import org.springframework.data.annotation.Immutable;
 public class RegisteredTeamDto implements TeamTypeDto {
 
   @NotNull
-  private final String teamId;
+  private final ObjectId teamId;
 
   @JsonPOJOBuilder(withPrefix = "")
   public static final class RegisteredTeamDtoBuilder {
