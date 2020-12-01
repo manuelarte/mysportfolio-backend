@@ -1,8 +1,6 @@
 package org.manuel.mysportfolio.model.dtos.teamtousers;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.FromAndToDate;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.FromAndToDate.FromToType;
@@ -16,12 +14,11 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 
-@JsonDeserialize(builder = UserInTeamDto.UserInTeamDtoBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @FromAndToDate(FromToType.FROM_LOWER_THAN_OR_EQUAL_TO_TO)
 @lombok.AllArgsConstructor
 @lombok.Value
-@lombok.Builder(toBuilder = true)
+@lombok.extern.jackson.Jacksonized @lombok.Builder(toBuilder = true)
 public class UserInTeamDto {
 
   @FromDate
@@ -35,10 +32,5 @@ public class UserInTeamDto {
   @NotEmpty(groups = {New.class, Update.class})
   @lombok.Singular
   private final Set<UserInTeam.UserInTeamRole> roles;
-
-  @JsonPOJOBuilder(withPrefix = "")
-  public static final class UserInTeamDtoBuilder {
-
-  }
 
 }

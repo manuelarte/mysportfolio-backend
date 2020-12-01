@@ -1,7 +1,5 @@
 package org.manuel.mysportfolio.model.dtos.playerprofile;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.time.Year;
 import java.util.Map;
 import javax.validation.Valid;
@@ -9,10 +7,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import org.bson.types.ObjectId;
 
-@JsonDeserialize(builder = PlayerProfileDto.PlayerProfileDtoBuilder.class)
 @lombok.AllArgsConstructor
 @lombok.Value
-@lombok.Builder(toBuilder = true)
+@lombok.extern.jackson.Jacksonized @lombok.Builder(toBuilder = true)
 public class PlayerProfileDto {
 
   @NotNull
@@ -23,10 +20,5 @@ public class PlayerProfileDto {
           Year,
       @Valid
           PlayerProfileSportInfoDto> info;
-
-  @JsonPOJOBuilder(withPrefix = "")
-  public static final class PlayerProfileDtoBuilder {
-
-  }
 
 }

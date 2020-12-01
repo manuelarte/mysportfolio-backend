@@ -69,7 +69,7 @@ class DevBearerTokenAuthenticationConverterFilter implements
     attributes.put("uid", mockUser.getOrDefault("uid", DEFAULT_USER_ID));
     attributes.put("sub", mockUser.getOrDefault("sub", DEFAULT_USER_ID));
     attributes.put("name", mockUser.getOrDefault("name", "Test User"));
-    attributes.put("email", mockUser.getOrDefault("email", "mymatchfolio@test.com"));
+    attributes.put("email", mockUser.getOrDefault("email", "mysportfolio@mysportfolio.org"));
     attributes.put("picture",
         "https://lh3.googleusercontent.com/a-/AAuE7mBk0hY2RSA_JMUDFNo2wT54GjycNKMGgtLfw5X1LpQ=s96-c");
     attributes.put("app-membership", mockUser.getOrDefault("app-membership", AppMembership.NOOB));
@@ -81,7 +81,7 @@ class DevBearerTokenAuthenticationConverterFilter implements
         .externalId((String)claims.getOrDefault("sub", DEFAULT_USER_ID))
         .fullName((String)claims.getOrDefault("name", "Test User"))
         .appMembership((AppMembership) claims.getOrDefault("app-membership", AppMembership.NOOB))
-        .email((String)claims.getOrDefault("email", "mymatchfolio@gmail.com"))
+        .email((String)claims.getOrDefault("email", "mysportfolio@mysportfolio.org"))
         .admin((Boolean)claims.getOrDefault("admin", false))
         .build();
   }

@@ -50,7 +50,7 @@ public class UserPlayerProfileCommandControllerTest {
   @BeforeEach
   @SuppressWarnings("checkstyle:javadoctype")
   public void setup() {
-    appUserRepository.save(new AppUser("test", "test@mymatchfolio.com",
+    appUserRepository.save(new AppUser("test", "test@mysportfolio.org",
         ItConfiguration.IT_USER_ID, AppMembership.FREE, false, null,
         new AppSettings(false)));
   }

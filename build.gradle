@@ -1,7 +1,7 @@
 import io.github.manuelarte.spring.ProjectVersion
 
 plugins {
-    id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id 'org.springframework.boot' version '2.4.0'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'java'
     id "nebula.facet" version "7.0.9"
@@ -53,7 +53,7 @@ dependencies {
     implementation 'org.threeten:threeten-extra:1.5.0'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.cloud:spring-cloud-gcp-starter-logging:1.2.0.RELEASE'
+    implementation 'org.springframework.cloud:spring-cloud-gcp-starter-logging:1.2.6.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.security:spring-security-oauth2-client'
@@ -61,7 +61,6 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
-    implementation 'pl.jsolve:typeconverter:1.0.1'
     implementation 'org.aspectj:aspectjrt:1.9.6'
     implementation 'org.aspectj:aspectjweaver:1.9.6'
 
@@ -73,18 +72,18 @@ dependencies {
     implementation 'io.github.manuelarte.spring:manuelarte-validation:0.0.2'
     implementation 'io.github.manuelarte.spring:query-parameter-model:0.0.2'
     implementation 'io.github.manuelarte.spring:query-parameter-mongo:0.0.2'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok:1.18.16'
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
 
     implementation 'com.google.firebase:firebase-admin:7.0.1'
 
-    testImplementation 'org.json:json:20200518'
-    testImplementation 'org.mockito:mockito-junit-jupiter:3.4.6'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+    testImplementation 'org.json:json:20201115'
+    testImplementation 'org.mockito:mockito-junit-jupiter:3.6.28'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testImplementation 'org.mockito:mockito-core'
-    testImplementation 'nl.jqno.equalsverifier:equalsverifier:3.4.1'
-    testImplementation 'org.mutabilitydetector:MutabilityDetector:0.10.3'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+    testImplementation 'nl.jqno.equalsverifier:equalsverifier:3.5'
+    testImplementation 'org.mutabilitydetector:MutabilityDetector:0.10.4'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 
     integrationTestImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

@@ -124,7 +124,7 @@ public class TestUtils {
   }
 
   @SuppressWarnings("checkstyle:javadoctype")
-  public static RegisteredTeamDto createMockRegisteredTeamDto(ObjectId teamId) {
+  public static RegisteredTeamDto createMockRegisteredTeamDto(final ObjectId teamId) {
     return RegisteredTeamDto.builder()
         .teamId(teamId)
         .build();

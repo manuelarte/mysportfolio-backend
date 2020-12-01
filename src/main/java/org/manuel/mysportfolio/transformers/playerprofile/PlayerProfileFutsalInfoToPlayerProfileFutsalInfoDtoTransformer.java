@@ -1,19 +1,21 @@
 package org.manuel.mysportfolio.transformers.playerprofile;
 
 import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfileFutsalInfo;
+import java.time.Month;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileFutsalInfoDto;
-import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileSportSeasonSummaryDto;
+import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileTimeIntervalSummaryDto;
 import org.springframework.stereotype.Component;
 
 @Component
 @lombok.AllArgsConstructor
 public class PlayerProfileFutsalInfoToPlayerProfileFutsalInfoDtoTransformer implements
-    BiFunction<PlayerProfileSportSeasonSummaryDto, PlayerProfileFutsalInfo, PlayerProfileFutsalInfoDto> {
+    BiFunction<Map<Month, PlayerProfileTimeIntervalSummaryDto>, PlayerProfileFutsalInfo, PlayerProfileFutsalInfoDto> {
 
   @Override
-  public PlayerProfileFutsalInfoDto apply(final PlayerProfileSportSeasonSummaryDto summary,
+  public PlayerProfileFutsalInfoDto apply(final Map<Month, PlayerProfileTimeIntervalSummaryDto> summary,
       final PlayerProfileFutsalInfo input) {
     return PlayerProfileFutsalInfoDto.builder()
         .summary(summary)
