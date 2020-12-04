@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Fixing bug of team image in anonymous team
+
 ### Removed
 
 ## [0.0.1] - 2020-11-26

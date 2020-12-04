@@ -121,7 +121,7 @@ tasks.register("printDockerTag") {
 
 jib {
     from {
-        image = 'openjdk:13'
+        image = 'openjdk:15'
     }
     to {
         image = "gcr.io/mysportfolio-backend/$name:${getDockerTag()}"

@@ -3,7 +3,6 @@ package org.manuel.mysportfolio.model.dtos.team;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.github.manuelarte.mysportfolio.model.Constants;
-import io.github.manuelarte.mysportfolio.model.documents.team.TeamImage;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -23,6 +22,6 @@ public class AnonymousTeamDto implements TeamTypeDto {
 
   private final TeamKitDto<KitPartDto, KitPartDto> teamKit;
 
-  private final TeamImage teamImage;
+  private final TeamImageDto teamImage;
 
 }
