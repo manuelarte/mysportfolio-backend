@@ -1,11 +1,11 @@
 package org.manuel.mysportfolio.transformers.teamtousers;
 
 import io.github.manuelarte.mysportfolio.model.documents.teamtouser.TeamToUsers;
+import io.github.manuelarte.mysportfolio.model.dtos.teamtousers.TeamToUsersDto;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.dtos.teamtousers.TeamToUsersDto;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,12 +1,12 @@
 package org.manuel.mysportfolio.controllers.command;
 
+import io.github.manuelarte.mysportfolio.model.dtos.CompetitionDto;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.New;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.PartialUpdate;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Update;
 import io.jsonwebtoken.lang.Assert;
 import javax.validation.groups.Default;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.dtos.CompetitionDto;
 import org.manuel.mysportfolio.services.command.CompetitionCommandService;
 import org.manuel.mysportfolio.transformers.CompetitionDtoToCompetitionTransformer;
 import org.manuel.mysportfolio.transformers.CompetitionToCompetitionDtoTransformer;

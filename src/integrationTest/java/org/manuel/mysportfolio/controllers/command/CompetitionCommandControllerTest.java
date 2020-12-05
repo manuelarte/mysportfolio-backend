@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.manuelarte.mysportfolio.model.dtos.CompetitionDto;
 import java.time.YearMonth;
 import javax.inject.Inject;
 import org.hamcrest.Matchers;
@@ -17,7 +18,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.TestUtils;
-import org.manuel.mysportfolio.model.dtos.CompetitionDto;
 import org.manuel.mysportfolio.repositories.CompetitionRepository;
 import org.manuel.mysportfolio.transformers.CompetitionToCompetitionDtoTransformer;
 import org.springframework.boot.test.context.SpringBootTest;

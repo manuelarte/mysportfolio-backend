@@ -7,6 +7,7 @@ import io.github.manuelarte.mysportfolio.model.documents.match.AnonymousTeam;
 import io.github.manuelarte.mysportfolio.model.documents.match.Match;
 import io.github.manuelarte.mysportfolio.model.documents.match.RegisteredTeam;
 import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
+import io.github.manuelarte.mysportfolio.model.documents.match.events.MatchEvent;
 import io.github.manuelarte.mysportfolio.model.documents.match.type.FriendlyMatchType;
 import io.github.manuelarte.mysportfolio.model.documents.team.Team;
 import io.github.manuelarte.mysportfolio.model.documents.team.TeamKit;
@@ -15,6 +16,17 @@ import io.github.manuelarte.mysportfolio.model.documents.teamtouser.TeamToUsers;
 import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam;
 import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam.UserInTeamRole;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppMembership;
+import io.github.manuelarte.mysportfolio.model.dtos.CompetitionDto;
+import io.github.manuelarte.mysportfolio.model.dtos.match.FriendlyMatchTypeDto;
+import io.github.manuelarte.mysportfolio.model.dtos.match.MatchDto;
+import io.github.manuelarte.mysportfolio.model.dtos.match.events.GoalMatchEventDto;
+import io.github.manuelarte.mysportfolio.model.dtos.match.events.MatchEventDto;
+import io.github.manuelarte.mysportfolio.model.dtos.team.AnonymousTeamDto;
+import io.github.manuelarte.mysportfolio.model.dtos.team.RegisteredTeamDto;
+import io.github.manuelarte.mysportfolio.model.dtos.team.TeamDto;
+import io.github.manuelarte.mysportfolio.model.dtos.team.TeamKitDto;
+import io.github.manuelarte.mysportfolio.model.dtos.team.TeamTypeDto;
+import io.github.manuelarte.mysportfolio.model.dtos.team.kits.PlainKitPartDto;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -22,6 +34,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -29,16 +42,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.dtos.CompetitionDto;
-import org.manuel.mysportfolio.model.dtos.match.FriendlyMatchTypeDto;
-import org.manuel.mysportfolio.model.dtos.match.MatchDto;
-import org.manuel.mysportfolio.model.dtos.match.events.GoalMatchEventDto;
-import org.manuel.mysportfolio.model.dtos.team.AnonymousTeamDto;
-import org.manuel.mysportfolio.model.dtos.team.RegisteredTeamDto;
-import org.manuel.mysportfolio.model.dtos.team.TeamDto;
-import org.manuel.mysportfolio.model.dtos.team.TeamKitDto;
-import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
-import org.manuel.mysportfolio.model.dtos.team.kits.PlainKitPartDto;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -161,11 +164,13 @@ public class TestUtils {
       final H homeTeam, final A awayTeam, final int homeTeamGoalsNumber,
       final int awayTeamGoalsNumber, final Map<String, TeamOption> playedFor,
       final String... chips) {
-    final var goals = IntStream.range(0, homeTeamGoalsNumber)
-        .mapToObj(i -> createMockGoal(TeamOption.HOME_TEAM)).collect(Collectors.toList());
-    goals.addAll(IntStream.range(0, awayTeamGoalsNumber)
-        .mapToObj(i -> createMockGoal(TeamOption.AWAY_TEAM)).collect(Collectors.toList()));
-    return MatchDto.builder()
+    final List<?  extends MatchEventDto<? extends MatchEvent>> goals = IntStream
+        .range(0, homeTeamGoalsNumber + awayTeamGoalsNumber)
+        .mapToObj(i -> {
+          final var teamOption = i < homeTeamGoalsNumber ? TeamOption.HOME_TEAM : TeamOption.AWAY_TEAM;
+          return createMockGoal(teamOption);
+        }).collect(Collectors.toList());
+    return MatchDto.<H, A>builder()
         .type(new FriendlyMatchTypeDto(Sport.FOOTBALL))
         .playedFor(playedFor)
         .homeTeam(homeTeam)

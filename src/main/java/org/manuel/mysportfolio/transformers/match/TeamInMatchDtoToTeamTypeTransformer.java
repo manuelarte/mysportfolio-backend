@@ -1,10 +1,10 @@
 package org.manuel.mysportfolio.transformers.match;
 
 import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
+import io.github.manuelarte.mysportfolio.model.dtos.team.AnonymousTeamDto;
+import io.github.manuelarte.mysportfolio.model.dtos.team.RegisteredTeamDto;
+import io.github.manuelarte.mysportfolio.model.dtos.team.TeamTypeDto;
 import java.util.function.Function;
-import org.manuel.mysportfolio.model.dtos.team.AnonymousTeamDto;
-import org.manuel.mysportfolio.model.dtos.team.RegisteredTeamDto;
-import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.springframework.stereotype.Component;
 
 @Component

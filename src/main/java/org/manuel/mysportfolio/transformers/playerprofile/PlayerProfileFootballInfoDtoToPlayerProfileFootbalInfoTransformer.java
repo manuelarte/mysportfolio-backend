@@ -1,8 +1,8 @@
 package org.manuel.mysportfolio.transformers.playerprofile;
 
 import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfileFootballInfo;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerProfileFootballInfoDto;
 import java.util.function.Function;
-import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileFootballInfoDto;
 import org.springframework.stereotype.Component;
 
 @Component

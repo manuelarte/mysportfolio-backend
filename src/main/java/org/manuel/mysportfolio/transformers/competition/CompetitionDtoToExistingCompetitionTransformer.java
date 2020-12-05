@@ -2,10 +2,10 @@ package org.manuel.mysportfolio.transformers.competition;
 
 import io.github.manuelarte.mysportfolio.exceptions.EntityNotFoundException;
 import io.github.manuelarte.mysportfolio.model.documents.competition.Competition;
+import io.github.manuelarte.mysportfolio.model.dtos.CompetitionDto;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.dtos.CompetitionDto;
 import org.manuel.mysportfolio.services.query.CompetitionQueryService;
 import org.springframework.stereotype.Component;
 

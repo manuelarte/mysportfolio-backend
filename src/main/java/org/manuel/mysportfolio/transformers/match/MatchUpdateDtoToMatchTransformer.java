@@ -3,14 +3,13 @@ package org.manuel.mysportfolio.transformers.match;
 import io.github.manuelarte.mysportfolio.model.documents.match.Match;
 import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
 import io.github.manuelarte.mysportfolio.model.documents.match.events.MatchEvent;
+import io.github.manuelarte.mysportfolio.model.dtos.match.MatchDto;
+import io.github.manuelarte.mysportfolio.model.dtos.team.TeamTypeDto;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.manuel.mysportfolio.model.dtos.PlaceDto;
-import org.manuel.mysportfolio.model.dtos.match.MatchDto;
-import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.transformers.match.events.MatchEventDtoToMatchEventTransformer;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +22,7 @@ public class MatchUpdateDtoToMatchTransformer implements
   private final TeamInMatchDtoToTeamTypeTransformer teamInMatchDtoToTeamTypeTransformer;
   private final MatchTypeDtoToMatchTypeTransformer matchTypeDtoToMatchTypeTransformer;
   private final MatchEventDtoToMatchEventTransformer matchEventDtoToMatchEventTransformer;
+  private final PlaceDtoToPlaceTransformer placeDtoToPlaceTransformer;
 
   @Override
   public Match<TeamType, TeamType> apply(
@@ -41,7 +41,7 @@ public class MatchUpdateDtoToMatchTransformer implements
     updatedMatch.setVersion(matchUpdateDto.getVersion());
     updatedMatch.setType(matchTypeDtoToMatchTypeTransformer.apply(matchUpdateDto.getType()));
 
-    updatedMatch.setAddress(Optional.ofNullable(matchUpdateDto.getAddress()).map(PlaceDto::toPlace).orElse(null));
+    updatedMatch.setAddress(Optional.ofNullable(matchUpdateDto.getAddress()).map(placeDtoToPlaceTransformer).orElse(null));
     updatedMatch.setStartDate(matchUpdateDto.getStartDate());
     updatedMatch.setEndDate(matchUpdateDto.getEndDate());
 

@@ -1,12 +1,12 @@
 package org.manuel.mysportfolio.transformers.playerprofile;
 
 import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfileFutsalInfo;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerProfileFutsalInfoDto;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerProfileTimeIntervalSummaryDto;
 import java.time.Month;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiFunction;
-import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileFutsalInfoDto;
-import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileTimeIntervalSummaryDto;
 import org.springframework.stereotype.Component;
 
 @Component

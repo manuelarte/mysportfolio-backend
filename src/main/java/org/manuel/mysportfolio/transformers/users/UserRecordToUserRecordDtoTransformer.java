@@ -1,8 +1,8 @@
 package org.manuel.mysportfolio.transformers.users;
 
 import com.google.firebase.auth.UserRecord;
+import io.github.manuelarte.mysportfolio.model.dtos.user.UserRecordDto;
 import java.util.function.Function;
-import org.manuel.mysportfolio.model.dtos.user.UserRecordDto;
 import org.springframework.stereotype.Component;
 
 @Component

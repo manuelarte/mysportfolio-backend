@@ -1,11 +1,11 @@
 package org.manuel.mysportfolio.controllers.command;
 
+import io.github.manuelarte.mysportfolio.model.dtos.teamtousers.TeamToUsersDto;
+import io.github.manuelarte.mysportfolio.model.dtos.teamtousers.UserInTeamDto;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.New;
 import io.github.manuelarte.spring.manuelartevalidation.constraints.groups.Update;
 import javax.validation.groups.Default;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.dtos.teamtousers.TeamToUsersDto;
-import org.manuel.mysportfolio.model.dtos.teamtousers.UserInTeamDto;
 import org.manuel.mysportfolio.services.command.TeamToUsersCommandService;
 import org.manuel.mysportfolio.transformers.teamtousers.TeamToUsersDtoToTeamToUsersTransformer;
 import org.manuel.mysportfolio.transformers.teamtousers.TeamToUsersToTeamToUsersDtoTransformer;

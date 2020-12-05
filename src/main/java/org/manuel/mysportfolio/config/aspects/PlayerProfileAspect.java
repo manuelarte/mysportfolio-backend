@@ -33,7 +33,8 @@ public class PlayerProfileAspect {
         .externalId(externalId)
         .build());
     if (playerProfile.getInfo() == null || playerProfile.getInfo().isEmpty()) {
-      final var user = appUserQueryService.findByExternalId(externalId).orElseThrow(() -> new EntityNotFoundException(AppUser.class, externalId));
+      final var user = appUserQueryService.findByExternalId(externalId)
+          .orElseThrow(() -> new EntityNotFoundException(AppUser.class, externalId));
       // create player profile year entries since the user registered
       final var creationDateYear = Year.from(user.getCreatedDate().get().atZone(ZoneId.systemDefault()));
       final var nowYear = Year.now(clock);

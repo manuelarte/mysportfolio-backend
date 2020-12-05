@@ -1,9 +1,9 @@
 package org.manuel.mysportfolio.transformers;
 
 import io.github.manuelarte.mysportfolio.model.Place;
+import io.github.manuelarte.mysportfolio.model.dtos.PlaceDto;
+import io.github.manuelarte.mysportfolio.model.dtos.PlaceDto.LatitudeAndLongitudeDto;
 import java.util.function.Function;
-import org.manuel.mysportfolio.model.dtos.PlaceDto;
-import org.manuel.mysportfolio.model.dtos.PlaceDto.LatitudeAndLongitudeDto;
 import org.springframework.stereotype.Component;
 
 @Component

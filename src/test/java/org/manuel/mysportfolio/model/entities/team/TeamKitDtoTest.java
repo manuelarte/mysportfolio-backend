@@ -4,14 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.manuelarte.mysportfolio.model.dtos.team.TeamKitDto;
+import io.github.manuelarte.mysportfolio.model.dtos.team.kits.PlainKitPartDto;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.config.AppConfig;
-import org.manuel.mysportfolio.model.dtos.team.TeamKitDto;
-import org.manuel.mysportfolio.model.dtos.team.kits.PlainKitPartDto;
 
 class TeamKitDtoTest {
 

@@ -2,9 +2,9 @@ package org.manuel.mysportfolio.controllers.query;
 
 import io.github.manuelarte.mysportfolio.exceptions.EntityNotFoundException;
 import io.github.manuelarte.mysportfolio.model.documents.team.Team;
+import io.github.manuelarte.mysportfolio.model.dtos.team.TeamDto;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
-import org.manuel.mysportfolio.model.dtos.team.TeamDto;
 import org.manuel.mysportfolio.services.query.TeamQueryService;
 import org.manuel.mysportfolio.transformers.team.TeamToTeamDtoTransformer;
 import org.springframework.data.domain.Page;

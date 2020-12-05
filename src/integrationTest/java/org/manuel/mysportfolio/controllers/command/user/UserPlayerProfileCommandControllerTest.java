@@ -11,6 +11,8 @@ import io.github.manuelarte.mysportfolio.model.documents.player.FootballPosition
 import io.github.manuelarte.mysportfolio.model.documents.user.AppMembership;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppSettings;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerProfileFootballInfoDto;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerProfileSportInfoDto;
 import java.time.Year;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolationException;
@@ -18,8 +20,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.ItConfiguration;
-import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileFootballInfoDto;
-import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileSportInfoDto;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.repositories.PlayerProfileRepository;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

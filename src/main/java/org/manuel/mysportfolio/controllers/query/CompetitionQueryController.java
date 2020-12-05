@@ -1,11 +1,11 @@
 package org.manuel.mysportfolio.controllers.query;
 
+import io.github.manuelarte.mysportfolio.model.dtos.CompetitionDto;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Optional;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
-import org.manuel.mysportfolio.model.dtos.CompetitionDto;
 import org.manuel.mysportfolio.services.query.CompetitionQueryService;
 import org.manuel.mysportfolio.transformers.CompetitionToCompetitionDtoTransformer;
 import org.springframework.data.domain.Page;

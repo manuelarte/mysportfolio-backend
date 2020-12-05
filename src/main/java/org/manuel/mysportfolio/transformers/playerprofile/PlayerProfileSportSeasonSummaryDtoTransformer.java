@@ -7,6 +7,7 @@ import io.github.manuelarte.mysportfolio.model.documents.match.Match;
 import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
 import io.github.manuelarte.mysportfolio.model.documents.match.events.AssistDetails;
 import io.github.manuelarte.mysportfolio.model.documents.match.events.GoalMatchEvent;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerProfileTimeIntervalSummaryDto;
 import java.time.Month;
 import java.time.Year;
 import java.time.ZoneId;
@@ -19,7 +20,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileTimeIntervalSummaryDto;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
 
 @lombok.AllArgsConstructor

@@ -1,9 +1,9 @@
 package org.manuel.mysportfolio.transformers;
 
 import io.github.manuelarte.mysportfolio.model.documents.playersperformance.Performance;
+import io.github.manuelarte.mysportfolio.model.dtos.match.PerformanceDto;
 import java.util.Optional;
 import java.util.function.Function;
-import org.manuel.mysportfolio.model.dtos.match.PerformanceDto;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,26 +1,25 @@
 package org.manuel.mysportfolio.transformers.match.events;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.manuelarte.mysportfolio.model.documents.match.events.DefaultMatchEvent;
 import io.github.manuelarte.mysportfolio.model.documents.match.events.GoalMatchEvent;
 import io.github.manuelarte.mysportfolio.model.documents.match.events.HalfTimeMatchEvent;
 import io.github.manuelarte.mysportfolio.model.documents.match.events.MatchEvent;
 import io.github.manuelarte.mysportfolio.model.documents.match.events.SubstitutionMatchEvent;
+import io.github.manuelarte.mysportfolio.model.dtos.match.events.AssistDetailsDto;
+import io.github.manuelarte.mysportfolio.model.dtos.match.events.DefaultMatchEventDto;
+import io.github.manuelarte.mysportfolio.model.dtos.match.events.GoalMatchEventDto;
+import io.github.manuelarte.mysportfolio.model.dtos.match.events.HalfTimeMatchEventDto;
+import io.github.manuelarte.mysportfolio.model.dtos.match.events.MatchEventDto;
+import io.github.manuelarte.mysportfolio.model.dtos.match.events.SubstitutionMatchEventDto;
 import java.util.Optional;
 import java.util.function.Function;
-import org.manuel.mysportfolio.model.dtos.match.events.AssistDetailsDto;
-import org.manuel.mysportfolio.model.dtos.match.events.DefaultMatchEventDto;
-import org.manuel.mysportfolio.model.dtos.match.events.GoalMatchEventDto;
-import org.manuel.mysportfolio.model.dtos.match.events.HalfTimeMatchEventDto;
-import org.manuel.mysportfolio.model.dtos.match.events.MatchEventDto;
-import org.manuel.mysportfolio.model.dtos.match.events.SubstitutionMatchEventDto;
 import org.springframework.stereotype.Component;
 
 @Component
 @lombok.AllArgsConstructor
 public class MatchEventToMatchEventDtoTransformer implements Function<MatchEvent, MatchEventDto<MatchEvent>> {
 
-  private final ObjectMapper objectMapper;
+  private final GoalCoordinatesToGoalCoordinatesDto goalCoordinatesToGoalCoordinatesDto;
 
   @Override
   @lombok.SneakyThrows
@@ -33,7 +32,7 @@ public class MatchEventToMatchEventDtoTransformer implements Function<MatchEvent
           .team(casted.getTeam())
           .playerId(casted.getPlayerId())
           .minute(casted.getMinute())
-          .goalCoordinates(casted.getGoalCoordinates())
+          .goalCoordinates(goalCoordinatesToGoalCoordinatesDto.apply(casted.getGoalCoordinates()))
           .bodyPart(casted.getBodyPart())
           .rates(casted.getRates())
           .description(casted.getDescription())
@@ -58,7 +57,7 @@ public class MatchEventToMatchEventDtoTransformer implements Function<MatchEvent
       final var casted = (HalfTimeMatchEvent) matchEvent;
       toReturn = HalfTimeMatchEventDto.builder()
           .id(casted.getId())
-          .duration(casted.getDuration())
+          .minute(casted.getMinute())
           .build();
     } else if (matchEvent instanceof DefaultMatchEvent) {
       final var casted = (DefaultMatchEvent) matchEvent;

@@ -13,6 +13,7 @@ import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
 import io.github.manuelarte.mysportfolio.model.documents.match.events.GoalMatchEvent;
 import io.github.manuelarte.mysportfolio.model.documents.match.events.MatchEvent;
 import io.github.manuelarte.mysportfolio.model.documents.match.type.FriendlyMatchType;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerProfileTimeIntervalSummaryDto;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -22,7 +23,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileTimeIntervalSummaryDto;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
 
 class PlayerProfileTimeIntervalSummaryDtoTransformerTest {

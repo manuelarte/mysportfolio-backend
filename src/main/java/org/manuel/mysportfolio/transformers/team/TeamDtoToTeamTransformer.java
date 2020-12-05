@@ -1,9 +1,9 @@
 package org.manuel.mysportfolio.transformers.team;
 
 import io.github.manuelarte.mysportfolio.model.documents.team.Team;
+import io.github.manuelarte.mysportfolio.model.dtos.team.TeamDto;
 import java.util.Optional;
 import java.util.function.Function;
-import org.manuel.mysportfolio.model.dtos.team.TeamDto;
 import org.springframework.stereotype.Component;
 
 @Component

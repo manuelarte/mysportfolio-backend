@@ -2,10 +2,10 @@ package org.manuel.mysportfolio.transformers.team;
 
 import io.github.manuelarte.mysportfolio.exceptions.EntityNotFoundException;
 import io.github.manuelarte.mysportfolio.model.documents.team.Team;
+import io.github.manuelarte.mysportfolio.model.dtos.team.TeamDto;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.dtos.team.TeamDto;
 import org.manuel.mysportfolio.services.query.TeamQueryService;
 import org.springframework.stereotype.Component;
 
