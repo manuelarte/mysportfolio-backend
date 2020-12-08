@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import io.github.manuelarte.mysportfolio.model.Sport;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppMembership;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppSettings;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
@@ -64,9 +65,10 @@ public class UserPlayerProfileQueryControllerTest {
         .contentType(APPLICATION_JSON)
         .accept(APPLICATION_JSON))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.info." + now.getYear() +".footballInfo.summary." + now.getMonth() + ".numberOfMatchesPlayed")
+        .andExpect(jsonPath("$.info." + now.getYear() +".[0].sport").value(Sport.FOOTBALL.toString()))
+        .andExpect(jsonPath("$.info." + now.getYear() +".[0].summary." + now.getMonth() + ".numberOfMatchesPlayed")
             .value(1))
-        .andExpect(jsonPath("$.info." + now.getYear() +".footballInfo.summary." + now.getMonth() + ".numberOfGoals")
+        .andExpect(jsonPath("$.info." + now.getYear() +".[0].summary." + now.getMonth() + ".numberOfGoals")
             .value(0));
   }
 

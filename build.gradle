@@ -44,10 +44,13 @@ repositories {
 
 }
 
+ext.mysportfolioVersion = "0.0.1-alpha1"
+
 dependencies {
     implementation 'io.github.manuelarte.mysportfolio:mysportfolio-exceptions:0.0.1'
-    implementation 'io.github.manuelarte.mysportfolio:mysportfolio-model:0.0.1.RC2'
-    implementation 'io.github.manuelarte.mysportfolio:mysportfolio-dtos:0.0.1.RC1'
+    implementation "io.github.manuelarte.mysportfolio:mysportfolio-model-constants:${mysportfolioVersion}"
+    implementation "io.github.manuelarte.mysportfolio:mysportfolio-model:${mysportfolioVersion}"
+    implementation "io.github.manuelarte.mysportfolio:mysportfolio-dtos:${mysportfolioVersion}"
 
     implementation 'javax.inject:javax.inject:1'
     implementation 'javax.validation:validation-api:2.0.1.Final'
@@ -73,6 +76,7 @@ dependencies {
     implementation 'io.github.manuelarte.spring:manuelarte-validation:0.0.2'
     implementation 'io.github.manuelarte.spring:query-parameter-model:0.0.2'
     implementation 'io.github.manuelarte.spring:query-parameter-mongo:0.0.2'
+    implementation 'org.jetbrains:annotations:20.1.0'
     compileOnly 'org.projectlombok:lombok:1.18.16'
     annotationProcessor 'org.projectlombok:lombok:1.18.16'
 

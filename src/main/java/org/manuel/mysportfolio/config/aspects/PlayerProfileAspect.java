@@ -9,6 +9,7 @@ import java.time.Year;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
@@ -40,7 +41,7 @@ public class PlayerProfileAspect {
       final var nowYear = Year.now(clock);
       long between = ChronoUnit.YEARS.between(creationDateYear, nowYear);
       final Stream<Year> yearStream = LongStream.range(0, between + 1).mapToObj(creationDateYear::plusYears);
-      final Map<Year, PlayerProfileSportInfo> info = yearStream.collect(HashMap::new, (m,v) -> m.put(v, null), HashMap::putAll);
+      final Map<Year, List<PlayerProfileSportInfo<?>>> info = yearStream.collect(HashMap::new, (m,v) -> m.put(v, null), HashMap::putAll);
       playerProfile.setInfo(info);
       this.playerProfileRepository.save(playerProfile);
     }
