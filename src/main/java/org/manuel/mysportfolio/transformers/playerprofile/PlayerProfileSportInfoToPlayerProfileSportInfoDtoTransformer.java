@@ -6,10 +6,11 @@ import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfileFoo
 import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfileFutsalInfo;
 import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfileSportInfo;
 import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerProfileSportInfoDto;
+import io.jsonwebtoken.lang.Assert;
 import java.time.Year;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.constraints.NotNull;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
 import org.springframework.stereotype.Component;
 
@@ -25,8 +26,13 @@ public class PlayerProfileSportInfoToPlayerProfileSportInfoDtoTransformer {
   private final PlayerProfileFutsalInfoToPlayerProfileFutsalInfoDtoTransformer
       playerProfileFutsalInfoToPlayerProfileFutsalInfoDtoTransformer;
 
-  public List<PlayerProfileSportInfoDto<?>> apply(final String externalId, final Year year,
-      final List<PlayerProfileSportInfo<?>> playerProfileSportsInfo) {
+  public List<PlayerProfileSportInfoDto<?>> apply(
+      @NotNull final String externalId,
+      @NotNull final Year year,
+      @NotNull final List<PlayerProfileSportInfo<?>> playerProfileSportsInfo) {
+    Assert.notNull(externalId, "The external id can't be null");
+    Assert.notNull(year, "The year can't be null");
+    Assert.notNull(playerProfileSportsInfo, "The list of sports info can't be null");
     final var summaryTransformer = new PlayerProfileSportSeasonSummaryDtoTransformer(externalId,
         year, matchQueryService);
     final var footballSummary = summaryTransformer.apply(Sport.FOOTBALL);
@@ -49,7 +55,8 @@ public class PlayerProfileSportInfoToPlayerProfileSportInfoDtoTransformer {
 
   private <T extends PlayerProfileSportInfo<?>> Optional<T> getPlayerProfileSportInfo(
       final Class<T> clazz, final List<PlayerProfileSportInfo<?>> playerProfileSportsInfo) {
-    return Optional.ofNullable(playerProfileSportsInfo).orElse(Collections.emptyList()).stream()
+    assert playerProfileSportsInfo != null;
+    return playerProfileSportsInfo.stream()
         .filter(it -> it.getClass().equals(clazz))
         .map(clazz::cast).findAny();
 

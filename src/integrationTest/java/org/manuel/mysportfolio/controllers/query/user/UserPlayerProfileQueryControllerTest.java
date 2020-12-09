@@ -69,7 +69,8 @@ public class UserPlayerProfileQueryControllerTest {
         .andExpect(jsonPath("$.info." + now.getYear() +".[0].summary." + now.getMonth() + ".numberOfMatchesPlayed")
             .value(1))
         .andExpect(jsonPath("$.info." + now.getYear() +".[0].summary." + now.getMonth() + ".numberOfGoals")
-            .value(0));
+            .value(0))
+        .andExpect(jsonPath("$.info." + now.plusYears(1).getYear()).doesNotExist());
   }
 
 }
