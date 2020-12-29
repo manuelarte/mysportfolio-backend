@@ -12,8 +12,9 @@ import org.bson.types.ObjectId;
 
 public class ObjectIdModule {
 
-
   public static class ObjectIdSerializer extends StdSerializer<ObjectId> {
+
+    private static final long serialVersionUID = -42L;
 
     public ObjectIdSerializer() {
       this(null);
@@ -31,6 +32,8 @@ public class ObjectIdModule {
   }
 
   public static class ObjectIdDeserializer extends StdDeserializer<ObjectId> {
+
+    private static final long serialVersionUID = -42L;
 
     public ObjectIdDeserializer() {
       this(null);

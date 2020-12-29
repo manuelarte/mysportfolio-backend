@@ -25,6 +25,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @Import(ItConfiguration.class)
 class TeamToUsersQueryServiceTest {
 
+  private static final String USER_ID = "123456789";
+
   @Inject
   private TeamToUsersQueryService teamToUsersQueryService;
 
@@ -38,18 +40,17 @@ class TeamToUsersQueryServiceTest {
 
   @Test
   public void testFindByUsersExistsSameUserPermissions() {
-    final String userId = "123456789";
     final var actual = new TeamToUsers(null, null, new ObjectId(),
-        Collections.singletonMap(userId,
+        Collections.singletonMap(USER_ID,
             new UserInTeam(LocalDate.now().minus(1, ChronoUnit.MONTHS), LocalDate.now(),
                 Collections.singleton(UserInTeam.UserInTeamRole.PLAYER))),
-        Collections.singleton("123456789"));
+        Collections.singleton(USER_ID));
     teamToUsersRepository.save(actual);
 
     final List<TeamToUsers> byUsersContaining;
     try {
-      SecurityContextHolder.getContext().setAuthentication(TestUtils.createAuthentication(userId));
-      byUsersContaining = teamToUsersQueryService.findByUsersExists(userId);
+      SecurityContextHolder.getContext().setAuthentication(TestUtils.createAuthentication(USER_ID));
+      byUsersContaining = teamToUsersQueryService.findByUsersExists(USER_ID);
     } finally {
       SecurityContextHolder.clearContext();
     }
@@ -58,19 +59,18 @@ class TeamToUsersQueryServiceTest {
 
   @Test
   public void testFindByUsersExistsDifferentUserPermissions() {
-    final String userId = "123456789";
     final var actual = new TeamToUsers(null, null, new ObjectId(),
-        Collections.singletonMap(userId,
+        Collections.singletonMap(USER_ID,
             new UserInTeam(LocalDate.now().minus(1, ChronoUnit.MONTHS), LocalDate.now(),
                 Collections.singleton(UserInTeam.UserInTeamRole.PLAYER))),
-        Collections.singleton("123456789"));
+        Collections.singleton(USER_ID));
     teamToUsersRepository.save(actual);
 
     try {
       SecurityContextHolder.getContext()
           .setAuthentication(TestUtils.createAuthentication("otherUser"));
       assertThrows(AccessDeniedException.class,
-          () -> teamToUsersQueryService.findByUsersExists(userId));
+          () -> teamToUsersQueryService.findByUsersExists(USER_ID));
     } finally {
       SecurityContextHolder.clearContext();
     }

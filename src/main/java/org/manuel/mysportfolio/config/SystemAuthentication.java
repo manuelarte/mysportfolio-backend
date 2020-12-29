@@ -6,6 +6,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public class SystemAuthentication extends AbstractAuthenticationToken {
 
+  private static final long serialVersionUID = -42L;
+
   public SystemAuthentication() {
     super(Collections.singletonList(new SimpleGrantedAuthority("ROLE_SYSTEM")));
   }

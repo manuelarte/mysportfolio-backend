@@ -8,6 +8,7 @@ plugins {
     id 'com.google.cloud.tools.jib' version '2.7.0'
     id 'com.palantir.git-version' version '0.12.3'
     id 'checkstyle'
+    id 'pmd'
 }
 
 ext.versionFile = file('version.properties')
@@ -42,6 +43,11 @@ repositories {
     maven { url 'https://repo.spring.io/milestone' }
     maven { url  "https://dl.bintray.com/manueldoncelmartos/mysportfolio" }
 
+}
+
+pmd {
+    consoleOutput = true
+    ignoreFailures = true
 }
 
 ext.mysportfolioVersion = "0.0.1-alpha1"

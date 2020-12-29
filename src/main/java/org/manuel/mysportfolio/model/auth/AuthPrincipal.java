@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 @lombok.Getter
 public class AuthPrincipal extends DefaultOAuth2User {
 
-  private AppMembership appMembership;
+  private final AppMembership appMembership;
 
   public AuthPrincipal(
       final Collection<? extends GrantedAuthority> authorities,
@@ -23,10 +23,12 @@ public class AuthPrincipal extends DefaultOAuth2User {
     return (String) this.getAttributes().get("sub");
   }
 
+  @SuppressWarnings("unused")
   public String getEmail() {
     return (String) this.getAttributes().get("email");
   }
 
+  @SuppressWarnings("unused")
   public String getPicture() {
     return (String) this.getAttributes().get("picture");
   }

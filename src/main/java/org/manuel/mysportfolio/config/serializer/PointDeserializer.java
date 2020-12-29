@@ -9,6 +9,8 @@ import org.springframework.data.geo.Point;
 
 public class PointDeserializer extends StdDeserializer<Point> {
 
+  private static final long serialVersionUID = -42L;
+
   public PointDeserializer() {
     this(null);
   }

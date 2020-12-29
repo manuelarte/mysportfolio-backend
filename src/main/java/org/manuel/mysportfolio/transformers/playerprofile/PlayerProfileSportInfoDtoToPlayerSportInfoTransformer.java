@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 public class PlayerProfileSportInfoDtoToPlayerSportInfoTransformer implements
     Function<PlayerProfileSportInfoDto<?>, PlayerProfileSportInfo<?>> {
 
-  private final PlayerProfileFootballInfoDtoToPlayerProfileFootbalInfoTransformer
-      playerProfileFootballInfoDtoToPlayerProfileFootbalInfoTransformer;
+  private final PlayerProfileFootballInfoDtoToPlayerProfileFootballInfoTransformer
+      playerProfileFootballInfoDtoToPlayerProfileFootballInfoTransformer;
   private final PlayerProfileFootball7InfoDtoToPlayerProfileFootball7InfoTransformer
       playerProfileFootball7InfoDtoToPlayerProfileFootball7InfoTransformer;
   private final PlayerProfileFutsalInfoDtoToPlayerProfileFutsalInfoTransformer
@@ -24,7 +24,7 @@ public class PlayerProfileSportInfoDtoToPlayerSportInfoTransformer implements
   public PlayerProfileSportInfo<?> apply(final PlayerProfileSportInfoDto playerProfileSportInfo) {
     if (playerProfileSportInfo instanceof PlayerProfileFootballInfoDto) {
       final var footballInfoDto = (PlayerProfileFootballInfoDto) playerProfileSportInfo;
-      return playerProfileFootballInfoDtoToPlayerProfileFootbalInfoTransformer.apply(footballInfoDto);
+      return playerProfileFootballInfoDtoToPlayerProfileFootballInfoTransformer.apply(footballInfoDto);
     } else if (playerProfileSportInfo instanceof PlayerProfileFootball7InfoDto) {
       final var football7InfoDto = (PlayerProfileFootball7InfoDto) playerProfileSportInfo;
       return playerProfileFootball7InfoDtoToPlayerProfileFootball7InfoTransformer.apply(football7InfoDto);

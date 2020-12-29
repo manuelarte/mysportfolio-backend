@@ -33,9 +33,4 @@ public class AppConfig {
         .registerModule(objectIdModule);
   }
 
-  //@Bean
-  //public TaskScheduler taskScheduler() {
-  //    return new ConcurrentTaskScheduler(); //single threaded by default
-  //}
-
 }

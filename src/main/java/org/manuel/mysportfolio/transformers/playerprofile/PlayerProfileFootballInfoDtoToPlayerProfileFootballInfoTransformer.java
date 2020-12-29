@@ -6,7 +6,7 @@ import java.util.function.Function;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PlayerProfileFootballInfoDtoToPlayerProfileFootbalInfoTransformer implements
+public class PlayerProfileFootballInfoDtoToPlayerProfileFootballInfoTransformer implements
     Function<PlayerProfileFootballInfoDto, PlayerProfileFootballInfo> {
 
   @Override

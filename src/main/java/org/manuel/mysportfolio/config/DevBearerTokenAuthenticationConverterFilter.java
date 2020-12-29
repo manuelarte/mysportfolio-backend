@@ -27,6 +27,7 @@ import org.springframework.stereotype.Component;
 class DevBearerTokenAuthenticationConverterFilter implements
     BearerTokenAuthenticationConverterFilter {
 
+  private static final String APP_MEMBERSHIP_HEADER = "app-membership";
   private static final String DEFAULT_USER_ID = "DefaultUserId";
 
   private final ObjectMapper objectMapper;
@@ -49,7 +50,7 @@ class DevBearerTokenAuthenticationConverterFilter implements
     final AuthPrincipal principal;
     if (!Strings.isNullOrEmpty(mockUserHeaderValue)) {
       final Map<String, Object> mockUserValue = createClaims(objectMapper.readValue(httpRequest.getHeader("x-mock-user"), HashMap.class));
-      principal = new AuthPrincipal(authorities, mockUserValue, (AppMembership) mockUserValue.get("app-membership"));
+      principal = new AuthPrincipal(authorities, mockUserValue, (AppMembership) mockUserValue.get(APP_MEMBERSHIP_HEADER));
     } else {
       principal = new AuthPrincipal(authorities, createClaims(Collections.emptyMap()), AppMembership.NOOB);
     }
@@ -72,7 +73,7 @@ class DevBearerTokenAuthenticationConverterFilter implements
     attributes.put("email", mockUser.getOrDefault("email", "mysportfolio@mysportfolio.org"));
     attributes.put("picture",
         "https://lh3.googleusercontent.com/a-/AAuE7mBk0hY2RSA_JMUDFNo2wT54GjycNKMGgtLfw5X1LpQ=s96-c");
-    attributes.put("app-membership", mockUser.getOrDefault("app-membership", AppMembership.NOOB));
+    attributes.put(APP_MEMBERSHIP_HEADER, mockUser.getOrDefault(APP_MEMBERSHIP_HEADER, AppMembership.NOOB));
     return attributes;
   }
 
@@ -80,7 +81,7 @@ class DevBearerTokenAuthenticationConverterFilter implements
     return AppUser.builder()
         .externalId((String)claims.getOrDefault("sub", DEFAULT_USER_ID))
         .fullName((String)claims.getOrDefault("name", "Test User"))
-        .appMembership((AppMembership) claims.getOrDefault("app-membership", AppMembership.NOOB))
+        .appMembership((AppMembership) claims.getOrDefault(APP_MEMBERSHIP_HEADER, AppMembership.NOOB))
         .email((String)claims.getOrDefault("email", "mysportfolio@mysportfolio.org"))
         .admin((Boolean)claims.getOrDefault("admin", false))
         .build();

@@ -43,7 +43,7 @@ public class UserPlayerProfileQueryControllerTest {
 
   @BeforeEach
   @SuppressWarnings("checkstyle:javadoctype")
-  public void setup() {
+  public void setUp() {
     appUserRepository.save(new AppUser("test", "test@mysportfolio.org",
         ItConfiguration.IT_USER_ID, AppMembership.FREE, false, null,
         new AppSettings(false)));
@@ -65,10 +65,10 @@ public class UserPlayerProfileQueryControllerTest {
         .contentType(APPLICATION_JSON)
         .accept(APPLICATION_JSON))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.info." + now.getYear() +".[0].sport").value(Sport.FOOTBALL.toString()))
-        .andExpect(jsonPath("$.info." + now.getYear() +".[0].summary." + now.getMonth() + ".numberOfMatchesPlayed")
+        .andExpect(jsonPath("$.info." + now.getYear() + ".[0].sport").value(Sport.FOOTBALL.toString()))
+        .andExpect(jsonPath("$.info." + now.getYear() + ".[0].summary." + now.getMonth() + ".numberOfMatchesPlayed")
             .value(1))
-        .andExpect(jsonPath("$.info." + now.getYear() +".[0].summary." + now.getMonth() + ".numberOfGoals")
+        .andExpect(jsonPath("$.info." + now.getYear() + ".[0].summary." + now.getMonth() + ".numberOfGoals")
             .value(0))
         .andExpect(jsonPath("$.info." + now.plusYears(1).getYear()).doesNotExist());
   }
