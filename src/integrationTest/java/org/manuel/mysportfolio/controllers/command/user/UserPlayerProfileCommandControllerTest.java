@@ -6,16 +6,14 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppMembership;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppSettings;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
-import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerProfileFootballInfoDto;
-import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerProfileSportInfoDto;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerSportsInfoDto;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.sportinfo.PlayerFootballInfoDto;
 import io.github.manuelarte.mysportfolio.model.football.FootballPosition;
 import java.time.Year;
-import java.util.List;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.AfterEach;
@@ -66,42 +64,49 @@ public class UserPlayerProfileCommandControllerTest {
   @Test
   public void updatePlayerProfileSportInfoForNotExistingPlayerTest() throws Exception {
     final var userId = ItConfiguration.IT_USER_ID;
-    final List<PlayerProfileSportInfoDto<?>> playerSportInfo = List.of(PlayerProfileFootballInfoDto.builder()
-            .preferredPosition(FootballPosition.CENTRE_FORWARD)
-            .build());
+    final PlayerSportsInfoDto profileSportsInfo = PlayerSportsInfoDto.builder()
+        .football(
+            PlayerFootballInfoDto.builder()
+            .mainPosition(FootballPosition.CENTRE_FORWARD)
+            .build())
+        .build();
 
     mvc.perform(put("/api/v1/users/{userId}/player/{year}", userId, Year.now())
         .contentType(APPLICATION_JSON)
         .accept(APPLICATION_JSON)
-        .content(objectMapper.writerFor(new TypeReference<List<PlayerProfileSportInfoDto<?>>>() {}).writeValueAsString(playerSportInfo)))
+        .content(objectMapper.writeValueAsString(profileSportsInfo)))
         .andExpect(status().isOk());
   }
 
   @Test
   public void updatePlayerProfileSportInfoForTheFuture() {
     final var userId = ItConfiguration.IT_USER_ID;
-    final List<PlayerProfileSportInfoDto<?>> playerSportInfo = List.of(
-        PlayerProfileFootballInfoDto.builder()
-            .preferredPosition(FootballPosition.CENTRE_FORWARD)
-            .build());
+    final PlayerSportsInfoDto profileSportsInfo = PlayerSportsInfoDto.builder()
+        .football(
+          PlayerFootballInfoDto.builder()
+              .mainPosition(FootballPosition.CENTRE_FORWARD)
+              .build())
+        .build();
 
     assertThrows(NestedServletException.class, () -> mvc.perform(
         put("/api/v1/users/{userId}/player/{year}", userId, Year.now().plusYears(1))
             .contentType(APPLICATION_JSON)
-            .content(objectMapper.writerFor(new TypeReference<List<PlayerProfileSportInfoDto<?>>>() {}).writeValueAsString(playerSportInfo))));
+            .content(objectMapper.writeValueAsString(profileSportsInfo))));
   }
 
   @Test
   public void updatePlayerProfileForNonExistingUser() {
     final var userId = ItConfiguration.IT_USER_ID + "nono";
-    final List<PlayerProfileSportInfoDto<?>> playerSportInfo = List.of(PlayerProfileFootballInfoDto.builder()
-            .preferredPosition(FootballPosition.CENTRE_FORWARD)
-            .build());
+    final PlayerSportsInfoDto playerSportInfo = PlayerSportsInfoDto.builder()
+        .football(PlayerFootballInfoDto.builder()
+            .mainPosition(FootballPosition.CENTRE_FORWARD)
+            .build())
+        .build();
 
     final var thrown = assertThrows(NestedServletException.class, () -> mvc.perform(
         put("/api/v1/users/{userId}/player/{year}", userId, Year.now().minusYears(1))
             .contentType(APPLICATION_JSON)
-            .content(objectMapper.writerFor(new TypeReference<List<PlayerProfileSportInfoDto<?>>>() {}).writeValueAsString(playerSportInfo))));
+            .content(objectMapper.writeValueAsString(playerSportInfo))));
     assertTrue(thrown.getCause() instanceof ConstraintViolationException);
   }
 

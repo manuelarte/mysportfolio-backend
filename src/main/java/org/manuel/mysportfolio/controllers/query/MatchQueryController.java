@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@lombok.extern.slf4j.Slf4j
 @RestController
 @RequestMapping("/api/v1/matches")
 @lombok.AllArgsConstructor
@@ -56,7 +57,7 @@ public class MatchQueryController {
   }
 
   private String getUserId() {
-    return userIdProvider.getUserId();
+    return userIdProvider.getUserId().orElse(null);
   }
 
 }

@@ -1,14 +1,16 @@
 package org.manuel.mysportfolio.controllers.command.user;
 
-import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfileSportInfo;
-import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerProfileSportInfoDto;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerSportInfoDto;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerSportsInfoDto;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.sportinfo.PlayerFootball7InfoDto;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.sportinfo.PlayerFootballInfoDto;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.sportinfo.PlayerFutsalInfoDto;
 import java.time.Year;
-import java.util.List;
-import java.util.stream.Collectors;
 import javax.validation.constraints.PastOrPresent;
 import org.manuel.mysportfolio.services.command.PlayerProfileCommandService;
-import org.manuel.mysportfolio.transformers.playerprofile.PlayerProfileSportInfoDtoToPlayerSportInfoTransformer;
-import org.manuel.mysportfolio.transformers.playerprofile.PlayerProfileSportInfoToPlayerProfileSportInfoDtoTransformer;
+import org.manuel.mysportfolio.transformers.playerprofile.PlayerSportsInfoDtoToProfileSportsInfoTransformer;
+import org.manuel.mysportfolio.transformers.playerprofile.PlayerSportsInfoToPlayerSportsInfoDtoTransformer;
+import org.manuel.mysportfolio.transformers.playerprofile.sportinfo.PlayerSportInfoDtoToPlayerSportInfoTransformer;
 import org.manuel.mysportfolio.validations.UserExists;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,19 +28,52 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserPlayerProfileCommandController {
 
   private final PlayerProfileCommandService playerProfileCommandService;
-  private final PlayerProfileSportInfoDtoToPlayerSportInfoTransformer transformer;
-  private final PlayerProfileSportInfoToPlayerProfileSportInfoDtoTransformer playerProfileSportInfoToPlayerProfileSportInfoDtoTransformer;
+  private final PlayerSportsInfoDtoToProfileSportsInfoTransformer playerSportsInfoDtoToProfileSportsInfoTransformer;
+  private final PlayerSportsInfoToPlayerSportsInfoDtoTransformer playerSportsInfoToPlayerSportsInfoDtoTransformer;
+  private final PlayerSportInfoDtoToPlayerSportInfoTransformer transformer;
+
 
   @PutMapping(value = "{year}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<PlayerProfileSportInfoDto<?>>> updatePlayerSportInfo(
+  public ResponseEntity<PlayerSportsInfoDto> updatePlayerSportInfo(
       @PathVariable @UserExists final String userId,
       @PastOrPresent @PathVariable final Year year,
-      @RequestBody final List<PlayerProfileSportInfoDto<?>> playerProfileSportsInfo) {
+      @RequestBody final PlayerSportsInfoDto playerSportsInfoDto) {
     final var updated = playerProfileCommandService.updateForYear(userId, year,
-        playerProfileSportsInfo.stream()
-            .map(transformer).collect(Collectors.<PlayerProfileSportInfo<?>>toList()));
-    return ResponseEntity.ok(playerProfileSportInfoToPlayerProfileSportInfoDtoTransformer
+        playerSportsInfoDtoToProfileSportsInfoTransformer.apply(playerSportsInfoDto));
+    return ResponseEntity.ok(playerSportsInfoToPlayerSportsInfoDtoTransformer
         .apply(userId, year, updated));
+  }
+
+  @PutMapping(value = "/{year}/FOOTBALL", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<PlayerSportInfoDto<?>> updateYearPlayerFootballInfo(
+      @PathVariable @UserExists final String userId,
+      @PastOrPresent @PathVariable final Year year,
+      @RequestBody final PlayerFootballInfoDto playerFootballInfoDto) {
+    updatePlayerSportInfoForYearAndSport(userId, year, playerFootballInfoDto);
+    return ResponseEntity.ok(playerFootballInfoDto);
+  }
+
+  @PutMapping(value = "/{year}/FOOTBALL_7", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<PlayerSportInfoDto<?>> updateYearPlayerFootball7Info(
+      @PathVariable @UserExists final String userId,
+      @PastOrPresent @PathVariable final Year year,
+      @RequestBody final PlayerFootball7InfoDto playerFootball7InfoDto) {
+    updatePlayerSportInfoForYearAndSport(userId, year, playerFootball7InfoDto);
+    return ResponseEntity.ok(playerFootball7InfoDto);
+  }
+
+  @PutMapping(value = "/{year}/FUTSAL", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<PlayerSportInfoDto<?>> updateYearPlayerFutsalInfo(
+      @PathVariable @UserExists final String userId,
+      @PastOrPresent @PathVariable final Year year,
+      @RequestBody final PlayerFutsalInfoDto playerFutsalInfoDto) {
+    updatePlayerSportInfoForYearAndSport(userId, year, playerFutsalInfoDto);
+    return ResponseEntity.ok(playerFutsalInfoDto);
+  }
+
+  private void updatePlayerSportInfoForYearAndSport(
+      final String userId, final Year year, final PlayerSportInfoDto<?> playerSportInfo) {
+    playerProfileCommandService.updateForYearAndSport(userId, year, transformer.apply(playerSportInfo));
   }
 
 }

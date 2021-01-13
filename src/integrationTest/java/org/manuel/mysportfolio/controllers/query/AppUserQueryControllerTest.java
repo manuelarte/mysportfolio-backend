@@ -63,5 +63,4 @@ public class AppUserQueryControllerTest {
         .andExpect(jsonPath("$.content[0].type").value("team-add-user"));
   }
 
-
 }

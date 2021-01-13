@@ -7,6 +7,8 @@ import java.time.Clock;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.serializer.ObjectIdModule;
 import org.manuel.mysportfolio.config.serializer.PointDeserializer;
+import org.springframework.boot.actuate.trace.http.HttpTraceRepository;
+import org.springframework.boot.actuate.trace.http.InMemoryHttpTraceRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.geo.Point;
@@ -31,6 +33,11 @@ public class AppConfig {
         .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
         .registerModule(module)
         .registerModule(objectIdModule);
+  }
+
+  @Bean
+  public HttpTraceRepository httpTraceRepository() {
+    return new InMemoryHttpTraceRepository();
   }
 
 }

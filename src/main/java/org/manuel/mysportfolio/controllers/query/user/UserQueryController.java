@@ -40,7 +40,7 @@ public class UserQueryController {
   public ResponseEntity<UserNotificationPage> getMyNotifications(
       @PageableDefault final Pageable pageable) {
     final var userNotifications = appUserQueryService
-        .getUserNotifications(pageable, userIdProvider.getUserId());
+        .getUserNotifications(pageable, userIdProvider.getUserId().orElse(null));
     final var page = new UserNotificationPage(userNotifications);
     return ResponseEntity.ok(page);
   }

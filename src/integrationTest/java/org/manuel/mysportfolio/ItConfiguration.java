@@ -1,5 +1,6 @@
 package org.manuel.mysportfolio;
 
+import java.util.Optional;
 import org.manuel.mysportfolio.config.UserIdProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +14,7 @@ public class ItConfiguration {
   @Bean
   @Primary
   public UserIdProvider userIdProvider() {
-    return () -> IT_USER_ID;
+    return () -> Optional.of(IT_USER_ID);
   }
 
 }

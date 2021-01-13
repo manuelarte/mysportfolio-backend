@@ -56,7 +56,7 @@ public class CompetitionQueryController {
   }
 
   private String getUserId() {
-    return userIdProvider.getUserId();
+    return userIdProvider.getUserId().orElse(null);
   }
 
 }

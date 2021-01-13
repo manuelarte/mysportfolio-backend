@@ -1,6 +1,7 @@
 package org.manuel.mysportfolio.config.mvc;
 
 import org.manuel.mysportfolio.config.BearerTokenAuthenticationConverterFilter;
+import org.manuel.mysportfolio.config.MdcLogEnhancerFilter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @lombok.AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+  private final MdcLogEnhancerFilter mdcLogEnhancerFilter;
   private final BearerTokenAuthenticationConverterFilter bearerTokenAuthenticationConverterFilter;
 
   @Override
@@ -22,6 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http
         .addFilterBefore(bearerTokenAuthenticationConverterFilter,
             UsernamePasswordAuthenticationFilter.class)
+        .addFilterAfter(mdcLogEnhancerFilter, UsernamePasswordAuthenticationFilter.class)
         .cors().and()
         .csrf().disable()
         .authorizeRequests()

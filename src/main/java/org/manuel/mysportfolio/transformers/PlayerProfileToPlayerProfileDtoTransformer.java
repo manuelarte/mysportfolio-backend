@@ -1,20 +1,20 @@
 package org.manuel.mysportfolio.transformers;
 
 import io.github.manuelarte.mysportfolio.model.documents.player.PlayerProfile;
+import io.github.manuelarte.mysportfolio.model.documents.player.PlayerSportsInfo;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
 import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerProfileDto;
 import java.time.Clock;
 import java.time.Year;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 import org.manuel.mysportfolio.services.query.AppUserQueryService;
-import org.manuel.mysportfolio.transformers.playerprofile.PlayerProfileSportInfoToPlayerProfileSportInfoDtoTransformer;
+import org.manuel.mysportfolio.transformers.playerprofile.PlayerSportsInfoToPlayerSportsInfoDtoTransformer;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,7 +24,7 @@ public class PlayerProfileToPlayerProfileDtoTransformer implements
 
   private final Clock clock;
   private final AppUserQueryService appUserQueryService;
-  private final PlayerProfileSportInfoToPlayerProfileSportInfoDtoTransformer transformer;
+  private final PlayerSportsInfoToPlayerSportsInfoDtoTransformer transformer;
 
   @Override
   public PlayerProfileDto apply(final PlayerProfile playerProfile) {
@@ -42,7 +42,7 @@ public class PlayerProfileToPlayerProfileDtoTransformer implements
             transformer.apply(
                 playerProfile.getExternalId(),
                 year,
-                Optional.ofNullable(info.get(year)).orElse(Collections.emptyList()))));
+                Optional.ofNullable(info.get(year)).orElse(new PlayerSportsInfo()))));
 
     return PlayerProfileDto.builder()
         .id(playerProfile.getId())

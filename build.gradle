@@ -54,7 +54,7 @@ ext.mysportfolioVersion = "0.0.1-alpha1"
 
 dependencies {
     implementation 'io.github.manuelarte.mysportfolio:mysportfolio-exceptions:0.0.1'
-    implementation "io.github.manuelarte.mysportfolio:mysportfolio-model-constants:${mysportfolioVersion}"
+    implementation "io.github.manuelarte.mysportfolio:mysportfolio-model-common:${mysportfolioVersion}"
     implementation "io.github.manuelarte.mysportfolio:mysportfolio-model:${mysportfolioVersion}"
     implementation "io.github.manuelarte.mysportfolio:mysportfolio-dtos:${mysportfolioVersion}"
 
@@ -63,6 +63,7 @@ dependencies {
     implementation 'org.threeten:threeten-extra:1.5.0'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     implementation 'org.springframework.cloud:spring-cloud-gcp-starter-logging:1.2.6.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-security'

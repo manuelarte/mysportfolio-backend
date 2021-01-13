@@ -53,7 +53,7 @@ public class UserCommandController {
   }
 
   private String getUserId() {
-    return userIdProvider.getUserId();
+    return userIdProvider.getUserId().orElse(null);
   }
 
   @lombok.AllArgsConstructor
