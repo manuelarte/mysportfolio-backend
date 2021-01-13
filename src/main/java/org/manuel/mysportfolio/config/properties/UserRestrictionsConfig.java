@@ -64,7 +64,7 @@ public class UserRestrictionsConfig {
   public enum InstantFunction {
     BEGINNING_YEAR(IntervalUtils.fromBeginningOfYearFromReference()), BEGINNING_WEEK(IntervalUtils.fromBeginningOfWeekFromReference());
 
-    private BiFunction<UserRestriction, Instant, Interval> interval;
+    private final BiFunction<UserRestriction, Instant, Interval> interval;
   }
 
   @lombok.experimental.UtilityClass

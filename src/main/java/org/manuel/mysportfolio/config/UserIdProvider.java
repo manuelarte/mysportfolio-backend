@@ -1,7 +1,9 @@
 package org.manuel.mysportfolio.config;
 
+import java.util.Optional;
+
 public interface UserIdProvider {
 
-  String getUserId();
+  Optional<String> getUserId();
 
 }

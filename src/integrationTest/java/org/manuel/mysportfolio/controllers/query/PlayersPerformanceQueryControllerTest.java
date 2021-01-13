@@ -44,7 +44,7 @@ class PlayersPerformanceQueryControllerTest {
   private MockMvc mvc;
 
   @BeforeEach
-  public void setup() {
+  public void setUp() {
     mvc = MockMvcBuilders.webAppContextSetup(context)
         .apply(springSecurity())
         .build();
@@ -58,14 +58,14 @@ class PlayersPerformanceQueryControllerTest {
 
   @Test
   public void testGetPlayerPerformance() throws Exception {
-    final String createdBy = "123456789";
+    final String createdBy = ItConfiguration.IT_USER_ID;
 
     final var matchSaved = matchRepository.save(TestUtils
         .createMockMatch(TestUtils.createMockAnonymousTeam(), TestUtils.createMockAnonymousTeam(),
             createdBy));
     playersPerformanceRepository.save(new PlayersPerformance(null, null, matchSaved.getId(),
         Collections.singletonMap(createdBy, new Performance(new BigDecimal("6.5"), null)),
-        "123456789", Instant.now(), null, null));
+        ItConfiguration.IT_USER_ID, Instant.now(), null, null));
 
     mvc.perform(
         get("/api/v1/matches/{matchId}/performances/{playerId}", matchSaved.getId(), createdBy)

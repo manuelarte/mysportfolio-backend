@@ -3,12 +3,10 @@ package org.manuel.mysportfolio.transformers.match;
 import io.github.manuelarte.mysportfolio.model.documents.match.type.CompetitionMatchType;
 import io.github.manuelarte.mysportfolio.model.documents.match.type.FriendlyMatchType;
 import io.github.manuelarte.mysportfolio.model.documents.match.type.MatchType;
-import java.util.Optional;
+import io.github.manuelarte.mysportfolio.model.dtos.match.CompetitionMatchTypeDto;
+import io.github.manuelarte.mysportfolio.model.dtos.match.FriendlyMatchTypeDto;
+import io.github.manuelarte.mysportfolio.model.dtos.match.MatchTypeDto;
 import java.util.function.Function;
-import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.dtos.match.CompetitionMatchTypeDto;
-import org.manuel.mysportfolio.model.dtos.match.FriendlyMatchTypeDto;
-import org.manuel.mysportfolio.model.dtos.match.MatchTypeDto;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,7 +16,7 @@ public class MatchTypeDtoToMatchTypeTransformer implements Function<MatchTypeDto
   public MatchType apply(final MatchTypeDto matchTypeDto) {
     if (matchTypeDto instanceof CompetitionMatchTypeDto) {
       final var casted = (CompetitionMatchTypeDto) matchTypeDto;
-      return new CompetitionMatchType(Optional.ofNullable(casted.getCompetitionId()).map(ObjectId::new).orElse(null));
+      return new CompetitionMatchType(casted.getCompetitionId());
     }
     if (matchTypeDto instanceof FriendlyMatchTypeDto) {
       final var casted = (FriendlyMatchTypeDto) matchTypeDto;

@@ -5,8 +5,8 @@ import io.github.manuelarte.mysportfolio.model.documents.match.Match;
 import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.repositories.MatchRepository;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
@@ -46,13 +46,11 @@ class MatchQueryServiceImpl implements MatchQueryService {
   }
 
   @Override
-  public Collection<Match<?, ?>> findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(
+  public Collection<Match<TeamType, TeamType>> findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(
       final String userId,
       final LocalDate from, final LocalDate to, final Sport sport) {
-    return matchRepository
-        .findAllByTypeSportOrTypeCompetitionInAndStartDateIsBetween(userId, sport, from, to)
-        .stream()
-        .map(it -> (Match<?, ?>) it).collect(Collectors.toSet());
+    return new HashSet<>(matchRepository
+        .findAllByTypeSportOrTypeCompetitionInAndStartDateIsBetween(userId, sport, from, to));
   }
 
 }

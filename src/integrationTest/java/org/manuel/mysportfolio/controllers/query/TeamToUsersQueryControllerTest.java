@@ -38,7 +38,7 @@ public class TeamToUsersQueryControllerTest {
   private MockMvc mvc;
 
   @BeforeEach
-  public void setup() {
+  public void setUp() {
     mvc = MockMvcBuilders.webAppContextSetup(context)
         .apply(springSecurity())
         .build();
@@ -75,7 +75,7 @@ public class TeamToUsersQueryControllerTest {
         .contentType(APPLICATION_JSON))
         .andExpect(status().is4xxClientError())
         .andExpect(jsonPath("$.error.code").value("404"))
-        .andExpect(jsonPath("$.error.message").value("TeamToUsers with id "+ teamId +" not found"))
+        .andExpect(jsonPath("$.error.message").value("TeamToUsers with id " + teamId + " not found"))
         .andExpect(jsonPath("$.error.errors[0].domain").value(TeamToUsers.class.getSimpleName()));
   }
 

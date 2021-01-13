@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.manuelarte.mysportfolio.model.TeamOption;
 import io.github.manuelarte.mysportfolio.model.documents.match.AnonymousTeam;
+import io.github.manuelarte.mysportfolio.model.dtos.match.MatchDto;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,7 +27,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.TestUtils;
-import org.manuel.mysportfolio.model.dtos.match.MatchDto;
 import org.manuel.mysportfolio.repositories.MatchRepository;
 import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.manuel.mysportfolio.transformers.match.MatchToMatchDtoTransformer;
@@ -44,6 +44,8 @@ import org.springframework.web.util.NestedServletException;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class MatchCommandControllerTest {
 
+  private static final String USER_ID = "123456789";
+
   @Inject
   private ObjectMapper objectMapper;
   @Inject
@@ -59,7 +61,7 @@ public class MatchCommandControllerTest {
 
   @BeforeEach
   @SuppressWarnings("checkstyle:javadoctype")
-  public void setup() {
+  public void setUp() {
     mvc = MockMvcBuilders.webAppContextSetup(context)
         .apply(springSecurity())
         .build();
@@ -87,7 +89,7 @@ public class MatchCommandControllerTest {
           .andExpect(jsonPath("$.id", Matchers.notNullValue()))
           .andExpect(jsonPath("$.type.type").value("friendly"))
           .andExpect(jsonPath("$.homeTeam.type").value("registered"))
-          .andExpect(jsonPath("$.homeTeam.teamId").value(matchDto.getHomeTeam().getTeamId()))
+          .andExpect(jsonPath("$.homeTeam.teamId").value(matchDto.getHomeTeam().getTeamId().toString()))
           .andExpect(jsonPath("$.awayTeam.type").value("anonymous"))
           .andExpect(jsonPath("$.awayTeam.name").value(matchDto.getAwayTeam().getName()));
     } finally {
@@ -99,7 +101,7 @@ public class MatchCommandControllerTest {
   public void testSaveMatchWithTwoAnonymousTeams() throws Exception {
     final var matchDto = TestUtils.createMockMatchDto(TestUtils.createMockAnonymousTeamDto(),
         TestUtils.createMockAnonymousTeamDto(), 0, 0,
-        Collections.singletonMap("123456789", TeamOption.HOME_TEAM));
+        Collections.singletonMap(USER_ID, TeamOption.HOME_TEAM));
 
     mvc.perform(post("/api/v1/matches").contentType(APPLICATION_JSON)
         .content(objectMapper.writeValueAsString(matchDto)))
@@ -117,7 +119,7 @@ public class MatchCommandControllerTest {
   public void testUpdateMatchWithTwoAnonymousTeams() throws Exception {
     final var match = matchRepository.save(
         TestUtils.createMockMatch(TestUtils.createMockAnonymousTeam(),
-            TestUtils.createMockAnonymousTeam(), "123456789"));
+            TestUtils.createMockAnonymousTeam(), USER_ID));
     final String description = "new description";
     final MatchDto<?, ?> updateDto = matchToMatchDtoTransformer.apply(match).toBuilder()
         .id(null).createdBy(null)
@@ -140,7 +142,7 @@ public class MatchCommandControllerTest {
   @Test
   public void testUpdateNotExistingMatch() {
     final var match = matchRepository.save(TestUtils.createMockMatch(TestUtils.createMockAnonymousTeam(),
-            TestUtils.createMockAnonymousTeam(), "123456789"));
+            TestUtils.createMockAnonymousTeam(), USER_ID));
     final String description = "new description";
     final MatchDto<?, ?> updateDto = matchToMatchDtoTransformer.apply(match).toBuilder()
         .id(null).createdBy(null)
@@ -158,7 +160,7 @@ public class MatchCommandControllerTest {
   public void testSaveMatchWithChipTooBig() throws Exception {
     final var matchDto = TestUtils.createMockMatchDto(TestUtils.createMockAnonymousTeamDto(),
         TestUtils.createMockAnonymousTeamDto(), 0, 0,
-        Collections.singletonMap("123456789", TeamOption.HOME_TEAM),
+        Collections.singletonMap(USER_ID, TeamOption.HOME_TEAM),
         RandomStringUtils.randomAlphabetic(22));
 
     mvc.perform(post("/api/v1/matches").contentType(APPLICATION_JSON)
@@ -172,7 +174,7 @@ public class MatchCommandControllerTest {
         .collect(Collectors.toSet());
     final var matchDto = TestUtils.createMockMatchDto(TestUtils.createMockAnonymousTeamDto(),
         TestUtils.createMockAnonymousTeamDto(), 0, 0,
-        Collections.singletonMap("123456789", TeamOption.HOME_TEAM),
+        Collections.singletonMap(USER_ID, TeamOption.HOME_TEAM),
         chips.toArray(new String[]{}));
 
     mvc.perform(post("/api/v1/matches").contentType(APPLICATION_JSON)

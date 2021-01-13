@@ -8,14 +8,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam.UserInTeamRole;
+import io.github.manuelarte.mysportfolio.model.dtos.teamtousers.UserInTeamDto;
+import io.github.manuelarte.mysportfolio.model.dtos.user.UserTeamDto;
 import java.time.LocalDate;
 import javax.inject.Inject;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.TestUtils;
-import org.manuel.mysportfolio.model.dtos.teamtousers.UserInTeamDto;
-import org.manuel.mysportfolio.model.dtos.user.UserTeamDto;
 import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.manuel.mysportfolio.repositories.TeamToUsersRepository;
 import org.manuel.mysportfolio.transformers.teamtousers.UserInTeamDtoToUserInTeamTransformer;
@@ -102,7 +101,7 @@ class UserTeamCommandControllerTest {
     assertEquals(1, teamRepository.count());
     assertEquals(userInTeamDtoToUserInTeamTransformer.apply(updatedUserTeamDto.getUserInTeam()),
         teamToUsersRepository.findByTeamId(
-            new ObjectId(savedUserTeams.getTeam().getId())).get().getUsers().get(ItConfiguration.IT_USER_ID));
+            savedUserTeams.getTeam().getId()).get().getUsers().get(ItConfiguration.IT_USER_ID));
   }
 
 }

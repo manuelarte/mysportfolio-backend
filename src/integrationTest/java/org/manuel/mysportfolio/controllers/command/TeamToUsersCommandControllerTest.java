@@ -10,6 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.manuelarte.mysportfolio.model.documents.teamtouser.TeamToUsers;
 import io.github.manuelarte.mysportfolio.model.documents.teamtouser.UserInTeam;
+import io.github.manuelarte.mysportfolio.model.dtos.teamtousers.TeamToUsersDto;
+import io.github.manuelarte.mysportfolio.model.dtos.teamtousers.UserInTeamDto;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
@@ -21,8 +23,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.ItConfiguration;
-import org.manuel.mysportfolio.model.dtos.teamtousers.TeamToUsersDto;
-import org.manuel.mysportfolio.model.dtos.teamtousers.UserInTeamDto;
 import org.manuel.mysportfolio.repositories.TeamToUsersRepository;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -48,7 +48,7 @@ class TeamToUsersCommandControllerTest {
   private MockMvc mvc;
 
   @BeforeEach
-  public void setup() {
+  public void setUp() {
     mvc = MockMvcBuilders.webAppContextSetup(context)
         .apply(springSecurity())
         .build();
@@ -61,7 +61,7 @@ class TeamToUsersCommandControllerTest {
 
   @Test
   public void testSaveTeamToUsers() throws Exception {
-    final var userId = "123456";
+    final var userId = ItConfiguration.IT_USER_ID;
     final var teamToUsers = TeamToUsersDto.builder()
         .users(Collections.singletonMap(userId,
             UserInTeamDto.builder().from(LocalDate.now().minus(1, ChronoUnit.MONTHS))
@@ -82,7 +82,7 @@ class TeamToUsersCommandControllerTest {
 
   @Test
   public void testSaveTeamToUsersNoAdminGiven() throws Exception {
-    final var userId = "123456";
+    final var userId = ItConfiguration.IT_USER_ID;
     final var teamToUsers = TeamToUsersDto.builder()
         .users(Collections.singletonMap(userId,
             UserInTeamDto.builder().from(LocalDate.now().minus(1, ChronoUnit.MONTHS))
@@ -98,7 +98,7 @@ class TeamToUsersCommandControllerTest {
 
   @Test
   public void testUpdateUserInTeam() throws Exception {
-    final var userId = "123456789";
+    final var userId = ItConfiguration.IT_USER_ID;
     final var userInTeam = new UserInTeam();
     userInTeam.setFrom(LocalDate.now().minus(1, ChronoUnit.MONTHS));
     userInTeam.setRoles(Collections.singleton(UserInTeam.UserInTeamRole.PLAYER));

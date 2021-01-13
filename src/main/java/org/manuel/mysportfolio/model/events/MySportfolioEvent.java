@@ -1,6 +1,5 @@
 package org.manuel.mysportfolio.model.events;
 
-import org.manuel.mysportfolio.model.notifications.NewBadgesNotification;
 import org.springframework.context.ApplicationEvent;
 
 public abstract class MySportfolioEvent<T> extends ApplicationEvent {
@@ -14,8 +13,5 @@ public abstract class MySportfolioEvent<T> extends ApplicationEvent {
   public MySportfolioEvent(T source) {
     super(source);
   }
-
-  public abstract NewBadgesNotification.Reason getNewBadgesNotificationReason();
-
 
 }

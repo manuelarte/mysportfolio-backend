@@ -1,12 +1,11 @@
 package org.manuel.mysportfolio.transformers.teamtousers;
 
 import io.github.manuelarte.mysportfolio.model.documents.teamtouser.TeamToUsers;
+import io.github.manuelarte.mysportfolio.model.dtos.teamtousers.TeamToUsersDto;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.dtos.teamtousers.TeamToUsersDto;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,7 +20,7 @@ public class TeamToUsersDtoToTeamToUsersTransformer implements
     final var users = teamToUsersDto.getUsers().entrySet().stream().collect(Collectors
         .toMap(Map.Entry::getKey, it -> userInTeamDtoToUserInTeamTransformer.apply(it.getValue())));
     final var teamToUsers = new TeamToUsers();
-    teamToUsers.setId(Optional.ofNullable(teamToUsersDto.getId()).map(ObjectId::new).orElse(null));
+    teamToUsers.setId(teamToUsersDto.getId());
     teamToUsers.setVersion(teamToUsersDto.getVersion());
     teamToUsers.setTeamId(teamId);
     teamToUsers.setUsers(users);

@@ -9,15 +9,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.manuelarte.mysportfolio.model.dtos.team.TeamDto;
 import javax.inject.Inject;
-import org.bson.types.ObjectId;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.ItConfiguration;
 import org.manuel.mysportfolio.TestUtils;
-import org.manuel.mysportfolio.model.dtos.team.TeamDto;
 import org.manuel.mysportfolio.repositories.TeamRepository;
 import org.manuel.mysportfolio.repositories.TeamToUsersRepository;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -47,7 +46,7 @@ public class TeamCommandControllerTest {
   private MockMvc mvc;
 
   @BeforeEach
-  public void setup() {
+  public void setUp() {
     mvc = MockMvcBuilders.webAppContextSetup(context)
         .apply(springSecurity())
         .build();
@@ -70,9 +69,9 @@ public class TeamCommandControllerTest {
             .andReturn().getResponse().getContentAsString(), TeamDto.class);
 
     // test team to users entry is created
-    final var byTeamId = teamToUsersRepository.findByTeamId(new ObjectId(saved.getId()));
+    final var byTeamId = teamToUsersRepository.findByTeamId(saved.getId());
     assertTrue(byTeamId.isPresent());
-    assertTrue(byTeamId.get().getAdmins().contains("123456789"));
+    assertTrue(byTeamId.get().getAdmins().contains(ItConfiguration.IT_USER_ID));
   }
 
   @Test

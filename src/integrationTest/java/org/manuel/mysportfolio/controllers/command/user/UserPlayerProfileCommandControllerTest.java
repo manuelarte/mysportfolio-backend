@@ -7,10 +7,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.manuelarte.mysportfolio.model.documents.player.FootballPosition;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppMembership;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppSettings;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerSportsInfoDto;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.sportinfo.PlayerFootballInfoDto;
+import io.github.manuelarte.mysportfolio.model.football.FootballPosition;
 import java.time.Year;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolationException;
@@ -18,8 +20,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.manuel.mysportfolio.ItConfiguration;
-import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileFootballInfoDto;
-import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileSportInfoDto;
 import org.manuel.mysportfolio.repositories.AppUserRepository;
 import org.manuel.mysportfolio.repositories.PlayerProfileRepository;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -49,8 +49,8 @@ public class UserPlayerProfileCommandControllerTest {
 
   @BeforeEach
   @SuppressWarnings("checkstyle:javadoctype")
-  public void setup() {
-    appUserRepository.save(new AppUser("test", "test@mymatchfolio.com",
+  public void setUp() {
+    appUserRepository.save(new AppUser("test", "test@mysportfolio.org",
         ItConfiguration.IT_USER_ID, AppMembership.FREE, false, null,
         new AppSettings(false)));
   }
@@ -64,40 +64,42 @@ public class UserPlayerProfileCommandControllerTest {
   @Test
   public void updatePlayerProfileSportInfoForNotExistingPlayerTest() throws Exception {
     final var userId = ItConfiguration.IT_USER_ID;
-    final var playerSportInfo = PlayerProfileSportInfoDto.builder()
-        .footballInfo(PlayerProfileFootballInfoDto.builder()
-            .preferredPosition(FootballPosition.CENTRE_FORWARD)
+    final PlayerSportsInfoDto profileSportsInfo = PlayerSportsInfoDto.builder()
+        .football(
+            PlayerFootballInfoDto.builder()
+            .mainPosition(FootballPosition.CENTRE_FORWARD)
             .build())
         .build();
 
     mvc.perform(put("/api/v1/users/{userId}/player/{year}", userId, Year.now())
         .contentType(APPLICATION_JSON)
         .accept(APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(playerSportInfo)))
+        .content(objectMapper.writeValueAsString(profileSportsInfo)))
         .andExpect(status().isOk());
   }
 
   @Test
   public void updatePlayerProfileSportInfoForTheFuture() {
     final var userId = ItConfiguration.IT_USER_ID;
-    final var playerSportInfo = PlayerProfileSportInfoDto.builder()
-        .footballInfo(PlayerProfileFootballInfoDto.builder()
-            .preferredPosition(FootballPosition.CENTRE_FORWARD)
-            .build())
+    final PlayerSportsInfoDto profileSportsInfo = PlayerSportsInfoDto.builder()
+        .football(
+          PlayerFootballInfoDto.builder()
+              .mainPosition(FootballPosition.CENTRE_FORWARD)
+              .build())
         .build();
 
     assertThrows(NestedServletException.class, () -> mvc.perform(
         put("/api/v1/users/{userId}/player/{year}", userId, Year.now().plusYears(1))
             .contentType(APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(playerSportInfo))));
+            .content(objectMapper.writeValueAsString(profileSportsInfo))));
   }
 
   @Test
   public void updatePlayerProfileForNonExistingUser() {
     final var userId = ItConfiguration.IT_USER_ID + "nono";
-    final var playerSportInfo = PlayerProfileSportInfoDto.builder()
-        .footballInfo(PlayerProfileFootballInfoDto.builder()
-            .preferredPosition(FootballPosition.CENTRE_FORWARD)
+    final PlayerSportsInfoDto playerSportInfo = PlayerSportsInfoDto.builder()
+        .football(PlayerFootballInfoDto.builder()
+            .mainPosition(FootballPosition.CENTRE_FORWARD)
             .build())
         .build();
 

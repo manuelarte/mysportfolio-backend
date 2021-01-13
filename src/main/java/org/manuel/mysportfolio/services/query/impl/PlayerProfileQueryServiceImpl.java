@@ -22,6 +22,6 @@ public class PlayerProfileQueryServiceImpl implements PlayerProfileQueryService 
         String.format("The user with external id %s does not exists", externalId));
     return playerProfileRepository
         .findByExternalIdIs(externalId)
-        .orElseGet(() -> playerProfileRepository.save(new PlayerProfile(externalId)));
+        .orElseGet(() -> playerProfileRepository.save(new PlayerProfile(externalId, null)));
   }
 }

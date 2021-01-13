@@ -12,4 +12,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Fixing bug of team image in anonymous team
+- Using DTOs library
+
+### Removed
+
+- Removed badges from Core
+
+## [0.0.1] - 2020-11-26
+
+### Added
+
+- Migration from MySportfolio to MySportfolio-core
+
+### Changed
+
 ### Removed

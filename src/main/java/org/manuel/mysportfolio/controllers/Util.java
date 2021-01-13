@@ -12,7 +12,7 @@ public class Util {
       final UserIdProvider userIdProvider,
       final String externalUserId) {
     return ("me".equals(externalUserId)
-        ? appUserQueryService.findByExternalId(userIdProvider.getUserId()) :
+        ? appUserQueryService.findByExternalId(userIdProvider.getUserId().orElse(null)) :
         appUserQueryService.findByExternalId(externalUserId))
         .orElseThrow(() -> new EntityNotFoundException(AppUser.class, externalUserId));
   }

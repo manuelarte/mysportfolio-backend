@@ -3,8 +3,8 @@ package org.manuel.mysportfolio.model.dtos.usernotification;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import io.github.manuelarte.mysportfolio.model.dtos.team.TeamDto;
 import javax.validation.constraints.NotNull;
-import org.manuel.mysportfolio.model.dtos.team.TeamDto;
 import org.manuel.mysportfolio.model.entities.usernotification.UserNotificationStatus;
 
 @JsonDeserialize(builder = TeamAddUserNotificationDto.TeamAddUserNotificationDtoBuilder.class)

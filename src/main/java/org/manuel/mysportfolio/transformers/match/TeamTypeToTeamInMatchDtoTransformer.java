@@ -3,13 +3,13 @@ package org.manuel.mysportfolio.transformers.match;
 import io.github.manuelarte.mysportfolio.model.documents.match.AnonymousTeam;
 import io.github.manuelarte.mysportfolio.model.documents.match.RegisteredTeam;
 import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
+import io.github.manuelarte.mysportfolio.model.dtos.team.TeamTypeDto;
 import java.util.function.Function;
-import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.springframework.stereotype.Component;
 
 @Component
 @lombok.AllArgsConstructor
-public class TeamTypeToTeamInMatchDtoTransformer<T> implements Function<TeamType, TeamTypeDto> {
+public class TeamTypeToTeamInMatchDtoTransformer implements Function<TeamType, TeamTypeDto> {
 
   private final RegisteredTeamToRegisteredTeamDtoTransformer registeredTeamToRegisteredTeamDtoTransformer;
   private final AnonymousTeamToAnonymousTeamDtoTransformer anonymousTeamToAnonymousTeamDtoTransformer;

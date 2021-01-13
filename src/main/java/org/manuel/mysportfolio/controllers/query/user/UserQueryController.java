@@ -2,9 +2,9 @@ package org.manuel.mysportfolio.controllers.query.user;
 
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
+import io.github.manuelarte.mysportfolio.model.dtos.user.UserRecordDto;
 import java.util.stream.Collectors;
 import org.manuel.mysportfolio.config.UserIdProvider;
-import org.manuel.mysportfolio.model.dtos.user.UserRecordDto;
 import org.manuel.mysportfolio.model.dtos.usernotification.UserNotificationDto;
 import org.manuel.mysportfolio.model.entities.usernotification.UserNotification;
 import org.manuel.mysportfolio.services.query.AppUserQueryService;
@@ -40,13 +40,14 @@ public class UserQueryController {
   public ResponseEntity<UserNotificationPage> getMyNotifications(
       @PageableDefault final Pageable pageable) {
     final var userNotifications = appUserQueryService
-        .getUserNotifications(pageable, userIdProvider.getUserId());
+        .getUserNotifications(pageable, userIdProvider.getUserId().orElse(null));
     final var page = new UserNotificationPage(userNotifications);
     return ResponseEntity.ok(page);
   }
 
   @GetMapping(value = "/{appUserExternalId}/userRecord", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<UserRecordDto> getUserRecord(@PathVariable @UserExists final String appUserExternalId) throws FirebaseAuthException {
+  public ResponseEntity<UserRecordDto> getUserRecord(@PathVariable @UserExists final String appUserExternalId)
+      throws FirebaseAuthException {
     final UserRecord userRecord = firebaseQueryService.findByFirebaseId(appUserExternalId);
     return ResponseEntity.ok(userRecordToUserRecordDtoTransformer.apply(userRecord));
   }

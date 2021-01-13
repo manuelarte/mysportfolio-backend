@@ -1,7 +1,5 @@
 package org.manuel.mysportfolio.controllers.command.user;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.github.manuelarte.mysportfolio.exceptions.EntityNotFoundException;
 import io.github.manuelarte.mysportfolio.model.documents.user.AppUser;
 import javax.validation.Valid;
@@ -55,22 +53,17 @@ public class UserCommandController {
   }
 
   private String getUserId() {
-    return userIdProvider.getUserId();
+    return userIdProvider.getUserId().orElse(null);
   }
 
-  @JsonDeserialize(builder = RegistrationTokenDto.RegistrationTokenDtoBuilder.class)
   @lombok.AllArgsConstructor
   @lombok.Data
-  @lombok.Builder(toBuilder = true)
+  @lombok.extern.jackson.Jacksonized @lombok.Builder(toBuilder = true)
   public static class RegistrationTokenDto {
 
     @NotNull
     private final String registrationToken;
 
-    @JsonPOJOBuilder(withPrefix = "")
-    public static final class RegistrationTokenDtoBuilder {
-
-    }
   }
 
 

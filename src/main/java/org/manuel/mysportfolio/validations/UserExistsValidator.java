@@ -23,7 +23,7 @@ public class UserExistsValidator implements ConstraintValidator<UserExists, Stri
   public boolean isValid(final String value, final ConstraintValidatorContext context) {
     final String theValue;
     if ("me".equals(value)) {
-      theValue = userIdProvider.getUserId();
+      theValue = userIdProvider.getUserId().orElse(null);
     } else {
       theValue = value;
     }

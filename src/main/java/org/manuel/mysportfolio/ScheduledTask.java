@@ -36,7 +36,7 @@ public class ScheduledTask {
   //fixedRate = 1 * 60 * 60 * 24 * 1000
   //)
   public void sendCompetitionDay() {
-    final DayOfWeek from = DayOfWeek.from(LocalDate.now()).minus(1);
+    final DayOfWeek from = DayOfWeek.from(LocalDate.now()).minus(1L);
     final List<Competition> competitionsPlayedToday = doWithSystemAuthentication(
         () -> competitionQueryService.findAllPlaying(from));
     final AtomicInteger numberSent = new AtomicInteger(0);

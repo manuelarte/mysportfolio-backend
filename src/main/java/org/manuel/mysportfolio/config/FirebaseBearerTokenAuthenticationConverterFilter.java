@@ -48,7 +48,7 @@ public class FirebaseBearerTokenAuthenticationConverterFilter implements
       final AppUserRepository appUserRepository) throws IOException {
 
     final var serviceAccount = new ByteArrayInputStream(json.getBytes());
-    final var options = new FirebaseOptions.Builder()
+    final var options = FirebaseOptions.builder()
         .setCredentials(GoogleCredentials.fromStream(serviceAccount))
         .setDatabaseUrl("https://mysportfolio-test.firebaseio.com")
         .build();

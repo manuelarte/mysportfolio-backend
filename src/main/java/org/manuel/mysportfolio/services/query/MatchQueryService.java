@@ -17,7 +17,7 @@ public interface MatchQueryService extends BaseDocumentQueryService<Match<TeamTy
       String createdBy);
 
   @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-  Collection<Match<?, ?>> findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(String userId,
+  Collection<Match<TeamType, TeamType>> findAllByPlayedForContainsAndStartDateIsBetweenAndSportIs(String userId,
       LocalDate from, LocalDate to, Sport sport);
 
 }

@@ -1,8 +1,6 @@
 package org.manuel.mysportfolio.model.events;
 
 import io.github.manuelarte.mysportfolio.model.documents.match.Match;
-import org.manuel.mysportfolio.model.notifications.NewBadgesNotification.Reason;
-import org.manuel.mysportfolio.model.notifications.NewBadgesNotification.Reason.Entity;
 
 public class MatchCreatedEvent extends MySportfolioEvent<Match<?, ?>> {
 
@@ -13,11 +11,6 @@ public class MatchCreatedEvent extends MySportfolioEvent<Match<?, ?>> {
    */
   public MatchCreatedEvent(final Match<?, ?> source) {
     super(source);
-  }
-
-  @Override
-  public Reason getNewBadgesNotificationReason() {
-    return new Reason(Entity.MATCH, ((Match<?, ?>)source).getId().toString());
   }
 
 }

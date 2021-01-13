@@ -38,7 +38,7 @@ public class AppUserQueryControllerTest {
   private MockMvc mvc;
 
   @BeforeEach
-  public void setup() {
+  public void setUp() {
     mvc = MockMvcBuilders.webAppContextSetup(context)
         .apply(springSecurity())
         .build();
@@ -53,7 +53,7 @@ public class AppUserQueryControllerTest {
   public void testGetMyNotifications() throws Exception {
     final var teamSaved = teamRepository.save(TestUtils.createMockTeam());
 
-    final String userId = "123456789";
+    final String userId = ItConfiguration.IT_USER_ID;
     final var actual = new TeamAddUserNotification(null, null, "from", userId, teamSaved.getId());
     userNotificationRepository.save(actual);
 
@@ -62,6 +62,5 @@ public class AppUserQueryControllerTest {
         .andExpect(jsonPath("$.content", Matchers.hasSize(1)))
         .andExpect(jsonPath("$.content[0].type").value("team-add-user"));
   }
-
 
 }

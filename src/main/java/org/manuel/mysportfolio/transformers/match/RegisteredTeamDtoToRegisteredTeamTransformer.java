@@ -1,9 +1,8 @@
 package org.manuel.mysportfolio.transformers.match;
 
 import io.github.manuelarte.mysportfolio.model.documents.match.RegisteredTeam;
+import io.github.manuelarte.mysportfolio.model.dtos.team.RegisteredTeamDto;
 import java.util.function.Function;
-import org.bson.types.ObjectId;
-import org.manuel.mysportfolio.model.dtos.team.RegisteredTeamDto;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,7 +17,7 @@ public class RegisteredTeamDtoToRegisteredTeamTransformer implements
 
   private RegisteredTeam createRegisteredTeam(final RegisteredTeamDto registeredTeamDto) {
     final var registeredTeam = new RegisteredTeam();
-    registeredTeam.setTeamId(new ObjectId(registeredTeamDto.getTeamId()));
+    registeredTeam.setTeamId(registeredTeamDto.getTeamId());
     return registeredTeam;
   }
 

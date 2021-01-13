@@ -1,6 +1,6 @@
 package org.manuel.mysportfolio.controllers.query.user;
 
-import org.manuel.mysportfolio.model.dtos.playerprofile.PlayerProfileDto;
+import io.github.manuelarte.mysportfolio.model.dtos.playerprofile.PlayerProfileDto;
 import org.manuel.mysportfolio.services.query.PlayerProfileQueryService;
 import org.manuel.mysportfolio.transformers.PlayerProfileToPlayerProfileDtoTransformer;
 import org.manuel.mysportfolio.validations.UserExists;

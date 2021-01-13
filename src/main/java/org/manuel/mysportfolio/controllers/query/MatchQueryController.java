@@ -3,12 +3,12 @@ package org.manuel.mysportfolio.controllers.query;
 import io.github.manuelarte.mysportfolio.exceptions.EntityNotFoundException;
 import io.github.manuelarte.mysportfolio.model.documents.match.Match;
 import io.github.manuelarte.mysportfolio.model.documents.match.TeamType;
+import io.github.manuelarte.mysportfolio.model.dtos.match.MatchDto;
+import io.github.manuelarte.mysportfolio.model.dtos.team.TeamTypeDto;
 import io.github.manuelarte.spring.queryparameter.QueryParameter;
 import java.util.Optional;
 import org.bson.types.ObjectId;
 import org.manuel.mysportfolio.config.UserIdProvider;
-import org.manuel.mysportfolio.model.dtos.match.MatchDto;
-import org.manuel.mysportfolio.model.dtos.team.TeamTypeDto;
 import org.manuel.mysportfolio.services.query.MatchQueryService;
 import org.manuel.mysportfolio.transformers.match.MatchToMatchDtoTransformer;
 import org.springframework.data.domain.Page;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@lombok.extern.slf4j.Slf4j
 @RestController
 @RequestMapping("/api/v1/matches")
 @lombok.AllArgsConstructor
@@ -56,7 +57,7 @@ public class MatchQueryController {
   }
 
   private String getUserId() {
-    return userIdProvider.getUserId();
+    return userIdProvider.getUserId().orElse(null);
   }
 
 }
